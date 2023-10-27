@@ -9,12 +9,9 @@ namespace UnityStandardAssets.ImageEffects
     {
         SerializedObject serObj;
 
-        void OnEnable () {
-            serObj = new SerializedObject (target);
-        }
+        void OnEnable () { serObj = new SerializedObject(target); }
 
         private Texture2D tempClutTex2D;
-
 
         public override void OnInspectorGUI () {
             serObj.Update ();
@@ -47,19 +44,17 @@ namespace UnityStandardAssets.ImageEffects
                 {
                     string path = AssetDatabase.GetAssetPath (tex);
                     TextureImporter textureImporter = AssetImporter.GetAtPath(path) as TextureImporter;
-                    bool doImport = textureImporter.isReadable == false;
-                    if (textureImporter.mipmapEnabled == true) {
-                        doImport = true;
-                    }
-                    if (textureImporter.textureFormat != TextureImporterFormat.AutomaticTruecolor) {
-                        doImport = true;
-                    }
+                    
+                    bool doImport = !textureImporter.isReadable || 
+                        textureImporter.mipmapEnabled ||
+                        textureImporter.textureCompression != TextureImporterCompression.Uncompressed;
+
 
                     if (doImport)
                     {
                         textureImporter.isReadable = true;
                         textureImporter.mipmapEnabled = false;
-                        textureImporter.textureFormat = TextureImporterFormat.AutomaticTruecolor;
+                        textureImporter.textureCompression = TextureImporterCompression.Uncompressed;
                         AssetDatabase.ImportAsset (path, ImportAssetOptions.ForceUpdate);
                         //tex = AssetDatabase.LoadMainAssetAtPath(path);
                     }

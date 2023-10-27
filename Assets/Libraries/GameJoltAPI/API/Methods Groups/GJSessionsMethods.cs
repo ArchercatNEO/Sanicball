@@ -58,12 +58,9 @@ public class GJSessionsMethods
 		{
 			GJAPI.Instance.GJDebug ("Session successfully opened.");
 		}
-		
-		if (OpenCallback != null)
-		{
-			OpenCallback (success);
-		}
-	}
+
+        OpenCallback?.Invoke(success);
+    }
 	#endregion Open
 	
 	#region Ping
@@ -83,7 +80,7 @@ public class GJSessionsMethods
 	{
 		GJAPI.Instance.GJDebug ("Pinging Session.");
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string> ();
+		Dictionary<string,string> parameters = new();
 		string status = active ? "active" : "idle";
 		parameters.Add ("status", status);
 		
@@ -108,12 +105,9 @@ public class GJSessionsMethods
 		{
 			GJAPI.Instance.GJDebug ("Session successfully pinged.");
 		}
-		
-		if (PingCallback != null)
-		{
-			PingCallback (success);
-		}
-	}
+
+        PingCallback?.Invoke(success);
+    }
 	#endregion Ping
 
 	#region Close
@@ -152,11 +146,8 @@ public class GJSessionsMethods
 		{
 			GJAPI.Instance.GJDebug ("Session successfully closed.");
 		}
-		
-		if (CloseCallback != null)
-		{
-			CloseCallback (success);
-		}
-	}
+
+        CloseCallback?.Invoke(success);
+    }
 	#endregion Close
 }

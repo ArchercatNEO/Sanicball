@@ -48,8 +48,7 @@ namespace UnityStandardAssets.ImageEffects
 
             Matrix4x4 P = GetComponent<Camera>().projectionMatrix;
             var invP= P.inverse;
-            Vector4 projInfo = new Vector4
-                ((-2.0f / (Screen.width * P[0])),
+            Vector4 projInfo = new                ((-2.0f / (Screen.width * P[0])),
                  (-2.0f / (Screen.height * P[5])),
                  ((1.0f - P[2]) / P[0]),
                  ((1.0f + P[6]) / P[5]));

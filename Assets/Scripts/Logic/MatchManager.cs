@@ -8,6 +8,7 @@ using Sanicball.UI;
 using SanicballCore;
 using SanicballCore.MatchMessages;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Sanicball.Logic
 {
@@ -26,20 +27,14 @@ namespace Sanicball.Logic
 
         #region Exposed fields
 
-        [SerializeField]
-        private string lobbySceneName = "Lobby";
+        [SerializeField] private string lobbySceneName = "Lobby";
 
         //Prefabs
-        [SerializeField]
-        private PauseMenu pauseMenuPrefab;
-        [SerializeField]
-        private Chat chatPrefab;
-        [SerializeField]
-        private RaceManager raceManagerPrefab;
-        [SerializeField]
-        private UI.Popup disconnectedPopupPrefab;
-        [SerializeField]
-        private Marker markerPrefab = null;
+        [SerializeField] private PauseMenu pauseMenuPrefab;
+        [SerializeField] private Chat chatPrefab;
+        [SerializeField] private RaceManager raceManagerPrefab;
+        [SerializeField] private UI.Popup disconnectedPopupPrefab;
+        [SerializeField] private Marker markerPrefab = null;
 
         #endregion Exposed fields
 
@@ -47,14 +42,14 @@ namespace Sanicball.Logic
 
         //List of all clients in the match. Only serves a purpose in online play.
         //In local play, this list will always only contain the local client.
-        private List<MatchClient> clients = new List<MatchClient>();
+        private List<MatchClient> clients = new();
 
         //Holds the guid of the local client, to check if messages are directed at it.
         private Guid myGuid;
 
         //List of all players - players are seperate from clients because each client can have
         //up to 4 players playing in splitscreen.
-        private List<MatchPlayer> players = new List<MatchPlayer>();
+        private List<MatchPlayer> players = new();
 
         //These settings will be used when starting a race
         private MatchSettings currentSettings;
@@ -160,8 +155,7 @@ namespace Sanicball.Logic
         private void SettingsChangedCallback(SettingsChangedMessage msg, float travelTime)
         {
             currentSettings = msg.NewMatchSettings;
-            if (MatchSettingsChanged != null)
-                MatchSettingsChanged(this, EventArgs.Empty);
+            MatchSettingsChanged?.Invoke(this, EventArgs.Empty);
         }
 
         private void ClientJoinedCallback(ClientJoinedMessage msg, float travelTime)
@@ -194,8 +188,7 @@ namespace Sanicball.Logic
 
             StopLobbyTimer();
 
-            if (MatchPlayerAdded != null)
-                MatchPlayerAdded(this, new MatchPlayerEventArgs(p, msg.ClientGuid == myGuid));
+            MatchPlayerAdded?.Invoke(this, new MatchPlayerEventArgs(p, msg.ClientGuid == myGuid));
         }
 
         private void PlayerLeftCallback(PlayerLeftMessage msg, float travelTime)
@@ -211,8 +204,7 @@ namespace Sanicball.Logic
                     Destroy(player.BallObject.gameObject);
                 }
 
-                if (MatchPlayerRemoved != null)
-                    MatchPlayerRemoved(this, new MatchPlayerEventArgs(player, msg.ClientGuid == myGuid)); //TODO: determine if removed player was local
+                MatchPlayerRemoved?.Invoke(this, new MatchPlayerEventArgs(player, msg.ClientGuid == myGuid)); //TODO: determine if removed player was local //TODO: determine if removed player was local
             }
         }
 
@@ -302,7 +294,7 @@ namespace Sanicball.Logic
             //Create existing players
             foreach (var playerInfo in matchState.Players)
             {
-                MatchPlayer p = new MatchPlayer(playerInfo.ClientGuid, playerInfo.CtrlType, playerInfo.CharacterId);
+                MatchPlayer p = new(playerInfo.ClientGuid, playerInfo.CtrlType, playerInfo.CharacterId);
                 p.ReadyToRace = playerInfo.ReadyToRace;
                 players.Add(p);
 
@@ -321,7 +313,7 @@ namespace Sanicball.Logic
             autoStartTimer = matchState.CurAutoStartTime;
 
             //Create messenger
-            OnlineMatchMessenger messenger = new OnlineMatchMessenger(client);
+            OnlineMatchMessenger messenger = new(client);
             this.messenger = messenger;
             messenger.Disconnected += (sender, e) =>
             {
@@ -368,6 +360,7 @@ namespace Sanicball.Logic
             //Create this client
             myGuid = Guid.NewGuid();
             messenger.SendMessage(new ClientJoinedMessage(myGuid, ActiveData.GameSettings.nickname));
+
         }
 
         private void LocalChatMessageSent(object sender, UI.ChatMessageArgs args)
@@ -462,7 +455,7 @@ namespace Sanicball.Logic
         {
             lobbyTimerOn = false;
             lobbyTimer = lobbyTimerMax;
-            LobbyReferences.Active.CountdownField.enabled = false;
+            //LobbyReferences.Active.CountdownField.enabled = false;
         }
 
         #endregion Players ready and lobby timer
@@ -475,7 +468,7 @@ namespace Sanicball.Logic
 
             loadingStage = false;
             loadingLobby = true;
-            UnityEngine.SceneManagement.SceneManager.LoadScene(lobbySceneName);
+            SceneManager.LoadScene(lobbySceneName);
         }
 
         private void GoToStage()
@@ -485,56 +478,48 @@ namespace Sanicball.Logic
             loadingStage = true;
             loadingLobby = false;
 
-            foreach (var p in Players)
-            {
-                p.ReadyToRace = false;
-            }
+            players.ForEach(player => player.ReadyToRace = false);
 
-            UnityEngine.SceneManagement.SceneManager.LoadScene(targetStage.sceneName);
-            ;
+            SceneManager.LoadScene(targetStage.sceneName);
         }
 
+        void OnEnable()
+        {
+            //Tell our 'OnLevelFinishedLoading' function to start listening for a scene change as soon as this script is enabled.
+            SceneManager.sceneLoaded += OnStageLoaded;
+        }
+        
+        void OnDisable()
+        {
+        //Tell our 'OnLevelFinishedLoading' function to stop listening for a scene change as soon as this script is disabled. Remember to always have an unsubscription for every delegate you subscribe to!
+            SceneManager.sceneLoaded -= OnStageLoaded;
+        }
+        
         //Check if we were loading the lobby or the race
-        private void OnLevelWasLoaded(int level)
+        private void OnStageLoaded(Scene scene, LoadSceneMode mode)
         {
             if (loadingLobby)
             {
-                InitLobby();
-                loadingLobby = false;
+                inLobby = true;
+
+                players.ForEach(SpawnLobbyBall);
+
+                if (showSettingsOnLobbyLoad)
+                {
+                    //Let the player pick settings first time entering the lobby
+                    LobbyReferences.Active.MatchSettingsPanel.Show();
+                    showSettingsOnLobbyLoad = false;
+                }   
             }
             if (loadingStage)
             {
-                InitRace();
-                loadingStage = false;
+                inLobby = false;
+                Instantiate(raceManagerPrefab).Init(currentSettings, this, messenger, joiningRaceInProgress);
+                joiningRaceInProgress = false;
             }
-        }
-
-        //Initiate the lobby after loading lobby scene
-        private void InitLobby()
-        {
-            inLobby = true;
-
-            foreach (var p in Players)
-            {
-                SpawnLobbyBall(p);
-            }
-
-            if (showSettingsOnLobbyLoad)
-            {
-                //Let the player pick settings first time entering the lobby
-                LobbyReferences.Active.MatchSettingsPanel.Show();
-                showSettingsOnLobbyLoad = false;
-            }
-        }
-
-        //Initiate a race after loading the stage scene
-        private void InitRace()
-        {
-            inLobby = false;
-
-            var raceManager = Instantiate(raceManagerPrefab);
-            raceManager.Init(currentSettings, this, messenger, joiningRaceInProgress);
-            joiningRaceInProgress = false;
+            
+            loadingLobby = false;
+            loadingStage = false;
         }
 
         public void QuitMatch(string reason = null)
@@ -544,7 +529,7 @@ namespace Sanicball.Logic
 
         private IEnumerator QuitMatchInternal(string reason)
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene("Menu");
+           SceneManager.LoadScene("Menu");
 
             if (reason != null)
             {

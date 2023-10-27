@@ -20,7 +20,7 @@ namespace Sanicball.Logic
 
     public abstract class MatchMessenger
     {
-        protected List<MatchMessageListener> listeners = new List<MatchMessageListener>();
+        protected List<MatchMessageListener> listeners = new();
 
         /// <summary>
         /// Sends a message to this messenger.

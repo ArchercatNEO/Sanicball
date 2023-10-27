@@ -15,7 +15,7 @@ namespace Sanicball
 
         public LayerMask m_ReflectLayers = -1;
 
-        private Hashtable m_ReflectionCameras = new Hashtable(); // Camera -> Camera table
+        private Hashtable m_ReflectionCameras = new(); // Camera -> Camera table
 
         private RenderTexture m_ReflectionTexture = null;
         private int m_OldReflectionTextureSize = 0;
@@ -58,7 +58,7 @@ namespace Sanicball
             // Render reflection
             // Reflect camera around reflection plane
             float d = -Vector3.Dot(normal, pos) - m_ClipPlaneOffset;
-            Vector4 reflectionPlane = new Vector4(normal.x, normal.y, normal.z, d);
+            Vector4 reflectionPlane = new(normal.x, normal.y, normal.z, d);
 
             Matrix4x4 reflection = Matrix4x4.zero;
             CalculateReflectionMatrix(ref reflection, reflectionPlane);
@@ -162,7 +162,7 @@ namespace Sanicball
             reflectionCamera = m_ReflectionCameras[currentCamera] as Camera;
             if (!reflectionCamera) // catch both not-in-dictionary and in-dictionary-but-deleted-GO
             {
-                GameObject go = new GameObject("Mirror Refl Camera id" + GetInstanceID() + " for " + currentCamera.GetInstanceID(), typeof(Camera), typeof(Skybox));
+                GameObject go = new("Mirror Refl Camera id" + GetInstanceID() + " for " + currentCamera.GetInstanceID(), typeof(Camera), typeof(Skybox));
                 reflectionCamera = go.GetComponent<Camera>();
                 reflectionCamera.enabled = false;
                 reflectionCamera.transform.position = transform.position;

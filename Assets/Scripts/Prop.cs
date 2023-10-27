@@ -7,7 +7,7 @@ namespace Sanicball
     public class Prop : MonoBehaviour
     {
         [SerializeField]
-        private Vector3 maxRandomRotation = new Vector3(20, 360, 20);
+        private Vector3 maxRandomRotation = new(20, 360, 20);
 
         [SerializeField]
         private float maxRandomScale = 0.4f;
@@ -16,7 +16,7 @@ namespace Sanicball
         private void Start()
         {
             int seed = GetInstanceID();
-            System.Random random = new System.Random(seed);
+            System.Random random = new(seed);
 
             float randX = random.NextFloatUniform() * maxRandomRotation.x;
             float randY = random.NextFloatUniform() * maxRandomRotation.y;

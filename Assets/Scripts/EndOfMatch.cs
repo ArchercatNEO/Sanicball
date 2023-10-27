@@ -23,7 +23,7 @@ namespace Sanicball
         private Scoreboard activeScoreboard;
         private bool hasActivatedOnce = false;
 
-        private List<RacePlayer> movedPlayers = new List<RacePlayer>();
+        private List<RacePlayer> movedPlayers = new();
 
         public void Activate(RaceManager manager)
         {

@@ -17,7 +17,7 @@ namespace Sanicball.UI
 		public RectTransform sectionHeaderPrefab;
 		public RectTransform recordTypeContainer; 
 
-		private List<RecordTypeControl> recordTypes = new List<RecordTypeControl> ();
+		private List<RecordTypeControl> recordTypes = new();
 
         private int selectedStage = 0;
 

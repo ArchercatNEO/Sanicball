@@ -110,7 +110,7 @@ namespace Sanicball.Gameplay
 
         public bool CanMove { get { return canMove; } set { canMove = value; } }
         public bool AutoBrake { get; set; }
-        public Vector3 DirectionVector { get; set; }
+        public Vector3 DirectionVector { get; set; } = Vector3.zero;
         public Vector3 Up { get; set; }
         public bool Brake { get; set; }
         public string Nickname { get { return nickname; } }
@@ -139,8 +139,7 @@ namespace Sanicball.Gameplay
 
         public void RequestRespawn()
         {
-            if (RespawnRequested != null)
-                RespawnRequested(this, System.EventArgs.Empty);
+            RespawnRequested?.Invoke(this, System.EventArgs.Empty);
         }
 
         public void Init(BallType type, ControlType ctrlType, int characterId, string nickname)
@@ -217,8 +216,7 @@ namespace Sanicball.Gameplay
                     camera.Target = rb;
                     camera.CtrlType = ctrlType;
 
-                    if (CameraCreated != null)
-                        CameraCreated(this, new CameraCreationArgs(camera));
+                    CameraCreated?.Invoke(this, new CameraCreationArgs(camera));
                 }
             }
             if (type == BallType.LobbyPlayer)
@@ -284,7 +282,7 @@ namespace Sanicball.Gameplay
                 //If not use both
                 if (!grounded)
                 {
-                    rb.AddForce((Quaternion.Euler(0, -90, 0) * DirectionVector) * characterStats.airSpeed);
+                    rb.AddForce(Quaternion.Euler(0, -90, 0) * DirectionVector * characterStats.airSpeed);
                 }
             }
 
@@ -378,8 +376,7 @@ namespace Sanicball.Gameplay
 
             if (c)
             {
-                if (CheckpointPassed != null)
-                    CheckpointPassed(this, new CheckpointPassArgs(c));
+                CheckpointPassed?.Invoke(this, new CheckpointPassArgs(c));
             }
 
             if (other.GetComponent<TriggerRespawn>())

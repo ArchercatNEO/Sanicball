@@ -48,7 +48,7 @@ public class GJUsersMethods
 		
 		GJAPI.Instance.GJDebug ("Verifying user.");
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string>();
+		Dictionary<string,string> parameters = new();
 		parameters.Add ("username", name);
 		parameters.Add ("user_token", token);
 		
@@ -77,12 +77,9 @@ public class GJUsersMethods
 		{
 			GJAPI.Instance.GJDebug ("User successfully verified.\n" + GJAPI.User.ToString());
 		}
-		
-		if (VerifyCallback != null)
-		{
-			VerifyCallback (success);
-		}
-	}
+
+        VerifyCallback?.Invoke(success);
+    }
 	
 	public delegate void _GetVerifiedCallback (GJUser user);
 	/// <summary>
@@ -131,12 +128,9 @@ public class GJUsersMethods
 			
 			GJAPI.Instance.GJDebug ("Verified user successfully fetched.\n" + GJAPI.User.ToString());
 		}
-				
-		if (GetVerifiedCallback != null)
-		{
-			GetVerifiedCallback (GJAPI.User);
-		}
-	}
+
+        GetVerifiedCallback?.Invoke(GJAPI.User);
+    }
 	
 	public delegate void _GetOneCallback (GJUser user);
 	/// <summary>
@@ -160,7 +154,7 @@ public class GJUsersMethods
 		
 		GJAPI.Instance.GJDebug ("Getting user.");
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string>();
+		Dictionary<string,string> parameters = new();
 		parameters.Add ("username", name);
 		
 		GJAPI.Instance.Request (USERS_FETCH, parameters, false, ReadGetOneResponse);
@@ -176,7 +170,7 @@ public class GJUsersMethods
 	{	
 		GJAPI.Instance.GJDebug ("Getting user.");
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string>();
+		Dictionary<string,string> parameters = new();
 		parameters.Add ("user_id", id.ToString());
 		
 		GJAPI.Instance.Request (USERS_FETCH, parameters, false, ReadGetOneResponse);
@@ -206,12 +200,9 @@ public class GJUsersMethods
 			user = new GJUser (dictionary);
 			GJAPI.Instance.GJDebug ("User successfully fetched.\n" + user.ToString());
 		}
-		
-		if (GetOneCallback != null)
-		{
-			GetOneCallback (user);
-		}
-	}
+
+        GetOneCallback?.Invoke(user);
+    }
 	
 	public delegate void _GetMultipleCallback (GJUser[] users);
 	/// <summary>
@@ -235,7 +226,7 @@ public class GJUsersMethods
 		
 		GJAPI.Instance.GJDebug ("Getting users.");
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string>();
+		Dictionary<string,string> parameters = new();
 		string joinedIds = string.Join (",", new List<uint>(ids).ConvertAll (i => i.ToString ()).ToArray ());
 		parameters.Add ("user_id", joinedIds);
 		
@@ -263,7 +254,7 @@ public class GJUsersMethods
 			Dictionary<string,string>[] dictionaries = GJAPI.Instance.ResponseToDictionaries (response);
 			GJAPI.Instance.CleanDictionaries (ref dictionaries);
 			
-			StringBuilder debug = new StringBuilder();
+			StringBuilder debug = new();
 			debug.Append ("Users successfully fetched.\n");
 			
 			int count = dictionaries.Length;
@@ -276,10 +267,7 @@ public class GJUsersMethods
 			
 			GJAPI.Instance.GJDebug (debug.ToString ());
 		}
-		
-		if (GetMultipleCallback != null)
-		{
-			GetMultipleCallback (users);
-		}
-	}
+
+        GetMultipleCallback?.Invoke(users);
+    }
 }

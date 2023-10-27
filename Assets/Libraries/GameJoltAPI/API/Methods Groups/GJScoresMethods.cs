@@ -54,7 +54,7 @@ public class GJScoresMethods
 		
 		GJAPI.Instance.GJDebug ("Adding score for verified user: " + sort);
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string> ();
+		Dictionary<string,string> parameters = new();
 		parameters.Add ("score", score);
 		parameters.Add ("sort", sort.ToString ());
 		if (extraData.Trim () != string.Empty)
@@ -97,7 +97,7 @@ public class GJScoresMethods
 		
 		GJAPI.Instance.GJDebug ("Adding score for guest: " + sort);
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string> ();
+		Dictionary<string,string> parameters = new();
 		parameters.Add ("score", score);
 		parameters.Add ("sort", sort.ToString ());
 		parameters.Add ("guest", name);
@@ -130,12 +130,9 @@ public class GJScoresMethods
 		{
 			GJAPI.Instance.GJDebug ("Score successfully added.");
 		}
-		
-		if (AddCallback != null)
-		{
-			AddCallback (success);
-		}
-	}
+
+        AddCallback?.Invoke(success);
+    }
 	
 	public delegate void _GetMultipleCallback (GJScore[] scores);
 	/// <summary>
@@ -168,7 +165,7 @@ public class GJScoresMethods
 			limit = 100;
 		}
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string> ();
+		Dictionary<string,string> parameters = new();
 		parameters.Add ("limit", limit.ToString ());
 		if (table != 0)
 		{
@@ -199,7 +196,7 @@ public class GJScoresMethods
 			Dictionary<string,string>[] dictionaries = GJAPI.Instance.ResponseToDictionaries (response);
 			GJAPI.Instance.CleanDictionaries (ref dictionaries);
 			
-			StringBuilder debug = new StringBuilder();
+			StringBuilder debug = new();
 			debug.Append ("Scores successfully fetched.\n");
 			
 			int count = dictionaries.Length;
@@ -212,12 +209,9 @@ public class GJScoresMethods
 			
 			GJAPI.Instance.GJDebug (debug.ToString ());
 		}
-		
-		if (GetMultipleCallback != null)
-		{
-			GetMultipleCallback (scores);
-		}
-	}
+
+        GetMultipleCallback?.Invoke(scores);
+    }
 	
 	public delegate void _GetTablesCallback (GJTable[] tables);
 	/// <summary>
@@ -256,7 +250,7 @@ public class GJScoresMethods
 			Dictionary<string,string>[] dictionaries = GJAPI.Instance.ResponseToDictionaries (response);
 			GJAPI.Instance.CleanDictionaries (ref dictionaries);
 			
-			StringBuilder debug = new StringBuilder();
+			StringBuilder debug = new();
 			debug.Append ("Score Tables successfully fetched.\n");
 			
 			int count = dictionaries.Length;
@@ -269,10 +263,7 @@ public class GJScoresMethods
 			
 			GJAPI.Instance.GJDebug (debug.ToString ());
 		}
-		
-		if (GetTablesCallback != null)
-		{
-			GetTablesCallback (tables);
-		}
-	}
+
+        GetTablesCallback?.Invoke(tables);
+    }
 }

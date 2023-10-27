@@ -17,7 +17,7 @@ namespace Sanicball.UI
 
         private bool slideShouldOpen = false;
 
-        private List<ScoreboardEntry> activeEntries = new List<ScoreboardEntry>();
+        private List<ScoreboardEntry> activeEntries = new();
 
         private void Update()
         {

@@ -128,8 +128,7 @@ namespace Sanicball.UI
 
             if (text.Trim() != string.Empty)
             {
-                if (MessageSent != null)
-                    MessageSent(this, new ChatMessageArgs(text));
+                MessageSent?.Invoke(this, new ChatMessageArgs(text));
             }
             EventSystem.current.SetSelectedGameObject(prevSelectedObject);
 

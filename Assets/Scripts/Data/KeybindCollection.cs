@@ -27,7 +27,7 @@ namespace Sanicball.Data
     [System.Serializable]
     public class KeybindCollection
     {
-        public Dictionary<Keybind, KeyCode> keybinds = new Dictionary<Keybind, KeyCode>();
+        public Dictionary<Keybind, KeyCode> keybinds = new();
 
         /// <summary>
         /// Creates an instance and assigns default keybinds.
@@ -61,15 +61,8 @@ namespace Sanicball.Data
 
         public KeyCode this[Keybind b]
         {
-            get
-            {
-                return keybinds[b];
-            }
-
-            set
-            {
-                keybinds[b] = value;
-            }
+            get { return keybinds[b]; }
+            set { keybinds[b] = value; }
         }
 
         /// <summary>

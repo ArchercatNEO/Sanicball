@@ -86,7 +86,7 @@ public class GJHTrophiesMethods
 		{
 			DownloadTrophyIcon (trophy, tex =>
 			{
-				GJHNotification nofitication = new GJHNotification ( trophy.Title, trophy.Description, tex );
+				GJHNotification nofitication = new( trophy.Title, trophy.Description, tex );
 				GJHNotificationsManager.QueueNotification (nofitication);	
 			});
 		}
@@ -111,11 +111,8 @@ public class GJHTrophiesMethods
 				{
 					icon = (Texture2D) Resources.Load ("Images/TrophyIcon", typeof (Texture2D)) ?? new Texture2D (75,75);	
 				}
-			
-				if (OnComplete != null)
-				{
-					OnComplete (icon);
-				}
-			});
+
+                OnComplete?.Invoke(icon);
+            });
 	}
 }

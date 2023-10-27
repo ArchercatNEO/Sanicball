@@ -58,7 +58,7 @@ public class GJHNotificationsManager : MonoBehaviour
 	/// <summary>
 	/// The notifications queue.
 	/// </summary>
-	Queue<GJHNotification> queue = new Queue<GJHNotification>();
+	Queue<GJHNotification> queue = new();
 	/// <summary>
 	/// The current notification.
 	/// </summary>

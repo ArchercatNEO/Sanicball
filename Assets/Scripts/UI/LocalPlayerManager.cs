@@ -15,37 +15,36 @@ namespace Sanicball.UI
         public LocalPlayerPanel localPlayerPanelPrefab;
         public event System.EventHandler<MatchPlayerEventArgs> LocalPlayerJoined;
 
-        [SerializeField]
-        private Text matchJoiningHelpField = null;
+        [SerializeField] private Text matchJoiningHelpField = null;
 
         private const int maxPlayers = 4;
         private MatchManager manager;
-        private List<ControlType> usedControls = new List<ControlType>();
+        private List<ControlType> usedControls = new();
 
         private void Start()
         {
             manager = FindObjectOfType<MatchManager>();
 
-            if (manager)
-            {
-                //Create local player panels for players already in the game
-                foreach (var p in manager.Players)
-                {
-                    if (p.ClientGuid == manager.LocalClientGuid && p.CtrlType != ControlType.None)
-                    {
-                        var panel = CreatePanelForControlType(p.CtrlType, true);
-                        panel.AssignedPlayer = p;
-                        panel.SetCharacter(p.CharacterId);
-                    }
-                }
-
-                manager.MatchPlayerAdded += Manager_MatchPlayerAdded;
-            }
-            else
+            if (!manager)
             {
                 Debug.LogWarning("Game manager not found - players cannot be added");
+                UpdateHelpText();
+                return;
+            }
+            
+            //Create local player panels for players already in the game
+            foreach (var p in manager.Players)
+            {
+                if (p.ClientGuid == manager.LocalClientGuid && p.CtrlType != ControlType.None)
+                {
+                    var panel = CreatePanelForControlType(p.CtrlType, true);
+                    panel.AssignedPlayer = p;
+                    panel.SetCharacter(p.CharacterId);
+                }
             }
 
+            manager.MatchPlayerAdded += Manager_MatchPlayerAdded;
+            
             UpdateHelpText();
         }
 
@@ -55,15 +54,14 @@ namespace Sanicball.UI
             if (PauseMenu.GamePaused) return; //Short circuit if the game is paused
             foreach (ControlType ctrlType in System.Enum.GetValues(typeof(ControlType)))
             {
-                if (GameInput.IsOpeningMenu(ctrlType))
-                {
-                    if (!manager
-                        || usedControls.Count >= maxPlayers //Max players reached?
-                        || usedControls.Contains(ctrlType)) //Control type taken?
-                        return; //Fuk off
+                if (!GameInput.IsOpeningMenu(ctrlType)) continue;
+                
+                if (!manager
+                    || usedControls.Count >= maxPlayers //Max players reached?
+                    || usedControls.Contains(ctrlType)) //Control type taken?
+                    return; //Fuk off
 
-                    CreatePanelForControlType(ctrlType, false);
-                }
+                CreatePanelForControlType(ctrlType, false);
             }
         }
 
@@ -99,8 +97,7 @@ namespace Sanicball.UI
         {
             if (e.IsLocal)
             {
-                if (LocalPlayerJoined != null)
-                    LocalPlayerJoined(this, e);
+                LocalPlayerJoined?.Invoke(this, e);
             }
         }
 

@@ -5,7 +5,7 @@ using System.Collections;
 public class CountLines: EditorWindow 
 {
 	System.Text.StringBuilder strStats;
-	Vector2 scrollPosition = new Vector2(0,0);
+	Vector2 scrollPosition = new(0,0);
 	struct File
 	{
 		public string 	name;
@@ -44,7 +44,7 @@ public class CountLines: EditorWindow
 		string strDir = System.IO.Directory.GetCurrentDirectory();
 		strDir += @"/Assets";
 		int iLengthOfRootPath = strDir.Length;
-		ArrayList stats = new ArrayList();	
+		ArrayList stats = new();	
 		ProcessDirectory(stats, strDir);	
 		
 		int iTotalNbLines = 0;

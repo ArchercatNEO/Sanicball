@@ -81,11 +81,11 @@ namespace Sanicball.Gameplay
 
         private PosRot CalcTargetPlacement()
         {
-            Ray ray = new Ray(transform.position, transform.rotation * Vector3.down);
+            Ray ray = new(transform.position, transform.rotation * Vector3.down);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 100, placementLayers.value))
             {
-                PosRot placement = new PosRot();
+                PosRot placement = new();
                 placement.Position = hit.point;
 
                 Quaternion alongNormal = Quaternion.FromToRotation(Vector3.up, hit.normal);

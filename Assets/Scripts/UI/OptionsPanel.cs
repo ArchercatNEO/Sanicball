@@ -39,7 +39,7 @@ namespace Sanicball.UI
         public Text music;
         public Text fast;
 
-        private GameSettings tempSettings = new GameSettings();
+        private GameSettings tempSettings = new();
 
         public void Apply()
         {

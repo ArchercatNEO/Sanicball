@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Sanicball.Data
 {
-    [System.Serializable]
+    [Serializable]
     public class GameSettings
     {
         [Header("Online")]
@@ -81,56 +82,56 @@ namespace Sanicball.Data
         public void Validate()
         {
             //Resolution
-            if (resolution >= Screen.resolutions.Length)
-                resolution = Screen.resolutions.Length - 1;
-            if (resolution < 0)
-                resolution = 0;
+            resolution = Mathf.Clamp(resolution, 0, Screen.resolutions.Length - 1);
+
             //AA
             if (aa != 0 && aa != 2 && aa != 4 && aa != 8)
                 aa = 0;
+            
             //Mouse speed
             oldControlsMouseSpeed = Mathf.Clamp(oldControlsMouseSpeed, 0.5f, 10f);
+            
             //KB speed
             oldControlsKbSpeed = Mathf.Clamp(oldControlsKbSpeed, 0.5f, 10f);
+            
             //Sound volume
             soundVolume = Mathf.Clamp(soundVolume, 0f, 1f);
         }
 
         public void Apply(bool changeWindow)
-        {
-            if (changeWindow)
-            {
-                //Resolution and fullscreen
-                if (resolution < Screen.resolutions.Length)
-                {
-                    Resolution res = Screen.resolutions[(int)resolution];
-                    if (Screen.width != res.width || Screen.height != res.height || fullscreen != Screen.fullScreen)
-                        Screen.SetResolution(res.width, res.height, fullscreen);
-                }
-            }
+        {            
             //AA
             QualitySettings.antiAliasing = aa;
+
             //Vsync
-            if (vsync) { QualitySettings.vSyncCount = 1; } else { QualitySettings.vSyncCount = 0; }
+            QualitySettings.vSyncCount = Convert.ToInt32(vsync);
+
             //Shadows
             GameObject dl = GameObject.Find("Directional light");
             if (dl != null)
             {
-                LightShadows ls;
-                if (shadows) { ls = LightShadows.Hard; } else { ls = LightShadows.None; }
-                dl.GetComponent<Light>().shadows = ls;
+                dl.GetComponent<Light>().shadows = shadows ? LightShadows.Hard : LightShadows.None;
             }
+
             //Volume
             AudioListener.volume = soundVolume;
+            
             //Mute
             MusicPlayer music = GameObject.FindObjectOfType<MusicPlayer>();
-            if (music)
-                music.GetComponent<AudioSource>().mute = !music;
+            if (music) music.GetComponent<AudioSource>().mute = false;
+
             //Camera effects
             foreach(var cam in GameObject.FindObjectsOfType<CameraEffects>())
             {
                 cam.EnableEffects();
             }
+
+            //Resolution and fullscreen
+            if (!changeWindow) return;
+            if (resolution >= Screen.resolutions.Length) return;
+            
+            Resolution res = Screen.resolutions[resolution];
+            Screen.SetResolution(res.width, res.height, fullscreen);
         }
     }
 

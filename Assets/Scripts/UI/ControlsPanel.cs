@@ -24,7 +24,7 @@ namespace Sanicball.UI
         public Text chat;
         private Keybind keybindToChange;
 
-        private KeybindCollection tempKeybinds = new KeybindCollection();
+        private KeybindCollection tempKeybinds = new();
 
         public void Apply()
         {

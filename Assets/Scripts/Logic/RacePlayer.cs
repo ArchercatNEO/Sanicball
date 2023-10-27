@@ -216,8 +216,7 @@ namespace Sanicball.Logic
             checkpointTimes[currentCheckpointIndex] = lapTime;
 
             //Call NextCheckpointPassed BEFORE doing anything else. This ensures things like lap records work correctly.
-            if (NextCheckpointPassed != null)
-                NextCheckpointPassed(this, new NextCheckpointPassArgs(currentCheckpointIndex, TimeSpan.FromSeconds(lapTime)));
+            NextCheckpointPassed?.Invoke(this, new NextCheckpointPassArgs(currentCheckpointIndex, TimeSpan.FromSeconds(lapTime)));
 
             currentCheckpointIndex = (currentCheckpointIndex + 1) % sr.checkpoints.Length;
             currentCheckpointPos = nextCheckpoint.transform.position;
@@ -226,8 +225,7 @@ namespace Sanicball.Logic
             {
                 lap++;
 
-                if (FinishLinePassed != null)
-                    FinishLinePassed(this, EventArgs.Empty);
+                FinishLinePassed?.Invoke(this, EventArgs.Empty);
 
                 if (LapRecordsEnabled)
                 {
@@ -262,10 +260,7 @@ namespace Sanicball.Logic
 
         private void Ball_RespawnRequested(object sender, EventArgs e)
         {
-            if (Respawned != null)
-            {
-                Respawned(this, EventArgs.Empty);
-            }
+            Respawned?.Invoke(this, EventArgs.Empty);
 
             ball.transform.position = sr.checkpoints[currentCheckpointIndex].GetRespawnPoint() + Vector3.up * ball.transform.localScale.x * 0.5f;
             ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
@@ -323,8 +318,7 @@ namespace Sanicball.Logic
         {
             matchMessenger.RemoveListener<CheckpointPassedMessage>(CheckpointPassedHandler);
 
-            if (Destroyed != null)
-                Destroyed(this, EventArgs.Empty);
+            Destroyed?.Invoke(this, EventArgs.Empty);
         }
     }
 }

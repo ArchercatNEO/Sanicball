@@ -18,10 +18,7 @@ namespace Sanicball.UI
         public void Close()
         {
             closing = true;
-            if (onClose != null)
-            {
-                onClose();
-            }
+            onClose?.Invoke();
         }
 
         private void Start()

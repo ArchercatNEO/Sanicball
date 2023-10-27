@@ -70,8 +70,7 @@ namespace Sanicball.UI
                         countdownText = "GO FAST";
                         countdownFontSize = 160;
                         UISound.Play(countdown2);
-                        if (OnCountdownFinished != null)
-                            OnCountdownFinished(this, new System.EventArgs());
+                        OnCountdownFinished?.Invoke(this, new System.EventArgs());
                         if (esport)
                         {
                             esport.StartTheShit();

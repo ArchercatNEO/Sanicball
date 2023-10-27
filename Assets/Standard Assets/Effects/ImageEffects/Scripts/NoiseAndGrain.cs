@@ -21,8 +21,8 @@ namespace UnityStandardAssets.ImageEffects
         public float softness = 0.0f;
         public bool  monochrome = false;
 
-        public Vector3 intensities = new Vector3(1.0f, 1.0f, 1.0f);
-        public Vector3 tiling = new Vector3(64.0f, 64.0f, 64.0f);
+        public Vector3 intensities = new(1.0f, 1.0f, 1.0f);
+        public Vector3 tiling = new(64.0f, 64.0f, 64.0f);
         public float monochromeTiling = 64.0f;
 
         public FilterMode filterMode = FilterMode.Bilinear;

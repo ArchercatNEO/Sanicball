@@ -41,7 +41,7 @@ namespace Sanicball.UI
         private Data.CharacterInfo selectedChar;
         private float targetX = 0;
         private float targetY = 0;
-        private List<CharacterSelectEntry> activeEntries = new List<CharacterSelectEntry>();
+        private List<CharacterSelectEntry> activeEntries = new();
 
         [SerializeField]
         private Sprite cancelIconSprite;
@@ -162,13 +162,11 @@ namespace Sanicball.UI
         {
             if (selected == 0)
             {
-                if (CancelSelected != null)
-                    CancelSelected(this, EventArgs.Empty);
+                CancelSelected?.Invoke(this, EventArgs.Empty);
             }
             else
             {
-                if (CharacterSelected != null)
-                    CharacterSelected(this, new CharacterSelectionArgs(Array.IndexOf(ActiveData.Characters, selectedChar)));
+                CharacterSelected?.Invoke(this, new CharacterSelectionArgs(Array.IndexOf(ActiveData.Characters, selectedChar)));
             }
         }
 

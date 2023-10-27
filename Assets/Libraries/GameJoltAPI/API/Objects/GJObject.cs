@@ -91,7 +91,7 @@ public abstract class GJObject
 	/// </returns>
 	public override string ToString ()
 	{
-		StringBuilder output = new StringBuilder();
+		StringBuilder output = new();
 		output.AppendFormat (" [{0}]\n", this.GetType().ToString());
 		foreach (KeyValuePair<string,string> pair in properties)
 		{

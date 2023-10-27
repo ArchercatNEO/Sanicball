@@ -66,12 +66,12 @@ class ExportTerrain : EditorWindow
 	void Export()
 	{
 		string fileName = EditorUtility.SaveFilePanel("Export .obj file", "", "Terrain", "obj");
-		int w = terrain.heightmapWidth;
-		int h = terrain.heightmapHeight;
+		int w = terrain.heightmapResolution;
+		int h = terrain.heightmapResolution;
 		Vector3 meshScale = terrain.size;
 		int tRes = (int)Mathf.Pow(2, (int)saveResolution );
 		meshScale = new Vector3(meshScale.x / (w - 1) * tRes, meshScale.y, meshScale.z / (h - 1) * tRes);
-		Vector2 uvScale = new Vector2(1.0f / (w - 1), 1.0f / (h - 1));
+		Vector2 uvScale = new(1.0f / (w - 1), 1.0f / (h - 1));
 		float[,] tData = terrain.GetHeights(0, 0, w, h);
 		
 		w = (w - 1) / tRes + 1;
@@ -136,7 +136,7 @@ class ExportTerrain : EditorWindow
 		}
 		
 		// Export to .obj
-		StreamWriter sw = new StreamWriter(fileName);
+		StreamWriter sw = new(fileName);
 		try
 		{
 			
@@ -149,7 +149,7 @@ class ExportTerrain : EditorWindow
 			for (int i = 0; i < tVertices.Length; i++)
 			{
 				UpdateProgress();
-				StringBuilder sb = new StringBuilder("v ", 20);
+				StringBuilder sb = new("v ", 20);
 				// StringBuilder stuff is done this way because it's faster than using the "{0} {1} {2}"etc. format
 				// Which is important when you're exporting huge terrains.
 				sb.Append(tVertices[i].x.ToString()).Append(" ").
@@ -161,7 +161,7 @@ class ExportTerrain : EditorWindow
 			for (int i = 0; i < tUV.Length; i++)
 			{
 				UpdateProgress();
-				StringBuilder sb = new StringBuilder("vt ", 22);
+				StringBuilder sb = new("vt ", 22);
 				sb.Append(tUV[i].x.ToString()).Append(" ").
 					Append(tUV[i].y.ToString());
 				sw.WriteLine(sb);
@@ -172,7 +172,7 @@ class ExportTerrain : EditorWindow
 				for (int i = 0; i < tPolys.Length; i += 3)
 				{
 					UpdateProgress();
-					StringBuilder sb = new StringBuilder("f ", 43);
+					StringBuilder sb = new("f ", 43);
 					sb.Append(tPolys[i] + 1).Append("/").Append(tPolys[i] + 1).Append(" ").
 						Append(tPolys[i + 1] + 1).Append("/").Append(tPolys[i + 1] + 1).Append(" ").
 							Append(tPolys[i + 2] + 1).Append("/").Append(tPolys[i + 2] + 1);
@@ -185,7 +185,7 @@ class ExportTerrain : EditorWindow
 				for (int i = 0; i < tPolys.Length; i += 4)
 				{
 					UpdateProgress();
-					StringBuilder sb = new StringBuilder("f ", 57);
+					StringBuilder sb = new("f ", 57);
 					sb.Append(tPolys[i] + 1).Append("/").Append(tPolys[i] + 1).Append(" ").
 						Append(tPolys[i + 1] + 1).Append("/").Append(tPolys[i + 1] + 1).Append(" ").
 							Append(tPolys[i + 2] + 1).Append("/").Append(tPolys[i + 2] + 1).Append(" ").

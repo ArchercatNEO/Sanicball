@@ -34,7 +34,7 @@ namespace Sanicball
             // Size of every cell
             float sizeX = 1.0f / colCount;
             float sizeY = 1.0f / rowCount;
-            Vector2 size = new Vector2(sizeX, sizeY);
+            Vector2 size = new(sizeX, sizeY);
 
             // split into horizontal and vertical index
             var uIndex = index % colCount;
@@ -44,7 +44,7 @@ namespace Sanicball
             // v coordinate is the bottom of the image in opengl so we need to invert.
             float offsetX = (uIndex + colNumber) * size.x;
             float offsetY = (1.0f - size.y) - (vIndex + rowNumber) * size.y;
-            Vector2 offset = new Vector2(offsetX, offsetY);
+            Vector2 offset = new(offsetX, offsetY);
 
             GetComponent<Renderer>().material.SetTextureOffset("_MainTex", offset);
             GetComponent<Renderer>().material.SetTextureScale("_MainTex", size);

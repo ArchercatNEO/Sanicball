@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Net;
-using Lidgren.Network;
-using Sanicball.Data;
-using Sanicball.Logic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Networking;
+using Lidgren.Network;
+using Sanicball.Logic;
+using Sanicball.Data;
 
 namespace Sanicball.UI
 {
@@ -20,11 +20,11 @@ namespace Sanicball.UI
 
         private List<ServerListItem> servers = new List<ServerListItem>();
 
-        //Stores server browser IPs, so they can be differentiated from LAN servers
+        // Stores server browser IPs, so they can be differentiated from LAN servers
         private List<string> serverBrowserIPs = new List<string>();
 
         private NetClient discoveryClient;
-        private WWW serverBrowserRequester;
+        private UnityWebRequest serverBrowserRequester;
         private DateTime latestLocalRefreshTime;
         private DateTime latestBrowserRefreshTime;
 
@@ -35,17 +35,52 @@ namespace Sanicball.UI
             discoveryClient.DiscoverLocalPeers(25000);
             latestLocalRefreshTime = DateTime.Now;
 
-			serverBrowserRequester = new WWW(ActiveData.GameSettings.serverListURL);
+            string serverListURL = ActiveData.GameSettings.serverListURL;
+            //StartCoroutine(FetchServerList(serverListURL));
+        }
 
+        private System.Collections.IEnumerator FetchServerList(string serverListURL)
+        {
             serverCountField.text = "Refreshing servers, hang on...";
             errorField.enabled = false;
 
-            //Clear old servers
+            // Clear old servers
             foreach (var serv in servers)
             {
                 Destroy(serv.gameObject);
             }
             servers.Clear();
+
+            serverBrowserRequester = UnityWebRequest.Get(serverListURL);
+            yield return serverBrowserRequester.SendWebRequest();
+
+            if (serverBrowserRequester.result == UnityWebRequest.Result.Success)
+            {
+                latestBrowserRefreshTime = DateTime.Now;
+
+                string result = serverBrowserRequester.downloadHandler.text;
+                string[] entries = result.Split(new string[] { "<br>" }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (string entry in entries)
+                {
+                    int separationPoint = entry.LastIndexOf(':');
+                    string ip = entry.Substring(0, separationPoint);
+                    string port = entry.Substring(separationPoint + 1, entry.Length - (separationPoint + 1));
+
+                    if (int.TryParse(port, out int portInt))
+                    {
+                        System.Threading.Thread discoverThread = new System.Threading.Thread(() => { discoveryClient.DiscoverKnownPeer(ip, portInt); });
+                        discoverThread.Start();
+                        serverBrowserIPs.Add(ip);
+                    }
+                }
+                serverCountField.text = "0 servers";
+            }
+            else
+            {
+                Debug.LogError("Failed to receive servers - " + serverBrowserRequester.error);
+                serverCountField.text = "Cannot access server list URL!";
+            }
         }
 
         private void Awake()
@@ -60,48 +95,47 @@ namespace Sanicball.UI
 
         private void Update()
         {
-            //Refresh on f5 (pretty nifty)
+            // Refresh on F5 (pretty nifty)
             if (Input.GetKeyDown(KeyCode.F5))
             {
                 RefreshServers();
             }
 
-            //Check for response from the server browser requester
+            // Check for response from the server browser requester
             if (serverBrowserRequester != null && serverBrowserRequester.isDone)
             {
                 if (string.IsNullOrEmpty(serverBrowserRequester.error))
                 {
                     latestBrowserRefreshTime = DateTime.Now;
 
-                    string result = serverBrowserRequester.text;
+                    string result = serverBrowserRequester.downloadHandler.text;
                     string[] entries = result.Split(new string[] { "<br>" }, StringSplitOptions.RemoveEmptyEntries);
 
                     foreach (string entry in entries)
                     {
-                        int seperationPoint = entry.LastIndexOf(':');
-                        string ip = entry.Substring(0, seperationPoint);
-                        string port = entry.Substring(seperationPoint + 1, entry.Length - (seperationPoint + 1));
+                        int separationPoint = entry.LastIndexOf(':');
+                        string ip = entry.Substring(0, separationPoint);
+                        string port = entry.Substring(separationPoint + 1, entry.Length - (separationPoint + 1));
 
-                        int portInt;
-                        if (int.TryParse(port, out portInt))
+                        if (int.TryParse(port, out int portInt))
                         {
                             System.Threading.Thread discoverThread = new System.Threading.Thread(() => { discoveryClient.DiscoverKnownPeer(ip, portInt); });
                             discoverThread.Start();
                             serverBrowserIPs.Add(ip);
                         }
                     }
-					serverCountField.text = "0 servers";
+                    serverCountField.text = "0 servers";
                 }
                 else
                 {
                     Debug.LogError("Failed to receive servers - " + serverBrowserRequester.error);
-					serverCountField.text = "Cannot access server list URL!";
+                    serverCountField.text = "Cannot access server list URL!";
                 }
 
                 serverBrowserRequester = null;
             }
 
-            //Check for messages on the discovery client
+            // Check for messages on the discovery client
             NetIncomingMessage msg;
             while ((msg = discoveryClient.ReadMessage()) != null)
             {
@@ -150,7 +184,7 @@ namespace Sanicball.UI
                 if (button)
                 {
                     var nav = new Navigation() { mode = Navigation.Mode.Explicit };
-                    //Up navigation
+                    // Up navigation
                     if (i == 0)
                     {
                         nav.selectOnUp = aboveList;
@@ -162,7 +196,7 @@ namespace Sanicball.UI
                     {
                         nav.selectOnUp = servers[i - 1].GetComponent<Button>();
                     }
-                    //Down navigation
+                    // Down navigation
                     if (i == servers.Count - 1)
                     {
                         nav.selectOnDown = belowList;

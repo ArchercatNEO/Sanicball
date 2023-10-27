@@ -82,7 +82,7 @@ namespace UnityStandardAssets.ImageEffects
                 float x = Mathf.Floor(vertexWithOffset % totalWidth) / totalWidth;
                 float y = Mathf.Floor(vertexWithOffset / totalWidth) / totalHeight;
 
-                Vector3 position = new Vector3(x * 2 - 1, y * 2 - 1, 1.0f);
+                Vector3 position = new(x * 2 - 1, y * 2 - 1, 1.0f);
 
                 verts[i3 + 0] = position;
                 verts[i3 + 1] = position;

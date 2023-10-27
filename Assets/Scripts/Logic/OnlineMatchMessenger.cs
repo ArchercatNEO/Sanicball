@@ -4,6 +4,7 @@ using System.Reflection;
 using Lidgren.Network;
 using SanicballCore;
 using UnityEngine;
+using Newtonsoft.Json;
 
 namespace Sanicball.Logic
 {
@@ -45,8 +46,10 @@ namespace Sanicball.Logic
         {
             this.client = client;
 
-            serializerSettings = new Newtonsoft.Json.JsonSerializerSettings();
-            serializerSettings.TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All;
+            serializerSettings = new Newtonsoft.Json.JsonSerializerSettings
+            {
+                TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All
+            };
         }
 
         public override void SendMessage<T>(T message)
@@ -73,8 +76,8 @@ namespace Sanicball.Logic
 
         public override void UpdateListeners()
         {
-            NetIncomingMessage msg;
-            while ((msg = client.ReadMessage()) != null)
+            NetIncomingMessage msg = client.ReadMessage();
+            for (; msg != null; msg = client.ReadMessage())
             {
                 switch (msg.MessageType)
                 {
@@ -94,12 +97,12 @@ namespace Sanicball.Logic
                     case NetIncomingMessageType.StatusChanged:
                         NetConnectionStatus status = (NetConnectionStatus)msg.ReadByte();
                         string statusMsg = msg.ReadString();
+                        
 
                         switch (status)
                         {
                             case NetConnectionStatus.Disconnected:
-                                if (Disconnected != null)
-                                    Disconnected(this, new DisconnectArgs(statusMsg));
+                                Disconnected?.Invoke(this, new DisconnectArgs(statusMsg));
                                 break;
 
                             default:
@@ -114,7 +117,9 @@ namespace Sanicball.Logic
                         {
                             case MessageType.MatchMessage:
                                 double timestamp = msg.ReadTime(false);
-                                MatchMessage message = Newtonsoft.Json.JsonConvert.DeserializeObject<MatchMessage>(msg.ReadString(), serializerSettings);
+                                string data = msg.ReadString();
+                                Debug.Log(data);
+                                MatchMessage message = JsonConvert.DeserializeObject<MatchMessage>(data, serializerSettings);
 
                                 //Use reflection to call ReceiveMessage with the proper type parameter
                                 MethodInfo methodToCall = typeof(OnlineMatchMessenger).GetMethod("ReceiveMessage", BindingFlags.NonPublic | BindingFlags.Instance);
@@ -126,10 +131,7 @@ namespace Sanicball.Logic
                             case MessageType.PlayerMovementMessage:
                                 double time = msg.ReadTime(false);
                                 PlayerMovement movement = PlayerMovement.ReadFromMessage(msg);
-                                if (OnPlayerMovement != null)
-                                {
-                                    OnPlayerMovement(this, new PlayerMovementArgs(time, movement));
-                                }
+                                OnPlayerMovement?.Invoke(this, new PlayerMovementArgs(time, movement));
                                 break;
                         }
                         break;

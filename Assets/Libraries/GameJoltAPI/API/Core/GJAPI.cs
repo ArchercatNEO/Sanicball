@@ -1,8 +1,9 @@
-using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System;
 using System.Text;
+using UnityEngine;
+using UnityEngine.Networking;
 
 /// <summary>
 /// Game Jolt API main class.
@@ -278,7 +279,7 @@ public class GJAPI : MonoBehaviour
 	/// </returns>
 	public override string ToString ()
 	{
-		StringBuilder msg = new StringBuilder();
+		StringBuilder msg = new();
 		msg.AppendLine (" [GJAPI]");
 		msg.AppendFormat ("Game ID: {0}\n", Instance.gameId.ToString ());
 #if UNITY_EDITOR
@@ -316,11 +317,8 @@ public class GJAPI : MonoBehaviour
 		if (gameId == 0 || privateKey == string.Empty || version == 0)
 		{
 			GJDebug ("Please initialise GameJolt API first.", LogType.Error);
-			if (OnResponseComplete != null)
-			{
-				OnResponseComplete ("Error:\nAPI needs to be initialised first.");
-			}
-			return;
+            OnResponseComplete?.Invoke("Error:\nAPI needs to be initialised first.");
+            return;
 		}
 		
 		if (parameters == null)
@@ -333,11 +331,8 @@ public class GJAPI : MonoBehaviour
 			if (this.user == null)
 			{
 				GJDebug ("Authentification required for " + method, LogType.Error);
-				if (OnResponseComplete != null)
-				{
-					OnResponseComplete ("Error:\nThe method " + method + " requires authentification.");
-				}
-				return;
+                OnResponseComplete?.Invoke("Error:\nThe method " + method + " requires authentification.");
+                return;
 			}
 			else
 			{
@@ -374,11 +369,8 @@ public class GJAPI : MonoBehaviour
 		if (gameId == 0 || privateKey == string.Empty || version == 0)
 		{
 			GJDebug ("Please initialise GameJolt API first.", LogType.Error);
-			if (OnResponseComplete != null)
-			{
-				OnResponseComplete ("Error:\nAPI needs to be initialised first.");
-			}
-			return;
+            OnResponseComplete?.Invoke("Error:\nAPI needs to be initialised first.");
+            return;
 		}
 		
 		if (parameters == null)
@@ -391,11 +383,8 @@ public class GJAPI : MonoBehaviour
 			if (this.user == null)
 			{
 				GJDebug ("Authentification required for " + method, LogType.Error);
-				if (OnResponseComplete != null)
-				{
-					OnResponseComplete ("Error:\nThe method " + method + " requires authentification.");
-				}
-				return;
+                OnResponseComplete?.Invoke("Error:\nThe method " + method + " requires authentification.");
+                return;
 			}
 			else
 			{
@@ -422,7 +411,7 @@ public class GJAPI : MonoBehaviour
 	/// </param>
 	string GetRequestURL (string method, Dictionary<string,string> parameters)
 	{
-		StringBuilder url = new StringBuilder ();
+		StringBuilder url = new();
 		url.Append (PROTOCOL);
 		url.Append (API_ROOT);
 		url.Append ("v");
@@ -487,7 +476,7 @@ public class GJAPI : MonoBehaviour
 #if UNITY_WP8 || UNITY_METRO
 		byte[] data = MD5Core.GetHash(input, System.Text.Encoding.ASCII);
 #else
-		System.Security.Cryptography.MD5CryptoServiceProvider x = new System.Security.Cryptography.MD5CryptoServiceProvider ();
+		System.Security.Cryptography.MD5CryptoServiceProvider x = new();
         byte [] data = System.Text.Encoding.ASCII.GetBytes (input);
         data = x.ComputeHash (data);
 #endif
@@ -512,7 +501,7 @@ public class GJAPI : MonoBehaviour
 	IEnumerator OpenURLAndGetResponse (string url, Action<string> OnResponseComplete = null)
 	{		
 		GJDebug ("Opening URL: " + url);
-		WWW www = new WWW (url);
+		WWW www = new(url);
 		
 		float callTimeout = Time.time + timeout;
 		string msg = null;
@@ -533,14 +522,11 @@ public class GJAPI : MonoBehaviour
 			GJDebug ("Error opening URL:\n" + www.error, LogType.Error);
 			msg = www.error;
 		}
-				
-		if (OnResponseComplete != null)
-		{
-			// If msg is not null, it means something went wrong.
-			// Thus, we shouldn't read www.text because it's not ready.
-			OnResponseComplete (msg ?? www.text);
-		}
-	}
+
+        // If msg is not null, it means something went wrong.
+        // Thus, we shouldn't read www.text because it's not ready.
+        OnResponseComplete?.Invoke(msg ?? www.text);
+    }
 	
 	/// <summary>
 	/// Opens the URL wait for the response.
@@ -559,7 +545,7 @@ public class GJAPI : MonoBehaviour
 	/// </param>
 	IEnumerator OpenURLAndGetResponse (string url, Dictionary<string,string> postParameters, Action<string> OnResponseComplete = null)
 	{
-		StringBuilder debugMsg = new StringBuilder ();
+		StringBuilder debugMsg = new();
 		debugMsg.AppendFormat ("Opening URL with post parameters: {0}\n", url);
 		
 		if (postParameters == null || postParameters.Count == 0)
@@ -568,7 +554,7 @@ public class GJAPI : MonoBehaviour
 			yield break;
 		}
 				
-		WWWForm form = new WWWForm ();
+		WWWForm form = new();
 		foreach (KeyValuePair<string,string> postParameter in postParameters)
 		{
 			debugMsg.AppendFormat ("Post parameter: {0}: {1}\n", postParameter.Key, postParameter.Value);
@@ -577,7 +563,7 @@ public class GJAPI : MonoBehaviour
 		
 		
 		GJDebug (debugMsg.ToString ());
-		WWW www = new WWW (url, form);
+		WWW www = new(url, form);
 		
 		float callTimeout = Time.time + 5f;
 		string msg = null;
@@ -598,14 +584,11 @@ public class GJAPI : MonoBehaviour
 			GJDebug ("Error opening URL:\n" + www.error, LogType.Error);
 			msg = www.error;
 		}
-				
-		if (OnResponseComplete != null)
-		{
-			// If msg is not null, it means something went wrong.
-			// Thus, we shouldn't read www.text because it's not ready.
-			OnResponseComplete (msg ?? www.text);
-		}
-	}
+
+        // If msg is not null, it means something went wrong.
+        // Thus, we shouldn't read www.text because it's not ready.
+        OnResponseComplete?.Invoke(msg ?? www.text);
+    }
 	
 	/// <summary>
 	/// Determines whether the response is successful.
@@ -660,7 +643,7 @@ public class GJAPI : MonoBehaviour
 	/// </param>
 	public Dictionary<string, string> ResponseToDictionary (string response, bool addIndexToKey = false)
 	{
-		Dictionary<string, string> dictionary = new Dictionary<string, string>();
+		Dictionary<string, string> dictionary = new();
 		int colonIndex = 0;
 		string key = string.Empty;
 		string val = string.Empty;

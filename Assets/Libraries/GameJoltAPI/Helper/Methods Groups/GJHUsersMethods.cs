@@ -46,11 +46,8 @@ public class GJHUsersMethods
 		Application.ExternalCall ("GJAPI_AuthUser", GJAPIHelper.Instance.gameObject.name, "OnGetUserFromWeb");
 		#else
 		getFromWebCallback = null;
-		if (onComplete != null)
-		{
-			onComplete (string.Empty, string.Empty);
-		}
-		Debug.Log ("GJAPIHelper: The method \"GetFromWeb\" can only be called from WebPlayer builds.");
+        onComplete?.Invoke(string.Empty, string.Empty);
+        Debug.Log ("GJAPIHelper: The method \"GetFromWeb\" can only be called from WebPlayer builds.");
 		#endif
 	}
 	
@@ -94,7 +91,7 @@ public class GJHUsersMethods
 			return;
 		}
 		
-		GJHNotification notification = new GJHNotification (string.Format ("Welcome back {0}!", GJAPI.User.Name));
+		GJHNotification notification = new(string.Format ("Welcome back {0}!", GJAPI.User.Name));
 		GJHNotificationsManager.QueueNotification (notification);
 	}
 	
@@ -133,11 +130,8 @@ public class GJHUsersMethods
 				{
 					avatar = (Texture2D) Resources.Load ("Images/UserAvatar", typeof (Texture2D)) ?? new Texture2D (60,60);	
 				}
-			
-				if (OnComplete != null)
-				{
-					OnComplete (avatar);
-				}
-			});
+
+                OnComplete?.Invoke(avatar);
+            });
 	}
 }

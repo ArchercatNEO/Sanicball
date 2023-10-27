@@ -35,7 +35,7 @@ namespace Sanicball.Logic
         private SpectatorView spectatorViewPrefab = null;
 
         //Race state
-        private List<RacePlayer> players = new List<RacePlayer>();
+        private List<RacePlayer> players = new();
         private RaceState currentState = RaceState.None;
 
         //Fields set in Init()

@@ -45,7 +45,7 @@ public class GJTrophiesMethods
 		
 		GJAPI.Instance.GJDebug ("Adding Trophy: " + id + ".");
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string>();
+		Dictionary<string,string> parameters = new();
 		parameters.Add ("trophy_id", id.ToString ());
 		
 		GJAPI.Instance.Request (TROPHIES_ADD, parameters, true, ReadAddResponse);
@@ -68,12 +68,9 @@ public class GJTrophiesMethods
 		{
 			GJAPI.Instance.GJDebug ("Trophy successfully added.");
 		}
-		
-		if (AddCallback != null)
-		{
-			AddCallback (success);
-		}
-	}
+
+        AddCallback?.Invoke(success);
+    }
 	
 	public delegate void _GetOneCallback (GJTrophy trophy);
 	/// <summary>
@@ -97,7 +94,7 @@ public class GJTrophiesMethods
 		
 		GJAPI.Instance.GJDebug ("Getting Trophy: " + id + ".");
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string>();
+		Dictionary<string,string> parameters = new();
 		parameters.Add ("trophy_id", id.ToString ());
 		
 		GJAPI.Instance.Request (TROPHIES_FETCH, parameters, true, ReadGetOneResponse);
@@ -127,12 +124,9 @@ public class GJTrophiesMethods
 			trophy = new GJTrophy (dictionary);
 			GJAPI.Instance.GJDebug ("Trophy successfully fetched.\n" + trophy.ToString());
 		}
-		
-		if (GetOneCallback != null)
-		{
-			GetOneCallback (trophy);
-		}
-	}
+
+        GetOneCallback?.Invoke(trophy);
+    }
 	
 	public delegate void _GetMultipleCallback (GJTrophy[] trophies);
 	/// <summary>
@@ -156,7 +150,7 @@ public class GJTrophiesMethods
 		
 		GJAPI.Instance.GJDebug ("Getting trophies.");
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string>();
+		Dictionary<string,string> parameters = new();
 		string joinedIds = string.Join (",", new List<uint>(ids).ConvertAll (i => i.ToString ()).ToArray ());
 		parameters.Add ("trophy_id", joinedIds);
 		
@@ -184,7 +178,7 @@ public class GJTrophiesMethods
 			Dictionary<string,string>[] dictionaries = GJAPI.Instance.ResponseToDictionaries (response);
 			GJAPI.Instance.CleanDictionaries (ref dictionaries);
 			
-			StringBuilder debug = new StringBuilder();
+			StringBuilder debug = new();
 			debug.Append ("Trophies successfully fetched.\n");
 			
 			int count = dictionaries.Length;
@@ -197,12 +191,9 @@ public class GJTrophiesMethods
 			
 			GJAPI.Instance.GJDebug (debug.ToString ());
 		}
-		
-		if (GetMultipleCallback != null)
-		{
-			GetMultipleCallback (trophies);
-		}
-	}
+
+        GetMultipleCallback?.Invoke(trophies);
+    }
 	
 	public delegate void _GetAllCallback (GJTrophy[] trophies);
 	/// <summary>
@@ -237,7 +228,7 @@ public class GJTrophiesMethods
 			GJAPI.Instance.GJDebug ("Getting all trophies the verified user hasn't achieved.");
 		}
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string> ();
+		Dictionary<string,string> parameters = new();
 		parameters.Add ("achieved", achieved.ToString ().ToLower ());
 		
 		GJAPI.Instance.Request (TROPHIES_FETCH, parameters, true, ReadGetAllResponse);
@@ -264,7 +255,7 @@ public class GJTrophiesMethods
 			Dictionary<string,string>[] dictionaries = GJAPI.Instance.ResponseToDictionaries (response);
 			GJAPI.Instance.CleanDictionaries (ref dictionaries);
 			
-			StringBuilder debug = new StringBuilder();
+			StringBuilder debug = new();
 			debug.Append ("Trophies successfully fetched.\n");
 			
 			int count = dictionaries.Length;
@@ -277,10 +268,7 @@ public class GJTrophiesMethods
 			
 			GJAPI.Instance.GJDebug (debug.ToString ());
 		}
-		
-		if (GetAllCallback != null)
-		{
-			GetAllCallback (trophies);
-		}
-	}
+
+        GetAllCallback?.Invoke(trophies);
+    }
 }

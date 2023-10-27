@@ -5,19 +5,19 @@ namespace Sanicball
 {
     public class CameraFade : MonoBehaviour
     {
-        public GUIStyle m_BackgroundStyle = new GUIStyle();
+        public GUIStyle m_BackgroundStyle = new();
 
         // Style for background tiling
         public Texture2D m_FadeTexture;
 
         // 1x1 pixel texture used for fading
-        public Color m_CurrentScreenOverlayColor = new Color(0, 0, 0, 0);
+        public Color m_CurrentScreenOverlayColor = new(0, 0, 0, 0);
 
         // default starting color: black and fully transparrent
-        public Color m_TargetScreenOverlayColor = new Color(0, 0, 0, 0);
+        public Color m_TargetScreenOverlayColor = new(0, 0, 0, 0);
 
         // default target color: black and fully transparrent
-        public Color m_DeltaColor = new Color(0, 0, 0, 0);
+        public Color m_DeltaColor = new(0, 0, 0, 0);
 
         // the delta-color is basically the "speed / second" at which the current color should change
         public int m_FadeGUIDepth = -1000;
@@ -201,8 +201,7 @@ namespace Sanicball
                         SetScreenOverlayColor(instance.m_CurrentScreenOverlayColor);
                         instance.m_DeltaColor = new Color(0, 0, 0, 0);
 
-                        if (instance.m_OnFadeFinish != null)
-                            instance.m_OnFadeFinish();
+                        instance.m_OnFadeFinish?.Invoke();
 
                         Die();
                     }

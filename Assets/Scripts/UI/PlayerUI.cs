@@ -44,12 +44,12 @@ namespace Sanicball.UI
         private RectTransform markerContainer;
 
         private Marker checkpointMarker;
-        private List<Marker> playerMarkers = new List<Marker>();
+        private List<Marker> playerMarkers = new();
 
         private RacePlayer targetPlayer;
         private RaceManager targetManager;
 
-        private readonly Color finishedColor = new Color(0f, 0.5f, 1f);
+        private readonly Color finishedColor = new(0f, 0.5f, 1f);
 
         public RacePlayer TargetPlayer
         {

@@ -13,7 +13,7 @@ namespace Sanicball
             get
             {
                 //Pick a random next node based on their weights
-                List<int> choices = new List<int>();
+                List<int> choices = new();
                 for (int i = 0; i < targets.Length; i++)
                 {
                     for (int j = 0; j < targets[i].Weight; j++) choices.Add(i);

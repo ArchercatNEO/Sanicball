@@ -14,12 +14,12 @@ namespace Sanicball {
 		private float timer = 1f;
 		bool started = false;
 
-		private Color currentColor = new Color(1,0,0,0.2f);
+		private Color currentColor = new(1,0,0,0.2f);
 		const float COLOR_TIME = 60.0f / 110.0f;
 		private float colorTimer = COLOR_TIME;
 
-		Vector2 snoopPos = new Vector2(0,0);
-		Vector2 snoopTarget = new Vector2(0,0);
+		Vector2 snoopPos = new(0,0);
+		Vector2 snoopTarget = new(0,0);
 
 		//Groove
 		private int qSamples = 1024; // array size
@@ -40,7 +40,7 @@ namespace Sanicball {
 			timerOn = true;
 		}
 
-		List<Camera> cameras = new List<Camera>();
+		List<Camera> cameras = new();
 		AudioSource music;
 
 		private void Start4Real()
@@ -130,12 +130,12 @@ namespace Sanicball {
 
 		private void OnGUI()
 		{
-			Rect getRekt = new Rect(0, 0, Screen.width, Screen.height);
+			Rect getRekt = new(0, 0, Screen.width, Screen.height);
 
 			if (screenOverlayEnabled)
 			{
 				//Background
-				GUIStyle colorStyle = new GUIStyle();
+				GUIStyle colorStyle = new();
 				colorStyle.normal.background = solidWhite;
 				colorStyle.stretchWidth = true;
 				colorStyle.stretchHeight = true;
@@ -144,7 +144,7 @@ namespace Sanicball {
 				GUI.backgroundColor = Color.white;
 
 				//Overlay
-				GUIStyle mlgStyle = new GUIStyle();
+				GUIStyle mlgStyle = new();
 				mlgStyle.normal.background = screenOverlay;
 				mlgStyle.stretchWidth = true;
 				mlgStyle.stretchHeight = true;
@@ -153,7 +153,7 @@ namespace Sanicball {
 				//Snoop
 				SpriteSheetGUI ssgui = GetComponent<SpriteSheetGUI>();
 				Texture2D texture = snoop;
-				Rect snoopRect = new Rect(snoopPos.x, snoopPos.y, 8, 16);
+				Rect snoopRect = new(snoopPos.x, snoopPos.y, 8, 16);
 				GUI.BeginGroup(new Rect(snoopRect.x, snoopRect.y, texture.width * snoopRect.width * ssgui.Size.x, texture.height * snoopRect.height * ssgui.Size.y));
 				GUI.color = new Color(1,1,1,0.4f);
 				GUI.DrawTexture(new Rect(-texture.width * snoopRect.width * ssgui.Offset.x, -texture.height * snoopRect.height * ssgui.Offset.y, texture.width * snoopRect.width, texture.height * snoopRect.height), texture);
@@ -162,7 +162,7 @@ namespace Sanicball {
 
 			if (bass)
 			{
-				GUIStyle newstyle = new GUIStyle();
+				GUIStyle newstyle = new();
 				newstyle.alignment = TextAnchor.MiddleCenter;
 				newstyle.fontSize = 600;
 				newstyle.fontStyle = FontStyle.Bold;

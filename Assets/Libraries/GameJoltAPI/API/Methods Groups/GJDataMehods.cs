@@ -55,10 +55,10 @@ public class GJDataMehods
 		
 		GJAPI.Instance.GJDebug ("Adding data.");
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string> ();
+		Dictionary<string,string> parameters = new();
 		parameters.Add ("key", key);
 		
-		Dictionary<string,string> postParameters = new Dictionary<string, string> ();
+		Dictionary<string,string> postParameters = new();
 		postParameters.Add ("data", val);
 		
 		GJAPI.Instance.Request (DATA_SET, parameters, postParameters, userData, ReadSetResponse);
@@ -81,12 +81,9 @@ public class GJDataMehods
 		{
 			GJAPI.Instance.GJDebug ("Data successfully added.");
 		}
-		
-		if (SetCallback != null)
-		{
-			SetCallback (success);
-		}
-	}
+
+        SetCallback?.Invoke(success);
+    }
 	
 	public enum UpdateOperation { Add, Subtract, Multiply, Divide, Append, Prepend };
 	
@@ -127,12 +124,12 @@ public class GJDataMehods
 		
 		GJAPI.Instance.GJDebug ("Updating data.");
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string> ();
+		Dictionary<string,string> parameters = new();
 		parameters.Add ("key", key);
 		parameters.Add ("operation", operation.ToString ().ToLower ());
 		parameters.Add ("format", "dump");
 		
-		Dictionary<string,string> postParameters = new Dictionary<string, string> ();
+		Dictionary<string,string> postParameters = new();
 		postParameters.Add ("value", val);
 		
 		GJAPI.Instance.Request (DATA_UPDATE, parameters, postParameters, userData, ReadUpdateResponse);
@@ -167,17 +164,11 @@ public class GJDataMehods
 				GJAPI.Instance.GJDebug ("Data successfully updated.\n" + data);
 			}
 		}
-		
-		if (UpdateSuccessCallback != null)
-		{
-			UpdateSuccessCallback (success);
-		}
-		
-		if (UpdateCallback != null)
-		{
-			UpdateCallback (data);
-		}
-	}
+
+        UpdateSuccessCallback?.Invoke(success);
+
+        UpdateCallback?.Invoke(data);
+    }
 	
 	public delegate void _GetCallback (string data);
 	/// <summary>
@@ -204,7 +195,7 @@ public class GJDataMehods
 		
 		GJAPI.Instance.GJDebug ("Getting data.");
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string> ();
+		Dictionary<string,string> parameters = new();
 		parameters.Add ("key", key);
 		parameters.Add ("format", "dump");
 				
@@ -240,12 +231,9 @@ public class GJDataMehods
 				GJAPI.Instance.GJDebug ("Data successfully fetched.\n" + data);
 			}
 		}
-		
-		if (GetCallback != null)
-		{
-			GetCallback (data);
-		}
-	}
+
+        GetCallback?.Invoke(data);
+    }
 	
 	public delegate void _RemoveKey (bool success);
 	/// <summary>
@@ -272,7 +260,7 @@ public class GJDataMehods
 		
 		GJAPI.Instance.GJDebug ("Removing key.");
 		
-		Dictionary<string,string> parameters = new Dictionary<string, string> ();
+		Dictionary<string,string> parameters = new();
 		parameters.Add ("key", key);
 				
 		GJAPI.Instance.Request (DATA_REMOVE, parameters, userData, ReadRemoveKeyResponse);
@@ -295,12 +283,9 @@ public class GJDataMehods
 		{
 			GJAPI.Instance.GJDebug ("Key successfully removed.");
 		}
-		
-		if (RemoveKeyCallback != null)
-		{
-			RemoveKeyCallback (success);
-		}
-	}
+
+        RemoveKeyCallback?.Invoke(success);
+    }
 	
 	public delegate void _GetKeysCallback (string[] keys);
 	/// <summary>
@@ -349,10 +334,7 @@ public class GJDataMehods
 			
 			GJAPI.Instance.GJDebug ("Keys successfully fetched.\n" + string.Join ("\n", keys));
 		}
-		
-		if (GetKeysCallback != null)
-		{
-			GetKeysCallback (keys);
-		}
-	}
+
+        GetKeysCallback?.Invoke(keys);
+    }
 }

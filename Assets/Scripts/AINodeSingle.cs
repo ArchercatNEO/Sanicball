@@ -5,8 +5,7 @@ namespace Sanicball
 {
     public class AINodeSingle : AINode
     {
-        [SerializeField]
-        private AINode nextNode;
+        [SerializeField] private AINode nextNode;
 
         public override AINode NextNode { get { return nextNode; } }
 

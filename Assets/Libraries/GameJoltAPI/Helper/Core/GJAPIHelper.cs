@@ -179,7 +179,7 @@ public class GJAPIHelper : MonoBehaviour {
 		if (!string.IsNullOrEmpty (url))
 		{
 			Texture2D tex;
-			WWW www = new WWW (url);
+			WWW www = new(url);
 			yield return www;
 			
 			if (www.error == null)
@@ -193,12 +193,9 @@ public class GJAPIHelper : MonoBehaviour {
 				Debug.Log ("GJAPIHelper: Error downloading image:\n" + www.error);
 				tex = null;
 			}
-			
-			if (OnComplete != null)
-			{
-				OnComplete (tex);
-			}
-		}
+
+            OnComplete?.Invoke(tex);
+        }
 	}
 	
 	public void OnGetUserFromWeb (string response)

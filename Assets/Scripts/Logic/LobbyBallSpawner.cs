@@ -7,8 +7,7 @@ namespace Sanicball.Logic
 {
     public class LobbyBallSpawner : BallSpawner
     {
-        [SerializeField]
-        private LobbyPlatform lobbyPlatform = null;
+        [SerializeField] private LobbyPlatform lobbyPlatform = null;
 
         public Ball SpawnBall(PlayerType playerType, ControlType ctrlType, int character, string nickname)
         {

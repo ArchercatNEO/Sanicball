@@ -68,7 +68,7 @@ namespace Sanicball.Gameplay
                 Vector3 velocity = GetComponent<Rigidbody>().velocity;
                 Quaternion towardsVelocity = (velocity != Vector3.zero) ? Quaternion.LookRotation(velocity) : Quaternion.LookRotation(target.transform.position);
 
-                Ray ray = new Ray(transform.position, towardsVelocity * Vector3.forward);
+                Ray ray = new(transform.position, towardsVelocity * Vector3.forward);
 
                 float maxDist = Mathf.Max(0, Mathf.Min(velocity.magnitude * 1f, Vector3.Distance(transform.position, target.transform.position) - 35));
 

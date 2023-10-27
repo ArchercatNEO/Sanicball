@@ -11,7 +11,7 @@ namespace Sanicball.Gameplay
         private Quaternion startRotation;
         private Quaternion targetRotation;
 
-        private List<Ball> balls = new List<Ball>();
+        private List<Ball> balls = new();
 
         public void AddBall(Ball b)
         {

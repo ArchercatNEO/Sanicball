@@ -38,10 +38,7 @@ namespace Sanicball
 
         private AudioSource aSource;
 
-        public void Play()
-        {
-            Play(playlist[currentSongID].name);
-        }
+        public void Play() { Play(playlist[currentSongID].name); }
 
         public void Play(string credits)
         {
@@ -75,9 +72,11 @@ namespace Sanicball
                 Sanicball.Logic.MatchManager m = FindObjectOfType<Sanicball.Logic.MatchManager>();
                 if (!m.InLobby) {
                     List<Song> p = playlist.ToList();
-                    Song s = new Song();
-                    s.name = "Skrollex - Bungee Ride";
-                    s.clip = ActiveData.ESportsMusic;
+                    Song s = new()
+                    {
+                        name = "Skrollex - Bungee Ride",
+                        clip = ActiveData.ESportsMusic
+                    };
                     p.Insert(0,s);
                     playlist = p.ToArray();
                 }

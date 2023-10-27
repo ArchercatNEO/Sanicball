@@ -32,7 +32,7 @@ namespace Sanicball.UI
         public void OnSelect(BaseEventData eventData)
         {
             selected = true;
-            if (onSelect != null) onSelect.Invoke();
+            onSelect?.Invoke();
             b.onClick.AddListener(Activate);
         }
 
@@ -64,7 +64,7 @@ namespace Sanicball.UI
 
         private void Activate()
         {
-            if (onActivate != null) onActivate.Invoke();
+            onActivate?.Invoke();
         }
     }
 }

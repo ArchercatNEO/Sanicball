@@ -16,7 +16,7 @@ namespace Sanicball.Gameplay
         [SerializeField]
         private Camera attachedCamera;
         [SerializeField]
-        private Vector3 defaultCameraPosition = new Vector3(6, 2.8f, 0);
+        private Vector3 defaultCameraPosition = new(6, 2.8f, 0);
 
         private float cameraDistance = 1;
         private float cameraDistanceTarget = 1;

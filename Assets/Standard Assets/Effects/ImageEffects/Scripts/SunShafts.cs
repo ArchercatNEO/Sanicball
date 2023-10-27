@@ -28,7 +28,7 @@ namespace UnityStandardAssets.ImageEffects
         public Transform sunTransform;
         public int radialBlurIterations = 2;
         public Color sunColor = Color.white;
-        public Color sunThreshold = new Color(0.87f,0.74f,0.65f);
+        public Color sunThreshold = new(0.87f,0.74f,0.65f);
         public float sunShaftBlurRadius = 2.5f;
         public float sunShaftIntensity = 1.15f;
 
@@ -90,7 +90,7 @@ namespace UnityStandardAssets.ImageEffects
             sunShaftsMaterial.SetVector ("_SunThreshold", sunThreshold);
 
             if (!useDepthTexture) {
-                var format= GetComponent<Camera>().hdr ? RenderTextureFormat.DefaultHDR: RenderTextureFormat.Default;
+                var format= GetComponent<Camera>().allowHDR ? RenderTextureFormat.DefaultHDR: RenderTextureFormat.Default;
                 RenderTexture tmpBuffer = RenderTexture.GetTemporary (source.width, source.height, 0, format);
                 RenderTexture.active = tmpBuffer;
                 GL.ClearWithSkybox (false, GetComponent<Camera>());

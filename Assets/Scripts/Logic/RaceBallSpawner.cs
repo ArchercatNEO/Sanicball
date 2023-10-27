@@ -1,4 +1,5 @@
-﻿using Sanicball.Data;
+﻿using System.Linq;
+using Sanicball.Data;
 using Sanicball.Gameplay;
 using SanicballCore;
 using UnityEngine;
@@ -8,21 +9,20 @@ namespace Sanicball.Logic
     public class RaceBallSpawner : BallSpawner
     {
         //These two are only used for visualizing spawn positions in the editor
-        [SerializeField]
-        private int editorBallCount = 8;
+        [SerializeField] private int editorBallCount = 8;
 
-        [SerializeField]
-        private float editorBallSize = 1;
+        [SerializeField] private float editorBallSize = 1;
 
-        [SerializeField]
-        private int columns = 10;
+        [SerializeField] private int columns = 10;
 
-        [SerializeField]
-        private LayerMask ballSpawningMask = new LayerMask();
+        [SerializeField] private LayerMask ballSpawningMask = new();
 
         public Ball SpawnBall(int position, BallType ballType, ControlType ctrlType, int character, string nickname)
         {
-            float characterSize = ActiveData.Characters[character].ballSize;
+            object[] thing =  ActiveData.Characters;
+            Debug.Log(character);
+            Debug.Log(string.Join(',', thing));
+            float characterSize = 10f; //ActiveData.Characters[character].ballSize;
 
             return SpawnBall(GetSpawnPoint(position, characterSize / 2f), transform.rotation, ballType, ctrlType, character, nickname);
         }

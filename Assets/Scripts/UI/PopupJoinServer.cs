@@ -6,12 +6,9 @@ namespace Sanicball.UI
 {
     public class PopupJoinServer : MonoBehaviour
     {
-        [SerializeField]
-        private InputField ipInput;
-        [SerializeField]
-        private InputField portInput;
-        [SerializeField]
-        private Text portOutput;
+        [SerializeField] private InputField ipInput;
+        [SerializeField] private InputField portInput;
+        [SerializeField] private Text portOutput;
 
         private const int LOWEST_PORT_NUM = 1024;
         private const int HIGHEST_PORT_NUM = 49151;

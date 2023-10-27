@@ -48,7 +48,7 @@ namespace Sanicball.Gameplay
             //Input
             var targetDirectionOffset = Quaternion.identity;
             Vector2 camVector = GameInput.CameraVector(CtrlType);
-            Vector3 orientedCamVector = new Vector3(camVector.x, 0, camVector.y);
+            Vector3 orientedCamVector = new(camVector.x, 0, camVector.y);
             if (orientedCamVector != Vector3.zero)
             {
                 Quaternion camQuaternion = Quaternion.Slerp(Quaternion.identity, Quaternion.LookRotation(orientedCamVector), orientedCamVector.magnitude);

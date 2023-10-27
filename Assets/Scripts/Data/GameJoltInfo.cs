@@ -20,7 +20,7 @@ namespace Sanicball.Data
         public bool verbose;
         public bool disabled;
 
-        private Dictionary<string, PlayerType> specialUsers = new Dictionary<string, PlayerType>();
+        private Dictionary<string, PlayerType> specialUsers = new();
 
         public void Init()
         {
@@ -51,36 +51,23 @@ namespace Sanicball.Data
         public PlayerType GetPlayerType(string username)
         {
             if (disabled) return PlayerType.Normal;
-            PlayerType result;
-            if (!string.IsNullOrEmpty(username) && specialUsers.TryGetValue(username, out result))
-            {
-                return result;
-            }
-            return PlayerType.Normal;
+            if (!string.IsNullOrEmpty(username)) return PlayerType.Normal;
+            if (!specialUsers.ContainsKey(username)) return PlayerType.Normal;
+            
+            return specialUsers[username];
         }
 
         public Color GetPlayerColor(PlayerType type)
         {
-            switch (type)
+            return type switch
             {
-                case PlayerType.Anon:
-                    return new Color(0.88f, 0.88f, 0.88f);
-
-                case PlayerType.Normal:
-                    return Color.white;
-
-                case PlayerType.Developer:
-                    return new Color(0.6f, 0.7f, 1);
-
-                case PlayerType.Special:
-                    return new Color(0.2f, 0.8f, 0.2f);
-
-                case PlayerType.Donator:
-                    return new Color(1, 0.8f, 0.4f);
-
-                default:
-                    return Color.white;
-            }
+                PlayerType.Anon => new Color(0.88f, 0.88f, 0.88f),
+                PlayerType.Normal => Color.white,
+                PlayerType.Developer => new Color(0.6f, 0.7f, 1),
+                PlayerType.Special => new Color(0.2f, 0.8f, 0.2f),
+                PlayerType.Donator => new Color(1, 0.8f, 0.4f),
+                _ => Color.white,
+            };
         }
 
         private void LoadSpecialUsersCallback(string data)
@@ -92,9 +79,10 @@ namespace Sanicball.Data
                 GJAPI.Data.GetCallback -= LoadSpecialUsersCallback;
                 return;
             }
-            string[] pairs = data.Split(';');
-            foreach (string s in pairs)
+
+            foreach (string s in data.Split(';'))
             {
+                //(string nameStr, string typeStr) = s.Split('=');
                 string[] nameTypePair = s.Split('=');
                 if (nameTypePair.Length != 2) continue;
                 string nameStr = nameTypePair[0];
@@ -106,6 +94,7 @@ namespace Sanicball.Data
                     specialUsers.Add(nameStr, (PlayerType)typeInt);
                 }
             }
+
             Debug.Log("Special user list loaded.");
             GJAPI.Data.GetCallback -= LoadSpecialUsersCallback;
         }

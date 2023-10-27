@@ -69,7 +69,7 @@ namespace UnityStandardAssets.ImageEffects
             EditorGUILayout.PropertyField(whiteIntensity, new GUIContent(" White Boost"));
             midGrey.floatValue = EditorGUILayout.Slider( new GUIContent(" Mid Grey (for Boost)"), midGrey.floatValue, 0.0f, 1.0f);
             if (monochrome.boolValue == false) {
-                Color c = new Color(intensities.vector3Value.x,intensities.vector3Value.y,intensities.vector3Value.z,1.0f);
+                Color c = new(intensities.vector3Value.x,intensities.vector3Value.y,intensities.vector3Value.z,1.0f);
                 c = EditorGUILayout.ColorField(new GUIContent(" Color Weights"), c);
                 intensities.vector3Value = new Vector3(c.r, c.g, c.b);
             }

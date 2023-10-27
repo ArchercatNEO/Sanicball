@@ -7,9 +7,9 @@ namespace UnityStandardAssets.ImageEffects
     [AddComponentMenu("Image Effects/Displacement/Vortex")]
     public class Vortex : ImageEffectBase
     {
-        public Vector2 radius = new Vector2(0.4F,0.4F);
+        public Vector2 radius = new(0.4F,0.4F);
         public float angle = 50;
-        public Vector2 center = new Vector2(0.5F, 0.5F);
+        public Vector2 center = new(0.5F, 0.5F);
 		
         // Called by camera to apply image effect
         void OnRenderImage (RenderTexture source, RenderTexture destination)
