@@ -28,9 +28,7 @@ namespace Sanicball.UI
 
             if (firstSelectedOnOpen)
             {
-                var es = FindObjectOfType<EventSystem>();
-                if (es)
-                    es.SetSelectedGameObject(firstSelectedOnOpen);
+                FindObjectOfType<EventSystem>()?.SetSelectedGameObject(firstSelectedOnOpen);
             }
         }
 

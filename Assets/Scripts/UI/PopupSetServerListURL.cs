@@ -12,8 +12,8 @@ namespace Sanicball.UI
 
         public void Validate()
         {
-			string u = url.text.Trim();
-			optionsPanel.SetServerListURL(u);
+            string u = url.text.Trim();
+            optionsPanel.SetServerListURL(u);
             GetComponent<Popup>().Close();
         }
 
@@ -27,7 +27,7 @@ namespace Sanicball.UI
                 return;
             }
 
-			url.text = optionsPanel.GetServerListURL() ?? "";
+            url.text = optionsPanel.GetServerListURL() ?? "";
         }
     }
 }

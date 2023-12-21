@@ -1,26 +1,35 @@
-﻿using Sanicball.Data;
+﻿using UnityEngine;
 using Sanicball.Gameplay;
-using SanicballCore;
-using UnityEngine;
+using System;
 
 namespace Sanicball.Logic
 {
-    public class LobbyBallSpawner : BallSpawner
+    public class LobbyBallSpawner : MonoBehaviour
     {
-        [SerializeField] private LobbyPlatform lobbyPlatform = null;
+        private static LobbyBallSpawner? Instance;
 
-        public Ball SpawnBall(PlayerType playerType, ControlType ctrlType, int character, string nickname)
+        public static Rigidbody SpawnBall()
         {
-            if (lobbyPlatform)
+            if (Instance is null)
             {
-                lobbyPlatform.Activate();
-            }
-            else
-            {
-                Debug.LogError("LobbyBallSpawner has no lobby platform assigned");
+                Debug.LogError("LobbySpawner instance not found, cannot spawn a ball");
+                throw new NullReferenceException();
             }
 
-            return SpawnBall(transform.position, transform.rotation, BallType.LobbyPlayer, ctrlType, character, nickname);
+            //TODO Inline LobbyPlataform into this class
+            LobbyPlatform.TryActivate();
+
+            return Instantiate(PrefabFactory.ballPrefab, Instance.transform.position, Instance.transform.rotation);
+        }
+
+        private void Start()
+        {
+            Instance = this;
+        }
+
+        private void OnDestroy()
+        {
+            Instance = null;
         }
 
         private void OnDrawGizmos()

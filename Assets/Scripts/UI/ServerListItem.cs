@@ -1,24 +1,22 @@
-﻿using Sanicball.Logic;
+﻿using System.Net;
 using UnityEngine;
 using UnityEngine.UI;
+using Sanicball.Data;
+using Sanicball.Logic;
 
 namespace Sanicball.UI
 {
     public class ServerListItem : MonoBehaviour
     {
-        [SerializeField]
-        private Text serverNameText = null;
-        [SerializeField]
-        private Text serverStatusText = null;
-        [SerializeField]
-        private Text playerCountText = null;
-        [SerializeField]
-        private Text pingText = null;
+        [SerializeField] private Text serverNameText = null;
+        [SerializeField] private Text serverStatusText = null;
+        [SerializeField] private Text playerCountText = null;
+        [SerializeField] private Text pingText = null;
 
         private ServerInfo info;
-        private System.Net.IPEndPoint endpoint;
+        private IPEndPoint endpoint;
 
-        public void Init(ServerInfo info, System.Net.IPEndPoint endpoint, int pingMs, bool isLocal)
+        public void Init(ServerInfo info, IPEndPoint endpoint, int pingMs, bool isLocal)
         {
             serverNameText.text = info.Config.ServerName;
             serverStatusText.text = info.InRace ? "In race" : "In lobby";
@@ -34,15 +32,7 @@ namespace Sanicball.UI
 
         public void Join()
         {
-            MatchStarter starter = FindObjectOfType<MatchStarter>();
-            if (starter)
-            {
-                starter.JoinOnlineGame(endpoint);
-            }
-            else
-            {
-                Debug.LogError("No match starter found");
-            }
+            MatchStarter.JoinOnlineGame(endpoint);
         }
     }
 }

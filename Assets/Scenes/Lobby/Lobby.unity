@@ -827,10 +827,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5af0185813de1b24b8338acafbca1a2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusBar: {fileID: 77566419}
-  localPlayerManager: {fileID: 1812706277}
   matchSettingsPanel: {fileID: 1002170702}
-  ballSpawner: {fileID: 1146614289}
   countdownField: {fileID: 1818452963}
   markerContainer: {fileID: 1120488725}
 --- !u!1 &77566415
@@ -7262,8 +7259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af9f55fa4ddc61f4ab4a6196d0c7906f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballPrefab: {fileID: 11410174, guid: 15c7ed3ff76289b4680e4b9f1f52fb22, type: 3}
-  lobbyPlatform: {fileID: 2002385385}
 --- !u!1 &1147140282
 GameObject:
   m_ObjectHideFlags: 0
@@ -9245,7 +9240,8 @@ PrefabInstance:
       propertyPath: immediateInit
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 11410174, guid: 15c7ed3ff76289b4680e4b9f1f52fb22, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 15c7ed3ff76289b4680e4b9f1f52fb22, type: 3}
 --- !u!1001 &1489585435
 PrefabInstance:
@@ -10699,6 +10695,7 @@ GameObject:
   - component: {fileID: 1621079303}
   - component: {fileID: 1621079302}
   - component: {fileID: 1621079301}
+  - component: {fileID: 1621079306}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -10795,6 +10792,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1621079306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1621079300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c758f2f24e6d71d4db2c5835f435d3e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1627433478
 GameObject:
   m_ObjectHideFlags: 0
@@ -12571,8 +12580,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d9b76b7dce569149bfcfbd62e9216b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  localPlayerPanelPrefab: {fileID: 11465012, guid: f468d0545ff98d449afb2f8e153d278f,
-    type: 3}
   matchJoiningHelpField: {fileID: 2043634685}
 --- !u!222 &1812706279
 CanvasRenderer:

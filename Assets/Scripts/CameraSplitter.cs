@@ -1,78 +1,33 @@
-﻿using System.Collections;
-using System.Linq;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Sanicball
 {
-    [RequireComponent(typeof(Camera))]
     public class CameraSplitter : MonoBehaviour
     {
-        private Camera cam;
-        private AudioListener listener;
-
-        public int SplitscreenIndex { get; set; }
-
-        private void Start()
+        static int count = 0;
+        public static void SetSpliScreen(Camera camera, int position)
         {
-            cam = GetComponent<Camera>();
-            listener = GetComponent<AudioListener>();
-            var splitters = FindObjectsOfType<CameraSplitter>().ToList();
-
-            int count = splitters.Count;
-            int index = SplitscreenIndex;
-
-            switch (count)
+            count++;
+            camera.rect = (count, position) switch
             {
-                case 2:
-                    cam.rect = new Rect(0, index == 0 ? 0.5f : 0f, 1, 0.5f);
-                    break;
+                (2, 0) => new Rect(0, 0.5f, 1, 0.5f),
+                (2, _) => new Rect(0, 0f, 1, 0.5f),
+                (3, 0) => new Rect(0, 0.5f, 1, 0.5f),
+                (3, 1) => new Rect(0, 0, 0.5f, 0.5f),
+                (3, 2) => new Rect(0.5f, 0, 0.5f, 0.5f),
+                (3, _) => camera.rect,
+                (4, 0) => new Rect(0, 0.5f, 0.5f, 0.5f),
+                (4, 1) => new Rect(0.5f, 0.5f, 0.5f, 0.5f),
+                (4, 2) => new Rect(0, 0, 0.5f, 0.5f),
+                (4, 3) => new Rect(0, 0, 0.5f, 0.5f),
+                (4, _) => camera.rect,
+                _ => new Rect(0, 0, 1, 1)
+            };
 
-                case 3:
-                    switch (index)
-                    {
-                        case 0:
-                            cam.rect = new Rect(0, 0.5f, 1, 0.5f);
-                            break;
-
-                        case 1:
-                            cam.rect = new Rect(0, 0, 0.5f, 0.5f);
-                            break;
-
-                        case 2:
-                            cam.rect = new Rect(0.5f, 0, 0.5f, 0.5f);
-                            break;
-                    }
-                    break;
-
-                case 4:
-                    switch (index)
-                    {
-                        case 0:
-                            cam.rect = new Rect(0, 0.5f, 0.5f, 0.5f);
-                            break;
-
-                        case 1:
-                            cam.rect = new Rect(0.5f, 0.5f, 0.5f, 0.5f);
-                            break;
-
-                        case 2:
-                            cam.rect = new Rect(0, 0, 0.5f, 0.5f);
-                            break;
-
-                        case 3:
-                            cam.rect = new Rect(0.5f, 0, 0.5f, 0.5f);
-                            break;
-                    }
-                    break;
-
-                default:
-                    cam.rect = new Rect(0, 0, 1, 1);
-                    break;
-            }
-
-            if (listener)
+            AudioListener? listener = camera.GetComponent<AudioListener>();
+            if (listener is not null)
             {
-                listener.enabled = index == 0;
+                listener.enabled = position == 0;
             }
         }
     }

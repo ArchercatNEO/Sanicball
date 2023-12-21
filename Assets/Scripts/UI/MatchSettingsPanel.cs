@@ -1,5 +1,4 @@
 ﻿using Sanicball.Data;
-using Sanicball.Logic;
 using SanicballCore;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,54 +8,38 @@ namespace Sanicball.UI
     [RequireComponent(typeof(ToggleCanvasGroup))]
     public class MatchSettingsPanel : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject firstActive;
+        [SerializeField] private GameObject firstActive;
 
         [Header("Fields")]
-        [SerializeField]
-        private Text stage;
-        [SerializeField]
-        private Text laps;
-        [SerializeField]
-        private Text aiCount;
-        [SerializeField]
-        private Text aiSkill;
-        [SerializeField]
-        private Text[] aiCharacters;
+        [SerializeField] private Text stage;
+        [SerializeField] private Text laps;
+        [SerializeField] private Text aiCount;
+        [SerializeField] private Text aiSkill;
+        [SerializeField] private Text[] aiCharacters;
 
         private MatchSettings tempSettings = MatchSettings.CreateDefault();
 
         public void Show()
         {
-            var canvasGroup = GetComponent<ToggleCanvasGroup>();
-            canvasGroup.Show();
+            GetComponent<ToggleCanvasGroup>().Show();
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstActive);
         }
 
         public void Hide()
         {
-            var canvasGroup = GetComponent<ToggleCanvasGroup>();
-            canvasGroup.Hide();
+            GetComponent<ToggleCanvasGroup>().Hide();
         }
 
         public void RevertSettings()
         {
-            var manager = FindObjectOfType<MatchManager>();
-            if (manager)
-            {
-                tempSettings = manager.CurrentSettings;
-            }
+            tempSettings = Globals.settings;
             UpdateUiFields();
         }
 
         public void SaveSettings()
         {
-            var manager = FindObjectOfType<MatchManager>();
-            if (manager)
-            {
-                manager.RequestSettingsChange(tempSettings);
-                ActiveData.MatchSettings = tempSettings;
-            }
+            new SettingsChangedMessage(tempSettings).Send();
+            Globals.MatchSettings = tempSettings;
         }
 
         public void DefaultSettings()
@@ -84,9 +67,8 @@ namespace Sanicball.UI
 
         public void IncrementStage()
         {
-            if (tempSettings.StageId < ActiveData.Stages.Length - 1) tempSettings.StageId++;
-            else
-                tempSettings.StageId = 0;
+            tempSettings.StageId++;
+            tempSettings.StageId %= ActiveData.Stages.Length - 1;
             UpdateUiFields();
         }
 
@@ -164,6 +146,13 @@ namespace Sanicball.UI
 
             tempSettings.SetAICharacter(pos, characterId);
             UpdateUiFields();
+        }
+
+        public int Increment(int number, int limit)
+        {
+            number++;
+            number %= limit;
+            return number;
         }
 
         private void UpdateUiFields()

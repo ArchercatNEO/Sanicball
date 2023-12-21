@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Sanicball.Data;
+﻿using Sanicball.Data;
 using UnityEngine;
 
 namespace Sanicball
@@ -16,7 +15,7 @@ namespace Sanicball
 
         private void Update()
         {
-            aSource.mute = !ActiveData.GameSettings.music;
+            aSource.mute = !GameSettings.Instance.music;
         }
     }
 }

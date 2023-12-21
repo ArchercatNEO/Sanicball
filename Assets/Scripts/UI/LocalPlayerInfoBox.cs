@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Sanicball.UI
@@ -12,10 +11,8 @@ namespace Sanicball.UI
         private bool fadingOut = false;
         private float a = 0f;
 
-        [SerializeField]
-        private Text text;
-        [SerializeField]
-        private Image image;
+        [SerializeField] private Text text;
+        [SerializeField] private Image image;
 
         private const float fadeTime = 0.2f;
         private const float timerMax = 3f;

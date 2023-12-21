@@ -2,7 +2,5 @@
 
 namespace Sanicball
 {
-    public class TriggerRespawn : MonoBehaviour
-    {
-    }
+    public class TriggerRespawn : MonoBehaviour {}
 }

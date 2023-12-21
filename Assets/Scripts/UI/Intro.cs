@@ -5,7 +5,6 @@ namespace Sanicball.UI
 {
     public class Intro : MonoBehaviour
     {
-        public string menuSceneName = "Menu";
 
         public Image[] images;
         public float imgTime = 0.2f;
@@ -79,7 +78,7 @@ namespace Sanicball.UI
 
         private void GoToMenu()
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(menuSceneName);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(Constants.menuName);
             isHoldingImage = true;
         }
     }

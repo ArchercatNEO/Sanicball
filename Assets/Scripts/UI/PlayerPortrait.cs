@@ -1,4 +1,5 @@
-﻿using Sanicball.Data;
+﻿using System;
+using System.Collections;
 using Sanicball.Logic;
 using SanicballCore;
 using UnityEngine;
@@ -6,61 +7,66 @@ using UnityEngine.UI;
 
 namespace Sanicball.UI
 {
+    //TODO, make the main class the container class and turn these into entries
+    /// <summary>
+    /// 
+    /// </summary>
     public class PlayerPortrait : MonoBehaviour
     {
         private const int spacing = 64;
+        
+        private static PlayerPortrait portraitPrefab => Resources.Load<PlayerPortrait>("Prefabs\\User Interface\\PlayerPortrait");
+        private static Transform portraitContainer = null;
 
-        private int targetPosition = 0;
+        public static PlayerPortrait Create(string name, Color color, Func<float> func)
+        {
+            PlayerPortrait portrait = Instantiate(portraitPrefab);
 
-        [SerializeField]
-        private Text positionField;
+            portrait.nameField.text = name;
+            portrait.characterImage.color = color;
 
-        [SerializeField]
-        private Image characterImage;
+            portrait.CalculateRaceProgress = func;
 
-        [SerializeField]
-        private Text nameField;
+            return portrait;
+        }
+
+        public Func<float> CalculateRaceProgress { get; private set; }
+
+        [SerializeField] private Text nameField;
+        [SerializeField] private Image characterImage;
+        [SerializeField] private Text positionField;
 
         private RectTransform trans;
-        public RacePlayer TargetPlayer { get; set; }
 
-        public void Move(int newPosition)
+        PlayerPortrait()
         {
-            targetPosition = newPosition;
-        }
-
-        // Use this for initialization
-        private void Start()
-        {
+            transform.SetParent(portraitContainer, false);
             trans = GetComponent<RectTransform>();
-
-            TargetPlayer.Destroyed += DestroyedCallback;
         }
 
-        private void DestroyedCallback(object sender, System.EventArgs e)
+        public void ChangeUI(int position)
         {
-            if (this)
-                Destroy(gameObject);
-            TargetPlayer.Destroyed -= DestroyedCallback;
-        }
-
-        // Update is called once per frame
-        private void Update()
-        {
-            targetPosition = TargetPlayer.RaceFinished ? (TargetPlayer.FinishReport.Position) : (TargetPlayer.Position);
-            //Position field
-            positionField.text = Utils.GetPosString(targetPosition);
-            if (TargetPlayer.RaceFinished) positionField.color = new Color(0f, 0.5f, 1f);
-            //Image representing character
-            characterImage.color = ActiveData.Characters[TargetPlayer.Character].color;
-            //Name field
-            nameField.text = TargetPlayer.Name;
-
+            positionField.text = Utils.GetPosString(position);
+            
             float y = trans.anchoredPosition.y;
-
-            y = Mathf.Lerp(y, -(targetPosition - 1) * spacing, Time.deltaTime * 10);
-
+            y = Mathf.Lerp(y, -(position - 1) * 64, Time.deltaTime * 10);
             trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, y);
+        }
+
+        public void FinishRace(int position)
+        {
+            positionField.text = Utils.GetPosString(position);
+            positionField.color = new Color(0f, 0.5f, 1f);
+            StartCoroutine(Animate(position));
+        }
+
+        public IEnumerator Animate(int position)
+        {
+            float y = trans.anchoredPosition.y;
+            y = Mathf.Lerp(y, -(position - 1) * 64, Time.deltaTime * 10);
+            trans.anchoredPosition = new Vector2(trans.anchoredPosition.x, y);
+            
+            yield return new WaitForFixedUpdate();
         }
     }
 }

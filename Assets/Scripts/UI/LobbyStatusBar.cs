@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Sanicball.Logic;
+using Sanicball.Scenes;
 
 namespace Sanicball.UI
 {
@@ -15,53 +15,45 @@ namespace Sanicball.UI
 
         private List<ClientListEntry> curClientListEntries = new();
 
-        private MatchManager manager;
-
         private void Start()
         {
-            manager = FindObjectOfType<MatchManager>();
-
             //Self destruct if not in online mode
-            if (!manager.OnlineMode) { Destroy(gameObject); }
+            if (!ServerRelay.OnlineMode) { Destroy(gameObject); }
         }
 
-        private void Update()
+        /* private void Update()
         {
-            if (!manager) return;
+            int clients = Client.clients.Count;
+            int players = Player.players.Count;
 
-            int clients = manager.Clients.Count;
-            int players = manager.Players.Count;
-
-            if (manager.AutoStartTimerOn)
-            {
-                leftText.text = $"Match will start in {GetTimeString()}, or when all players are ready.";
-            }
-            else if (manager.Players.Count > 0)
-            {
-                leftText.text = "Match starts when all players are ready.";
-            }
-            else
-            {
-                leftText.text = "Match will not start without players.";
-            }
-            rightText.text = clients + " " + (clients != 1 ? "clients" : "client") + " - " + players + " " + (players != 1 ? "players" : "player");
+            if (LobbyManager.autoStartTimer.isRunning)
+                { leftText.text = $"Match will start in {GetTimeString()}, or when all players are ready."; }
+            else if (Player.players.Count > 0)
+                { leftText.text = "Match starts when all players are ready."; }
+            else { leftText.text = "Match will not start without players."; }
+            rightText.text = $"{pluralize("client", clients)} - {pluralize("player", players)}";
 
             curClientListEntries.ForEach(entry => Destroy(entry.gameObject));
             curClientListEntries.Clear();
 
-            foreach (MatchClient c in manager.Clients)
+            foreach (var (_, client) in Client.clients)
             {
                 ClientListEntry listEntry = Instantiate(clientListEntryPrefab);
                 listEntry.transform.SetParent(clientList, false);
+                listEntry.FillFields(client);
 
-                listEntry.FillFields(c, manager);
                 curClientListEntries.Add(listEntry);
             }
+        } */
+
+        private string pluralize(string name, int count)
+        {
+            return $"{count} {name}{(count > 1 ? "s" : "")}";
         }
 
         private string GetTimeString()
         {
-            System.TimeSpan timeToUse  = System.TimeSpan.FromSeconds(manager.AutoStartTimer);
+            System.TimeSpan timeToUse = System.TimeSpan.FromSeconds(LobbyUI.autoStartTimeout - LobbyUI.autoStartTimer.Now());
             return string.Format("{0:00}:{1:00}", timeToUse.Minutes, timeToUse.Seconds);
         }
     }

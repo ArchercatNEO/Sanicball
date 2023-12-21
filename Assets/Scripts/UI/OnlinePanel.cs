@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using Lidgren.Network;
-using Sanicball.Logic;
 using Sanicball.Data;
 
 namespace Sanicball.UI
@@ -35,8 +34,8 @@ namespace Sanicball.UI
             discoveryClient.DiscoverLocalPeers(25000);
             latestLocalRefreshTime = DateTime.Now;
 
-            string serverListURL = ActiveData.GameSettings.serverListURL;
-            //StartCoroutine(FetchServerList(serverListURL));
+            string serverListURL = GameSettings.Instance.serverListURL;
+            StartCoroutine(FetchServerList(serverListURL));
         }
 
         private System.Collections.IEnumerator FetchServerList(string serverListURL)
@@ -87,7 +86,7 @@ namespace Sanicball.UI
         {
             errorField.enabled = false;
 
-            NetPeerConfiguration config = new NetPeerConfiguration(OnlineMatchMessenger.APP_ID);
+            NetPeerConfiguration config = new NetPeerConfiguration(Constants.APP_ID);
             config.EnableMessageType(NetIncomingMessageType.DiscoveryResponse);
             discoveryClient = new NetClient(config);
             discoveryClient.Start();

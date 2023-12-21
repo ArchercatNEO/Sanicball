@@ -1839,7 +1839,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 175151494}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f0e33ebea88c741478eb839cc4da334e, type: 3}
   m_Name: 
@@ -10863,7 +10863,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 494ffde743c275343962463842b551b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  matchManagerPrefab: {fileID: 11456720, guid: fdb6e26d3a9dcac42af827fefb1aa46f, type: 3}
   connectingPopupPrefab: {fileID: 11490040, guid: d36f6e19722c0544da5ffd3f126d226a,
     type: 3}
   popupHandler: {fileID: 589528318}

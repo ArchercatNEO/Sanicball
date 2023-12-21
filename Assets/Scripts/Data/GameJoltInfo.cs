@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Sanicball.Data
@@ -12,7 +13,7 @@ namespace Sanicball.Data
         Developer = 2,
     }
 
-    [System.Serializable]
+    [Serializable]
     public class GameJoltInfo
     {
         public int gameID;
@@ -35,8 +36,8 @@ namespace Sanicball.Data
             GJAPI.Data.GetCallback += LoadSpecialUsersCallback;
 
             //Check if current game jolt info is legit
-            string username = ActiveData.GameSettings.gameJoltUsername;
-            string token = ActiveData.GameSettings.gameJoltToken;
+            string username = GameSettings.Instance.gameJoltUsername;
+            string token = GameSettings.Instance.gameJoltToken;
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(token)) return;
 
             GJAPI.Users.Verify(username, token);
@@ -53,7 +54,7 @@ namespace Sanicball.Data
             if (disabled) return PlayerType.Normal;
             if (!string.IsNullOrEmpty(username)) return PlayerType.Normal;
             if (!specialUsers.ContainsKey(username)) return PlayerType.Normal;
-            
+
             return specialUsers[username];
         }
 
@@ -104,8 +105,8 @@ namespace Sanicball.Data
             if (!isLegit)
             {
                 //Not legit! Remove info
-                ActiveData.GameSettings.gameJoltUsername = string.Empty;
-                ActiveData.GameSettings.gameJoltToken = string.Empty;
+                GameSettings.Instance.gameJoltUsername = string.Empty;
+                GameSettings.Instance.gameJoltToken = string.Empty;
             }
             GJAPI.Users.VerifyCallback -= CheckIfSignedInCallback;
         }

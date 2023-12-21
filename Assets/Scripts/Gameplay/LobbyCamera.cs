@@ -3,19 +3,31 @@ using UnityEngine;
 
 namespace Sanicball.Gameplay
 {
+    //TODO, find a nicer way to use where this is pointing without the interface
     [RequireComponent(typeof(Camera))]
-    public class LobbyCamera : MonoBehaviour
+    public class LobbyCamera : MonoBehaviour, IBallCamera
     {
+        public static LobbyCamera Instance => FindObjectOfType<LobbyCamera>();
         public float rotationSpeed;
-
         private Quaternion startRotation;
-        private Quaternion targetRotation;
 
-        private List<Ball> balls = new();
+        private readonly List<Rigidbody?> balls = new();
+        private Vector3 sum = Vector3.zero;
 
-        public void AddBall(Ball b)
+
+        public Quaternion RotateCamera(Rigidbody target)
         {
-            balls.Add(b);
+            balls.Add(target);
+            sum += target.transform.position;
+            return transform.rotation;
+        }
+
+        //We aren't interested in changing the direction here
+        public void SetDirection(Quaternion dir) { }
+
+        public void Remove()
+        {
+            Destroy(gameObject);
         }
 
         private void Start()
@@ -23,44 +35,20 @@ namespace Sanicball.Gameplay
             startRotation = transform.rotation;
         }
 
-        private void Update()
+        private void LateUpdate()
         {
-            if (balls.Count > 0)
+            Quaternion targetRotation = startRotation;
+            if (balls.Count != 0)
             {
-                Vector3 sum = Vector3.zero;
-
-                //Copy the balls array for safe modification
-                var ballsCopy = new List<Ball>(balls);
-                foreach (var b in ballsCopy)
-                {
-                    //Check for removed balls
-                    if (b == null)
-                    {
-                        balls.Remove(b);
-                        continue;
-                    }
-                    //Add position to sum
-                    sum += b.transform.position;
-
-                    if (b.Input)
-                    {
-                        b.Input.LookDirection = transform.rotation;
-                    }
-                }
                 //Divide sum by number of balls to get the average position (<3 you vector math)
-                var target = sum / ballsCopy.Count;
-
-                //Rotate towards target point
+                Vector3 target = sum / balls.Count;
                 targetRotation = Quaternion.LookRotation(target - transform.position);
             }
-            else
-            {
-                //Rotate towards default orientation with no players
-                targetRotation = startRotation;
-            }
 
-            //Rotate
+            //Rotate towards target point
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            sum = Vector3.zero;
+            balls.Clear();
         }
     }
 }

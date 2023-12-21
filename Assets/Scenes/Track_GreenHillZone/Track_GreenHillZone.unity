@@ -19004,18 +19004,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1982fd417715fa24b9a9c07b4c205657, type: 3}
---- !u!114 &672367542 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 11492120, guid: 1982fd417715fa24b9a9c07b4c205657,
-    type: 3}
-  m_PrefabInstance: {fileID: 672367541}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 278720098d44f1f4dbd40783637ffae5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &673123021
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30520,14 +30508,12 @@ MonoBehaviour:
   - {fileID: 1916207188}
   - {fileID: 1928634668}
   - {fileID: 413427328}
-  spawnPoint: {fileID: 2112555894}
   waitingCameraOrientations:
   - {fileID: 1636198216}
   - {fileID: 1016709955}
   - {fileID: 1580647809}
   - {fileID: 170547449}
   - {fileID: 221631430}
-  endOfMatchHandler: {fileID: 672367542}
 --- !u!1001 &1062220661
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -60268,18 +60254,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2112555892}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2112555894 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 11454616, guid: 1744336a2c795c741bd68a34779b59bb,
-    type: 3}
-  m_PrefabInstance: {fileID: 2112555892}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e852ecf7ebba3c45854acc2ac78b3d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &2113340365 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 493674, guid: 72209a189277212448e6689c89dcebfa,

@@ -2,6 +2,7 @@
 
 namespace Sanicball.Gameplay
 {
+    //TODO merge with LobbySpawner
     public class LobbyPlatform : MonoBehaviour
     {
         public float moveDistance = 2f;
@@ -11,13 +12,27 @@ namespace Sanicball.Gameplay
 
         private Vector3 basePos;
 
-        public void Activate()
+        private static LobbyPlatform? Instance;
+
+        public static void TryActivate()
+        {
+            if (Instance == null)
+            {
+                Debug.LogError("LobbyPlatform not found, cannot activate");
+                return;
+            }
+
+            Instance.Activate();
+        }
+
+        private void Activate()
         {
             currentPos = 1f;
         }
 
         private void Start()
         {
+            Instance = this;
             basePos = transform.position;
         }
 

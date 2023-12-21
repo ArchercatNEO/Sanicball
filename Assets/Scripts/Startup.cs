@@ -15,14 +15,14 @@ namespace Sanicball
             if (nicknameField.text.Trim() != "")
             {
                 setNicknameGroup.alpha = 0f;
-                ActiveData.GameSettings.nickname = nicknameField.text;
+                GameSettings.Instance.nickname = nicknameField.text;
                 intro.enabled = true;
             }
         }
 
         private void Start()
         {
-            if (string.IsNullOrEmpty(ActiveData.GameSettings.nickname) || ActiveData.GameSettings.nickname == "Player")
+            if (string.IsNullOrEmpty(GameSettings.Instance.nickname) || GameSettings.Instance.nickname == "Player")
             {
                 //Set nickname before continuing
                 setNicknameGroup.alpha = 1f;

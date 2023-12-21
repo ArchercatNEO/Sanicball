@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Sanicball.Data;
+using Sanicball.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,115 +23,93 @@ namespace Sanicball.UI
     {
         private const int COLUMN_COUNT = 4;
 
-        [SerializeField]
-        private RectTransform entryContainer = null;
-        [SerializeField]
-        private CharacterSelectEntry entryPrefab = null;
-        [SerializeField]
-        private Text characterNameLabel;
+        [SerializeField] private RectTransform entryContainer = null;
+        [SerializeField] private CharacterSelectEntry entryPrefab = null;
+        [SerializeField] private Text characterNameLabel;
 
-        [SerializeField]
-        private float scrollSpeed = 1f;
+        [SerializeField] private float scrollSpeed = 1f;
+        [SerializeField] private float normalIconSize = 64;
+        [SerializeField] private float selectedIconSize = 96;
 
-        [SerializeField]
-        private float normalIconSize = 64;
-        [SerializeField]
-        private float selectedIconSize = 96;
-
+        private CharacterSelectEntry[] activeEntries = {};
         private int selected = 0;
-        private Data.CharacterInfo selectedChar;
+        private int Selected
+        {
+            get => selected;
+            set
+            {
+                selected = value;
+                if (value == 0)
+                {
+                    characterNameLabel.text = "Leave match";
+                }
+                else
+                {
+                    characterNameLabel.text = activeEntries[value].name;
+                }
+            }
+        }
+        private Data.CharacterInfo SelectedChar => activeEntries[selected].Character;
         private float targetX = 0;
         private float targetY = 0;
-        private List<CharacterSelectEntry> activeEntries = new();
 
-        [SerializeField]
-        private Sprite cancelIconSprite;
+        [SerializeField] private Sprite cancelIconSprite;
 
         public event EventHandler<CharacterSelectionArgs> CharacterSelected;
         public event EventHandler CancelSelected;
 
         private IEnumerator Start()
         {
-            var charList = ActiveData.Characters.OrderBy(a => a.tier).ToArray();
-            if (ActiveData.GameSettings.eSportsReady)
-            {
-                charList = charList.Where(a => a.tier == SanicballCore.CharacterTier.Hyperspeed).ToArray();
-            }
+            /* GameSettings.Instance.eSportsReady 
+                ? 
+                : ActiveData.Characters.Where(a => a.tier == SanicballCore.CharacterTier.Hyperspeed);*/
 
+            
             CharacterSelectEntry cancelEnt = Instantiate(entryPrefab);
             cancelEnt.IconImage.sprite = cancelIconSprite;
             cancelEnt.transform.SetParent(entryContainer.transform, false);
-            activeEntries.Add(cancelEnt);
-
-            for (int i = 0; i < charList.Length; i++)
-            {
-                if (!charList[i].hidden)
-                {
+            
+            List<CharacterSelectEntry> empty = new() {cancelEnt};
+            IEnumerable<CharacterSelectEntry> charList = ActiveData.Characters
+                .OrderBy(a => a.tier)
+                .Where(character => !character.hidden)
+                .Select(character => {
                     CharacterSelectEntry characterEnt = Instantiate(entryPrefab);
-
-                    characterEnt.Init(charList[i]);
+                    characterEnt.Init(character);
                     characterEnt.transform.SetParent(entryContainer.transform, false);
-                    activeEntries.Add(characterEnt);
-                }
-            }
+                    
+                    return characterEnt;
+                });
+
+            
+            empty.AddRange(charList);
+            activeEntries = empty.ToArray();
 
             //Wait a single frame before selecting the first character.
             yield return null;
-            Select(1);
+            Selected = 1;
         }
 
-        public void Right()
+        public void Right() { Selected = (Selected + 1) % activeEntries.Length; }
+        public void Left() { Selected = (Selected + activeEntries.Length - 1) % activeEntries.Length; }
+        public void Up() { Selected = (Selected + activeEntries.Length - COLUMN_COUNT) % activeEntries.Length; }
+        public void Down() { Selected = (Selected + COLUMN_COUNT) % activeEntries.Length; }
+
+        public void Accept()
         {
-            if (selected < activeEntries.Count - 1) Select(selected + 1); else Select(0);
-        }
-
-        public void Left()
-        {
-            if (selected > 0) Select(selected - 1); else Select(activeEntries.Count - 1);
-        }
-
-        public void Up()
-        {
-            if (activeEntries.Count <= COLUMN_COUNT) return;
-
-            int s = selected - COLUMN_COUNT;
-            if (s < 0)
-            {
-                s += activeEntries.Count;
-                //if (s < 0) s = activeEntries.Count - 1;
-            }
-            Select(s);
-        }
-
-        public void Down()
-        {
-            if (activeEntries.Count <= COLUMN_COUNT) return;
-
-            int s = selected + COLUMN_COUNT;
-            if (s > activeEntries.Count - 1)
-            {
-                s -= activeEntries.Count;
-                //if (s > activeEntries.Count) s = 0;
-            }
-            Select(s);
-        }
-
-        private void Select(int newSelection)
-        {
-            selected = newSelection;
-            selectedChar = activeEntries[selected].Character;
-
-            if (selected == 0)
-                characterNameLabel.text = "Leave match";
+            if (Selected == 0) { CancelSelected?.Invoke(this, EventArgs.Empty); }
             else
-                characterNameLabel.text = selectedChar.name;
+            {
+                gameObject.SetActive(false);
+                CharacterSelected?.Invoke(this, new CharacterSelectionArgs(Array.IndexOf(ActiveData.Characters, SelectedChar)));
+            }
         }
 
         private void Update()
         {
-            //Find the container's target X to center the selected character
-            targetX = entryContainer.sizeDelta.x / 2 - activeEntries[selected].RectTransform.anchoredPosition.x;
-            targetY = -entryContainer.sizeDelta.y / 2 - activeEntries[selected].RectTransform.anchoredPosition.y;
+            //Find the container's target X to center the Selected character
+            targetX = entryContainer.sizeDelta.x / 2 - activeEntries[Selected].RectTransform.anchoredPosition.x;
+            targetY = -entryContainer.sizeDelta.y / 2 - activeEntries[Selected].RectTransform.anchoredPosition.y;
 
             if (!Mathf.Approximately(entryContainer.anchoredPosition.x, targetX))
             {
@@ -145,39 +124,17 @@ namespace Sanicball.UI
             }
 
             //Resize all elements
-            for (int i = 0; i < activeEntries.Count; i++)
+            for (int i = 0; i < activeEntries.Length; i++)
             {
                 var element = activeEntries[i];
 
-                float targetSize = (i == selected) ? selectedIconSize : normalIconSize;
+                float targetSize = (i == Selected) ? selectedIconSize : normalIconSize;
 
                 if (!Mathf.Approximately(element.Size, targetSize))
                 {
                     element.Size = Mathf.Lerp(element.Size, targetSize, scrollSpeed * Time.deltaTime);
                 }
             }
-        }
-
-        public void Accept()
-        {
-            if (selected == 0)
-            {
-                CancelSelected?.Invoke(this, EventArgs.Empty);
-            }
-            else
-            {
-                CharacterSelected?.Invoke(this, new CharacterSelectionArgs(Array.IndexOf(ActiveData.Characters, selectedChar)));
-            }
-        }
-
-        public void Show()
-        {
-            gameObject.SetActive(true);
-        }
-
-        public void Hide()
-        {
-            gameObject.SetActive(false);
         }
     }
 }

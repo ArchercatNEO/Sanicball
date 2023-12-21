@@ -1,5 +1,5 @@
-﻿using Sanicball;
-using SanicballCore;
+﻿using Sanicball.Ball;
+using Sanicball.Data;
 using UnityEngine;
 
 namespace Sanicball.Gameplay
@@ -7,31 +7,30 @@ namespace Sanicball.Gameplay
     [RequireComponent(typeof(Camera))]
     public class OmniCamera : MonoBehaviour, IBallCamera
     {
-        public Rigidbody Target { get; set; }
-        public Camera AttachedCamera
+        private static OmniCamera Prefab => Resources.Load<OmniCamera>("Prefabs/Cameras/PlayerCamera");
+        public static OmniCamera Create(ControlType ctrl)
         {
-            get
-            {
-                if (!attachedCamera)
-                {
-                    attachedCamera = GetComponent<Camera>();
-                }
-                return attachedCamera;
-            }
+            OmniCamera instance = Instantiate(Prefab);
+            instance.CtrlType = ctrl;
+            instance.AttachedCamera = instance.GetComponent<Camera>();
+            return instance;
         }
+
+        public Camera AttachedCamera { get; private set; }
         public ControlType CtrlType { get; set; }
+        public float fovOffset = 0;
 
-        [SerializeField]
-        private float orbitHeight = 0.5f;
-        [SerializeField]
-        private float orbitDistance = 4.0f;
+        [SerializeField] private float orbitHeight = 0.5f;
+        [SerializeField] private float orbitDistance = 4.0f;
 
-        private Camera attachedCamera;
+        private Vector3 OrbitHeight => Vector3.up * orbitHeight;
+        private Vector3 OrbitDistance => Vector3.back * orbitDistance;
+
+
         private Quaternion currentDirection = Quaternion.Euler(0, 0, 0);
         private Quaternion currentDirectionWithOffset = Quaternion.Euler(0, 0, 0);
         private Vector3 up = Vector3.up;
 
-        public float fovOffset = 0;
 
         public void SetDirection(Quaternion dir)
         {
@@ -43,53 +42,47 @@ namespace Sanicball.Gameplay
             Destroy(gameObject);
         }
 
-        private void Update()
+        //Translate input to a rotation that will map a vector to fo
+        private static Quaternion InputRotation(ControlType ctrlType)
         {
-            //Input
-            var targetDirectionOffset = Quaternion.identity;
-            Vector2 camVector = GameInput.CameraVector(CtrlType);
-            Vector3 orientedCamVector = new(camVector.x, 0, camVector.y);
-            if (orientedCamVector != Vector3.zero)
-            {
-                Quaternion camQuaternion = Quaternion.Slerp(Quaternion.identity, Quaternion.LookRotation(orientedCamVector), orientedCamVector.magnitude);
-                targetDirectionOffset = camQuaternion;
-            }
+            Vector2 inputVector = ctrlType.CameraVector();
+            if (inputVector == Vector2.zero) return Quaternion.identity;
 
-            if (Target != null)
-            {
-                //Rotate the camera towards the velocity of the rigidbody
+            Vector3 flatDirection = new(inputVector.x, 0, inputVector.y);
+            // Generate the rotation needed to map [0, 0, 1] to flatDirection
+            Quaternion cameraRotation = Quaternion.LookRotation(flatDirection);
+            // Scale down the rotation based on our magnitude
+            Quaternion scaledRotation = Quaternion.Slerp(Quaternion.identity, cameraRotation, flatDirection.magnitude);
+            return scaledRotation;
+        }
 
-                //Set the up vector, and make it lerp towards the target's up vector if the target has a Ball
-                Vector3 targetUp = Vector3.up;
-                Ball bc = Target.GetComponent<Ball>();
-                if (bc)
-                {
-                    targetUp = bc.Up;
-                }
-                up = Vector3.Lerp(up, targetUp, Time.deltaTime * 100);
+        //Rotate the camera towards the velocity of the rigidbody
+        public Quaternion RotateCamera(Rigidbody Target)
+        {
+            //Set the up vector, and make it lerp towards the target's up vector if the target has a Ball
+            Vector3 targetUp = Target.GetComponent<AbstractBall>()?.Up ?? Vector3.up;
+            up = Vector3.Lerp(up, targetUp, Time.deltaTime * 100 /*~6*/);
 
-                //Based on how fast the target is moving, create a rotation bending towards its velocity.
-                Quaternion towardsVelocity = (Target.velocity != Vector3.zero) ? Quaternion.LookRotation(Target.velocity, up) : Quaternion.identity;
-                const float maxTrans = 20f;
-                Quaternion finalTargetDir = Quaternion.Slerp(currentDirection, towardsVelocity, Mathf.Max(0, Mathf.Min(-10 + Target.velocity.magnitude, maxTrans) / maxTrans));
+            const float maxTrans = 20f;
+            // If we are moving generate a rotation to map [0, 0, 1] to velocity and [0, 1, 0] to up
+            // Otherwise generate an empty rotation
+            Quaternion velocityRotation = (Target.velocity != Vector3.zero) ? Quaternion.LookRotation(Target.velocity, up) : Quaternion.identity;
+            // Interpolate between our current facing rotation and our new velocity rotation
+            Quaternion finalTargetDir = Quaternion.Slerp(currentDirection, velocityRotation, (Target.velocity.magnitude - 10) / maxTrans);
 
-                //Lerp towards the final rotation
-                currentDirection = Quaternion.Slerp(currentDirection, finalTargetDir, Time.deltaTime * 4);
+            //Lerp towards the final rotation
+            Quaternion inputRotation = InputRotation(CtrlType);
+            currentDirection = Quaternion.Slerp(currentDirection, finalTargetDir, Time.deltaTime * 4);
+            currentDirectionWithOffset = Quaternion.Slerp(currentDirectionWithOffset, currentDirection * inputRotation, Time.deltaTime * 6);
 
-                //Look for a BallControlInput and set its look direction
-                BallControlInput bci = Target.GetComponent<BallControlInput>();
-                if (bci != null)
-                {
-                    bci.LookDirection = currentDirection;
-                }
 
-                //Set camera FOV to get higher with more velocity
-                AttachedCamera.fieldOfView = Mathf.Lerp(AttachedCamera.fieldOfView, Mathf.Min(60f + (Target.velocity.magnitude), 100f) + fovOffset, Time.deltaTime * 20);
+            transform.position = Target.transform.position + OrbitHeight + currentDirectionWithOffset * OrbitDistance;
+            transform.rotation = currentDirectionWithOffset;
 
-                currentDirectionWithOffset = Quaternion.Slerp(currentDirectionWithOffset, currentDirection * targetDirectionOffset, Time.deltaTime * 6);
-                transform.position = Target.transform.position + Vector3.up * orbitHeight + currentDirectionWithOffset * (Vector3.back * orbitDistance);
-                transform.rotation = currentDirectionWithOffset;
-            }
+            //Set camera FOV to get higher with more velocity
+            AttachedCamera.fieldOfView = Mathf.Lerp(AttachedCamera.fieldOfView, Mathf.Min(60f + Target.velocity.magnitude, 100f) + fovOffset, Time.deltaTime * 20);
+
+            return currentDirection;
         }
     }
 }

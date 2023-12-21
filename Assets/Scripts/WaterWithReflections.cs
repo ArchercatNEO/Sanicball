@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Sanicball.Data;
+﻿using Sanicball.Data;
 using UnityEngine;
 
 namespace Sanicball
@@ -15,7 +14,7 @@ namespace Sanicball
 
         private void Start()
         {
-            ReflectionQuality q = ActiveData.GameSettings.reflectionQuality;
+            ReflectionQuality q = GameSettings.Instance.reflectionQuality;
 
             if (q == ReflectionQuality.Off)
             {

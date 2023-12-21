@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Sanicball.Logic;
+﻿using Sanicball.Logic;
 using SanicballCore;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,46 +8,29 @@ namespace Sanicball.UI
     [RequireComponent(typeof(ToggleCanvasGroup))]
     public class ScoreboardEntry : MonoBehaviour
     {
-        [SerializeField]
-        private Text positionField = null;
-        [SerializeField]
-        private Image iconField = null;
-        [SerializeField]
-        private Text nameField = null;
-        [SerializeField]
-        private Text timeField = null;
+        private static ScoreboardEntry entryPrefab => Resources.Load<ScoreboardEntry>("Prefabs/User Interface/ScoreboardEntry");
 
-        public RacePlayer Player { get; private set; }
+        [SerializeField] private Text positionField = null;
+        [SerializeField] private Image iconField = null;
+        [SerializeField] private Text nameField = null;
+        [SerializeField] private Text timeField = null;
 
-        public void Init(RacePlayer player)
+        public static ScoreboardEntry Create(Transform container, Sprite icon, string name, IRaceReport report)
         {
-            Player = player;
-            GetComponent<ToggleCanvasGroup>().Show();
+            ScoreboardEntry e = Instantiate(entryPrefab);
+            e.transform.SetParent(container, false);
 
-            RaceFinishReport report = player.FinishReport;
-            if (report != null)
-            {
-                if (report.Position != RaceFinishReport.DISQUALIFIED_POS)
-                {
-                    positionField.text = Utils.GetPosString(report.Position);
-                }
-                else
-                {
-                    positionField.color = Color.red;
-                    positionField.text = "DSQ";
-                }
-
-                timeField.text = Utils.GetTimeString(report.Time);
-            }
-            else
-            {
-                positionField.text = "???";
-
-                timeField.text = "Still racing";
-            }
-
-            iconField.sprite = Data.ActiveData.Characters[player.Character].icon;
-            nameField.text = player.Name;
+            e.GetComponent<ToggleCanvasGroup>().Show();
+            
+            e.iconField.sprite = icon;
+            
+            e.nameField.text = name;
+            
+            e.timeField.text = report.AsTime();
+            
+            e.positionField.color = report.ToColor();
+            e.positionField.text = report.AsPosition();
+            return e;
         }
     }
 }

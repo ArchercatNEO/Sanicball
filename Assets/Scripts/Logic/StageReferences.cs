@@ -1,25 +1,45 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Sanicball.Gameplay;
 
 namespace Sanicball.Logic
 {
     public class StageReferences : MonoBehaviour
     {
-        public Gameplay.Checkpoint[] checkpoints;
-
-        public RaceBallSpawner spawnPoint;
-
-        public CameraOrientation[] waitingCameraOrientations;
-
-        public EndOfMatch endOfMatchHandler;
-
-        public static StageReferences Active
-        {
-            get; private set;
-        }
-
+        private static StageReferences? Instance;
         private void Awake()
         {
-            Active = this;
+            Instance = this;
+        }
+
+        [SerializeField] private Checkpoint[] checkpoints;
+        public static Checkpoint[]? Checkpoints
+        {
+            get
+            {
+                if (Instance is null)
+                {
+                    Debug.LogError("No stage referece active");
+                    return null;
+                }
+
+                return Instance.checkpoints;
+            }
+        }
+
+        [SerializeField] private CameraOrientation[] waitingCameraOrientations;
+        public static CameraOrientation[]? WaitingCameraOrientations
+        {
+            get
+            {
+                if (Instance is null)
+                {
+                    Debug.LogError("No stage referece active");
+                    return null;
+                }
+
+                return Instance.waitingCameraOrientations;
+            }
         }
     }
 }

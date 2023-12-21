@@ -13,11 +13,11 @@ namespace Sanicball.UI
         public RecordTypeControl lapRecord;
         public RecordTypeControl hyperspeedLapRecord;
 
-		public RecordTypeControl recordTypeControlPrefab;
-		public RectTransform sectionHeaderPrefab;
-		public RectTransform recordTypeContainer; 
+        public RecordTypeControl recordTypeControlPrefab;
+        public RectTransform sectionHeaderPrefab;
+        public RectTransform recordTypeContainer;
 
-		private List<RecordTypeControl> recordTypes = new();
+        private List<RecordTypeControl> recordTypes = new();
 
         private int selectedStage = 0;
 
@@ -43,17 +43,17 @@ namespace Sanicball.UI
 
         private void Start()
         {
-			foreach (CharacterTier tier in System.Enum.GetValues (typeof(CharacterTier)).Cast<CharacterTier>())
-			{
-				RectTransform header = Instantiate(sectionHeaderPrefab);
-				header.GetComponentInChildren<Text>().text = tier.ToString () + " balls"; //yes
-				header.SetParent (recordTypeContainer, false);
+            foreach (CharacterTier tier in System.Enum.GetValues(typeof(CharacterTier)).Cast<CharacterTier>())
+            {
+                RectTransform header = Instantiate(sectionHeaderPrefab);
+                header.GetComponentInChildren<Text>().text = tier.ToString() + " balls"; //yes
+                header.SetParent(recordTypeContainer, false);
 
-				RecordTypeControl ctrl = Instantiate (recordTypeControlPrefab);
-				ctrl.transform.SetParent (recordTypeContainer, false);
-				ctrl.titleField.text = "Lap record";
-				recordTypes.Add (ctrl);
-			}
+                RecordTypeControl ctrl = Instantiate(recordTypeControlPrefab);
+                ctrl.transform.SetParent(recordTypeContainer, false);
+                ctrl.titleField.text = "Lap record";
+                recordTypes.Add(ctrl);
+            }
 
             UpdateFields();
             UpdateStageName();
@@ -61,19 +61,20 @@ namespace Sanicball.UI
 
         private void UpdateFields()
         {
-            var records = ActiveData.RaceRecords.Where(a => a.Stage == selectedStage && a.GameVersion == GameVersion.AS_FLOAT && a.WasTesting == GameVersion.IS_TESTING).OrderBy(a => a.Time);
+            var records = RaceRecord.records.Where(a => a.Stage == selectedStage && a.GameVersion == GameVersion.AS_FLOAT && a.WasTesting == GameVersion.IS_TESTING).OrderBy(a => a.Time);
 
-			for (int i = 0; i < recordTypes.Count (); i++) {
-				var ctrl = recordTypes [i];
-				var bestLapRecord = records.Where (a => a.Tier == (CharacterTier)i).FirstOrDefault();
-				ctrl.SetRecord (bestLapRecord);
-			}
+            for (int i = 0; i < recordTypes.Count(); i++)
+            {
+                var ctrl = recordTypes[i];
+                var bestLapRecord = records.Where(a => a.Tier == (CharacterTier)i).FirstOrDefault();
+                ctrl.SetRecord(bestLapRecord);
+            }
 
-//            var bestLapRecord = records.Where(a => a.Type == RecordType.Lap).FirstOrDefault();
-//            lapRecord.SetRecord(bestLapRecord);
-//
-//            var bestHyperspeedLapRecord = records.Where(a => a.Type == RecordType.HyperspeedLap).FirstOrDefault();
-//            hyperspeedLapRecord.SetRecord(bestHyperspeedLapRecord);
+            //            var bestLapRecord = records.Where(a => a.Type == RecordType.Lap).FirstOrDefault();
+            //            lapRecord.SetRecord(bestLapRecord);
+            //
+            //            var bestHyperspeedLapRecord = records.Where(a => a.Type == RecordType.HyperspeedLap).FirstOrDefault();
+            //            hyperspeedLapRecord.SetRecord(bestHyperspeedLapRecord);
         }
 
         private void UpdateStageName()

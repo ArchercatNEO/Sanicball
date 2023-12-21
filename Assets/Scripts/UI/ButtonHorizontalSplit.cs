@@ -28,7 +28,8 @@ namespace Sanicball.UI
             {
                 onClickRight.Invoke();
             }
-            else {
+            else
+            {
                 onClickLeft.Invoke();
             }
         }

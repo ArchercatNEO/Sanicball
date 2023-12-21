@@ -1,8 +1,7 @@
-﻿using Sanicball.Data;
-using Sanicball.Logic;
-using SanicballCore;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using Sanicball.Data;
+using Sanicball.IO;
 
 namespace Sanicball.UI
 {
@@ -11,187 +10,143 @@ namespace Sanicball.UI
     /// </summary>
     public class LocalPlayerPanel : MonoBehaviour
     {
-        [System.NonSerialized]
-        public LocalPlayerManager playerManager;
+        private static LocalPlayerPanel prefab => Resources.Load<LocalPlayerPanel>("Prefabs\\User Interface\\LocalPlayerPanel");
+        
+        public static LocalPlayerPanel Create(ControlType ctrlType, LocalPlayerManager manager)
+        {
+            LocalPlayerPanel instance = Instantiate(prefab);
+            instance.transform.SetParent(manager.transform, false);
+            instance.playerManager = manager;
+            instance.AssignedCtrlType = ctrlType;
+            return instance;
+        }
 
-        public ImageColorToggle readyIndicator;
+        public static LocalPlayerPanel Create(ControlType ctrlType, LocalPlayerManager manager, Player player)
+        {
+            new PlayerChangedMessage(ctrlType, player.charId, player.readyToRace).Send();
+            LocalPlayerPanel instance = Instantiate(prefab);
+            instance.transform.SetParent(manager.transform, false);
+            instance.playerManager = manager;
+            instance.AssignedCtrlType = ctrlType;
+            instance.AssignedPlayer = player;
+            instance.characterSelectSubpanel.gameObject.SetActive(false);
+            return instance;
+        }
 
-        [SerializeField]
-        private Image ctrlTypeImageField = null;
+        [System.NonSerialized] public LocalPlayerManager playerManager;
 
-        [SerializeField]
-        private Text helpTextField = null;
-
-        [SerializeField]
-        private Sprite[] controlTypeIcons;
-
-        [SerializeField]
-        private CharacterSelectPanel characterSelectSubpanel = null;
+        [SerializeField] private ImageColorToggle readyIndicator;
+        [SerializeField] private Image ctrlTypeImageField = null;
+        [SerializeField] private Text helpTextField = null;
+        [SerializeField] private Sprite[] controlTypeIcons;
+        [SerializeField] private CharacterSelectPanel characterSelectSubpanel = null;
 
         public ControlType AssignedCtrlType { get; set; }
-        public MatchPlayer AssignedPlayer { get; set; }
+        public Player? AssignedPlayer { get; set; }
 
         private bool uiPressed = false;
 
         private void Start()
         {
-            characterSelectSubpanel.CharacterSelected += CharacterSelectSubpanel_CharacterSelected;
-            characterSelectSubpanel.CancelSelected += CharacterSelectSubpanel_Cancelled;
-
-            playerManager.LocalPlayerJoined += PlayerManager_LocalPlayerJoined;
-
             ctrlTypeImageField.sprite = controlTypeIcons[(int)AssignedCtrlType];
+            
+            helpTextField.text = ShowCharacterSelectHelp();
+            
+            characterSelectSubpanel.CharacterSelected += (sender, e) => {
+                if (AssignedPlayer is null)
+                {
+                    new PlayerJoinedMessage(AssignedCtrlType, e.SelectedCharacter).Send();
+                    AssignedPlayer = new Player(false, e.SelectedCharacter);
+                }
+                else
+                {
+                    new PlayerChangedMessage(AssignedCtrlType, e.SelectedCharacter, AssignedPlayer.readyToRace).Send();
+                }
+            };
 
-            ShowCharacterSelectHelp();
+            characterSelectSubpanel.CancelSelected += (sender, e) => {
+                if (AssignedPlayer != null) { new PlayerLeftMessage(AssignedCtrlType).Send(); }
+                playerManager.RemoveControlType(AssignedCtrlType);
+                
+                Destroy(gameObject);
+            };
         }
 
         private void Update()
         {
             //This method handles input from the assigned controltype (if any)
             if (PauseMenu.GamePaused) return; //Short circuit if paused
-            bool accept = GameInput.IsOpeningMenu(AssignedCtrlType);
-            bool left = GameInput.UILeft(AssignedCtrlType);
-            bool right = GameInput.UIRight(AssignedCtrlType);
-            bool up = GameInput.UIUp(AssignedCtrlType);
-            bool down = GameInput.UIDown(AssignedCtrlType);
 
-            var cActive = characterSelectSubpanel.gameObject.activeSelf;
+            bool cActive = characterSelectSubpanel.gameObject.activeSelf;
 
-            if (GameInput.IsRespawning(AssignedCtrlType) && !cActive)
+            if (AssignedCtrlType.IsRespawning() && !cActive && AssignedPlayer is not null)
             {
-                ToggleReady();
+                readyIndicator.On = !AssignedPlayer.readyToRace;
+                new PlayerChangedMessage(AssignedCtrlType, AssignedPlayer.charId, !AssignedPlayer.readyToRace).Send();
             }
 
-            if (accept || left || right || up || down)
-            {
-                if (!uiPressed)
-                {
-                    if (accept)
-                    {
-                        if (cActive)
-                        {
-                            characterSelectSubpanel.Accept();
-                            ShowMainHelp();
-                        }
-                        else
-                        {
-                            characterSelectSubpanel.gameObject.SetActive(true);
-                            ShowCharacterSelectHelp();
-                        }
-                    }
-                    if (left && cActive)
-                    {
-                        characterSelectSubpanel.Left();
-                    }
-                    if (right && cActive)
-                    {
-                        characterSelectSubpanel.Right();
-                    }
-                    if (up && cActive)
-                    {
-                        characterSelectSubpanel.Up();
-                    }
-                    if (down && cActive)
-                    {
-                        characterSelectSubpanel.Down();
-                    }
-                    uiPressed = true;
-                }
-            }
-            else
+            bool accept = AssignedCtrlType.IsOpeningMenu();
+
+            AssignedCtrlType.UIMoves(out bool up, out bool down, out bool left, out bool right);
+
+            if (!(accept || left || right || up || down))
             {
                 uiPressed = false;
-            }
-        }
-
-        public void LeaveMatch()
-        {
-            if (AssignedPlayer == null) return;
-
-            playerManager.LeaveMatch(AssignedPlayer);
-            Destroy(gameObject);
-        }
-
-        public void ToggleReady()
-        {
-            if (AssignedPlayer != null)
-            {
-                readyIndicator.On = !AssignedPlayer.ReadyToRace;
-                playerManager.SetReady(AssignedPlayer, !AssignedPlayer.ReadyToRace);
-            }
-        }
-
-        public void SetCharacter(int c)
-        {
-            if (AssignedPlayer == null)
-            {
-                playerManager.CreatePlayerForControlType(AssignedCtrlType, c);
-            }
-            else
-            {
-                playerManager.SetCharacter(AssignedPlayer, c);
-            }
-            if (characterSelectSubpanel.gameObject.activeSelf)
-            {
-                characterSelectSubpanel.gameObject.SetActive(false);
-            }
-        }
-
-        private void PlayerManager_LocalPlayerJoined(object sender, MatchPlayerEventArgs e)
-        {
-            if (e.Player.CtrlType == AssignedCtrlType)
-            {
-                AssignedPlayer = e.Player;
-            }
-        }
-
-        private void CharacterSelectSubpanel_CharacterSelected(object sender, CharacterSelectionArgs e)
-        {
-            SetCharacter(e.SelectedCharacter);
-            characterSelectSubpanel.gameObject.SetActive(false);
-        }
-
-        private void CharacterSelectSubpanel_Cancelled(object sender, System.EventArgs e)
-        {
-            if (AssignedPlayer == null)
-            {
-                playerManager.RemoveControlType(AssignedCtrlType);
-                Destroy(gameObject);
                 return;
             }
-            else
+
+            if (uiPressed) {return;}
+            uiPressed = true;
+
+
+            if (accept)
             {
-                LeaveMatch();
+                if (cActive)
+                {
+                    characterSelectSubpanel.Accept();
+                    helpTextField.text = ShowMainHelp();
+                }
+                else
+                {
+                    characterSelectSubpanel.gameObject.SetActive(true);
+                    helpTextField.text = ShowCharacterSelectHelp();
+                }
             }
+
+            if (!cActive) return;
+            if (left) characterSelectSubpanel.Left();
+            if (right) characterSelectSubpanel.Right();
+            if (up) characterSelectSubpanel.Up();
+            if (down) characterSelectSubpanel.Down();
         }
 
-        private void ShowMainHelp()
+        private string ShowMainHelp()
         {
-            string kbConfirm = GameInput.GetKeyCodeName(ActiveData.Keybinds[Keybind.Menu]);
+            string kbConfirm = KeybindCollection.GetKeyBindName(Keybind.Menu);
             const string joyConfirm = "X";
-            string kbAction = GameInput.GetKeyCodeName(ActiveData.Keybinds[Keybind.Respawn]);
+            string kbAction = KeybindCollection.GetKeyBindName(Keybind.Respawn);
             const string joyAction = "Y";
 
             string confirm = AssignedCtrlType == ControlType.Keyboard ? kbConfirm : joyConfirm;
             string action = AssignedCtrlType == ControlType.Keyboard ? kbAction : joyAction;
 
-            helpTextField.text = string.Format("<b>{0}</b>: Change character\n<b>{1}</b>: Toggle ready to play", confirm, action);
+            return string.Format("<b>{0}</b>: Change character\n<b>{1}</b>: Toggle ready to play", confirm, action);
         }
 
-        private void ShowCharacterSelectHelp()
+        private string ShowCharacterSelectHelp()
         {
             const string kbLeft = "Left";
             const string joyLeft = kbLeft;
             const string kbRight = "Right";
             const string joyRight = kbRight;
-            string kbConfirm = GameInput.GetKeyCodeName(ActiveData.Keybinds[Keybind.Menu]);
+            string kbConfirm = KeybindCollection.GetKeyBindName(Keybind.Menu);
             const string joyConfirm = "X";
 
             string left = AssignedCtrlType == ControlType.Keyboard ? kbLeft : joyLeft;
             string right = AssignedCtrlType == ControlType.Keyboard ? kbRight : joyRight;
             string confirm = AssignedCtrlType == ControlType.Keyboard ? kbConfirm : joyConfirm;
 
-            helpTextField.text = string.Format("<b>{0}</b>/<b>{1}</b>: Select character\n<b>{2}</b>: Confirm", left, right, confirm);
+            return $"<b>{left}</b>/<b>{right}</b>: Select character\n<b>{confirm}</b>: Confirm";
         }
     }
 }

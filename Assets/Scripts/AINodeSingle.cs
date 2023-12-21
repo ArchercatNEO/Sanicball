@@ -1,24 +1,19 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Sanicball
 {
     public class AINodeSingle : AINode
     {
-        [SerializeField] private AINode nextNode;
-
+        [SerializeField] private AINode? nextNode;
         public override AINode NextNode { get { return nextNode; } }
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.blue;
-
             Gizmos.DrawSphere(transform.position, 3f);
 
-            if (nextNode)
-            {
-                Gizmos.DrawLine(transform.position, nextNode.transform.position);
-            }
+            if (nextNode is null) return;
+            Gizmos.DrawLine(transform.position, nextNode.transform.position);
         }
     }
 }

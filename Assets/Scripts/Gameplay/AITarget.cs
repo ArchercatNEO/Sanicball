@@ -11,11 +11,6 @@ namespace Sanicball.Gameplay
         private Vector2 target;
         private int timer;
 
-        public Vector3 GetPos()
-        {
-            return transform.position + new Vector3(pos.x, 0, pos.y);
-        }
-
         // Use this for initialization
         private void Start()
         {
@@ -44,8 +39,11 @@ namespace Sanicball.Gameplay
         {
             Gizmos.color = Color.red;
             Gizmos.DrawSphere(transform.position + new Vector3(pos.x, 0, pos.y), 2);
-            //Gizmos.color = Color.yellow;
-            //Gizmos.DrawSphere(transform.position + new Vector3(target.x,0,target.y),2);
+        }
+
+        public Vector3 GetPos()
+        {
+            return transform.position + new Vector3(pos.x, 0, pos.y);
         }
     }
 }

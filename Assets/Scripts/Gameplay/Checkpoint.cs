@@ -1,17 +1,21 @@
-﻿using UnityEngine;
+﻿using Sanicball.Logic;
+using Sanicball.UI;
+using UnityEngine;
 
 namespace Sanicball.Gameplay
 {
     public class Checkpoint : MonoBehaviour
     {
         //Data object to hold and hide things that are mostly not changed
-        [SerializeField]
-        private CheckpointData data;
-
-        [SerializeField]
-        private AINode firstAINode = null;
+        [SerializeField] private CheckpointData data;
+        [SerializeField] private AINode firstAINode = null;
 
         public AINode FirstAINode { get { return firstAINode; } }
+
+        /* public Marker ActivateMarker()
+        {
+
+        } */
 
         public void Show()
         {
@@ -27,13 +31,12 @@ namespace Sanicball.Gameplay
 
         public Vector3 GetRespawnPoint()
         {
-            RaycastHit hit;
-            Vector3 result = transform.position;
-            if (Physics.Raycast(transform.position + Vector3.up * 100, Vector3.down, out hit, 200, data.ballSpawningMask))
+            Vector3 origin = transform.position + Vector3.up * 100;
+            return Physics.Raycast(origin, Vector3.down, out RaycastHit hit, 200, data.ballSpawningMask) switch
             {
-                result = hit.point;
-            }
-            return result;
+                true => hit.point,
+                false => transform.position
+            };
         }
 
         private void Start()
@@ -43,9 +46,9 @@ namespace Sanicball.Gameplay
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = new Color(0.3f, 0.8f, 1f);
-            if (firstAINode != null)
+            if (firstAINode is not null)
             {
+                Gizmos.color = new Color(0.3f, 0.8f, 1f);
                 Gizmos.DrawLine(transform.position, firstAINode.transform.position);
             }
         }
@@ -58,6 +61,7 @@ namespace Sanicball.Gameplay
         }
     }
 
+    //TODO Make it static
     [System.Serializable]
     public class CheckpointData
     {
@@ -75,17 +79,26 @@ namespace Sanicball.Gameplay
     [System.Serializable]
     public class CheckpointToAIPathConnection
     {
-        [SerializeField]
-        private string name;
-        [SerializeField]
-        private AINode firstNode;
-        [SerializeField]
-        private float selectionWeight = 1f;
-        [SerializeField]
-        private bool usedByBig = true;
+        [SerializeField] private string name;
+        [SerializeField] private AINode firstNode;
+        [SerializeField] private float selectionWeight = 1f;
+        [SerializeField] private bool usedByBig = true;
 
         public AINode FirstNode { get { return firstNode; } }
         public float SelectionWeight { get { return selectionWeight; } }
         public bool UsedByBig { get { return usedByBig; } }
+    }
+
+    public class CheckpointStorer
+    {
+        public int pointer = 0;
+        public int Length { get => StageReferences.Checkpoints.Length; }
+        public Checkpoint Current { get => StageReferences.Checkpoints[pointer]; }
+        public Checkpoint Next { get => StageReferences.Checkpoints[(pointer + 1) % Length]; }
+
+        public void TryPassCheckpoint(Checkpoint checkpoint)
+        {
+            if (checkpoint != Next) return;
+        }
     }
 }

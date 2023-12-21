@@ -3,7 +3,6 @@ using UnityEngine;
 
 // This is in fact just the Water script from Pro Standard Assets,
 // just with refraction stuff removed.
-
 namespace Sanicball
 {
     //[ExecuteInEditMode] // Make mirror live-update even when not in play mode

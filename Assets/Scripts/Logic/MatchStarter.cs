@@ -1,128 +1,111 @@
-﻿using System.Net;
+﻿using System;
+using System.Collections.Generic;
+using System.Net;
 using UnityEngine;
+using Sanicball.Data;
+using Sanicball.UI;
+using Sanicball.Scenes;
 using SanicballCore;
 using Lidgren.Network;
+using ControlType = Sanicball.Data.ControlType;
 
 namespace Sanicball.Logic
 {
+    //TODO make this static with UI constructors
     public class MatchStarter : MonoBehaviour
     {
-        public const string APP_ID = "Sanicball";
+        private static UI.Popup connectingPopupPrefab => Resources.Load<UI.Popup>("Prefabs\\User Interface\\Popups\\ConnectingPopup");
 
-        [SerializeField] private MatchManager matchManagerPrefab = null;
-        [SerializeField] private UI.Popup connectingPopupPrefab = null;
-        [SerializeField] private UI.PopupHandler popupHandler = null;
-
-        private UI.PopupConnecting activeConnectingPopup;
-
-        //NetClient for when joining online matches
-        private NetClient joiningClient;
-
-        private void Update()
+        public static void BeginLocalGame()
         {
-            if (joiningClient == null) return;
-            
-            NetIncomingMessage msg = joiningClient.ReadMessage();
-            for (; msg != null; msg = joiningClient.ReadMessage())
-            {
-                switch (msg.MessageType)
-                {
-                    case NetIncomingMessageType.DebugMessage:
-                    case NetIncomingMessageType.VerboseDebugMessage:
-                        Debug.Log(msg.ReadString());
-                        break;
+            Globals.FromDefault();
 
-                    case NetIncomingMessageType.WarningMessage:
-                        Debug.LogWarning(msg.ReadString());
-                        break;
-
-                    case NetIncomingMessageType.ErrorMessage:
-                        Debug.LogError(msg.ReadString());
-                        break;
-
-                    case NetIncomingMessageType.StatusChanged:
-                        NetConnectionStatus status = (NetConnectionStatus) msg.ReadByte();
-
-                        switch (status)
-                        {
-                            case NetConnectionStatus.Connected:
-                                Debug.Log("Connected! Now waiting for match state");
-                                activeConnectingPopup.ShowMessage("Receiving match state...");
-                                break;
-
-                            case NetConnectionStatus.Disconnected:
-                                activeConnectingPopup.ShowMessage(msg.ReadString());
-                                break;
-
-                            default:
-                                string statusMsg = msg.ReadString();
-                                Debug.Log("Status change received: " + status + " - Message: " + statusMsg);
-                                break;
-                        }
-                        break;
-
-                    case NetIncomingMessageType.Data:
-                        byte type = msg.ReadByte();
-                        if (type == MessageType.InitMessage)
-                        {
-                            try
-                            {
-                                //Called when succesfully connected to a server
-                                MatchState matchInfo = MatchState.ReadFromMessage(msg);
-                                Instantiate(matchManagerPrefab).InitOnlineMatch(joiningClient, matchInfo);
-                            }
-                            catch (System.Exception ex)
-                            {
-                                activeConnectingPopup.ShowMessage("Failed to read match message - cannot join server!");
-                                Debug.LogError("Could not read match state, error: " + ex.Message);
-                            }
-
-                        }
-                        break;
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                popupHandler.CloseActivePopup();
-                joiningClient.Disconnect("Cancelled");
-                joiningClient = null;
-            }
+            LobbyUI.Load(0);
+            LobbyReferences.MatchSettingsPanel?.Show();
+            new ClientJoinedMessage().Send();
         }
 
-        public void BeginLocalGame()
+        public static void StartOnlineGame(Dictionary<Guid, Client> Clients, MatchSettings Settings, bool InRace, float CurAutoStartTime)
         {
-            MatchManager manager = Instantiate(matchManagerPrefab);
-            manager.InitLocalMatch();
+            Client.CopyFrom(Clients); //!Inline 
+            Globals.settings = Settings;
+
+            //TODO Get and apply travel time
+            if (!InRace) { LobbyUI.Load(CurAutoStartTime); }
+            else { RaceManager.Load(true); }
+
+            new ClientJoinedMessage().Send();
         }
 
-        public void JoinOnlineGame(string ip = "127.0.0.1", int port = 25000)
+        public static void JoinOnlineGame(IPEndPoint endpoint)
+        {
+            ServerRelay.Connect(endpoint);
+            PopupHandler.OpenPopup(connectingPopupPrefab);
+        }
+
+        public static void JoinOnlineGame(string ip = "127.0.0.1", int port = 25000)
         {
             JoinOnlineGame(new IPEndPoint(IPAddress.Parse(ip), port));
         }
 
-        public void JoinOnlineGame(IPEndPoint endpoint)
+        private void Update()
         {
-            NetPeerConfiguration conf = new(APP_ID);
-            conf.EnableMessageType(NetIncomingMessageType.VerboseDebugMessage);
-            conf.EnableMessageType(NetIncomingMessageType.DebugMessage);
-            conf.EnableMessageType(NetIncomingMessageType.WarningMessage);
-            conf.EnableMessageType(NetIncomingMessageType.ErrorMessage);
-            joiningClient = new NetClient(conf);
-            joiningClient.Start();
+            ServerRelay.NextMessage(Scene.Menu);
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                PopupHandler.CloseActivePopup();
+                ServerRelay.Disconnect("Cancelled");
+            }
+        }
+    }
 
-            //Create approval message
-            NetOutgoingMessage approval = joiningClient.CreateMessage();
+    public record InitMatchMessage : Packet
+    {
+        public override void Consume() => MatchStarter.StartOnlineGame(Clients, Settings, InRace, CurAutoStartTime);
+        
+        private readonly Dictionary<Guid, Client> Clients = new();
+        private readonly MatchSettings Settings;
+        private readonly bool InRace;
+        private readonly float CurAutoStartTime;
 
-            ClientInfo info = new(GameVersion.AS_FLOAT, GameVersion.IS_TESTING);
-            var thing = Newtonsoft.Json.JsonConvert.SerializeObject(info);
-            approval.Write(thing);
+        public InitMatchMessage(NetBuffer buffer)
+        {
+            int clientCount = buffer.ReadInt32();
+            for (int i = 0; i < clientCount; i++)
+            {
+                Guid guid = buffer.ReadGuid();
+                string name = buffer.ReadString();
 
-            //Debug.Log(approval.ToString());
-            joiningClient.Connect(endpoint, approval);
+                Dictionary<ControlType, Data.Player> players = new();
+                int playerCount = buffer.ReadInt32();
+                for (int j = 0; j < playerCount; j++)
+                {
+                    ControlType ctrlType = (ControlType)buffer.ReadInt32();
+                    byte readyToRace = buffer.ReadByte();
+                    int characterId = buffer.ReadInt32();
 
-            popupHandler.OpenPopup(connectingPopupPrefab);
+                    players.Add(ctrlType, new Data.Player(readyToRace != 0, characterId));
+                }
 
-            activeConnectingPopup = FindObjectOfType<UI.PopupConnecting>();
+                Clients.Add(guid, new Client(name, players));
+            }
+
+            //Match settings
+            Settings = new()
+            {
+                StageId = buffer.ReadInt32(),
+                Laps = buffer.ReadInt32(),
+                AICount = buffer.ReadInt32(),
+                AISkill = (AISkillLevel)buffer.ReadInt32(),
+                AutoStartTime = buffer.ReadInt32(),
+                AutoStartMinPlayers = buffer.ReadInt32(),
+                AutoReturnTime = buffer.ReadInt32(),
+                VoteRatio = buffer.ReadFloat(),
+                StageRotationMode = (StageRotationMode)buffer.ReadInt32()
+            };
+
+            InRace = buffer.ReadByte() != 0;
+            CurAutoStartTime = buffer.ReadFloat();
         }
     }
 }

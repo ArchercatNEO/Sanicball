@@ -1,13 +1,14 @@
-﻿using Sanicball.Data;
-using Sanicball.Logic;
-using SanicballCore;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
+using Sanicball.Data;
+using SanicballCore;
 
 namespace Sanicball.UI
 {
     public class MatchSettingsDisplayPanel : MonoBehaviour
     {
+        private static MatchSettingsDisplayPanel? Instance;
+        
         [Header("Fields")]
         public Text stageName;
 
@@ -18,27 +19,29 @@ namespace Sanicball.UI
 
         private Vector3 targetStageCamPos;
 
-        [SerializeField]
-        private Animation settingsChangedAnimation = null;
+        [SerializeField] private Animation settingsChangedAnimation = null;
 
-        [SerializeField]
-        private Camera stageLayoutCamera = null;
-
-        private MatchManager manager;
+        [SerializeField] private Camera stageLayoutCamera = null;
 
         private void Start()
         {
-            manager = FindObjectOfType<MatchManager>();
-            manager.MatchSettingsChanged += Manager_MatchSettingsChanged;
-
-            //Invoke callback immediately to set initial settings
-            Manager_MatchSettingsChanged(this, System.EventArgs.Empty);
+            Instance = this;
+            Instance.UpdateSettingsInternal(Globals.settings);
         }
 
-        private void Manager_MatchSettingsChanged(object sender, System.EventArgs e)
+        public static void UpdateSettings(MatchSettings settings)
         {
-            MatchSettings s = manager.CurrentSettings;
+            if (Instance is null)
+            {
+                Debug.LogError("Idk");
+                return;
+            }
 
+            Instance.UpdateSettingsInternal(settings);
+        }
+
+        private void UpdateSettingsInternal(MatchSettings s)
+        {
             targetStageCamPos = new Vector3(s.StageId * 50, stageLayoutCamera.transform.position.y, stageLayoutCamera.transform.position.z);
             stageName.text = ActiveData.Stages[s.StageId].name;
             stageImage.sprite = ActiveData.Stages[s.StageId].picture;
@@ -68,7 +71,23 @@ namespace Sanicball.UI
 
         private void OnDestroy()
         {
-            manager.MatchSettingsChanged -= Manager_MatchSettingsChanged;
+            Instance = null;
+        }
+    }
+
+    public record SettingsChangedMessage : Packet
+    {
+        private readonly MatchSettings matchSettings;
+
+        public SettingsChangedMessage(MatchSettings settings)
+        {
+            matchSettings = settings;
+        }
+
+        public override void Consume()
+        {
+            Globals.settings = matchSettings;
+            MatchSettingsDisplayPanel.UpdateSettings(matchSettings);
         }
     }
 }

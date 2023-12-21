@@ -6,7 +6,7 @@ namespace Sanicball
     {
         public float time = 0.5f;
         public float menuWidth = 400f;
-        public Canvas canvas;
+        public UnityEngine.Canvas canvas;
 
         private bool resized = false;
         private float pos = 0f;

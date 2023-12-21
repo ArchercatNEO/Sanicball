@@ -16,7 +16,8 @@ namespace Sanicball.UI
             {
                 timer -= Time.deltaTime;
             }
-            else {
+            else
+            {
                 if (spin == 0f) spin = 0.01f;
                 if (spin < 1000000f)
                 {

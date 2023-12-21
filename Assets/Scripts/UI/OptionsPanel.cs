@@ -6,9 +6,9 @@ namespace Sanicball.UI
 {
     public class OptionsPanel : MonoBehaviour
     {
-		[Header("Online")]
+        [Header("Online")]
         public Text nickname;
-		public Text serverListURL;
+        public Text serverListURL;
         public Text gameJoltAccount;
 
         [Header("Display")]
@@ -41,24 +41,37 @@ namespace Sanicball.UI
 
         private GameSettings tempSettings = new();
 
+        public static OptionsPanel? Instance;
+
+        private void Start()
+        {
+            Instance = this;
+            RevertToCurrent();
+        }
+
+        private void OnDestroy()
+        {
+            Instance = null;
+        }
+
         public void Apply()
         {
-            ActiveData.GameSettings.CopyValues(tempSettings);
-            ActiveData.GameSettings.Apply(true);
+            GameSettings.Instance = tempSettings;
+            GameSettings.Instance.Apply(true);
         }
 
         public void RevertToCurrent()
         {
-            tempSettings.CopyValues(ActiveData.GameSettings);
+            tempSettings = GameSettings.Instance;
             UpdateFields();
         }
 
         public void ResetToDefault()
         {
-			//Do not reset nickname!!
-			var nickname = tempSettings.nickname;
+            //Do not reset nickname!!
+            var nickname = tempSettings.nickname;
             tempSettings = new GameSettings();
-			tempSettings.nickname = nickname;
+            tempSettings.nickname = nickname;
             UpdateFields();
         }
 
@@ -67,7 +80,7 @@ namespace Sanicball.UI
             if (!gameObject.activeInHierarchy) return;
 
             nickname.text = tempSettings.nickname;
-			serverListURL.text = tempSettings.serverListURL;
+            serverListURL.text = tempSettings.serverListURL;
             gameJoltAccount.text = (!string.IsNullOrEmpty(tempSettings.gameJoltToken)) ? "Linked as " + tempSettings.gameJoltUsername : "Not linked";
 
             if (Screen.resolutions.Length > 0)
@@ -93,18 +106,13 @@ namespace Sanicball.UI
             reflectionQuality.text = tempSettings.reflectionQuality.ToString();
             eSportsReady.text = tempSettings.eSportsReady ? "Born ready" : "No way";
 
-			controlMode.text = tempSettings.useOldControls ? "Rotate manually (Precise)" : "Follow velocity (Intuitive)";
+            controlMode.text = tempSettings.useOldControls ? "Rotate manually (Precise)" : "Follow velocity (Intuitive)";
             cameraSpeedMouse.text = tempSettings.oldControlsMouseSpeed.ToString("n1");
             cameraSpeedKeyboard.text = tempSettings.oldControlsKbSpeed.ToString("n1");
 
             soundVolume.text = tempSettings.soundVolume <= 0f ? "Off" : (tempSettings.soundVolume * 10f).ToString("n0");
             music.text = tempSettings.music ? "On" : "Off";
             fast.text = tempSettings.fastMusic ? "On" : "Off";
-        }
-
-        private void Start()
-        {
-            RevertToCurrent();
         }
 
         #region Value changers
@@ -115,11 +123,11 @@ namespace Sanicball.UI
             UpdateFields();
         }
 
-		public void SetServerListURL(string url)
-		{
-			tempSettings.serverListURL = url;
-			UpdateFields ();
-		}
+        public void SetServerListURL(string url)
+        {
+            tempSettings.serverListURL = url;
+            UpdateFields();
+        }
 
         public void SetGameJoltInfo(string username, string token)
         {
@@ -134,10 +142,10 @@ namespace Sanicball.UI
             return tempSettings.nickname;
         }
 
-		public string GetServerListURL()
-		{
-			return tempSettings.serverListURL;
-		}
+        public string GetServerListURL()
+        {
+            return tempSettings.serverListURL;
+        }
 
         public string GetGameJoltUsername()
         {
@@ -185,55 +193,27 @@ namespace Sanicball.UI
 
         public void AaUp()
         {
-            switch (tempSettings.aa)
+            tempSettings.aa = tempSettings.aa switch
             {
-                case 0:
-                    tempSettings.aa = 2;
-                    break;
-
-                case 2:
-                    tempSettings.aa = 4;
-                    break;
-
-                case 4:
-                    tempSettings.aa = 8;
-                    break;
-
-                case 8:
-                    tempSettings.aa = 0;
-                    break;
-
-                default:
-                    tempSettings.aa = 0;
-                    break;
-            }
+                0 => 2,
+                2 => 4,
+                4 => 8,
+                8 => 0,
+                _ => 0,
+            };
             UpdateFields();
         }
 
         public void AaDown()
         {
-            switch (tempSettings.aa)
+            tempSettings.aa = tempSettings.aa switch
             {
-                case 0:
-                    tempSettings.aa = 8;
-                    break;
-
-                case 2:
-                    tempSettings.aa = 0;
-                    break;
-
-                case 4:
-                    tempSettings.aa = 2;
-                    break;
-
-                case 8:
-                    tempSettings.aa = 4;
-                    break;
-
-                default:
-                    tempSettings.aa = 0;
-                    break;
-            }
+                0 => 8,
+                2 => 0,
+                4 => 2,
+                8 => 4,
+                _ => 0,
+            };
             UpdateFields();
         }
 

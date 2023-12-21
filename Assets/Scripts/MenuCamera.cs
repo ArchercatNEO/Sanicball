@@ -57,9 +57,7 @@ namespace Sanicball
 
         private void ChangePath()
         {
-            currentPath++;
-            if (currentPath >= paths.Length)
-                currentPath = 0;
+            currentPath = (currentPath + 1) % paths.Length;
             transform.position = paths[currentPath].startPoint.position;
 
             //TODO: code betr

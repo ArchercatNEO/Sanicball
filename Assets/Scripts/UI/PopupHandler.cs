@@ -2,43 +2,60 @@
 
 namespace Sanicball.UI
 {
+    //TODO make static somehow
     public class PopupHandler : MonoBehaviour
     {
-        public CanvasGroup groupDisabledOnPopup;
-        public Transform targetParent;
-        private Popup activePopup;
+        private static PopupHandler? Instance;
+        private static Popup? activePopup;
 
-        public void OpenPopup(Popup popupPrefab)
+        public static void OpenPopup(Popup popupPrefab)
         {
+            if (Instance == null)
+            {
+                Debug.LogError("PopupHandler not found, cannot open popup");
+                return;
+            }
+
             if (activePopup != null)
             {
                 //Closing old popup
                 activePopup.Close();
-                groupDisabledOnPopup.interactable = true;
+                Instance.groupDisabledOnPopup.interactable = true;
             }
             //Opening new popup
             activePopup = Instantiate(popupPrefab);
-            activePopup.transform.SetParent(targetParent, false);
+            activePopup.transform.SetParent(Instance.targetParent, false);
             activePopup.onClose += () =>
             {
-                groupDisabledOnPopup.interactable = true;
+                Instance.groupDisabledOnPopup.interactable = true;
             };
-            groupDisabledOnPopup.interactable = false;
+            Instance.groupDisabledOnPopup.interactable = false;
         }
 
-        public void CloseActivePopup()
+        public static void CloseActivePopup()
         {
-            activePopup.Close();
+            if (Instance == null)
+            {
+                Debug.LogError("PopupHandler not found, cannot close popup");
+                return;
+            }
+
+            activePopup?.Close();
             activePopup = null;
-            groupDisabledOnPopup.interactable = true;
+            Instance.groupDisabledOnPopup.interactable = true;
         }
+
+        [SerializeField] private CanvasGroup groupDisabledOnPopup;
+        [SerializeField] private Transform targetParent;
 
         private void Start()
         {
+            Instance = this;
         }
 
-        private void Update()
+        private void OnDestroy()
         {
+            Instance = null;
         }
     }
 }

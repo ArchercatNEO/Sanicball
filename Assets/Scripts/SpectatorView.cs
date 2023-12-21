@@ -1,103 +1,46 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using UnityEngine.UI;
 using Sanicball.Gameplay;
 using Sanicball.Logic;
 using Sanicball.UI;
-using SanicballCore;
-using UnityEngine;
-using UnityEngine.UI;
+using Sanicball.Data;
+using Sanicball.Ball;
 
+//!Todo, rewrite to not depend on active cameras
 namespace Sanicball
 {
     public class SpectatorView : MonoBehaviour
     {
-        [SerializeField]
-        private OmniCamera omniCameraPrefab = null;
-        [SerializeField]
-        private PlayerUI playerUIPrefab = null;
+        private static SpectatorView prefab => Resources.Load<SpectatorView>("Prefabs/Instantiated/SpectatorView");
+        public static SpectatorView Create()
+        {
+            SpectatorView instance = Instantiate(prefab);
+            return instance;
+        }
 
-        [SerializeField]
-        private Text spectatingField = null;
-
-        private RacePlayer target;
+        //! Enable/Disable camera/UI when switching
+        [SerializeField] private Text spectatingField = null;
         private OmniCamera activeOmniCamera;
         private PlayerUI activePlayerUI;
 
         private bool leftPressed;
         private bool rightPressed;
-
-        public RacePlayer Target
-        {
-            get
-            {
-                return target;
-            }
-            set
-            {
-                target = value;
-                spectatingField.text = "Spectating <b>" + target.Name + "</b>";
-
-                if (activeOmniCamera == null)
-                {
-                    activeOmniCamera = Instantiate(omniCameraPrefab);
-                }
-                activeOmniCamera.Target = target.Transform.GetComponent<Rigidbody>();
-
-                if (activePlayerUI == null)
-                {
-                    activePlayerUI = Instantiate(playerUIPrefab);
-                    activePlayerUI.TargetManager = TargetManager;
-                }
-                activePlayerUI.TargetCamera = activeOmniCamera.AttachedCamera;
-                activePlayerUI.TargetPlayer = target;
-            }
-        }
-        public RaceManager TargetManager { get; set; }
-
-        private void Start()
-        {
-        }
-
+        private int index = 0;
+        
+        //Since this is only done online (no AIBall) when there are no players (no PlayerBall)
+        //We only ever need to handle RemoteBalls
         private void Update()
         {
-            if (GameInput.MovementVector(ControlType.Keyboard).x < 0)
-            {
-                if (!leftPressed)
-                {
-                    int prevIndex = FindIndex() - 1;
-                    if (prevIndex < 0) prevIndex = TargetManager.PlayerCount - 1;
+            AbstractBall player = RaceManager.players[index];
+            spectatingField.text = "Spectating <b>" + player.name + "</b>";
+            activePlayerUI = player.playerUI;
+            
+            float xMove = ControlType.Keyboard.MovementVector().x;
+            if (xMove < 0 && !leftPressed) { index = (index + RaceManager.players.Count - 1) % RaceManager.players.Count; }
+            if (xMove > 0 && !rightPressed) { index = (index + 1) % RaceManager.players.Count; }
 
-                    Target = TargetManager[prevIndex];
-
-                    leftPressed = true;
-                }
-            }
-            else if (leftPressed) leftPressed = false;
-
-            if (GameInput.MovementVector(ControlType.Keyboard).x > 0)
-            {
-                if (!rightPressed)
-                {
-                    int nextIndex = FindIndex() + 1;
-                    if (nextIndex >= TargetManager.PlayerCount) nextIndex = 0;
-
-                    Target = TargetManager[nextIndex];
-
-                    rightPressed = true;
-                }
-            }
-            else if (rightPressed) rightPressed = false;
-        }
-
-        private int FindIndex()
-        {
-            for (int i = 0; i < TargetManager.PlayerCount; i++)
-            {
-                if (TargetManager[i] == Target)
-                {
-                    return i;
-                }
-            }
-            return -1;
+            leftPressed = xMove < 0;
+            rightPressed = xMove > 0;
         }
     }
 }

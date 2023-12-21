@@ -1,17 +1,23 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Sanicball
 {
     public class MouseUnlocker : MonoBehaviour
     {
-        private void Start()
+        private static readonly MouseUnlocker prefab; //Resource.Load
+
+        /// <summary>
+        /// This way we guarantee there will always be a one and only MouseUnlocker
+        /// </summary>
+        /* static MouseUnlocker()
         {
-            if (FindObjectsOfType<MouseUnlocker>().Length > 1)
+            Instantiate(prefab);
+            SceneManager.activeSceneChanged += (sender, e) =>
             {
-                Destroy(gameObject);
-            }
-            DontDestroyOnLoad(gameObject);
-        }
+                Instantiate(prefab);
+            };
+        } */
 
         private void Update()
         {

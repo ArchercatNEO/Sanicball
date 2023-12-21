@@ -1,33 +1,33 @@
-﻿using System;
-using System.Collections;
-using Sanicball.Data;
-using SanicballCore;
+﻿using Sanicball.Data;
 using UnityEngine;
 
 namespace Sanicball.Gameplay
 {
     public class PivotCamera : MonoBehaviour, IBallCamera
     {
-        public Rigidbody Target { get; set; }
+        private static PivotCamera prefab;
+        public static PivotCamera Create(ControlType ctrl)
+        {
+            PivotCamera instance = Instantiate(prefab);
+            instance.CtrlType = ctrl;
+            instance.UseMouse = ctrl == ControlType.Keyboard;
+            return instance;
+        }
+
         public Camera AttachedCamera { get { return attachedCamera; } }
         public ControlType CtrlType { get; set; }
         public bool UseMouse { get; set; }
 
-        [SerializeField]
-        private Camera attachedCamera;
-        [SerializeField]
-        private Vector3 defaultCameraPosition = new(6, 2.8f, 0);
+        [SerializeField] private Camera attachedCamera;
+        [SerializeField] private Vector3 defaultCameraPosition = new(6, 2.8f, 0);
 
         private float cameraDistance = 1;
         private float cameraDistanceTarget = 1;
 
         //From smoothmouselook
-        [SerializeField]
-        private int smoothing = 2;
-        [SerializeField]
-        public int yMin = -85;
-        [SerializeField]
-        public int yMax = 85;
+        [SerializeField] private int smoothing = 2;
+        [SerializeField] public int yMin = -85;
+        [SerializeField] public int yMax = 85;
 
         private float xtargetRotation = 90;
         private float ytargetRotation = 0;
@@ -50,25 +50,19 @@ namespace Sanicball.Gameplay
         {
             if (UseMouse)
             {
-                sensitivityMouse = ActiveData.GameSettings.oldControlsMouseSpeed;
-                sensitivityKeyboard = ActiveData.GameSettings.oldControlsKbSpeed;
+                sensitivityMouse = GameSettings.Instance.oldControlsMouseSpeed;
+                sensitivityKeyboard = GameSettings.Instance.oldControlsKbSpeed;
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
             }
         }
 
-        private void Update()
+        public Quaternion RotateCamera(Rigidbody Target)
         {
-            var bci = Target.GetComponent<BallControlInput>();
-            if (bci)
-            {
-                bci.LookDirection = transform.rotation * Quaternion.Euler(0, -90, 0);
-            }
-
             //Mouse look
             if (UseMouse)
             {
-                if (Input.GetMouseButtonDown(0) && !GameInput.KeyboardDisabled && !UI.PauseMenu.GamePaused)
+                if (Input.GetMouseButtonDown(0) && ControlTypeImpl.KeyboardEnabled && !UI.PauseMenu.GamePaused)
                 {
                     Cursor.lockState = CursorLockMode.Locked;
                     Cursor.visible = false;
@@ -91,7 +85,7 @@ namespace Sanicball.Gameplay
             }
 
             //Keyboard controls
-            var cameraVector = GameInput.CameraVector(CtrlType);
+            Vector2 cameraVector = CtrlType.CameraVector();
 
             /*if (cameraVector.x < 0)
                 xtargetRotation -= 20 * sensitivityKeyboard * Time.deltaTime;
@@ -106,19 +100,11 @@ namespace Sanicball.Gameplay
             ytargetRotation -= cameraVector.y * 20 * sensitivityKeyboard * Time.deltaTime;
 
             ytargetRotation = Mathf.Clamp(ytargetRotation, yMin, yMax);
-            xtargetRotation = xtargetRotation % 360;
-            ytargetRotation = ytargetRotation % 360;
+            xtargetRotation %= 360;
+            ytargetRotation %= 360;
 
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, xtargetRotation, ytargetRotation), Time.deltaTime * 10 / smoothing);
-        }
-
-        private void LateUpdate()
-        {
-            if (Target == null)
-            {
-                Destroy(gameObject);
-                return;
-            }
+            Quaternion pivotRotation = Quaternion.Euler(0, xtargetRotation, ytargetRotation);
+            transform.localRotation = Quaternion.Lerp(transform.localRotation, pivotRotation, Time.deltaTime * 10 / smoothing);
 
             //Zooming
             cameraDistanceTarget = Mathf.Clamp(cameraDistanceTarget - (Input.GetAxis("Mouse ScrollWheel") * 2), 0, 10);
@@ -131,6 +117,8 @@ namespace Sanicball.Gameplay
 
             //Set camera FOV to get higher with more velocity
             AttachedCamera.fieldOfView = Mathf.Lerp(AttachedCamera.fieldOfView, Mathf.Min(60f + (Target.velocity.magnitude), 100f), Time.deltaTime * 4);
+
+            return transform.rotation * Quaternion.Euler(0, -90, 0);
         }
 
         private void OnDestroy()

@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Sanicball.Logic;
+﻿using System.Linq;
+using Sanicball.Data;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,18 +7,16 @@ namespace Sanicball.UI
 {
     public class ClientListEntry : MonoBehaviour
     {
-        [SerializeField]
-        private Text nameField = null;
-        [SerializeField]
-        private Text playerCountField = null;
+        [SerializeField] private Text nameField = null;
+        [SerializeField] private Text playerCountField = null;
 
-        public void FillFields(MatchClient client, MatchManager manager)
+        public void FillFields(Client client)
         {
-            nameField.text = client.Name;
+            nameField.text = client.name;
 
-            List<MatchPlayer> players = manager.Players.Where(a => a.ClientGuid == client.Guid).ToList();
+            var players = client.players;
             int playersTotal = players.Count();
-            int playersReady = players.Count(a => a.ReadyToRace);
+            int playersReady = players.Count(a => a.Value.readyToRace);
 
             if (playersTotal == 0)
             {

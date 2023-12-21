@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Sanicball
 {
-    [ExecuteInEditMode]
+    [ExecuteInEditMode, RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class Water : MonoBehaviour
     {
         public float noiseScaleX = 1f;
@@ -18,25 +18,17 @@ namespace Sanicball
 
         public float speed = 1;
 
-        public float[,] points;
         private float t = 0;
 
         private MeshFilter meshFilter;
-        private MeshRenderer meshRenderer;
 
         // Use this for initialization
         private void Start()
         {
             meshFilter = GetComponent<MeshFilter>();
-            meshRenderer = GetComponent<MeshRenderer>();
-            if (meshFilter == null)
-            {
-                meshFilter = gameObject.AddComponent<MeshFilter>();
-            }
-            if (meshRenderer == null)
-            {
-                meshRenderer = gameObject.AddComponent<MeshRenderer>();
-            }
+            Mesh m = meshFilter.sharedMesh ?? new Mesh();
+            m.name = "waterMesh";
+            meshFilter.sharedMesh = m;
         }
 
         // Update is called once per frame
@@ -45,7 +37,7 @@ namespace Sanicball
             t += Time.deltaTime * 10f;
             t = Time.time * speed;
 
-            points = new float[triangleCount, triangleCount];
+            float[,] points = new float[triangleCount, triangleCount];
             for (var x = 0; x < points.GetLength(0); x++)
             {
                 for (var y = 0; y < points.GetLength(1); y++)
@@ -93,18 +85,11 @@ namespace Sanicball
                     }
                 }
             }
-
-            Mesh m = meshFilter.sharedMesh;
-            if (m == null)
-            {
-                m = new Mesh();
-            }
-            m.name = "waterMesh";
-            m.vertices = verts.ToArray();
-            m.triangles = tris.ToArray();
-            m.uv = uv.ToArray();
-            m.RecalculateNormals();
-            meshFilter.sharedMesh = m;
+            
+            meshFilter.sharedMesh.vertices = verts.ToArray();
+            meshFilter.sharedMesh.triangles = tris.ToArray();
+            meshFilter.sharedMesh.uv = uv.ToArray();
+            meshFilter.sharedMesh.RecalculateNormals();
         }
     }
 }

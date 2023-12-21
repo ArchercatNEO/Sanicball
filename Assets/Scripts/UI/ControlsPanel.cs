@@ -1,4 +1,4 @@
-﻿using Sanicball.Data;
+﻿using Sanicball.IO;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,12 +28,12 @@ namespace Sanicball.UI
 
         public void Apply()
         {
-            ActiveData.Keybinds.CopyValues(tempKeybinds);
+            KeybindCollection.Instance = tempKeybinds;
         }
 
         public void RevertToCurrent()
         {
-            tempKeybinds.CopyValues(ActiveData.Keybinds);
+            tempKeybinds = KeybindCollection.Instance;
             UpdateFields();
         }
 
@@ -84,7 +84,7 @@ namespace Sanicball.UI
 
         private string Str(Keybind keybind)
         {
-            return GameInput.GetKeyCodeName(tempKeybinds[keybind]);
+            return KeybindCollection.GetKeyCodeName(tempKeybinds[keybind]);
         }
     }
 }

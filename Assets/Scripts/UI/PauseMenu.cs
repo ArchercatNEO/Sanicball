@@ -1,4 +1,5 @@
 ﻿using Sanicball.Logic;
+using Sanicball.Scenes;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -7,21 +8,46 @@ namespace Sanicball.UI
 {
     public class PauseMenu : MonoBehaviour
     {
+        public static bool GamePaused { get { return GameObject.FindWithTag(pauseTag); } }
+        
         private const string pauseTag = "Pause";
+        private static PauseMenu prefab => Resources.Load<PauseMenu>("Prefabs/User Interface/PauseMenu");
+        private static PauseMenu? Instance;
 
-        [SerializeField]
-        private GameObject firstSelected = null;
 
-        [SerializeField]
-        private Button contextSensitiveButton;
-        [SerializeField]
-        private Text contextSensitiveButtonLabel;
+        [SerializeField] private GameObject firstSelected = null;
+        [SerializeField] private Button contextSensitiveButton;
+        [SerializeField] private Text contextSensitiveButtonLabel;
 
         private bool mouseWasLocked;
 
-        public static bool GamePaused { get { return GameObject.FindWithTag(pauseTag); } }
+        public void MatchSettings()
+        {
+            LobbyReferences.MatchSettingsPanel.Show();
+            Close();
+        }
 
-        public bool OnlineMode { get; set; }
+        public void BackToLobby()
+        {
+            new LoadLobbyMessage().Send();
+            Close();
+        }
+
+        public void QuitMatch()
+        {
+            ServerRelay.Disconnect("Client left");
+            SceneManager.LoadScene(Constants.menuName);
+        }
+
+        public void Close()
+        {
+            if (mouseWasLocked)
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Cursor.visible = false;
+            }
+            Destroy(gameObject);
+        }
 
         private void Awake()
         {
@@ -35,18 +61,20 @@ namespace Sanicball.UI
 
         private void Start()
         {
+            Instance = this;
+
             UnityEngine.EventSystems.EventSystem.current.SetSelectedGameObject(firstSelected);
-            if (!OnlineMode)
+            if (!ServerRelay.OnlineMode)
             {
                 Time.timeScale = 0;
                 AudioListener.pause = true;
             }
 
-            if (SceneManager.GetActiveScene().name == "Lobby")
+            if (SceneManager.GetActiveScene().name == Constants.lobbyName)
             {
                 contextSensitiveButtonLabel.text = "Change match settings";
                 contextSensitiveButton.onClick.AddListener(MatchSettings);
-                if (OnlineMode)
+                if (ServerRelay.OnlineMode)
                 {
                     contextSensitiveButton.interactable = false;
                 }
@@ -58,57 +86,31 @@ namespace Sanicball.UI
             }
         }
 
-        public void Close()
+        //TODO get this thing to update without any pause menu
+        private void Update()
         {
-            if (mouseWasLocked)
+            //TODO refine the check to include what scene we're in
+            if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.JoystickButton7))
             {
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
+                if (Instance is null)
+                {
+                    Instance = Instantiate(prefab);
+                }
+                else
+                {
+                    Instance.Close();
+                }
             }
-            Destroy(gameObject);
         }
 
         private void OnDestroy()
         {
-            if (!OnlineMode)
+            Instance = null;
+
+            if (!ServerRelay.OnlineMode)
             {
                 Time.timeScale = 1;
                 AudioListener.pause = false;
-            }
-        }
-
-        public void MatchSettings()
-        {
-            LobbyReferences.Active.MatchSettingsPanel.Show();
-            Close();
-        }
-
-        public void BackToLobby()
-        {
-            var matchManager = FindObjectOfType<MatchManager>();
-            if (matchManager)
-            {
-                matchManager.RequestLoadLobby();
-                Close();
-            }
-            else
-            {
-                Debug.LogError("Cannot return to lobby: no match manager found to handle the request. Something is broken!");
-            }
-        }
-
-        public void QuitMatch()
-        {
-            var matchManager = FindObjectOfType<MatchManager>();
-            if (matchManager)
-            {
-                matchManager.QuitMatch();
-            }
-            else
-            {
-                //Backup solution in case the match manager bugs out for whatever reason
-                //Why would it ever bug out? I have no clue
-                SceneManager.LoadScene("Menu");
             }
         }
     }

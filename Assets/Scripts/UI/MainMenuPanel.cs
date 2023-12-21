@@ -6,10 +6,8 @@ namespace Sanicball.UI
 {
     public class MainMenuPanel : MonoBehaviour
     {
-        [SerializeField]
-        private Text versionNameField = null;
-        [SerializeField]
-        private Text taglineField = null;
+        [SerializeField] private Text versionNameField = null;
+        [SerializeField] private Text taglineField = null;
 
         private SlideCanvasGroup activePanel;
 

@@ -8,19 +8,21 @@ namespace Sanicball.Gameplay
     public class SpeedTrail : MonoBehaviour
     {
         private TrailRenderer tr;
+        private Rigidbody rb;
 
         // Use this for initialization
         private void Start()
         {
             tr = GetComponent<TrailRenderer>();
-            tr.enabled = ActiveData.GameSettings.trails;
+            tr.enabled = GameSettings.Instance.trails;
+            tr.gameObject.SetActive(GameSettings.Instance.trails);
+
+            rb = GetComponent<Rigidbody>();
         }
 
         private void Update()
         {
-            if (!tr.enabled) return;
-
-            float spd = Mathf.Max(0, GetComponent<Rigidbody>().velocity.magnitude - 60);
+            float spd = Mathf.Max(0, rb.velocity.magnitude - 60);
             tr.time = Mathf.Clamp(spd / 20, 0, 5);
             tr.startWidth = Mathf.Clamp(spd / 80, 0, 0.8f);
             tr.material.mainTextureScale = new Vector2(tr.time * 100, 1);

@@ -1,20 +1,21 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Sanicball
 {
     public static class UISound
     {
-        private static AudioSource instance;
+        private static readonly AudioSource Instance;
+
+        static UISound()
+        {
+            Instance = new GameObject("UI Sound (Static)").AddComponent<AudioSource>();
+            Object.DontDestroyOnLoad(Instance);
+        }
 
         public static void Play(AudioClip clip)
         {
-            if (!instance)
-            {
-                instance = new GameObject("UI Sound").AddComponent<AudioSource>();
-            }
-            instance.clip = clip;
-            instance.Play();
+            Instance.clip = clip;
+            Instance.Play();
         }
     }
 }

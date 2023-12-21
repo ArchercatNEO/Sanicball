@@ -15,7 +15,7 @@
         "**/*.pdf":true,
         "**/*.mid":true,
         "**/*.midi":true,
-        "**/*.wav":true,
+        "**/*.wav":false,
         "**/*.gif":true,
         "**/*.ico":true,
         "**/*.jpg":true,
@@ -40,7 +40,7 @@
         "**/*.flare":true,
         "**/*.mat":true,
         "**/*.meta":true,
-        "**/*.prefab":true,
+        "**/*.prefab":false,
         "**/*.unity":true,
         "build/":true,
         "Build/":true,
@@ -52,5 +52,5 @@
         "temp/":true,
         "Temp/":true
     },
-    "dotnet.preferCSharpExtension": true
+    "dotnet.preferCSharpExtension": true,
 }

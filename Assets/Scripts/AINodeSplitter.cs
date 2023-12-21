@@ -5,36 +5,35 @@ namespace Sanicball
 {
     public class AINodeSplitter : AINode
     {
-        [SerializeField]
-        private AINodeSplitterTarget[] targets;
+        [SerializeField] private AINodeSplitterTarget[] targets = {};
+        private readonly List<AINodeSplitterTarget> weighted = new();
+        
+        private AINodeSplitter()
+        {
+            //Pick a random next node based on their weights
+            foreach (AINodeSplitterTarget node in targets)
+                for (int j = 0; j < node.Weight; j++) 
+                    weighted.Add(node);
+        }
 
         public override AINode NextNode
         {
             get
             {
-                //Pick a random next node based on their weights
-                List<int> choices = new();
-                for (int i = 0; i < targets.Length; i++)
-                {
-                    for (int j = 0; j < targets[i].Weight; j++) choices.Add(i);
-                }
-                int randomChoice = Random.Range(0, choices.Count);
-                return targets[choices[randomChoice]].Node;
+                int randomChoice = Random.Range(0, weighted.Count);
+                return weighted[randomChoice].Node;
             }
         }
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.yellow;
-
             Gizmos.DrawSphere(transform.position, 3f);
 
             foreach (AINodeSplitterTarget target in targets)
             {
-                if (target.Node != null)
-                {
-                    Gizmos.DrawLine(transform.position, target.Node.transform.position);
-                }
+                if (target.Node is null) continue;
+                Gizmos.DrawLine(transform.position, target.Node.transform.position);
             }
         }
     }
@@ -42,12 +41,10 @@ namespace Sanicball
     [System.Serializable]
     public class AINodeSplitterTarget
     {
-        [SerializeField]
-        private AINode node = null;
-        [SerializeField]
-        private int weight = 1;
+        [SerializeField] private AINode? node = null;
+        [SerializeField] private int weight = 1;
 
-        public AINode Node { get { return node; } }
+        public AINode? Node { get { return node; } }
         public int Weight { get { return weight; } }
     }
 }
