@@ -1,0 +1,92 @@
+[gd_scene load_steps=10 format=3 uid="uid://b0vnhh1ow6ecl"]
+
+[ext_resource type="Material" uid="uid://clt2irqu13knl" path="res://Characters/C01-Sanic/Sanic.tres" id="1_4vyej"]
+[ext_resource type="Script" path="res://Scenes/Intro+Menu/MenuCamera.cs" id="1_gguv2"]
+[ext_resource type="Script" path="res://Scenes/Intro+Menu/MenuPath.cs" id="2_2esyw"]
+[ext_resource type="Material" uid="uid://cnrybb57xaqin" path="res://Characters/C02-Knackles/Knackles.tres" id="2_pedrv"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5umww"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o78tj"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_yf5th"]
+material = SubResource("StandardMaterial3D_o78tj")
+size = Vector3(60, 2, 60)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_lojc7"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_xgwie"]
+material = ExtResource("1_4vyej")
+
+[node name="Main" type="Node"]
+
+[node name="Menu2D" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Menu3D" type="Node3D" parent="."]
+
+[node name="Ground" type="StaticBody3D" parent="Menu3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00744236, -1, 0.00369409)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Menu3D/Ground"]
+shape = SubResource("BoxShape3D_5umww")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Menu3D/Ground"]
+mesh = SubResource("BoxMesh_yf5th")
+
+[node name="Lighting" type="Node3D" parent="Menu3D"]
+
+[node name="TopLight" type="SpotLight3D" parent="Menu3D/Lighting"]
+transform = Transform3D(-0.999204, 1.10745e-09, -0.0399051, -0.0250676, 0.778068, 0.62768, 0.0310489, 0.62818, -0.777448, 9.15307, 30.2551, -14.9669)
+spot_range = 30.638
+spot_angle = 20.0
+
+[node name="KeyLight" type="SpotLight3D" parent="Menu3D/Lighting"]
+transform = Transform3D(0.921191, 0.124831, -0.368542, 0.0206905, 0.930088, 0.366753, 0.388559, -0.345475, 0.854207, -23.8208, 30.5314, 57.2341)
+spot_range = 91.92
+spot_angle = 16.93
+
+[node name="FillLight" type="SpotLight3D" parent="Menu3D/Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -114.818, 0, -236.666)
+
+[node name="Camera3D" type="Camera3D" parent="Menu3D" node_paths=PackedStringArray("ball")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 13.002, 33.403)
+script = ExtResource("1_gguv2")
+ball = NodePath("../Ball")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Menu3D/Camera3D"]
+reset_on_save = false
+
+[node name="CameraPaths" type="Node3D" parent="Menu3D/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.90735e-06, -12.1342, -29.9193)
+
+[node name="Sanic" type="Node3D" parent="Menu3D/Camera3D/CameraPaths"]
+script = ExtResource("2_2esyw")
+CharacterMat = ExtResource("1_4vyej")
+Start = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100, 100)
+metadata/characterMat = ExtResource("1_4vyej")
+metadata/Start = Vector3(20, 20, 20)
+metadata/End = Vector3(1000, 1000, 1000)
+
+[node name="Knackles" type="Node3D" parent="Menu3D/Camera3D/CameraPaths"]
+metadata/characterMat = ExtResource("2_pedrv")
+metadata/Start = Vector3(30, 30, 30)
+metadata/End = Vector3(25, 25, 25)
+
+[node name="Ball" type="StaticBody3D" parent="Menu3D"]
+transform = Transform3D(-0.976198, 0, 0.216882, 0, 1, 0, -0.216882, 0, -0.976198, 0, 8.7678, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Menu3D/Ball"]
+transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 0, 0)
+shape = SubResource("SphereShape3D_lojc7")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Menu3D/Ball"]
+transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 0, 0)
+mesh = SubResource("SphereMesh_xgwie")

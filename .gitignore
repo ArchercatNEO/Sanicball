@@ -1,4 +1,6 @@
 .godot
 .vscode
 
+**/bin
+**/obj
 *.import

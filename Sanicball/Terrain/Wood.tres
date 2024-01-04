@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://xftxwgalnpgy"]
+
+[ext_resource type="Texture2D" uid="uid://c0le33pfjkxuq" path="res://Terrain/Wood.jpg" id="1_nh11s"]
+[ext_resource type="Texture2D" uid="uid://dem8obxn0c8sf" path="res://Terrain/BrushedMetal_Normal.png" id="2_g0hda"]
+
+[resource]
+albedo_texture = ExtResource("1_nh11s")
+normal_enabled = true
+normal_texture = ExtResource("2_g0hda")
+uv1_scale = Vector3(4, 4, 4)

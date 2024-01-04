@@ -1,6 +1,0 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://wvt14xas5816"]
-
-[ext_resource type="Texture2D" uid="uid://bwklxfxhr6aie" path="res://Assets/Characters/C12-Bloze/Bloze.png" id="1_wded4"]
-
-[resource]
-albedo_texture = ExtResource("1_wded4")

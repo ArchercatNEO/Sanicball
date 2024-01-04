@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://yvsf3gwttxet"]
+
+[ext_resource type="Script" path="res://Ball/PlayerBall.cs" id="1_3o3rl"]
+[ext_resource type="Material" uid="uid://clt2irqu13knl" path="res://Characters/C01-Sanic/Sanic.tres" id="1_apvfp"]
+[ext_resource type="Material" uid="uid://cnrybb57xaqin" path="res://Characters/C02-Knackles/Knackles.tres" id="2_tnboy"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6gej4"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="BoxMesh" id="BoxMesh_h0f50"]
+size = Vector3(60, 2, 60)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_v3ivl"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_e8we3"]
+material = ExtResource("1_apvfp")
+
+[node name="Main" type="Node3D"]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.37745, 0)
+omni_range = 4096.0
+
+[node name="Ground" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00744236, -1, 0.00369409)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_6gej4")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_h0f50")
+
+[node name="Ball" type="RigidBody3D" parent="."]
+transform = Transform3D(-0.976198, 0, 0.216882, 0, 1, 0, -0.216882, 0, -0.976198, 0, 6.7678, 0)
+script = ExtResource("1_3o3rl")
+
+[node name="Camera3D" type="Camera3D" parent="Ball"]
+transform = Transform3D(0.241345, 0.465255, -0.85164, 0.0625, 0.868308, 0.492072, 0.968425, -0.171986, 0.180483, -7.80958, 3.2322, 1.73506)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
+shape = SubResource("SphereShape3D_v3ivl")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball"]
+mesh = SubResource("SphereMesh_e8we3")
+surface_material_override/0 = ExtResource("2_tnboy")

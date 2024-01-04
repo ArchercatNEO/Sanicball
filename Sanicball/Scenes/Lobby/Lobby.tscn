@@ -1,0 +1,329 @@
+[gd_scene load_steps=30 format=3 uid="uid://iy8o8k21l1n1"]
+
+[ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://Scenes/Lobby/clear_sky.tres" id="1_b71r7"]
+[ext_resource type="AudioStream" uid="uid://j85y8jmri7x5" path="res://Music/Lobby/CasinoNightZone.ogg" id="1_knrur"]
+[ext_resource type="Script" path="res://Music/MusicPlayer.cs" id="1_s8m6y"]
+[ext_resource type="Material" uid="uid://xftxwgalnpgy" path="res://Terrain/Wood.tres" id="3_2m6vi"]
+[ext_resource type="Texture2D" uid="uid://dft07weo80mwh" path="res://Scenes/Lobby/TrianglesBackground.png" id="3_8rbhj"]
+[ext_resource type="Shape3D" uid="uid://dpxtdelj4vkx4" path="res://Terrain/Ground.tres" id="3_np11w"]
+[ext_resource type="Material" uid="uid://dmghyann0c8es" path="res://Scenes/Lobby/TVFrame.tres" id="3_tnksi"]
+[ext_resource type="BoxMesh" uid="uid://c28lla3d5dqd1" path="res://Terrain/Grond.tres" id="4_5lno4"]
+[ext_resource type="Texture2D" uid="uid://cctcmadbc8ho7" path="res://SharedArt/MusicNote.png" id="4_cqtmi"]
+[ext_resource type="PackedScene" uid="uid://c08vqn1nbmqlk" path="res://Ball/Ball.tscn" id="6_rv7tl"]
+[ext_resource type="Script" path="res://Ball/PlayerBall.cs" id="7_hww4q"]
+[ext_resource type="Script" path="res://Scenes/Lobby/LobbyCamera.cs" id="8_cdt1m"]
+
+[sub_resource type="Environment" id="Environment_wsstk"]
+background_mode = 2
+sky = ExtResource("1_b71r7")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_18lhn"]
+size = Vector3(60, 20, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_7l8op"]
+size = Vector3(60, 20, 1)
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_aihq1"]
+material = ExtResource("3_tnksi")
+size = Vector2(9, 5)
+
+[sub_resource type="BoxMesh" id="BoxMesh_3dan3"]
+material = ExtResource("3_tnksi")
+size = Vector3(0.1, 5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_40dyl"]
+material = ExtResource("3_tnksi")
+size = Vector3(0.1, 5, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_5afvx"]
+size = Vector3(0.1, 1, 7)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qnda2"]
+size = Vector3(0.1, 1, 7)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_33e33"]
+albedo_color = Color(1, 1, 1, 0)
+albedo_texture = ExtResource("3_8rbhj")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_mpevb"]
+material = SubResource("StandardMaterial3D_33e33")
+size = Vector2(7, 3)
+
+[sub_resource type="Animation" id="Animation_lqxk5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:mesh:material:uv1_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_6rq5x"]
+resource_name = "UpcycleTriangles"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:mesh:material:uv1_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_c6dja"]
+_data = {
+"RESET": SubResource("Animation_lqxk5"),
+"UpcycleTriangles": SubResource("Animation_6rq5x")
+}
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fbn66"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ld4q8"]
+material = SubResource("StandardMaterial3D_fbn66")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mph0q"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_6l1j5"]
+material = SubResource("StandardMaterial3D_mph0q")
+
+[node name="Lobby" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_wsstk")
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("1_knrur")
+script = ExtResource("1_s8m6y")
+
+[node name="ui" type="ColorRect" parent="Music"]
+z_index = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -40.0
+grow_horizontal = 0
+grow_vertical = 0
+color = Color(0, 0, 1, 1)
+
+[node name="fitter" type="BoxContainer" parent="Music/ui"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="note" type="TextureRect" parent="Music/ui/fitter"]
+layout_mode = 2
+texture = ExtResource("4_cqtmi")
+expand_mode = 2
+
+[node name="nowPlaying" type="Label" parent="Music/ui/fitter"]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+text = "Now playing:"
+horizontal_alignment = 2
+
+[node name="songName" type="Label" parent="Music/ui/fitter"]
+layout_mode = 2
+
+[node name="Lobby2D" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TopBar" type="ColorRect" parent="Lobby2D"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 57.0
+grow_horizontal = 2
+
+[node name="RaceCountdown" type="Label" parent="Lobby2D/TopBar"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -320.0
+offset_bottom = 57.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "Match starts in 3"
+
+[node name="BottomBar" type="ColorRect" parent="Lobby2D"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -69.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Lobby3D" type="Node3D" parent="."]
+
+[node name="Walls" type="Node3D" parent="Lobby3D"]
+
+[node name="Ground" type="StaticBody3D" parent="Lobby3D/Walls"]
+
+[node name="Hitbox" type="CollisionShape3D" parent="Lobby3D/Walls/Ground"]
+shape = ExtResource("3_np11w")
+
+[node name="Renderer" type="MeshInstance3D" parent="Lobby3D/Walls/Ground"]
+layers = 2
+material_override = ExtResource("3_2m6vi")
+mesh = ExtResource("4_5lno4")
+
+[node name="Wall1" type="StaticBody3D" parent="Lobby3D/Walls"]
+transform = Transform3D(-4.37113e-08, -7.62907e-11, 1, -0.00174533, 0.999998, 0, -0.999998, -0.00174533, -4.37114e-08, 30.5, 9, 0)
+
+[node name="Hitbox" type="CollisionShape3D" parent="Lobby3D/Walls/Wall1"]
+shape = SubResource("BoxShape3D_18lhn")
+
+[node name="Renderer" type="MeshInstance3D" parent="Lobby3D/Walls/Wall1"]
+transform = Transform3D(1, 0, 3.55271e-15, 0, 1, 6.93889e-18, 0, 0, 1, 0, 0, 0)
+mesh = SubResource("BoxMesh_7l8op")
+
+[node name="Wall2" type="StaticBody3D" parent="Lobby3D/Walls"]
+transform = Transform3D(4.37114e-08, 3.82137e-15, 1, 8.74228e-08, -1, 0, 1, 8.74228e-08, -4.37114e-08, -30.5, 9, 0)
+
+[node name="Hitbox" type="CollisionShape3D" parent="Lobby3D/Walls/Wall2"]
+shape = SubResource("BoxShape3D_18lhn")
+
+[node name="Renderer" type="MeshInstance3D" parent="Lobby3D/Walls/Wall2"]
+mesh = SubResource("BoxMesh_7l8op")
+skeleton = NodePath("../../Wall1")
+
+[node name="Wall3" type="StaticBody3D" parent="Lobby3D/Walls"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 9, 30)
+
+[node name="Hitbox" type="CollisionShape3D" parent="Lobby3D/Walls/Wall3"]
+shape = SubResource("BoxShape3D_18lhn")
+
+[node name="Renderer" type="MeshInstance3D" parent="Lobby3D/Walls/Wall3"]
+mesh = SubResource("BoxMesh_7l8op")
+skeleton = NodePath("../../Wall1")
+
+[node name="Wall4" type="StaticBody3D" parent="Lobby3D/Walls"]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 9, -29.548)
+
+[node name="Hitbox" type="CollisionShape3D" parent="Lobby3D/Walls/Wall4"]
+shape = SubResource("BoxShape3D_18lhn")
+
+[node name="Renderer" type="MeshInstance3D" parent="Lobby3D/Walls/Wall4"]
+mesh = SubResource("BoxMesh_7l8op")
+skeleton = NodePath("../../Wall1")
+
+[node name="Lighting" type="Node3D" parent="Lobby3D"]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Lobby3D/Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.9515, 0)
+light_energy = 10.374
+omni_range = 4096.0
+
+[node name="LobbyCamera" type="Camera3D" parent="Lobby3D"]
+transform = Transform3D(-0.106403, 0, -0.994323, 0, 1, 0, 0.994323, 0, -0.106403, -24.3743, 13.8098, 0.233967)
+script = ExtResource("8_cdt1m")
+
+[node name="TV" type="Node3D" parent="Lobby3D"]
+transform = Transform3D(2.235, 0, 0, 0, 2.235, 0, 0, 0, 2.235, 29.9577, 10.0878, -0.677451)
+
+[node name="Frame" type="Node3D" parent="Lobby3D/TV"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00106621, 0.0167284, 4.86374e-05)
+
+[node name="BackCover" type="MeshInstance3D" parent="Lobby3D/TV/Frame"]
+transform = Transform3D(2.16673e-05, 1, 2.17924e-05, -0.00310657, -2.17249e-05, 0.999995, 0.999995, -2.17349e-05, 0.00310657, 0.1, 0, 0)
+mesh = SubResource("PlaneMesh_aihq1")
+
+[node name="Left" type="MeshInstance3D" parent="Lobby3D/TV/Frame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+mesh = SubResource("BoxMesh_3dan3")
+
+[node name="Right" type="MeshInstance3D" parent="Lobby3D/TV/Frame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 4)
+mesh = SubResource("BoxMesh_40dyl")
+skeleton = NodePath("../Left")
+
+[node name="Top" type="MeshInstance3D" parent="Lobby3D/TV/Frame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+material_override = ExtResource("3_tnksi")
+mesh = SubResource("BoxMesh_5afvx")
+skeleton = NodePath("../Right")
+
+[node name="Bottom" type="MeshInstance3D" parent="Lobby3D/TV/Frame"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2, 0)
+material_override = ExtResource("3_tnksi")
+mesh = SubResource("BoxMesh_qnda2")
+skeleton = NodePath("../..")
+
+[node name="Phony" type="Label3D" parent="Lobby3D/TV/Frame"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.1, -2, 0)
+pixel_size = 0.03
+text = "PHONNY"
+
+[node name="Screen" type="Node3D" parent="Lobby3D/TV"]
+
+[node name="Background" type="MeshInstance3D" parent="Lobby3D/TV/Screen"]
+transform = Transform3D(5.50455e-06, -1, -9.5801e-05, -0.00408172, -9.58225e-05, 0.999992, -0.999992, -5.1157e-06, -0.00408172, 0, 0, 0)
+mesh = SubResource("PlaneMesh_mpevb")
+
+[node name="UpwardsCycle" type="AnimationPlayer" parent="Lobby3D/TV/Screen/Background"]
+libraries = {
+"": SubResource("AnimationLibrary_c6dja")
+}
+autoplay = "UpcycleTriangles"
+
+[node name="NextStage" type="MeshInstance3D" parent="Lobby3D/TV/Screen"]
+transform = Transform3D(-6.53698e-08, -1, 0, 1.49549, -4.37114e-08, 0, 0, 0, 1, -0.1, 0, -1.758)
+mesh = SubResource("PlaneMesh_ld4q8")
+
+[node name="UpNext" type="Label3D" parent="Lobby3D/TV/Screen/NextStage"]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 0, 1, 1, 4.37114e-08, -4.37114e-08, 0.844, 0.00999832, 0.0369999)
+pixel_size = 0.01
+text = "Up Next"
+
+[node name="StageImage" type="MeshInstance3D" parent="Lobby3D/TV/Screen/NextStage"]
+
+[node name="StageName" type="Label3D" parent="Lobby3D/TV/Screen/NextStage"]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 0, 1, 1, 4.37114e-08, -4.37114e-08, 0.844, 0.00999832, 0.0369999)
+pixel_size = 0.01
+text = "Up Next"
+
+[node name="LapCount" type="Label3D" parent="Lobby3D/TV/Screen/NextStage"]
+transform = Transform3D(-4.37114e-08, 1, 0, 4.37114e-08, 0, 1, 1, 4.37114e-08, -4.37114e-08, 0.844, 0.00999832, 0.0369999)
+pixel_size = 0.01
+text = "Up Next"
+
+[node name="StageMap" type="MeshInstance3D" parent="Lobby3D/TV/Screen"]
+transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, -0.0100002, 0, 1.55341)
+mesh = SubResource("PlaneMesh_6l1j5")
+
+[node name="Spawner" type="Node3D" parent="Lobby3D"]
+
+[node name="Ball" parent="Lobby3D" instance=ExtResource("6_rv7tl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 13.844, 0)
+script = ExtResource("7_hww4q")
+
+[node name="Decoration" type="Node3D" parent="Lobby3D"]
+
+[node name="StageLayouts" type="Node3D" parent="."]

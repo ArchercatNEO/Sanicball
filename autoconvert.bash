@@ -1,1 +1,0 @@
-Start-Process "C:\Program Files\GIMP 2\bin\gimp-2.8.exe" -ArgumentList "-i"
