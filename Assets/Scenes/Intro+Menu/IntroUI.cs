@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Godot;
 using Sanicball.Data;
 
@@ -32,32 +30,29 @@ public partial class IntroUI : Control
 		base._Ready();
 
 		Control input = GetNode<Control>($"UsernameInput");
-		TextEdit internalText = input.GetNode<TextEdit>($"TextEdit");
-		internalText.TextChanged += () => {
-			if (Input.IsKeyPressed(Key.Enter))
+		LineEdit internalText = input.GetNode<LineEdit>($"TextEdit");
+		internalText.TextSubmitted += (newString) => {
+			AccountSettings.Active.name = internalText.Text;
+			input.Hide();
+
+			AnimationPlayer[] animations = GetChildren()
+				.Where(node => node is TextureRect)
+				.Select(node => node.GetNode<AnimationPlayer>("AnimationPlayer"))
+				.ToArray();
+
+			animations[0].Play("FadeInOut");
+			for (int i = 1; i < animations.Length; i++)
 			{
-				AccountSettings.Active.name = internalText.Text;
-				input.Hide();
+				AnimationPlayer current = animations[i - 1];
+				AnimationPlayer next = animations[i];
 
-				AnimationPlayer[] animations = GetChildren()
-					.Where(node => node is TextureRect)
-					.Select(node => node.GetNode<AnimationPlayer>("AnimationPlayer"))
-					.ToArray();
-
-				animations[0].Play("FadeInOut");
-				for (int i = 1; i < animations.Length; i++)
-				{
-					AnimationPlayer current = animations[i - 1];
-					AnimationPlayer next = animations[i];
-
-					current.AnimationFinished += (name) => {
-						next.Play("FadeInOut");
-					};
-				}
-				animations.Last().AnimationFinished += (name) => {
-					GetTree().ChangeSceneToFile("res://Assets/Scenes/menu.tscn");
+				current.AnimationFinished += (name) => {
+					next.Play("FadeInOut");
 				};
 			}
+			animations.Last().AnimationFinished += (name) => {
+				GetTree().ChangeSceneToFile("res://Assets/Scenes/menu.tscn");
+			};
 		};
 	}
 }

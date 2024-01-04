@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dfqmnl7lgbosx"]
+
+[ext_resource type="Texture2D" uid="uid://bbvp66ege0r0j" path="res://Assets/Characters/C06-Roge-da-Bat/Roge.png" id="1_7bcxm"]
+
+[resource]
+albedo_texture = ExtResource("1_7bcxm")
