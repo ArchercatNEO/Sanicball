@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://yvsf3gwttxet"]
 
-[ext_resource type="Script" path="res://Ball/PlayerBall.cs" id="1_3o3rl"]
-[ext_resource type="Material" uid="uid://clt2irqu13knl" path="res://Characters/C01-Sanic/Sanic.tres" id="1_apvfp"]
-[ext_resource type="Material" uid="uid://cnrybb57xaqin" path="res://Characters/C02-Knackles/Knackles.tres" id="2_tnboy"]
+[ext_resource type="Script" path="res://Assets/Ball/PlayerBall.cs" id="1_3o3rl"]
+[ext_resource type="Material" uid="uid://clt2irqu13knl" path="res://Assets/Characters/C01-Sanic/Sanic.tres" id="1_apvfp"]
+[ext_resource type="Material" uid="uid://cnrybb57xaqin" path="res://Assets/Characters/C02-Knackles/Knackles.tres" id="2_tnboy"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6gej4"]
 size = Vector3(60, 2, 60)

@@ -10,8 +10,8 @@ public partial record class SanicCharacter
 		Credits = "Deviantart user Mew087123",
 
 		Color = new(0xEAC700),
-		Material = GD.Load<Material>("res://Characters/C03-Taels/Taels.tres"),
-		Icon = GD.Load<Texture>("res://Characters/C03-Taels/TaelsIcon.png"),
-		MinimapIcon = GD.Load<Texture>("res://Characters/C03-Taels/TaelsMinimap.png")
+		Material = GD.Load<Material>("res://Assets/Characters/C03-Taels/Taels.tres"),
+		Icon = GD.Load<Texture>("res://Assets/Characters/C03-Taels/TaelsIcon.png"),
+		MinimapIcon = GD.Load<Texture>("res://Assets/Characters/C03-Taels/TaelsMinimap.png")
 	};
 }

@@ -10,8 +10,8 @@ public partial class MusicPlayer : AudioStreamPlayer
     private MusicPlayer()
     {
         songs = new Song[] {
-            new("Chariots of fire", GD.Load<AudioStreamOggVorbis>("res://Music/ChariotsOfFire.ogg")),
-            new("Dread", GD.Load<AudioStreamOggVorbis>("res://Music/Dread.ogg"))
+            new("Chariots of fire", GD.Load<AudioStreamOggVorbis>("res://Assets/Music/ChariotsOfFire.ogg")),
+            new("Dread", GD.Load<AudioStreamOggVorbis>("res://Assets/Music/Dread.ogg"))
         };
     } 
     

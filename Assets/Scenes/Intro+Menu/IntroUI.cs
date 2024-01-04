@@ -55,7 +55,7 @@ public partial class IntroUI : Control
 					};
 				}
 				animations.Last().AnimationFinished += (name) => {
-					GetTree().ChangeSceneToFile("res://Scenes/menu.tscn");
+					GetTree().ChangeSceneToFile("res://Assets/Scenes/menu.tscn");
 				};
 			}
 		};

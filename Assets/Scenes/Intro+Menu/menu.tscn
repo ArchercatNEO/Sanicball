@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://b0vnhh1ow6ecl"]
 
-[ext_resource type="Material" uid="uid://clt2irqu13knl" path="res://Characters/C01-Sanic/Sanic.tres" id="1_4vyej"]
-[ext_resource type="Script" path="res://Scenes/MenuCamera.cs" id="1_gguv2"]
-[ext_resource type="Script" path="res://Scenes/MenuPath.cs" id="2_2esyw"]
-[ext_resource type="Material" uid="uid://cnrybb57xaqin" path="res://Characters/C02-Knackles/Knackles.tres" id="2_pedrv"]
+[ext_resource type="Material" uid="uid://clt2irqu13knl" path="res://Assets/Characters/C01-Sanic/Sanic.tres" id="1_4vyej"]
+[ext_resource type="Script" path="res://Assets/Scenes/Intro+Menu/MenuCamera.cs" id="1_gguv2"]
+[ext_resource type="Script" path="res://Assets/Scenes/Intro+Menu/MenuPath.cs" id="2_2esyw"]
+[ext_resource type="Material" uid="uid://cnrybb57xaqin" path="res://Assets/Characters/C02-Knackles/Knackles.tres" id="2_pedrv"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5umww"]
 size = Vector3(60, 2, 60)
@@ -55,7 +55,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -114.818, 0, -236.666)
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("ball")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.2, 13.002, 33.403)
 script = ExtResource("1_gguv2")
-ball = NodePath("../Ball")
+ball = NodePath("")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Camera3D"]
 reset_on_save = false
@@ -86,4 +86,3 @@ shape = SubResource("SphereShape3D_lojc7")
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ball"]
 transform = Transform3D(30, 0, 0, 0, 30, 0, 0, 0, 30, 0, 0, 0)
 mesh = SubResource("SphereMesh_xgwie")
-surface_material_override/0 = ExtResource("2_pedrv")
