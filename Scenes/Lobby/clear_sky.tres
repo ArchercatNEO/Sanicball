@@ -1,9 +1,0 @@
-[gd_resource type="Sky" load_steps=3 format=3 uid="uid://fu0h5jshp1tg"]
-
-[ext_resource type="Shader" path="res://Scenes/Lobby/Lobby.gdshader" id="1_1p0wf"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m02k5"]
-shader = ExtResource("1_1p0wf")
-
-[resource]
-sky_material = SubResource("ShaderMaterial_m02k5")
