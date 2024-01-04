@@ -1,0 +1,8 @@
+{
+    "public": true,
+    "servers": [],
+    "ip": "hello",
+    "port" : 7878,
+    "max_players": 10,
+    "enabled_connections": []
+}

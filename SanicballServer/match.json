@@ -1,0 +1,11 @@
+{
+    "stage_id": 2,
+    "laps": 2,
+    "ai_count": 7,
+    "ai_skill": 1,
+    "auto_start_time": 60,
+    "auto_start_min_players": 2,
+    "auto_return_time": 15,
+    "vote_ratio": 1.0,
+    "stage_rotation_mode": 0
+}
