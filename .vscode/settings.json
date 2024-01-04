@@ -1,5 +1,6 @@
 {
     "dotnet.defaultSolution": "Sanicball.sln",
+    "dotnet.projects.enableAutomaticRestore": true,
     "files.exclude": {
         "**/*.import" : true
     }
