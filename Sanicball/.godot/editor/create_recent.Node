@@ -1,0 +1,14 @@
+Control
+TextEdit
+TextureRect
+Label
+BoxContainer
+ColorRect
+WorldEnvironment
+AudioStreamPlayer3D
+CollisionShape3D
+MeshInstance3D
+RigidBody3D
+Label3D
+AnimationPlayer
+Node3D

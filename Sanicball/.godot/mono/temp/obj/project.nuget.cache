@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "dgSpecHash": "p+aF0hFwqqLGX9BTfRhUQloaFPI/x9qAn3T/j2g1jmzZmwqO/mfrDFxe0TgxpQq9nAHpAvNmsN6OTWEpX7uaMg==",
+  "success": true,
+  "projectFilePath": "/home/ernesto/Dev/Godot/Sanicball/Sanicball.csproj",
+  "expectedPackageFiles": [
+    "/home/ernesto/.nuget/packages/godot.sourcegenerators/4.2.1/godot.sourcegenerators.4.2.1.nupkg.sha512",
+    "/home/ernesto/.nuget/packages/godotsharp/4.2.1/godotsharp.4.2.1.nupkg.sha512",
+    "/home/ernesto/.nuget/packages/godotsharpeditor/4.2.1/godotsharpeditor.4.2.1.nupkg.sha512",
+    "/home/ernesto/.nuget/packages/microsoft.netcore.app.ref/7.0.14/microsoft.netcore.app.ref.7.0.14.nupkg.sha512",
+    "/home/ernesto/.nuget/packages/microsoft.aspnetcore.app.ref/7.0.14/microsoft.aspnetcore.app.ref.7.0.14.nupkg.sha512"
+  ],
+  "logs": []
+}
