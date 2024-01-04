@@ -1,4 +1,0 @@
-Sky
-BoxShape3D
-BoxMesh
-StandardMaterial3D

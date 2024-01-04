@@ -1,8 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <ui:VisualElement style="flex-grow: 1;">
-        <ui:Label text="Hello! &lt;br&gt;Please enter your name" display-tooltip-when-elided="true" name="help-text" style="position: absolute; height: 93px; width: 266px; top: 48px; left: 112px; align-items: stretch; justify-content: flex-start;" />
-        <ui:TextField picking-mode="Ignore" value="player" text="player" name="name-input" readonly="false" style="position: absolute; top: 139px; left: 111px; width: 224px;" />
-    </ui:VisualElement>
-    <ui:Label display-tooltip-when-elided="true" name="sanicteam" style="background-image: resource(&apos;Art/User Interface/Menu+Intro/Intro_Sanicteam&apos;); position: absolute; height: 96px; width: 335px; top: 194px; left: 80px; transition-property: opacity; transition-duration: 2s; transition-timing-function: ease-in-out-bounce; opacity: 0;" />
-    <ui:Label display-tooltip-when-elided="true" name="not-sega" style="position: absolute; height: 121px; width: 403px; top: 167px; left: 48px; background-image: resource(&apos;Art/User Interface/Menu+Intro/Intro_Notsega&apos;); opacity: 0;" />
-</ui:UXML>
