@@ -1,0 +1,8 @@
+[workspace]
+
+members = [
+    "SanicballServer"
+]
+
+[profile.dev]
+overflow-checks = false

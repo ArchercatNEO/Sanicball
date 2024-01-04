@@ -13,7 +13,7 @@ config_version=5
 config/name="Sanicball"
 run/main_scene="res://Scenes/Intro+Menu/intro.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
-config/icon="res://icon.svg"
+config/icon="res://Icon.png"
 
 [dotnet]
 
