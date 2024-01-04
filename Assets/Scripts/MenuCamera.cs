@@ -1,67 +1,74 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Sanicball
 {
     public class MenuCamera : MonoBehaviour
     {
+        public static MenuCamera? Instance;
+        
+        public Transform targetBall;
+        public Transform pathParent;
         public StandardShaderFade fade;
-        public MenuCameraPath[] paths;
-        public Transform lookTarget;
 
         public float moveSpeed = 0.2f;
         public float fadeTime = 0.4f;
 
-        private int currentPath = 0;
-        private float changePathTimer;
-
-        // Use this for initialization
-        private void Start()
+        public IEnumerator Resize(float time, float targetWidth)
         {
-            CameraFade.StartAlphaFade(Color.black, true, 5);
-
-            transform.position = paths[currentPath].startPoint.position;
+            Camera camera = GetComponent<Camera>();
+            for (float pos = 0; pos < time; pos += Time.deltaTime)
+            {
+                //var targetWidth = menuWidth * canvas.scaleFactor;
+                float smoothedPos = Mathf.SmoothStep(0f, 1f, pos / time);
+                camera.rect = new Rect(0, 0, 1f - (smoothedPos * targetWidth) / Screen.width, 1);
+                yield return new WaitForFixedUpdate();
+            }
         }
 
-        // Update is called once per frame
-        private void Update()
+        private void Awake() { Instance = this; }
+        private void OnDestroy() { Instance = null; }
+        
+        private void Start()
         {
-            float dist = Vector3.Distance(transform.position, paths[currentPath].endPoint.position);
+            StartCoroutine(CycleBalls());
+            CameraFade.StartAlphaFade(Color.black, true, 5);
+        }
 
-            //Movement
-            transform.position = Vector3.MoveTowards(transform.position, paths[currentPath].endPoint.position, moveSpeed * Time.deltaTime);
-
-            //Calculate time before hitting end point
-            float timeToChange = dist / moveSpeed;
-
-            //Start fading in if close enough to end point
-            if (timeToChange < fadeTime && changePathTimer <= 0f)
+        private IEnumerator CycleBalls()
+        {
+            while (true)
             {
-                changePathTimer = fadeTime;
-                fade.FadeIn(fadeTime);
-            }
-
-            //Change path and begin fading out when fadein is done
-            if (changePathTimer > 0f)
-            {
-                changePathTimer -= Time.deltaTime;
-                if (changePathTimer <= 0f)
+                foreach (Transform child in pathParent)
                 {
-                    ChangePath();
+                    MenuCameraPath path = child.GetComponent<MenuCameraPath>();
+                    
+                    targetBall.GetComponent<Renderer>().material = path.character;
+                    transform.position = path.transform.position;
+                    
+                    //Calculate time before hitting end point
+                    float dist = Vector3.Distance(transform.position, path.endPoint.position);
+                    float endTime = dist / moveSpeed;
+
+                    for (float time = 0; time < endTime - fadeTime; time += Time.deltaTime)
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, path.endPoint.position, moveSpeed * Time.deltaTime);
+                        transform.LookAt(targetBall.position);
+                        yield return new WaitForFixedUpdate();
+                    }
+
+                    fade.FadeIn(fadeTime);
+
+                    for (float time = 0; time < fadeTime; time += Time.deltaTime)
+                    {
+                        transform.position = Vector3.MoveTowards(transform.position, path.endPoint.position, moveSpeed * Time.deltaTime);
+                        transform.LookAt(targetBall.position);
+                        yield return new WaitForFixedUpdate();
+                    }
+
                     fade.FadeOut(fadeTime);
                 }
             }
-
-            //Look at target
-            transform.LookAt(lookTarget.position);
-        }
-
-        private void ChangePath()
-        {
-            currentPath = (currentPath + 1) % paths.Length;
-            transform.position = paths[currentPath].startPoint.position;
-
-            //TODO: code betr
-            lookTarget.GetComponent<CycleMaterial>().Switch();
         }
     }
 }

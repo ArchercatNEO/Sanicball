@@ -7,13 +7,11 @@ namespace Sanicball.IO
     [Serializable]
     public class KeybindCollection
     {
-        public static KeybindCollection Instance = Save.LoadFile<KeybindCollection>("GameKeybinds.json");
-        static KeybindCollection()
+        private static readonly LazySaveFile<KeybindCollection> instance = new("GameKeybinds.json");
+        public static KeybindCollection Instance
         {
-            AppDomain.CurrentDomain.ProcessExit += (object sender, EventArgs e) =>
-            {
-                Save.SaveFile("GameKeybinds.json", Instance);
-            };
+            get => instance.File;
+            set => instance.File = value;
         }
 
         public static bool GetKey(Keybind key) => Input.GetKey(Instance.keybinds[key]);

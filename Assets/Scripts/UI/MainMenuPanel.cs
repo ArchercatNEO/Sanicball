@@ -9,29 +9,24 @@ namespace Sanicball.UI
         [SerializeField] private Text versionNameField = null;
         [SerializeField] private Text taglineField = null;
 
-        private SlideCanvasGroup activePanel;
+        private SlideCanvasGroup? activePanel;
 
         public void SetActivePanel(SlideCanvasGroup panel)
         {
+            //Opening new panel
             if (activePanel == null)
             {
-                //Opening new panel
                 panel.Open();
                 activePanel = panel;
             }
+            //Changing panel
             else
             {
-                //Changing panel
+                CloseActivePanel();
                 if (activePanel != panel)
                 {
-                    CloseActivePanel();
                     panel.Open();
                     activePanel = panel;
-                }
-                else
-                {
-                    //Closing active panel
-                    CloseActivePanel();
                 }
             }
         }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using Sanicball.Data;
 using Sanicball.UI;
@@ -11,7 +12,7 @@ namespace Sanicball
         private static MusicPlayer? Instance;
         public static bool Mute 
         {
-            set  
+            set
             {
                 if (Instance == null)
                 {
@@ -50,6 +51,15 @@ namespace Sanicball
             Instance.isPlaying = false;
         }
 
+        public static float CalculateVolume(int sampleSize)
+        {
+            float[] samples = new float[sampleSize];
+            Instance.aSource.GetOutputData(samples, 0); 
+            return samples.Aggregate(0f, (accumulator, sample) => {
+                return accumulator += sample * sample;
+            });
+        }
+
         //public GUISkin skin;
         public bool playerCanvasLobbyOffset = false;
         private MusicPlayerCanvas playerCanvas;
@@ -58,6 +68,11 @@ namespace Sanicball
         public bool fadeIn = false;
 
         public List<Song> playlist = new();
+        public string SongCredits => playlist
+            .Aggregate("", (accumulator, song) => {
+                return accumulator + $"<b>s.Name</b> \n";
+            });
+        
         public AudioSource fastSource;
 
         [System.NonSerialized]
@@ -93,8 +108,7 @@ namespace Sanicball
 
             if (ESportMode.ESportsReady() && Globals.scene != Scene.Lobby)
             {
-                Song song = new("Skrollex - Bungee Ride", ActiveData.ESportsMusic);
-                playlist.Insert(0, song);
+                playlist.Insert(0, ESportMode.Song);
             }
 
             aSource = GetComponent<AudioSource>();
@@ -108,6 +122,8 @@ namespace Sanicball
 
         private void Update()
         {
+            aSource.mute = !GameSettings.Instance.music;
+            
             if (fadeIn) { aSource.volume = Mathf.Min(aSource.volume + Time.deltaTime * 0.1f, 0.5f); }
             
             //If it's not playing but supposed to play, change song

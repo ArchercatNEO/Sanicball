@@ -33,12 +33,12 @@ namespace Sanicball.UI
             return instance;
         }
 
-        [System.NonSerialized] public LocalPlayerManager playerManager;
+        private LocalPlayerManager playerManager;
 
         [SerializeField] private ImageColorToggle readyIndicator;
         [SerializeField] private Image ctrlTypeImageField = null;
         [SerializeField] private Text helpTextField = null;
-        [SerializeField] private Sprite[] controlTypeIcons;
+        [SerializeField] private Sprite[] controlTypeIcons = {};
         [SerializeField] private CharacterSelectPanel characterSelectSubpanel = null;
 
         public ControlType AssignedCtrlType { get; set; }

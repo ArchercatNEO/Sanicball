@@ -4,22 +4,18 @@ namespace Sanicball
 {
     public class MenuCameraPath : MonoBehaviour
     {
-        public Transform startPoint;
         public Transform endPoint;
-
-        private void Start()
-        {
-        }
-
-        private void Update()
-        {
-        }
+        public Material character;
 
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
-            Gizmos.DrawLine(startPoint.position, endPoint.position);
-            Gizmos.DrawSphere(startPoint.position, 0.05f);
+            Gizmos.DrawSphere(transform.position, 0.05f);
+            
+            Gizmos.DrawLine(transform.position, endPoint.position);
+
+            Gizmos.color = Color.red;
+            Gizmos.DrawSphere(endPoint.position, 0.05f);
         }
     }
 }

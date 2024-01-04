@@ -12,9 +12,9 @@ using ControlType = Sanicball.Data.ControlType;
 namespace Sanicball.Logic
 {
     //TODO make this static with UI constructors
-    public class MatchStarter : MonoBehaviour
+    public class MatchStarter
     {
-        private static UI.Popup connectingPopupPrefab => Resources.Load<UI.Popup>("Prefabs\\User Interface\\Popups\\ConnectingPopup");
+        private static Popup connectingPopupPrefab => Resources.Load<Popup>("Prefabs/User Interface/Popups/ConnectingPopup");
 
         public static void BeginLocalGame()
         {
@@ -48,15 +48,15 @@ namespace Sanicball.Logic
             JoinOnlineGame(new IPEndPoint(IPAddress.Parse(ip), port));
         }
 
-        private void Update()
+        //TODO put all logic into popups
+        /* private void Update()
         {
-            ServerRelay.NextMessage(Scene.Menu);
             if (Input.GetKeyDown(KeyCode.Escape))
             {
                 PopupHandler.CloseActivePopup();
                 ServerRelay.Disconnect("Cancelled");
             }
-        }
+        } */
     }
 
     public record InitMatchMessage : Packet

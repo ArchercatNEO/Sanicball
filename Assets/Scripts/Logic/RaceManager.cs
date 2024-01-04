@@ -51,13 +51,29 @@ namespace Sanicball.Logic
 
         public static void Load(bool raceInProgress)
         {
+            //Globals.settings.StageId
+            Debug.Log("Loading");
+            StageInfo targetStage = ActiveData.Stages[1];
+            SceneManager.LoadScene(targetStage.sceneName);
+            RaceManager.raceInProgress = raceInProgress;
+        }
+
+        private static bool raceInProgress;
+
+        private void Awake()
+        {
+            Debug.Log("Waking up");
+            //In online mode, send a RaceStartMessage as soon as the track is loaded (which is now)
+            if (ServerRelay.OnlineMode) new StartRaceMessage().Send();
+
             //Otherwise shortcut to loading the race
             foreach (var (_, client) in Client.clients)
+            {
                 foreach (var (_, player) in client.players)
+                {
                     player.readyToRace = false;
-
-            StageInfo targetStage = ActiveData.Stages[Globals.settings.StageId];
-            SceneManager.LoadScene(targetStage.sceneName);
+                }
+            }
 
             if (raceInProgress)
             {
@@ -66,11 +82,9 @@ namespace Sanicball.Logic
 
                 raceTimer.Start();
                 MusicPlayer.Play();
-                foreach (AbstractBall player in players) { player.enabled = true; }
-
-                SpectatorView.Create();
                 CreateBallObjects();
-                //Create race UI
+                SpectatorView.Create();
+                foreach (AbstractBall player in players) { player.enabled = true; }
             }
             else
             {
@@ -79,8 +93,6 @@ namespace Sanicball.Logic
                 waitingUI = WaitingUI.Create();
             }
 
-            //In online mode, send a RaceStartMessage as soon as the track is loaded (which is now)
-            if (ServerRelay.OnlineMode) new StartRaceMessage().Send();
         }
 
 
@@ -268,7 +280,6 @@ namespace Sanicball.Logic
                 Object.Destroy(waitingUI);
 
                 //Create countdown
-                ESportMode.TryCreate();
                 RaceCountdown.Create((float) time);
                 
                 //Create all balls

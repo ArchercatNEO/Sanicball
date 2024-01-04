@@ -2,36 +2,50 @@
 
 namespace Sanicball.Gameplay
 {
-    public class PfxFactory : MonoBehaviour
+    public static class PfxFactory
     {
-        private static ParticleSystem prefab => Resources.Load<ParticleSystem>("Prefabs/Instantiated/Ball objects/TireSmoke");
-        private static readonly ParticleSystem pSystem;
-        static PfxFactory()
+        private static readonly LazyFile<ParticleSystem> prefab = new("Prefabs/Instantiated/Ball objects/TireSmoke");
+        
+        //pSystems can be destroyed at any point
+        private static ParticleSystem? pSystem = null;
+        private static ParticleSystem PSystem
         {
-            pSystem = Instantiate(prefab);
+            get
+            {
+                if (pSystem is not null) { return pSystem; }
+                
+                pSystem = Object.Instantiate(prefab.File);
+                pSystem.name = "Particle Factory";
+                return pSystem;
+            }
         }
 
         #region Smoke
+        public static bool IsDrift(this Rigidbody rigidbody)
+        {
+            float speed = rigidbody.velocity.magnitude;
+            float rot = rigidbody.angularVelocity.magnitude / 2;
+            float angle = Vector3.Angle(rigidbody.velocity, Quaternion.Euler(0, -90, 0) * rigidbody.angularVelocity);
+
+            if (30 < rot && speed < 30) { return true; }
+            if (angle <= 50) { return false; }
+            if (rot > 10 || speed > 10) { return true; }
+            return false;
+        }
+
         private static ParticleSystem.EmitParams smokePool = new()
         {
             velocity = Vector3.zero,
             startLifetime = 5,
             startColor = Color.white
         };
-        public static void TryCreateSmokePfx(Rigidbody target)
+        public static void CreateSmoke(Vector3 position)
         {
-            float speed = target.velocity.magnitude;
-            float rot = target.angularVelocity.magnitude / 2;
-            float angle = Vector3.Angle(target.velocity, Quaternion.Euler(0, -90, 0) * target.angularVelocity);
-
-            if ((angle > 50 && (rot > 10 || speed > 10)) || (rot > 30 && speed < 30))
-            {
-                DriftAudio.BrakeFadeIn();
-                smokePool.position = target.transform.position - new Vector3(0, +0.5f, 0) + Random.insideUnitSphere * 0.25f;
-                smokePool.startSize = Random.Range(3f, 5f);
-                pSystem.Emit(smokePool, 1);
-            }
+            smokePool.position = position - new Vector3(0, +0.5f, 0) + Random.insideUnitSphere * 0.25f;
+            smokePool.startSize = Random.Range(3f, 5f);
+            PSystem.Emit(smokePool, 1);
         }
+
         #endregion Smoke
         //TODO use arguments and the static pSystem instead of prefabs
         #region Removal
@@ -39,7 +53,7 @@ namespace Sanicball.Gameplay
         private static ParticleSystem removalPrefab => Resources.Load<ParticleSystem>("Prefabs/Instantiated/Ball objects/BallRemovalParticles");
         public static void CreateRemovalPfx(Transform transform)
         {
-            Instantiate(removalPrefab, transform.position, transform.rotation);
+            Object.Instantiate(removalPrefab, transform.position, transform.rotation);
         }
         #endregion Removal
     }
@@ -47,9 +61,10 @@ namespace Sanicball.Gameplay
     public class DriftAudio : MonoBehaviour
     {
         #region Jump
-        private static AudioClip Jump => Resources.Load<AudioClip>("Sound/Sfx/jump");
+        private static LazyFile<AudioClip> Jump => new("Sound/Sfx/jump");
         public static void JumpEffect()
         {
+            Debug.Log(Jump.File);
             //I hate it too but conformity is better than rationality
             /* Jump.Play(); */
         }

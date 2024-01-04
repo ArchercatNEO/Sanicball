@@ -38,7 +38,7 @@ namespace Sanicball.UI
 
         private RectTransform trans;
 
-        PlayerPortrait()
+        private void Start()
         {
             transform.SetParent(portraitContainer, false);
             trans = GetComponent<RectTransform>();

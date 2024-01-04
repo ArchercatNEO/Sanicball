@@ -15,8 +15,6 @@ namespace Sanicball.Canvas
         {
             //MatchManager.Update();        
             RaceManager.Update();
-
-            ServerRelay.NextMessage(Scene.Race);
         }
     }
 }

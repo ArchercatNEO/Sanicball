@@ -1,0 +1,13 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="credits" style="position: absolute; height: 90px; width: 300px; top: auto; left: 0; flex-direction: row; flex-wrap: nowrap; justify-content: center; align-items: stretch; bottom: 0;">
+        <ui:Label display-tooltip-when-elided="true" name="sanicteam" enable-rich-text="true" style="background-image: resource(&apos;Art/User Interface/Menu+Intro/Intro_Sanicteam&apos;); justify-content: flex-start; align-items: flex-end; flex-direction: column; flex-wrap: nowrap; transform-origin: center; width: 163px;" />
+        <ui:Label display-tooltip-when-elided="true" name="notsega" style="background-image: resource(&apos;Art/User Interface/Menu+Intro/Intro_Notsega&apos;); width: 125px;" />
+    </ui:VisualElement>
+    <ui:Label display-tooltip-when-elided="true" name="sanicball" style="position: relative; background-image: resource(&apos;Art/User Interface/Menu+Intro/GameTitle&apos;); height: 133px; width: 654px; top: auto; left: auto;" />
+    <ui:Label text="Press any key" display-tooltip-when-elided="true" name="any-key" style="justify-content: flex-start; -unity-text-align: upper-center; white-space: nowrap; height: 141px; -unity-font: url(&apos;project://database/Library/unity%20default%20resources?fileID=10102&amp;guid=0000000000000000e000000000000000&amp;type=0#Arial&apos;); font-size: 96px;" />
+    <ui:Label display-tooltip-when-elided="true" name="menu-panel" style="background-color: rgb(0, 0, 255); background-image: resource(&apos;Art/User Interface/Textures/BoxSpikesLeftOnlyNoLines&apos;); height: auto; position: absolute; right: 0; left: auto; top: 0; bottom: 0; width: 400px;">
+        <ui:Label text="[VERSION NAME]" display-tooltip-when-elided="true" name="version" style="color: rgb(255, 0, 0); height: 35px; font-size: 24px; -unity-font: url(&apos;project://database/Assets/Fonts/Tahoma.ttf?fileID=12800000&amp;guid=69967b0d3c49f7c43a167c0c7cfac323&amp;type=3#Tahoma&apos;); -unity-font-style: normal;" />
+        <ui:Label text="[TAGLINE]" display-tooltip-when-elided="true" name="tagline" style="font-size: 24px; -unity-font: url(&apos;project://database/Assets/Fonts/Tahoma.ttf?fileID=12800000&amp;guid=69967b0d3c49f7c43a167c0c7cfac323&amp;type=3#Tahoma&apos;); color: rgb(255, 0, 0);" />
+        <ui:ListView focusable="true" name="ListView" show-border="false" reorderable="false" />
+    </ui:Label>
+</ui:UXML>

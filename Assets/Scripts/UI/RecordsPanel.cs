@@ -61,7 +61,7 @@ namespace Sanicball.UI
 
         private void UpdateFields()
         {
-            var records = RaceRecord.records.Where(a => a.Stage == selectedStage && a.GameVersion == GameVersion.AS_FLOAT && a.WasTesting == GameVersion.IS_TESTING).OrderBy(a => a.Time);
+            var records = RaceRecord.Records.Where(a => a.Stage == selectedStage && a.GameVersion == GameVersion.AS_FLOAT && a.WasTesting == GameVersion.IS_TESTING).OrderBy(a => a.Time);
 
             for (int i = 0; i < recordTypes.Count(); i++)
             {

@@ -129,7 +129,7 @@ namespace Sanicball.Ball
             Debug.Log("Saved lap record (" + TimeSpan.FromSeconds(lapTimer.Now()) + ")");
                 
             string sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
-            RaceRecord.records.Add(new RaceRecord(
+            RaceRecord.Records.Add(new RaceRecord(
                 character.tier,
                 lapTimer.Now(),
                 DateTime.Now,

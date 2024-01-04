@@ -11,7 +11,7 @@ using Sanicball.UI;
 using UnityEngine.SceneManagement;
 using static UnityEngine.Object;
 
-public static class ServerRelay
+public class ServerRelay : MonoBehaviour
 {
     public static bool OnlineMode { get; private set; }
     public static readonly NetClient client;
@@ -36,8 +36,7 @@ public static class ServerRelay
         {7, buffer => new DisconnectedPacket(buffer)},
     };
 
-    //TODO change packet to take in Scene
-    public static void NextMessage(Scene scene)
+    private void Update()
     {
         if (!OnlineMode)
         {

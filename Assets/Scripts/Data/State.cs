@@ -4,23 +4,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using SanicballCore;
+using UnityEditor;
 
 namespace Sanicball.Data
 {
     [Serializable]
     public class GameSettings
     {
-        public static GameSettings Instance = Save.LoadFile<GameSettings>("GameSettings.json");
-        static GameSettings()
+        private static readonly LazySaveFile<GameSettings> instance = new("GameSettings.json");
+        public static GameSettings Instance
         {
-            AppDomain.CurrentDomain.ProcessExit += (object sender, EventArgs e) =>
-            {
-                Save.SaveFile("GameSettings.json", Instance);
-            };
+            get => instance.File;
+            set => instance.File = value;
         }
 
         [Header("Online")]
-        public string nickname = "";
+        public string nickname = "player";
         public string serverListURL = "https://sanicball.bdgr.zone/servers/";
 
         public string gameJoltUsername;
@@ -134,21 +133,19 @@ namespace Sanicball.Data
     [Serializable]
     public class RaceRecord
     {
-        public static List<RaceRecord> records = Save.LoadFile<List<RaceRecord>>("Records.json");
-        static RaceRecord()
+        private static readonly LazySaveFile<List<RaceRecord>> records = new("Records.json");
+        public static List<RaceRecord> Records
         {
-            AppDomain.CurrentDomain.ProcessExit += (object sender, EventArgs e) =>
-            {
-                Save.SaveFile("Records.json", records);
-            };
+            get => records.File;
         }
+
 
         public static RaceRecord? Best(CharacterTier tier)
         {
             string sceneName = SceneManager.GetActiveScene().name;
             int stage = ActiveData.Stages.Where(a => a.sceneName == sceneName).First().id;
 
-            return records
+            return Records
                 .Where(record => record.IsSame(tier, stage))
                 .OrderBy(a => a.Time)
                 .FirstOrDefault();

@@ -121,7 +121,12 @@ namespace Sanicball.Ball
 
                 DriftAudio.RollFadeIn(rollSpd);
                 DriftAudio.SpeedFadeIn(vel);
-                PfxFactory.TryCreateSmokePfx(Body);
+                if (Body.IsDrift())
+                {
+                    DriftAudio.BrakeFadeIn();
+                    PfxFactory.CreateSmoke(transform.position);
+                }
+                
 
                 if (groundedTimer.Finished(0))
                 {
@@ -155,7 +160,7 @@ namespace Sanicball.Ball
             body.GetComponent<TrailRenderer>().material = character.trail;
             if (character.name == "Super Sanic" && GameSettings.Instance.eSportsReady)
             {
-                body.GetComponent<TrailRenderer>().material = ActiveData.ESportsTrail;
+                body.GetComponent<TrailRenderer>().material = ESportMode.Trail;
             }
             if (character.alternativeMesh != null)
             {

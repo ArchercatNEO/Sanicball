@@ -48,8 +48,6 @@ namespace Sanicball.Scenes
         // Update is called once per frame
         private void Update()
         {
-            ServerRelay.NextMessage(Scene.Lobby);
-            
             float timer = Constants.StartRaceTimeout;
             LobbyReferences.CountdownField.text = "Match starts in " + Mathf.Max(1f, Mathf.Ceil(timer - lobbyTimer.Now()));
 
@@ -61,18 +59,7 @@ namespace Sanicball.Scenes
 
         public record LoadRaceMessage : Packet
         {
-            public override void Consume()
-            {
-                lobbyTimer.Reset();
-                CameraFade.StartAlphaFade(Color.black, false, 0.3f, 0.05f, () => {
-                    foreach (var (_, client) in Client.clients)
-                        foreach (var (_, player) in client.players)
-                            player.readyToRace = false;
-
-                    string targetStage = ActiveData.Stages[Globals.settings.StageId].sceneName;
-                    SceneManager.LoadScene(targetStage);
-                });
-            }
+            public override void Consume() => RaceManager.Load(false);
         }
 
         public record AutoStartTimerMessage : Packet

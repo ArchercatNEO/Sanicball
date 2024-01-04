@@ -51,7 +51,7 @@ namespace Sanicball.UI
             targetFontSize = 160;
             UISound.Play(countdown2);
             RaceManager.StartRace();
-            ESportMode.StartTheShit();
+            ESportMode.StartEMode();
             yield return new WaitForSeconds(2);
 
             Destroy(gameObject);

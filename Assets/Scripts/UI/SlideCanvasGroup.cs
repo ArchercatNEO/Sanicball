@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace Sanicball.UI
@@ -6,71 +7,75 @@ namespace Sanicball.UI
     [RequireComponent(typeof(CanvasGroup))]
     public class SlideCanvasGroup : MonoBehaviour
     {
-        public bool isOpen = false;
-        public Vector2 closedPosition;
-        public float time = 1f;
+        //editor variables 
+        [SerializeField] private bool isOpen = false;
+        [SerializeField] private float time = 1f;
+        
+        //events
         public UnityEvent onOpen;
         public UnityEvent onClose;
+
+        //components
         private CanvasGroup cg;
-        private float pos = 0f;
-        private Vector2 startPosition;
         private RectTransform rectTransform;
-
-        public void Open()
-        {
-            isOpen = true;
-            gameObject.SetActive(true);
-            cg.alpha = 1f;
-            cg.interactable = true;
-            onOpen.Invoke();
-        }
-
-        public void Close()
-        {
-            isOpen = false;
-            cg.interactable = false;
-            onClose.Invoke();
-        }
+        
+        //start positions
+        private Vector2 startPosition;
+        [SerializeField] private Vector2 closedPosition;
 
         // Use this for initialization
         private void Start()
         {
             rectTransform = GetComponent<RectTransform>();
-            cg = GetComponent<CanvasGroup>();
             startPosition = rectTransform.anchoredPosition;
-            cg.interactable = isOpen;
-            cg.alpha = isOpen ? 1f : 0f;
-            if (isOpen)
-                pos = 1f;
-            else
-                gameObject.SetActive(false);
-            UpdatePosition();
+            
+            cg = GetComponent<CanvasGroup>();
+            
+            if (isOpen) { Open(); }
+            else { Close(); }
         }
 
-        private void Update()
+        public void Open()
         {
-            if (isOpen && pos < 1f)
-            {
-                pos = Mathf.Min(1, pos + Time.deltaTime / time);
-            }
-            if (!isOpen && pos > 0f)
-            {
-                pos = Mathf.Max(0, pos - Time.deltaTime / time);
-                if (pos <= 0f)
-                {
-                    cg.alpha = 0f;
-                    gameObject.SetActive(false);
-                }
-            }
-
-            UpdatePosition();
+            StopCoroutine(CloseInternal());
+            StartCoroutine(OpenInternal());
         }
 
-        private void UpdatePosition()
+        private IEnumerator OpenInternal()
         {
-            var smoothedPos = Mathf.SmoothStep(0f, 1f, pos);
+            gameObject.SetActive(true);
+            cg.alpha = 1f;
+            cg.interactable = true;
+            onOpen.Invoke();
+            
+            for (float pos = 0; pos < time; pos += Time.deltaTime)
+            {
+                var smoothedPos = Mathf.SmoothStep(0f, 1f, pos / time);
+                rectTransform.anchoredPosition = Vector2.Lerp(startPosition + closedPosition, startPosition, smoothedPos);
+                yield return new WaitForFixedUpdate();
+            }
+        }
 
-            (transform as RectTransform).anchoredPosition = Vector2.Lerp(startPosition + closedPosition, startPosition, smoothedPos);
+        public void Close()
+        {
+            StopCoroutine(OpenInternal());
+            StartCoroutine(CloseInternal());
+        }
+
+        private IEnumerator CloseInternal()
+        {
+            cg.interactable = false;
+            onClose.Invoke();
+            
+            for (float pos = 0; pos < time; pos += Time.deltaTime)
+            {
+                var smoothedPos = Mathf.SmoothStep(0f, 1f, pos / time);
+                rectTransform.anchoredPosition = Vector2.Lerp(startPosition + closedPosition, startPosition, smoothedPos);
+                yield return new WaitForFixedUpdate();
+            }
+
+            cg.alpha = 0f;
+            gameObject.SetActive(false);
         }
     }
 }

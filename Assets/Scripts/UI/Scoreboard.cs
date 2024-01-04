@@ -11,6 +11,6 @@ namespace Sanicball.UI
         public RectTransform entryContainer = null;
         [SerializeField] private SlideCanvasGroup slide = null;
 
-        private void Update() { if (!slide.isOpen) { slide.Open(); } }
+        private void Start() { slide.Open(); }
     }
 }

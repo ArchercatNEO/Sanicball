@@ -39,7 +39,7 @@ namespace Sanicball.UI
         public void SaveSettings()
         {
             new SettingsChangedMessage(tempSettings).Send();
-            Globals.MatchSettings = tempSettings;
+            Globals.settings = tempSettings;
         }
 
         public void DefaultSettings()

@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Sanicball.Gameplay;
 
 namespace Sanicball.Logic
@@ -7,10 +6,8 @@ namespace Sanicball.Logic
     public class StageReferences : MonoBehaviour
     {
         private static StageReferences? Instance;
-        private void Awake()
-        {
-            Instance = this;
-        }
+        private void Awake() { Instance = this; }
+        private void OnDestroy() { Instance = null; }
 
         [SerializeField] private Checkpoint[] checkpoints;
         public static Checkpoint[]? Checkpoints

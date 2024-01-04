@@ -21,10 +21,7 @@ namespace Sanicball.UI
                     return accumulator + $"{chara.name}: <b>{chara.artBy}</b> \n";
                 });
 
-            trackList.text = musicPlayerPrefab.playlist
-                .Aggregate("", (accumulator, song) => {
-                    return accumulator + $"<b>s.Name</b> \n";
-                });
+            trackList.text = musicPlayerPrefab.SongCredits;
         }
     }
 }

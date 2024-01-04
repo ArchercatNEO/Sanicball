@@ -7,12 +7,12 @@ public static class Globals
 {
     //? This data is saved to a json file, we use get/set to ensure the files are always updated
     #region JSON data
-    private static MatchSettings matchSettings = Save.LoadFile<MatchSettings>("MatchSettings.json");
+/*     private static readonly LazySaveFile<MatchSettings> matchSettings = new("MatchSettings.json");
     public static MatchSettings MatchSettings
     {
-        get { return matchSettings; }
-        set { Save.SaveFile("MatchSettings.json", value); matchSettings = value; }
-    }
+        get => matchSettings.File;
+        set => matchSettings.File = value;
+    } */
 
     #endregion
 
@@ -39,20 +39,6 @@ public static class Globals
     }
 
     #endregion State Initializer Functions
-
-    //? Esport mode thingys for... no clue
-    #region ESports
-
-    public static bool ESportsReady()
-    {
-        if (!GameSettings.Instance.eSportsReady) return false;
-
-        return !Client.clients[Constants.guid].players.Values.Any(
-            player => player.charId != 13
-        );
-    }
-
-    #endregion ESports
 }
 
 public enum Scene
