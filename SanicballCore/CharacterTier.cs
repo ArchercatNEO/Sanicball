@@ -1,8 +1,9 @@
-namespace SanicballCore {
+namespace SanicballCore
+{
     public enum CharacterTier
-	{
-		Normal,
-		Odd,
-		Hyperspeed
-	}
+    {
+        Normal,
+        Odd,
+        Hyperspeed
+    }
 }

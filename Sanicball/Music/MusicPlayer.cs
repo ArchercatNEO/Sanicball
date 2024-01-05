@@ -13,8 +13,8 @@ public partial class MusicPlayer : AudioStreamPlayer
             new("Chariots of fire", GD.Load<AudioStreamOggVorbis>("res://Music/ChariotsOfFire.ogg")),
             new("Dread", GD.Load<AudioStreamOggVorbis>("res://Music/Dread.ogg"))
         };
-    } 
-    
+    }
+
     public override void _Ready()
     {
         base._Ready();
@@ -25,10 +25,11 @@ public partial class MusicPlayer : AudioStreamPlayer
         songName.Text = first.Name;
         this.Stream = first.MP3;
         this.Play();
-        
-        this.Finished += () => {
+
+        this.Finished += () =>
+        {
             this.songIndex = (this.songIndex + 1) % this.songs.Length;
-            
+
             Song current = songs[songIndex];
             songName.Text = current.Name;
             this.Stream = current.MP3;

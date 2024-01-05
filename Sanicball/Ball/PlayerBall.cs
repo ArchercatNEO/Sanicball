@@ -13,7 +13,7 @@ public partial class PlayerBall : AbstractBall, IBall
         base._Ready();
 
         LobbyCamera.TrySubscribe(this);
-        
+
     }
 
     public override void _Input(InputEvent @event)

@@ -159,7 +159,7 @@ internal class Server : IDisposable
             {
                 Log(clients.Count + " players(s) in match");
             });
-        AddCommandHandler("kick", 
+        AddCommandHandler("kick",
         "Kicks a player from the server. Of course he could just re-join, but hopefully he'll get the message.",
         cmd =>
         {
@@ -282,7 +282,7 @@ internal class Server : IDisposable
             }
         });
         AddCommandHandler("setAutoStartTime",
-        "Sets the time required (in seconds) with enough players in the lobby before a race is automatically started.", 
+        "Sets the time required (in seconds) with enough players in the lobby before a race is automatically started.",
         cmd =>
         {
             int inputInt;
@@ -319,14 +319,16 @@ internal class Server : IDisposable
         "If not set to None, stages will change either randomly or in sequence every time the server returns to lobby.",
         cmd =>
         {
-            try {
+            try
+            {
                 StageRotationMode rotMode = (StageRotationMode)Enum.Parse(typeof(StageRotationMode), cmd.Content);
                 matchSettings.StageRotationMode = rotMode;
                 SaveMatchSettings();
                 SendToAll(new SettingsChangedMessage(matchSettings));
                 Log("Stage rotation mode set to " + rotMode);
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 string[] modes = Enum.GetNames(typeof(StageRotationMode));
                 string modesStr = string.Join("|", modes);
                 Log("Usage: setStageRotationMode [" + modesStr + "]");
@@ -336,7 +338,8 @@ internal class Server : IDisposable
         "Controls what ball tiers players can use.",
         cmd =>
         {
-            try {
+            try
+            {
                 AllowedTiers tiers = (AllowedTiers)Enum.Parse(typeof(AllowedTiers), cmd.Content);
                 matchSettings.AllowedTiers = tiers;
                 SaveMatchSettings();
@@ -345,7 +348,8 @@ internal class Server : IDisposable
                 Broadcast(GetAllowedTiersText());
                 Log("Allowed tiers set to " + tiers);
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 string[] modes = Enum.GetNames(typeof(AllowedTiers));
                 string modesStr = string.Join("|", modes);
                 Log("Usage: setAllowedTiers [" + modesStr + "]");
@@ -355,14 +359,16 @@ internal class Server : IDisposable
         "If not None, allowed ball tiers will change (To either NormalOnly, OddOnly or HyperspeedOnly) each time the server returns to lobby. WeightedRandom has a 10/14 chance of picking NormalOnly, 3/14 of OddOnly and 1/14 of HyperspeedOnly.",
         cmd =>
         {
-            try {
+            try
+            {
                 TierRotationMode mode = (TierRotationMode)Enum.Parse(typeof(TierRotationMode), cmd.Content);
                 matchSettings.TierRotationMode = mode;
                 SaveMatchSettings();
                 SendToAll(new SettingsChangedMessage(matchSettings));
                 Log("Tier rotation mode set to " + mode);
             }
-            catch (Exception) {
+            catch (Exception)
+            {
                 string[] modes = Enum.GetNames(typeof(TierRotationMode));
                 string modesStr = string.Join("|", modes);
                 Log("Usage: setTierRotationMode [" + modesStr + "]");
@@ -469,7 +475,8 @@ internal class Server : IDisposable
 
             if (newConfig.ShowOnList)
             {
-                while (newConfig.ServerListURLs == null) {
+                while (newConfig.ServerListURLs == null)
+                {
                     Console.Write("Enter one or more URL(s) for server lists this server should appear on, seperated by space (Leave blank to use the default list, '" + DEFAULT_SERVER_LIST_URL + "'):");
                     string input = Console.ReadLine().Trim();
 
@@ -477,7 +484,7 @@ internal class Server : IDisposable
                     {
                         newConfig.ServerListURLs = new string[] { DEFAULT_SERVER_LIST_URL };
                     }
-                    else 
+                    else
                     {
                         var urls = input.Split(' ');
                         newConfig.ServerListURLs = urls;
@@ -527,7 +534,7 @@ internal class Server : IDisposable
             Log("Server config at " + CONFIG_FILENAME + " not found. Please create a server config.", LogType.Error);
             return;
         }
-        
+
         using StreamReader sr = new(CONFIG_FILENAME);
         try
         {
@@ -539,8 +546,8 @@ internal class Server : IDisposable
             Log("Failed to parse server config from " + CONFIG_FILENAME + ", server cannot start. Please fix or delete the file. (" + ex.Message + ")", LogType.Error);
             return;
         }
-        
-        
+
+
 
         if (!LoadMatchSettings())
             matchSettings = MatchSettings.CreateDefault();
@@ -576,8 +583,8 @@ internal class Server : IDisposable
         MessageLoop();
     }
 
-#region done
-    
+    #region done
+
 
     private bool LoadMatchSettings(string path = SETTINGS_FILENAME)
     {
@@ -604,19 +611,19 @@ internal class Server : IDisposable
         return false;
     }
 
-    private void LoadMOTD(string? pathOverride = null) 
+    private void LoadMOTD(string? pathOverride = null)
     {
         string path = pathOverride ?? MOTD_FILENAME;
-        
+
         if (!File.Exists(path))
         {
             if (pathOverride == null)
             {
-                Log($"No message of the day found. You can display a message to joining players by creating a file named '{MOTD_FILENAME}' next to the server executable.",LogType.Warning);
+                Log($"No message of the day found. You can display a message to joining players by creating a file named '{MOTD_FILENAME}' next to the server executable.", LogType.Warning);
             }
             else
             {
-                Log("Could not load MOTD from this file.",LogType.Error);
+                Log("Could not load MOTD from this file.", LogType.Error);
             }
 
             return;
@@ -627,12 +634,13 @@ internal class Server : IDisposable
         Log("Loaded message of the day from " + path);
     }
 
-#endregion
+    #endregion
     private void AddToServerLists()
     {
         Thread addThread = new(() =>
         {
-            foreach (string listURL in config.ServerListURLs) {
+            foreach (string listURL in config.ServerListURLs)
+            {
                 try
                 {
                     using var client = new WebClient();
@@ -676,7 +684,7 @@ internal class Server : IDisposable
             {
                 if (lobbyTimer.Elapsed.TotalSeconds >= LOBBY_MATCH_START_TIME)
                 {
-                    Log("The race has been started by all players being ready.",LogType.Debug);
+                    Log("The race has been started by all players being ready.", LogType.Debug);
                     LoadRace();
                 }
             }
@@ -701,7 +709,7 @@ internal class Server : IDisposable
             {
                 if (autoStartTimer.Elapsed.TotalSeconds >= matchSettings.AutoStartTime)
                 {
-                    Log("The race has been automatically started.",LogType.Debug);
+                    Log("The race has been automatically started.", LogType.Debug);
                     LoadRace();
                 }
             }
@@ -719,7 +727,8 @@ internal class Server : IDisposable
             //Check racing timeout timers
             foreach (ServPlayer p in players)
             {
-                if (matchSettings.DisqualificationTime > 0) {
+                if (matchSettings.DisqualificationTime > 0)
+                {
                     if (!p.TimeoutMessageSent && p.RacingTimeout.Elapsed.TotalSeconds > matchSettings.DisqualificationTime / 2.0f)
                     {
                         SendToAll(new RaceTimeoutMessage(p.ClientGuid, p.CtrlType, matchSettings.DisqualificationTime / 2.0f));
@@ -851,14 +860,14 @@ internal class Server : IDisposable
                                     //If no players are left and we're in a race, return to lobby
                                     if (players.Count == 0 && inRace)
                                     {
-                                        Log("No players left in race!",LogType.Debug);
+                                        Log("No players left in race!", LogType.Debug);
                                         ReturnToLobby();
                                     }
 
                                     //If there are now less players than AutoStartMinPlayers, stop the auto start timer
                                     if (players.Count < matchSettings.AutoStartMinPlayers && autoStartTimer.IsRunning)
                                     {
-                                        Log("Too few players, match auto start timer stopped",LogType.Debug);
+                                        Log("Too few players, match auto start timer stopped", LogType.Debug);
                                         StopAutoStartTimer();
                                     }
 
@@ -872,7 +881,7 @@ internal class Server : IDisposable
                                 }
                                 else
                                 {
-                                    Log("Unknown client disconnected (Client was most likely not done connecting)",LogType.Debug);
+                                    Log("Unknown client disconnected (Client was most likely not done connecting)", LogType.Debug);
                                 }
                                 break;
 
@@ -950,7 +959,7 @@ internal class Server : IDisposable
 
                                             if (players.Count >= matchSettings.AutoStartMinPlayers && !autoStartTimer.IsRunning && matchSettings.AutoStartTime > 0)
                                             {
-                                                Log("Match will auto start in " + matchSettings.AutoStartTime + " seconds.",LogType.Debug);
+                                                Log("Match will auto start in " + matchSettings.AutoStartTime + " seconds.", LogType.Debug);
                                                 StartAutoStartTimer();
                                             }
                                         }
@@ -981,7 +990,7 @@ internal class Server : IDisposable
 
                                         if (players.Count < matchSettings.AutoStartMinPlayers && autoStartTimer.IsRunning)
                                         {
-                                            Log("Too few players, match auto start timer stopped",LogType.Debug);
+                                            Log("Too few players, match auto start timer stopped", LogType.Debug);
                                             StopAutoStartTimer();
                                         }
                                     }
@@ -1076,7 +1085,7 @@ internal class Server : IDisposable
                                         clientsLoadingStage--;
                                         if (clientsLoadingStage > 0)
                                         {
-                                            Log("Waiting for " + clientsLoadingStage + " client(s) to load",LogType.Debug);
+                                            Log("Waiting for " + clientsLoadingStage + " client(s) to load", LogType.Debug);
                                         }
                                         else
                                         {
@@ -1248,7 +1257,7 @@ internal class Server : IDisposable
 
             //Tier rotation
             AllowedTiers newTiers = matchSettings.AllowedTiers;
-            switch(matchSettings.TierRotationMode)
+            switch (matchSettings.TierRotationMode)
             {
                 case TierRotationMode.Cycle:
                     switch (matchSettings.AllowedTiers)
@@ -1266,7 +1275,8 @@ internal class Server : IDisposable
                     break;
                 case TierRotationMode.Random:
                     int rand = random.Next() % 3;
-                    switch (rand) {
+                    switch (rand)
+                    {
                         case 0:
                             newTiers = AllowedTiers.NormalOnly;
                             break;
@@ -1279,9 +1289,10 @@ internal class Server : IDisposable
                     }
                     break;
                 case TierRotationMode.WeightedRandom:
-                    int[] choices = new[] {0,0,0,0,0,0,0,0,0,0,1,1,1,2};
+                    int[] choices = new[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 2 };
                     int choice = choices[random.Next() % choices.Length];
-                    switch (choice) {
+                    switch (choice)
+                    {
                         case 0:
                             newTiers = AllowedTiers.NormalOnly;
                             break;
@@ -1294,7 +1305,8 @@ internal class Server : IDisposable
                     }
                     break;
             }
-            if (newTiers != matchSettings.AllowedTiers) {
+            if (newTiers != matchSettings.AllowedTiers)
+            {
                 matchSettings.AllowedTiers = newTiers;
                 matchSettingsChanged = true;
                 CorrectPlayerTiers();
@@ -1372,7 +1384,8 @@ internal class Server : IDisposable
         netServer.SendMessage(netMsg, netServer.Connections, NetDeliveryMethod.ReliableOrdered, 0);
     }
 
-    private void SendTo(MatchMessage matchMsg, ServClient reciever) {
+    private void SendTo(MatchMessage matchMsg, ServClient reciever)
+    {
         Log("Sending message of type " + matchMsg.GetType() + " to client " + reciever.Name, LogType.Debug);
         string matchMsgSerialized = JsonConvert.SerializeObject(matchMsg, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All });
 
@@ -1393,7 +1406,8 @@ internal class Server : IDisposable
         SendToAll(new ChatMessage("Server", ChatMessageType.System, text));
     }
 
-    private void Whisper(ServClient reciever, string text) {
+    private void Whisper(ServClient reciever, string text)
+    {
         Log("Sending whisper to client " + reciever.Name + "(Text: " + text + ")", LogType.Debug);
         SendTo(new ChatMessage("Server", ChatMessageType.System, text), reciever);
     }
@@ -1431,15 +1445,16 @@ internal class Server : IDisposable
         client.Connection.Disconnect(reason);
     }
 
-    private void CorrectPlayerTiers() {
-        foreach(ServPlayer player in players)
+    private void CorrectPlayerTiers()
+    {
+        foreach (ServPlayer player in players)
         {
             if (!VerifyCharacterTier(player.CharacterId))
             {
                 ServClient client = clients.FirstOrDefault(a => a.Guid == player.ClientGuid);
                 if (client != null)
                 {
-                    for (int i=0; i < characterTiers.Length; i++)
+                    for (int i = 0; i < characterTiers.Length; i++)
                     {
                         if (VerifyCharacterTier(i))
                         {
@@ -1454,7 +1469,8 @@ internal class Server : IDisposable
         }
     }
 
-    private bool VerifyCharacterTier(int id) {
+    private bool VerifyCharacterTier(int id)
+    {
         CharacterTier t = characterTiers[id];
         return matchSettings.AllowedTiers switch
         {
@@ -1467,7 +1483,8 @@ internal class Server : IDisposable
         };
     }
 
-    private string GetAllowedTiersText() {
+    private string GetAllowedTiersText()
+    {
         return matchSettings.AllowedTiers switch
         {
             AllowedTiers.NormalOnly => "Only characters from the Normal tier are allowed.",
@@ -1479,10 +1496,11 @@ internal class Server : IDisposable
     }
     #endregion Utility methods
 
-    private void SaveMatchSettings() {
-    using StreamWriter sw = new(SETTINGS_FILENAME);
-    sw.Write(JsonConvert.SerializeObject(matchSettings));
-}
+    private void SaveMatchSettings()
+    {
+        using StreamWriter sw = new(SETTINGS_FILENAME);
+        sw.Write(JsonConvert.SerializeObject(matchSettings));
+    }
 
     public void Dispose()
     {

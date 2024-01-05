@@ -7,7 +7,7 @@ internal class Program
     {
         CommandQueue commandQueue = new();
         bool serverClosed = false;
-        
+
         while (!serverClosed)
         {
             using Server serv = new(commandQueue);
@@ -26,7 +26,7 @@ internal class Program
                 Console.ForegroundColor = ConsoleColor.White;
             };
 
-            Thread inputThread = new(() => 
+            Thread inputThread = new(() =>
             {
                 string? input;
                 while (true)

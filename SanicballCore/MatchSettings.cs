@@ -19,14 +19,14 @@ namespace SanicballCore
         Random,
     }
 
-	public enum AllowedTiers
-	{
-		All,
-		NormalOnly,
-		OddOnly,
-		HyperspeedOnly,
-		NoHyperspeed,
-	}
+    public enum AllowedTiers
+    {
+        All,
+        NormalOnly,
+        OddOnly,
+        HyperspeedOnly,
+        NoHyperspeed,
+    }
 
     public enum TierRotationMode
     {
@@ -51,7 +51,7 @@ namespace SanicballCore
         public int AutoReturnTime { get; set; }
         public float VoteRatio { get; set; }
         public StageRotationMode StageRotationMode { get; set; }
-		public AllowedTiers AllowedTiers { get; set; }
+        public AllowedTiers AllowedTiers { get; set; }
         public TierRotationMode TierRotationMode { get; set; }
         public int DisqualificationTime { get; set; }
 
@@ -74,7 +74,7 @@ namespace SanicballCore
                 AutoReturnTime = 15,
                 VoteRatio = 1f,
                 StageRotationMode = StageRotationMode.None,
-				AllowedTiers = AllowedTiers.All,
+                AllowedTiers = AllowedTiers.All,
                 TierRotationMode = TierRotationMode.None,
                 DisqualificationTime = 120
             };
@@ -85,7 +85,7 @@ namespace SanicballCore
         /// </summary>
         /// <param name="pos">Target position</param>
         /// <returns></returns>
-        public int GetAICharacter(int pos)
+        public readonly int GetAICharacter(int pos)
         {
             string[] charIDs = aiCharacters.Split(',');
 
