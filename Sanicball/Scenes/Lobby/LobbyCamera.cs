@@ -49,7 +49,6 @@ public partial class LobbyCamera : Camera3D
 		}
 
 		//? Rotate towards the average position of every player
-		//! I have 0 confidence in this math
 		Vector3 sum = balls.Aggregate(Vector3.Zero, (accum, ball) => accum += ball.Position);
 		Vector3 meanPosition = sum / balls.Count;
 		Vector3 relativePosition = meanPosition - Position;
@@ -59,9 +58,9 @@ public partial class LobbyCamera : Camera3D
 		Vector3 normal = cameraForwards.Cross(relativePosition).Normalized();
 		if (normal == Vector3.Zero) { return; }
 		
-		float angle = Mathf.Asin(normal.Length() / (relativePosition.Length() * cameraForwards.Length()));
+		float angle = cameraForwards.AngleTo(relativePosition);
 		
-		Rotate(normal, angle);
+		Rotate(normal, angle * (float)delta * 10);
 	}
 
     public override void _ExitTree()
