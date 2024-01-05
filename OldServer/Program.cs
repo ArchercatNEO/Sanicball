@@ -1,75 +1,68 @@
-﻿using SanicballCore.Server;
+﻿
+namespace SanicballServer;
 
-namespace SanicballServer
+internal class Program
 {
-    internal class Program
+    private static void Main(string[] args)
     {
-        private static readonly CommandQueue commandQueue = new();
-
-        private static void Main(string[] args)
+        CommandQueue commandQueue = new();
+        bool serverClosed = false;
+        
+        while (!serverClosed)
         {
-            bool serverClosed = false;
-            while (!serverClosed)
+            using Server serv = new(commandQueue);
+            serv.OnLog += args =>
             {
-                using Server serv = new(commandQueue);
-                serv.OnLog += (sender, e) =>
+                Console.ForegroundColor = args.Type switch
                 {
-                    Console.ForegroundColor = e.Entry.Type switch
-                    {
-                        LogType.Normal => ConsoleColor.White,
-                        LogType.Debug => ConsoleColor.Gray,
-                        LogType.Warning => ConsoleColor.Yellow,
-                        LogType.Error => ConsoleColor.Red,
-                    };
-                    Console.WriteLine(e.Entry.Message);
-
-                    //Reset console color to not mess with the color of input text
-                    Console.ForegroundColor = ConsoleColor.White;
+                    LogType.Normal => ConsoleColor.White,
+                    LogType.Debug => ConsoleColor.Gray,
+                    LogType.Warning => ConsoleColor.Yellow,
+                    LogType.Error => ConsoleColor.Red,
                 };
+                Console.WriteLine(args.Message);
 
-                Thread inputThread = new Thread(InputLoop);
-                inputThread.Start();
+                //Reset console color to not mess with the color of input text
+                Console.ForegroundColor = ConsoleColor.White;
+            };
 
-#if DEBUG
-                serv.Start();
-                serverClosed = true;
-#else
-                    try
-                    {
-                        serv.Start();
-
-                        //Wait until server closes
-
-                        serverClosed = true;
-                    }
-                    catch (Exception ex)
-                    {
-                        serv.Log("Server encountered an exception and will restart.", LogType.Error);
-                        string exText = ex.GetType() + ": " + ex.Message + Environment.NewLine + ex.StackTrace;
-                        serv.Log(exText, LogType.Normal);
-                        Thread.Sleep(1000);
-                    }
-#endif
-
-                inputThread.Abort();
-                inputThread.Join();
-            }
-
-            Console.WriteLine("Press any key to close this window.");
-            Console.ReadKey(true);
-        }
-
-        private static void InputLoop()
-        {
-            string input;
-            while (true)
+            Thread inputThread = new(() => 
             {
-                input = Console.ReadLine();
-                if (!string.IsNullOrEmpty(input))
+                string? input;
+                while (true)
                 {
-                    commandQueue.Add(new Command(input.ToString()));
+                    input = Console.ReadLine();
+                    if (!string.IsNullOrEmpty(input))
+                    {
+                        commandQueue.Add(new Command(input.ToString()));
+                    }
                 }
+            });
+
+            inputThread.Start();
+
+            try
+            {
+                serv.Start();
+
+                //Wait until server closes
+
+                serverClosed = true;
             }
+            catch (Exception ex)
+            {
+                serv.Log("Server encountered an exception and will restart.", LogType.Error);
+                string exText = ex.GetType() + ": " + ex.Message + Environment.NewLine + ex.StackTrace;
+                serv.Log(exText, LogType.Normal);
+                Thread.Sleep(1000);
+            }
+
+
+            inputThread.Abort();
+            inputThread.Join();
         }
+
+        Console.WriteLine("Press any key to close this window.");
+        Console.ReadKey(true);
     }
 }
