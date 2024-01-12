@@ -50,7 +50,12 @@
         "Obj/": true,
         "ProjectSettings/": true,
         "temp/": true,
-        "Temp/": true
+        "Temp/": true,
+        "NoBadFilePaths/": true,
+        "OldServer/": true,
+        "Sanicball/": true,
+        "SanicballCore/": true,
+        "target/": true
     },
     "dotnet.preferCSharpExtension": true,
     "dotnet.defaultSolution": "Sanicball.sln"
