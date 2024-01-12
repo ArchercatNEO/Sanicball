@@ -1,6 +1,8 @@
 {
     "dotnet.defaultSolution": "Sanicball.sln",
     "dotnet.projects.enableAutomaticRestore": true,
+
+    "rust-analyzer.cargo.buildScripts.invocationStrategy": "per_workspace",
     "files.exclude": {
         "**/*.import" : true
     }

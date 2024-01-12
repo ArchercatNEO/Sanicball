@@ -2,11 +2,11 @@
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sanicball", "Sanicball\Sanicball.csproj", "{422DAF45-F65D-402A-AAA2-A6BDC9B05E9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoBadFilePaths", "NoBadFilePaths\NoBadFilePaths.csproj", "{F8C4CE79-91DD-41EC-AC25-F573E0921170}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoBadFilePaths", "SanicballDependency\NoBadFilePaths\NoBadFilePaths.csproj", "{F8C4CE79-91DD-41EC-AC25-F573E0921170}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanicballCore", "SanicballCore\SanicballCore.csproj", "{ED8D5D1E-E70F-4005-A3BA-F03794FF7A40}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanicballCore", "SanicballLegacy\SanicballCore\SanicballCore.csproj", "{ED8D5D1E-E70F-4005-A3BA-F03794FF7A40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanicballServer", "OldServer\SanicballServer.csproj", "{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanicballServer", "SanicballLegacy\OldServer\SanicballServer.csproj", "{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
