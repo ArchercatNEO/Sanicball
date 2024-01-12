@@ -1,16 +1,17 @@
 using Godot;
+using System;
+using Sanicball.Characters;
 
 namespace Sanicball.Scenes;
 
 [Tool]
 public partial class MenuPath : Node3D
 {
-    [Export]
-    Material CharacterMat = new();
+    [Export] public Material CharacterMat = SanicCharacter.Sanic.Material;
+    [Export] public Vector3 Start = Vector3.Zero;
+    [Export] public Vector3 End = Vector3.Zero;
 
-    [Export]
-    Transform3D Start;
-
-    [Export]
-    Transform3D End;
+    [Export] MeshInstance3D? startNode;
+    [Export] MeshInstance3D? endNode;
 }
+

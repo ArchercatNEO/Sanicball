@@ -18,7 +18,7 @@ public partial class MenuCamera : Camera3D
         Array<Node> paths = GetNode<Node3D>("CameraPaths").GetChildren();
 
         ballPosition = ball.Position;
-        MeshInstance3D ballMesh = ball.GetNode<MeshInstance3D>($"MeshInstance3D");
+        MeshInstance3D ballMesh = ball.GetNode<MeshInstance3D>("MeshInstance3D");
 
         Animation animation = new();
 
@@ -31,8 +31,7 @@ public partial class MenuCamera : Camera3D
             GD.Print(path.GetMeta("Start"));
             GD.Print(path.GetMeta("End"));
             animation.PositionTrackInsertKey(posIndex, 0, (Vector3)path.GetMeta("Start"));
-            animation.PositionTrackInsertKey(posIndex, 3, (Vector3)path.GetMeta("End"));
-            break;
+            animation.PositionTrackInsertKey(posIndex, 30, (Vector3)path.GetMeta("End"));
         };
 
         AnimationLibrary lib = new();
@@ -46,8 +45,6 @@ public partial class MenuCamera : Camera3D
     // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
-        Translate(new(Random.Shared.NextInt64(), Random.Shared.NextInt64(), Random.Shared.NextInt64()));
-        GD.Print(GlobalPosition);
-        //LookAt(ballPosition);
+        LookAt(ballPosition);
     }
 }
