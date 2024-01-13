@@ -25,7 +25,7 @@ pub struct Motd {
 }
 
 impl Buffer {
-    pub fn write_time(&mut self, timer: &mut Timer) -> &mut Self {
+    pub fn write_time(&mut self, timer: &Timer) -> &mut Self {
         self.write_f32(&timer.now().as_secs_f32());
         self
     }
@@ -38,7 +38,7 @@ pub struct Timer {
 }
 
 impl Timer {
-    pub fn now(&mut self) -> Duration {
+    pub fn now(&self) -> Duration {
         if !self.running {
             return self.running_time;
         }
@@ -61,7 +61,7 @@ impl Timer {
         self.running_time = Duration::from_secs(0);
         self.running = false;
     }
-    pub fn timeout(&mut self, seconds: u64) -> bool {
+    pub fn timeout(&self, seconds: u64) -> bool {
         self.running && self.now() > Duration::from_secs(seconds)
     }
 }

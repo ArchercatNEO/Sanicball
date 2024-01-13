@@ -1,10 +1,7 @@
 use std::net::SocketAddr;
-use std::net::UdpSocket;
-use std::usize;
-use std::vec;
 
 use crate::enums::{GameHeader, MessageTypes};
-use crate::network::connection::{Connection, UdpConnection};
+use crate::network::connection::Connection;
 use crate::network::traits::Packet;
 use crate::network::{buffer::Buffer, stream::Stream};
 use crate::oxidize;
@@ -15,11 +12,10 @@ use crate::{
     structs::{Client, Player},
 };
 
-pub struct Server {
+pub struct Server<C: Connection> {
     app_id: &'static str,
 
-    listener: UdpSocket,
-    connection: Box<dyn Connection<String>>,
+    connection: C,
 
     config: ServerConfig,
     match_settings: Settings,
@@ -38,18 +34,18 @@ pub struct Server {
     stream: Stream,
 }
 
-impl Server {
+impl<C: Connection> Server<C> {
     // ? Helper functions unrelated to most logic handling
-    fn write_new(&mut self, json: &str) -> Vec<u8> {
+    fn write_new(&self, json: &str) -> Vec<u8> {
         Buffer::default()
             .write_struct(&GameHeader::MatchMessage)
-            .write_time(&mut self.start_time)
+            .write_time(&self.start_time)
             .write_string(&json)
             .finish(Header::UserUnreliable) // ! Figure out how sequence works
     }
 
     ///Create a new message and send it to an address' chat
-    fn write_chat(&mut self, message: &str) -> MessageTypes {
+    fn write_chat(&self, message: &str) -> MessageTypes {
         MessageTypes::ChatMessage {
             from: "Server".to_owned(),
             r#type: 0,
@@ -57,41 +53,41 @@ impl Server {
         }
     }
 
-    fn chat_to(&mut self, message: &str, addr: SocketAddr) {
+    fn chat_to(&self, message: &str, addr: SocketAddr) {
         let object = &self.write_chat(message).as_json();
         let mut data = self.write_new(object);
         self.connection.send_to(&mut data, addr);
     }
 
-    fn chat_all(&mut self, message: &str) {
+    fn chat_all(&self, message: &str) {
         let object = &self.write_chat(message).as_json();
         let mut data = self.write_new(object);
         self.connection.send_all(&mut data);
     }
 
-    fn send_new(&mut self, message: MessageTypes) {
+    fn send_new(&self, message: MessageTypes) {
         let object = &message.as_json();
         let mut data = self.write_new(object);
         self.connection.send_all(&mut data);
     }
 
-    fn sending_client(&mut self) -> Option<usize> {
+    fn sending_client(&self) -> Option<usize> {
         self.clients
             .iter()
             .position(|e| e.connection == self.stream.origin)
     }
 
-    fn current_client(&mut self, guid: Vec<u8>) -> Option<usize> {
+    fn current_client(&self, guid: Vec<u8>) -> Option<usize> {
         self.clients.iter().position(|e| e.guid == guid)
     }
 
-    fn current_player(&mut self, guid: Vec<u8>, control: &i32) -> Option<usize> {
+    fn current_player(&self, guid: Vec<u8>, control: &i32) -> Option<usize> {
         self.players
             .iter()
             .position(|e| e.guid == guid && &e.ctrl_type == control)
     }
 
-    fn verify_player(&mut self, _player: Player) -> bool {
+    fn verify_player(&self, _player: Player) -> bool {
         true
     }
 
@@ -114,14 +110,13 @@ impl Server {
     // ? If you read this from top to bottom you should get a pretty good grasp of what's going on
 
     ///Start a new Server
-    pub fn new(config: ServerConfig, matches: Settings, motd: Motd) -> Server {
+    pub fn new(config: ServerConfig, matches: Settings, motd: Motd) -> Server<C> {
         println!("Hello there welcome your stay");
         println!("Starting server on ip: [129.0.0.1], port: [7878]");
 
         Server {
             app_id: "Sanicball",
-            listener: UdpSocket::bind("0.0.0.0:7878").unwrap(),
-            connection: Box::from(UdpConnection::new("0.0.0.0:7878")),
+            connection: C::new("0.0.0.0::7878"),
             config,
             match_settings: matches,
             motd,
@@ -141,7 +136,7 @@ impl Server {
     pub fn update(&mut self) {
         self.timers();
         let mut buffer = [0; 1500];
-        let raw = self.listener.recv_from(&mut buffer);
+        let raw = self.connection.recv_from(&mut buffer);
 
         if let Ok((size, addr)) = raw {
             self.stream = Stream::new(&buffer, size, addr);
@@ -156,7 +151,7 @@ impl Server {
 
                         let mut data = Buffer::default()
                             .write_byte(ping_number)
-                            .write_time(&mut self.start_time)
+                            .write_time(&self.start_time)
                             .finish(Header::Pong);
 
                         self.connection.send_to(&mut data, self.stream.origin);
@@ -248,17 +243,11 @@ impl Server {
 
                 let mut data = Buffer::default()
                     .write_struct(&GameHeader::PlayerMovementMessage)
-                    .write_time(&mut self.start_time)
+                    .write_time(&self.start_time)
                     .write_bytes(&self.stream.data[5..])
                     .finish(Header::UserUnreliable);
 
-                //TODO self.connection.all_except(&mut data, guid);
-                for client in self.clients.iter() {
-                    if client.guid == guid {
-                        continue;
-                    }
-                    self.connection.send_to(&mut data, client.connection);
-                }
+                //? self.connection.all_where(&mut data, |id| id != guid);
             }
         }
     }

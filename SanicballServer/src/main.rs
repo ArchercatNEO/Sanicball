@@ -13,18 +13,18 @@ pub mod server;
 pub mod tests;
 
 use crate::server::Server;
+use network::connection::UdpConnection;
 use serde::de::DeserializeOwned;
 use std::{fs::File, io::BufReader};
 
 //TODO Make this into an executable app
 //TODO Turn into CLI
 fn main() {
-    //env::set_var("RUST_BACKTRACE", "full");
     let server_config = load_file("config.json").unwrap();
     let match_config = load_file("match.json").unwrap();
     let motd = load_file("motd.json").unwrap();
 
-    let mut server = Server::new(server_config, match_config, motd);
+    let mut server: Server<UdpConnection> = Server::new(server_config, match_config, motd);
 
     loop {
         server.update();

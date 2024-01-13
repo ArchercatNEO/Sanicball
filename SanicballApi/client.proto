@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package sanicball;
+
+service client {
+    rpc Send(AddClient); 
+    message AddClient {
+        string name = 1;
+        uint8 controlType = 2;
+    }
+}

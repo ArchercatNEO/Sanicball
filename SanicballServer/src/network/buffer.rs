@@ -1,5 +1,4 @@
-use std::{fmt::Display, collections::HashMap, ops::{DerefMut, Deref}, rc::Rc};
-use std::sync::{Arc, Mutex};
+use std::{fmt::Display, collections::HashMap};
 use regex::Regex;
 
 use super::traits::Packet;

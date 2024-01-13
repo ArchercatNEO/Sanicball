@@ -1,7 +1,0 @@
-.godot
-
-**/bin
-**/obj
-/target/
-
-*.import
