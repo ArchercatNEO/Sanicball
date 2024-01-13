@@ -4,6 +4,7 @@
 
     "rust-analyzer.cargo.buildScripts.invocationStrategy": "per_workspace",
     "files.exclude": {
-        "**/*.import" : true
+        "**/*.import" : true,
+        "**/*.blend1": true
     }
 }
