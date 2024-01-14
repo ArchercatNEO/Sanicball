@@ -10,7 +10,7 @@ public partial record class SanicCharacter
         Credits = "Deviantart user franz888",
 
         Color = new(0x004CFF),
-        Material = GD.Load<Material>("res://Characters/C01-Sanic/Sanic.tres"),
+        Material = GD.Load<StandardMaterial3D>("res://Characters/C01-Sanic/Sanic.tres"),
         Icon = GD.Load<Texture>("res://Characters/C01-Sanic/SanicIcon.png"),
         MinimapIcon = GD.Load<Texture>("res://Characters/C01-Sanic/SanicMinimap.png")
     };

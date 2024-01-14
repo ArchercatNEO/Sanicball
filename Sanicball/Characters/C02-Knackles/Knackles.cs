@@ -10,7 +10,7 @@ public partial record class SanicCharacter
         Credits = "an unknown artist",
 
         Color = new(0xFF0000),
-        Material = GD.Load<Material>("res://Characters/C02-Knackles/Knackles.tres"),
+        Material = GD.Load<StandardMaterial3D>("res://Characters/C02-Knackles/Knackles.tres"),
         Icon = GD.Load<Texture>("res://Characters/C02-Knackles/KnacklesIcon.png"),
         MinimapIcon = GD.Load<Texture>("res://Characters/C02-Knackles/KnacklesMinimap.png")
     };

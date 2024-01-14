@@ -10,14 +10,14 @@ public partial record class SanicCharacter
 
     //Colours and renderers
     public required Color Color { get; init; }
-    public required Material Material { get; init; }
+    public required StandardMaterial3D Material { get; init; }
     public Material? Trail { get; init; } //TODO
     public required Texture Icon { get; init; }
     public required Texture MinimapIcon { get; init; }
 
     //These are for deformed characters (eggmen, metal sanic)
-    public Mesh? AlternativeMesh { get; init; }
-    public Mesh? CollisionMesh { get; init; }
+    public MeshInstance3D? AlternativeMesh { get; init; }
+    public CollisionShape3D? CollisionMesh { get; init; }
 
     //Overwrite physics stats (big, bee)
     public float RollSpeed { get; init; } = 100;
@@ -25,12 +25,4 @@ public partial record class SanicCharacter
     public float JumpHeight { get; init; } = 14;
     public float Grip { get; init; } = 20;
     public float BallSize { get; init; } = 1;
-}
-
-public static class CharacterExtension
-{
-    public static void SetCharacter(this RigidBody3D mesh, SanicCharacter character)
-    {
-
-    }
 }

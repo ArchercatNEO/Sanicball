@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://b0vnhh1ow6ecl"]
+[gd_scene load_steps=12 format=3 uid="uid://b0vnhh1ow6ecl"]
 
-[ext_resource type="Material" uid="uid://clt2irqu13knl" path="res://Characters/C01-Sanic/Sanic.tres" id="1_4vyej"]
 [ext_resource type="Script" path="res://Scenes/Intro+Menu/MenuCamera.cs" id="1_gguv2"]
 [ext_resource type="Script" path="res://Scenes/Intro+Menu/MenuPath.cs" id="2_2esyw"]
 [ext_resource type="Material" uid="uid://cnrybb57xaqin" path="res://Characters/C02-Knackles/Knackles.tres" id="2_pedrv"]
+[ext_resource type="Material" uid="uid://bh2mgbe4kxfhq" path="res://Characters/C03-Taels/Taels.tres" id="3_alwu2"]
+[ext_resource type="Material" uid="uid://ckdetghdrmpb6" path="res://Characters/C05-Shedew/Shedew.tres" id="5_gg4if"]
 [ext_resource type="SphereMesh" uid="uid://ctrirqb48lcyn" path="res://Scenes/Intro+Menu/ball.tres" id="5_x72ac"]
 
 [sub_resource type="Environment" id="Environment_ftve1"]
@@ -80,16 +81,24 @@ top_level = true
 
 [node name="Sanic" type="Node3D" parent="Menu3D/Camera3D/CameraPaths"]
 script = ExtResource("2_2esyw")
-Start = Vector3(52.36, 11.28, 0)
-End = Vector3(22.27, 9.38, 0)
-metadata/characterMat = ExtResource("1_4vyej")
-metadata/Start = Vector3(20, 20, 20)
-metadata/End = Vector3(1000, 1000, 1000)
+Start = Vector3(25, 10, 20)
+StartColor = Color(0.0862745, 1, 0, 1)
+End = Vector3(-25, 10, 20)
 
 [node name="Knackles" type="Node3D" parent="Menu3D/Camera3D/CameraPaths"]
+script = ExtResource("2_2esyw")
+CharacterMat = ExtResource("3_alwu2")
+Start = Vector3(-31.0044, 19.7869, 0)
+End = Vector3(-29.1718, 23.3267, 0)
 metadata/characterMat = ExtResource("2_pedrv")
 metadata/Start = Vector3(30, 30, 30)
 metadata/End = Vector3(25, 25, 25)
+
+[node name="Shedew" type="Node3D" parent="Menu3D/Camera3D/CameraPaths"]
+script = ExtResource("2_2esyw")
+CharacterMat = ExtResource("5_gg4if")
+Start = Vector3(-28.5712, 20.354, 0)
+End = Vector3(-42.0824, 17.6693, -9.53674e-07)
 
 [node name="Ball" type="StaticBody3D" parent="Menu3D"]
 transform = Transform3D(-0.976198, 0, 0.216882, 0, 1, 0, -0.216882, 0, -0.976198, 0, 8.7678, 0)

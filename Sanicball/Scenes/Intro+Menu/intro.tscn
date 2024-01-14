@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://c2v1qe5fjww6e"]
 
 [ext_resource type="Script" path="res://Scenes/Intro+Menu/IntroUI.cs" id="1_t1ji2"]
-[ext_resource type="Texture2D" uid="uid://dcvxtf02e50e2" path="res://Scenes/Intro+Menu/sanicteam.png" id="2_dxwkw"]
-[ext_resource type="Texture2D" uid="uid://timhm3kapkwp" path="res://Scenes/Intro+Menu/notsega.png" id="3_h427x"]
+[ext_resource type="Texture2D" uid="uid://xsb0tm45s6fr" path="res://Scenes/Intro+Menu/sanicteam.png" id="2_dxwkw"]
+[ext_resource type="Texture2D" uid="uid://beku0mlc4qaub" path="res://Scenes/Intro+Menu/notsega.png" id="3_h427x"]
 
 [sub_resource type="Animation" id="Animation_mt08v"]
 resource_name = "FadeInOut"

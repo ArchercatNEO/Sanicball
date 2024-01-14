@@ -11,15 +11,11 @@ internal partial class PathVisualizer : EditorPlugin
 
     public override void _EnterTree()
     {
-        base._EnterTree();
-
         AddNode3DGizmoPlugin(gizmo);
     }
 
     public override void _ExitTree()
     {
-        base._ExitTree();
-
         RemoveNode3DGizmoPlugin(gizmo);
     }
 }
@@ -40,16 +36,31 @@ internal partial class PathNode : EditorNode3DGizmoPlugin
 
     public override void _Redraw(EditorNode3DGizmo gizmo)
     {
-        base._Redraw(gizmo);
-
         gizmo.Clear();
 
         MenuPath path = (MenuPath)gizmo.GetNode3D();
 
-        Transform3D startNode = Transform3D.Identity with { Origin = path.Start };
-        gizmo.AddMesh(ball, path.CharacterMat, startNode);
+        gizmo.AddMesh(ball, path.startMat, path.startTranform);
+        gizmo.AddMesh(ball, path.endMat, path.endTranform);
+        gizmo.AddLines([path.Start, path.End], GetMaterial("main", gizmo));
+        gizmo.AddHandles([path.Start, path.End], GetMaterial("mine", gizmo), []);
+    }
 
-        Transform3D endNode = Transform3D.Identity with { Origin = path.End };
-        gizmo.AddMesh(ball, path.CharacterMat, endNode);
+    public override void _SetHandle(EditorNode3DGizmo gizmo, int handleId, bool secondary, Camera3D camera, Vector2 screenPos)
+    {
+        Vector3 origin = camera.ProjectRayOrigin(screenPos);
+        Vector3 normal = camera.ProjectRayNormal(screenPos);
+        Vector3? maybePosition = Plane.PlaneXY.IntersectsRay(origin, normal);
+        if (maybePosition is Vector3 position)
+        {
+            MenuPath path = (MenuPath)gizmo.GetNode3D();
+            if (handleId == 0) { path.Start =  position; }
+            else { path.End = position; }
+        }
+        else
+        {
+            GD.Print("Too far, lost intersection");
+        }
+        
     }
 }
