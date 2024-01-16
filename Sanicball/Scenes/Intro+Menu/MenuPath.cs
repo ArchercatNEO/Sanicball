@@ -8,7 +8,7 @@ namespace Sanicball.Scenes;
 public partial class MenuPath : Node3D
 {
     private StandardMaterial3D characterMat = SanicCharacter.Sanic.Material;
-    [Export] private StandardMaterial3D CharacterMat
+    [Export] public StandardMaterial3D CharacterMat
     {
         get => characterMat;
         set

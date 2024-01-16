@@ -15,7 +15,7 @@ size = Vector3(60, 2, 60)
 [sub_resource type="SphereMesh" id="SphereMesh_e8we3"]
 material = ExtResource("1_apvfp")
 
-[node name="Main" type="Node3D"]
+[node name="GreenHillZone" type="Node3D"]
 
 [node name="OmniLight3D" type="OmniLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.37745, 0)

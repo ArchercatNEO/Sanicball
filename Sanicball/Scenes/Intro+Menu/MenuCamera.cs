@@ -1,50 +1,63 @@
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 using Godot;
-using System;
-using Sanicball.Characters;
 using Godot.Collections;
+using Sanicball.Characters;
 
 namespace Sanicball.Scenes;
 
 public partial class MenuCamera : Camera3D
 {
-    [Export]
-    public StaticBody3D ball;
-    private Vector3 ballPosition = Vector3.Zero;
+    [Export] private StaticBody3D ball = null!;
 
     // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
+    public override async void _Ready()
     {
-        AnimationPlayer animator = GetNode<AnimationPlayer>("AnimationPlayer");
-        Array<Node> paths = GetNode<Node3D>("CameraPaths").GetChildren();
-
-        ballPosition = ball.Position;
-        MeshInstance3D ballMesh = ball.GetNode<MeshInstance3D>("MeshInstance3D");
-
-        Animation animation = new();
-
-        int posIndex = animation.AddTrack(Animation.TrackType.Position3D);
-        animation.TrackSetPath(posIndex, GetPath());
-
-        //int matChangeIndex = animation.AddTrack(Animation.TrackType.Method);
-        foreach (Node path in paths)
-        {
-            GD.Print(path.GetMeta("Start"));
-            GD.Print(path.GetMeta("End"));
-            animation.PositionTrackInsertKey(posIndex, 0, (Vector3)path.GetMeta("Start"));
-            animation.PositionTrackInsertKey(posIndex, 30, (Vector3)path.GetMeta("End"));
-        };
-
-        AnimationLibrary lib = new();
-        lib.AddAnimation("characterCycle", animation);
-
-        animator.AddAnimationLibrary("menulib", lib);
-        animation.LoopMode = Animation.LoopModeEnum.Pingpong;
-        animator.Play("menulib/characterCycle");
+        await Animate();
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
-    public override void _Process(double delta)
+    private async Task Animate()
     {
-        LookAt(ballPosition);
+
+        Vector3 ballPosition = ball.Position;
+        MeshInstance3D ballMesh = ball.GetNode<MeshInstance3D>("MeshInstance3D");
+
+        var paths = GetNode<Node3D>("CameraPaths").GetChildren().Cast<MenuPath>();
+
+        const float speed = 20; // m/s
+        int fps = Engine.PhysicsTicksPerSecond;
+        float distancePerTick = speed / fps;
+
+        while (true)
+        {
+            foreach (MenuPath path in paths)
+            {
+                ballMesh.MaterialOverride = path.CharacterMat;
+                Position = path.Start;
+
+                
+
+                float distance = path.Start.DistanceTo(path.End);
+                for (; distance > speed; distance -= distancePerTick)
+                {
+                    Position = Position.MoveToward(path.End, distancePerTick);
+                    LookAt(ballPosition);
+                    await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+                }
+                
+                Sanicball.Environment.FadeOut();
+
+                for (; distance > 0; distance -= distancePerTick)
+                {
+                    Position = Position.MoveToward(path.End, distancePerTick);
+                    LookAt(ballPosition);
+                    await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
+                }
+
+                Sanicball.Environment.FadeIn();
+            }
+        }
     }
 }

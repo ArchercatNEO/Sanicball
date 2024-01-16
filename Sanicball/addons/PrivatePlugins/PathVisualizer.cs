@@ -1,6 +1,5 @@
 using Godot;
 using Sanicball.Scenes;
-using System;
 
 namespace Sanicball.Tools;
 
@@ -46,6 +45,13 @@ internal partial class PathNode : EditorNode3DGizmoPlugin
         gizmo.AddHandles([path.Start, path.End], GetMaterial("mine", gizmo), []);
     }
 
+    public override Variant _GetHandleValue(EditorNode3DGizmo gizmo, int handleId, bool secondary)
+    {
+        MenuPath path = (MenuPath)gizmo.GetNode3D();
+        if (handleId == 0) { return path.Start; }
+        else { return path.End; }
+    }
+
     public override void _SetHandle(EditorNode3DGizmo gizmo, int handleId, bool secondary, Camera3D camera, Vector2 screenPos)
     {
         Vector3 origin = camera.ProjectRayOrigin(screenPos);
@@ -61,6 +67,5 @@ internal partial class PathNode : EditorNode3DGizmoPlugin
         {
             GD.Print("Too far, lost intersection");
         }
-        
     }
 }
