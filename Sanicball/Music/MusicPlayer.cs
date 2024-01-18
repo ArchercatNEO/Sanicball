@@ -4,23 +4,21 @@ namespace Sanicball.Sound;
 
 public partial class MusicPlayer : AudioStreamPlayer
 {
+    [Export] private Label songName = null!;
+    
     private readonly Song[] songs;
     private int songIndex = 0;
 
     private MusicPlayer()
     {
-        songs = new Song[] {
+        songs = [
             new("Chariots of fire", GD.Load<AudioStreamOggVorbis>("res://Music/ChariotsOfFire.ogg")),
             new("Dread", GD.Load<AudioStreamOggVorbis>("res://Music/Dread.ogg"))
-        };
+        ];
     }
 
     public override void _Ready()
     {
-        base._Ready();
-
-        Label songName = GetNode<Label>("ui/fitter/songName");
-
         Song first = songs[0];
         songName.Text = first.Name;
         this.Stream = first.MP3;

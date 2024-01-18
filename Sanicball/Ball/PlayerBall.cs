@@ -10,17 +10,12 @@ public partial class PlayerBall : AbstractBall, IBall
 
     public override void _Ready()
     {
-        base._Ready();
-
         LobbyCamera.TrySubscribe(this);
 
     }
 
     public override void _Input(InputEvent @event)
     {
-        base._Input(@event);
-
-
         Vector3 force = ControlType.Keyboard.NormalizedForce();
         force *= InputAcceleration;
 

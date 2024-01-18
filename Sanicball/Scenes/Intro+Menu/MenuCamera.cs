@@ -1,63 +1,43 @@
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Godot;
-using Godot.Collections;
-using Sanicball.Characters;
 
 namespace Sanicball.Scenes;
 
 public partial class MenuCamera : Camera3D
 {
-    [Export] private StaticBody3D ball = null!;
+    [Export] private float speed = 20;
+    [Export] private MeshInstance3D ballMesh = null!;
 
     // Called when the node enters the scene tree for the first time.
-    public override async void _Ready()
+    public override void _Ready()
     {
-        await Animate();
-    }
+        Vector3 ballPosition = ballMesh.Position;
 
-    private async Task Animate()
-    {
-
-        Vector3 ballPosition = ball.Position;
-        MeshInstance3D ballMesh = ball.GetNode<MeshInstance3D>("MeshInstance3D");
-
-        var paths = GetNode<Node3D>("CameraPaths").GetChildren().Cast<MenuPath>();
-
-        const float speed = 20; // m/s
-        int fps = Engine.PhysicsTicksPerSecond;
-        float distancePerTick = speed / fps;
-
-        while (true)
+        Tween animation = GetTree().CreateTween();
+        animation.BindNode(this);
+        animation.SetLoops();
+        
+        var paths = GetChildren().Cast<MenuPath>();
+        foreach (MenuPath path in paths)
         {
-            foreach (MenuPath path in paths)
-            {
-                ballMesh.MaterialOverride = path.CharacterMat;
-                Position = path.Start;
+            animation.TweenCallback(Callable.From(() => ballMesh.MaterialOverride = path.CharacterMat));
+            animation.TweenCallback(Callable.From(() => Position = path.Start));
+            
+            Vector3 target = path.End.MoveToward(path.Start, speed);
+            float time = path.Start.DistanceTo(target) / speed;
+            animation.SetParallel(true);
+            animation.TweenProperty(this, ":position", target, time);
+            animation.TweenMethod(Callable.From<Vector3>(_ => LookAt(ballPosition)), ballPosition, ballPosition, time);
+            animation.SetParallel(false);
 
-                
+            animation.TweenCallback(Callable.From(Sanicball.Environment.FadeOut));
 
-                float distance = path.Start.DistanceTo(path.End);
-                for (; distance > speed; distance -= distancePerTick)
-                {
-                    Position = Position.MoveToward(path.End, distancePerTick);
-                    LookAt(ballPosition);
-                    await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
-                }
-                
-                Sanicball.Environment.FadeOut();
-
-                for (; distance > 0; distance -= distancePerTick)
-                {
-                    Position = Position.MoveToward(path.End, distancePerTick);
-                    LookAt(ballPosition);
-                    await ToSignal(GetTree(), SceneTree.SignalName.PhysicsFrame);
-                }
-
-                Sanicball.Environment.FadeIn();
-            }
+            animation.SetParallel(true);
+            animation.TweenProperty(this, ":position", path.End, Position.DistanceTo(path.End) / speed);
+            animation.TweenMethod(Callable.From<Vector3>(_ => LookAt(ballPosition)), ballPosition, ballPosition, Position.DistanceTo(path.End) / speed);
+            animation.SetParallel(false);
+            
+            animation.TweenCallback(Callable.From(Sanicball.Environment.FadeIn));
         }
     }
 }

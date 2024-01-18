@@ -1,15 +1,14 @@
-[gd_scene load_steps=31 format=3 uid="uid://iy8o8k21l1n1"]
+[gd_scene load_steps=30 format=3 uid="uid://iy8o8k21l1n1"]
 
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://Scenes/Lobby/Decoration/clear_sky.tres" id="1_8ov4f"]
-[ext_resource type="AudioStream" uid="uid://j85y8jmri7x5" path="res://Music/Lobby/CasinoNightZone.ogg" id="1_knrur"]
 [ext_resource type="Script" path="res://Music/MusicPlayer.cs" id="1_s8m6y"]
-[ext_resource type="Texture2D" uid="uid://bw1foosvjm6ck" path="res://Scenes/Lobby/UI/TrianglesBackground.png" id="3_8rbhj"]
+[ext_resource type="Texture2D" uid="uid://bawb32fvt5hrb" path="res://Scenes/Lobby/UI/TrianglesBackground.png" id="3_8rbhj"]
 [ext_resource type="Shape3D" uid="uid://dpxtdelj4vkx4" path="res://Terrain/Ground.tres" id="3_np11w"]
 [ext_resource type="Material" uid="uid://dmghyann0c8es" path="res://Scenes/Lobby/Decoration/TVFrame.tres" id="3_tnksi"]
 [ext_resource type="BoxMesh" uid="uid://c28lla3d5dqd1" path="res://Terrain/Grond.tres" id="4_5lno4"]
-[ext_resource type="Texture2D" uid="uid://cctcmadbc8ho7" path="res://SharedArt/MusicNote.png" id="4_cqtmi"]
+[ext_resource type="Texture2D" uid="uid://dksr2t8ms7l81" path="res://SharedArt/MusicNote.png" id="4_cqtmi"]
 [ext_resource type="Script" path="res://Scenes/Lobby/LobbyCamera.cs" id="8_cdt1m"]
-[ext_resource type="PackedScene" uid="uid://dh2u0qi1utxg3" path="res://Scenes/Lobby/Decoration/Lamp.glb" id="8_vj3rq"]
+[ext_resource type="PackedScene" uid="uid://vljvs3rire1k" path="res://Scenes/Lobby/Decoration/Lamp.glb" id="8_vj3rq"]
 [ext_resource type="Script" path="res://Scenes/Lobby/LobbySpawner.cs" id="12_yaf6w"]
 
 [sub_resource type="Environment" id="Environment_wsstk"]
@@ -109,12 +108,13 @@ height = 6.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_wsstk")
 
-[node name="Music" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("1_knrur")
+[node name="Music" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("songName")]
 script = ExtResource("1_s8m6y")
+songName = NodePath("CanvasLayer/ui/fitter/songName")
 
-[node name="ui" type="ColorRect" parent="Music"]
-z_index = 1
+[node name="CanvasLayer" type="CanvasLayer" parent="Music"]
+
+[node name="ui" type="ColorRect" parent="Music/CanvasLayer"]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -126,7 +126,7 @@ grow_horizontal = 0
 grow_vertical = 0
 color = Color(0, 0, 1, 1)
 
-[node name="fitter" type="BoxContainer" parent="Music/ui"]
+[node name="fitter" type="HBoxContainer" parent="Music/CanvasLayer/ui"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -134,12 +134,12 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="note" type="TextureRect" parent="Music/ui/fitter"]
+[node name="note" type="TextureRect" parent="Music/CanvasLayer/ui/fitter"]
 layout_mode = 2
 texture = ExtResource("4_cqtmi")
 expand_mode = 2
 
-[node name="nowPlaying" type="Label" parent="Music/ui/fitter"]
+[node name="nowPlaying" type="Label" parent="Music/CanvasLayer/ui/fitter"]
 layout_mode = 2
 size_flags_horizontal = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
@@ -148,7 +148,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Now playing:"
 horizontal_alignment = 2
 
-[node name="songName" type="Label" parent="Music/ui/fitter"]
+[node name="songName" type="Label" parent="Music/CanvasLayer/ui/fitter"]
 layout_mode = 2
 
 [node name="Lobby2D" type="Control" parent="."]
@@ -190,9 +190,30 @@ grow_vertical = 0
 
 [node name="Lobby3D" type="Node3D" parent="."]
 
+[node name="Lighting" type="Node3D" parent="Lobby3D"]
+
+[node name="HangingLamp" type="OmniLight3D" parent="Lobby3D/Lighting"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.9515, 0)
+light_energy = 10.374
+omni_range = 4096.0
+
+[node name="Lamp" parent="Lobby3D/Lighting" instance=ExtResource("8_vj3rq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.28011, 1.04966, 26.4291)
+
+[node name="Bulb" type="OmniLight3D" parent="Lobby3D/Lighting/Lamp"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.48376, 0)
+light_energy = 10.374
+omni_range = 4096.0
+
+[node name="LobbyCamera" type="Camera3D" parent="Lobby3D"]
+transform = Transform3D(-0.106403, 0, -0.994323, 0, 1, 0, 0.994323, 0, -0.106403, -24.3743, 13.8098, 0.233967)
+script = ExtResource("8_cdt1m")
+
 [node name="Walls" type="Node3D" parent="Lobby3D"]
+metadata/_edit_group_ = true
 
 [node name="Ground" type="StaticBody3D" parent="Lobby3D/Walls"]
+metadata/_edit_group_ = true
 
 [node name="Hitbox" type="CollisionShape3D" parent="Lobby3D/Walls/Ground"]
 shape = ExtResource("3_np11w")
@@ -203,6 +224,7 @@ mesh = ExtResource("4_5lno4")
 
 [node name="Wall1" type="StaticBody3D" parent="Lobby3D/Walls"]
 transform = Transform3D(-4.37113e-08, -7.62907e-11, 1, -0.00174533, 0.999998, 0, -0.999998, -0.00174533, -4.37114e-08, 30.5, 9, 0)
+metadata/_edit_group_ = true
 
 [node name="Hitbox" type="CollisionShape3D" parent="Lobby3D/Walls/Wall1"]
 shape = SubResource("BoxShape3D_18lhn")
@@ -213,6 +235,7 @@ mesh = SubResource("BoxMesh_7l8op")
 
 [node name="Wall2" type="StaticBody3D" parent="Lobby3D/Walls"]
 transform = Transform3D(4.37114e-08, 3.82137e-15, 1, 8.74228e-08, -1, 0, 1, 8.74228e-08, -4.37114e-08, -30.5, 9, 0)
+metadata/_edit_group_ = true
 
 [node name="Hitbox" type="CollisionShape3D" parent="Lobby3D/Walls/Wall2"]
 shape = SubResource("BoxShape3D_18lhn")
@@ -223,6 +246,7 @@ skeleton = NodePath("../../Wall1")
 
 [node name="Wall3" type="StaticBody3D" parent="Lobby3D/Walls"]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 9, 30)
+metadata/_edit_group_ = true
 
 [node name="Hitbox" type="CollisionShape3D" parent="Lobby3D/Walls/Wall3"]
 shape = SubResource("BoxShape3D_18lhn")
@@ -233,6 +257,7 @@ skeleton = NodePath("../../Wall1")
 
 [node name="Wall4" type="StaticBody3D" parent="Lobby3D/Walls"]
 transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, 0, 9, -29.548)
+metadata/_edit_group_ = true
 
 [node name="Hitbox" type="CollisionShape3D" parent="Lobby3D/Walls/Wall4"]
 shape = SubResource("BoxShape3D_18lhn")
@@ -241,27 +266,9 @@ shape = SubResource("BoxShape3D_18lhn")
 mesh = SubResource("BoxMesh_7l8op")
 skeleton = NodePath("../../Wall1")
 
-[node name="Lighting" type="Node3D" parent="Lobby3D"]
-
-[node name="HangingLamp" type="OmniLight3D" parent="Lobby3D/Lighting"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 18.9515, 0)
-light_energy = 10.374
-omni_range = 4096.0
-
-[node name="Lamp2" parent="Lobby3D/Lighting" instance=ExtResource("8_vj3rq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.28011, 1.04966, 26.4291)
-
-[node name="Bulb" type="OmniLight3D" parent="Lobby3D/Lighting/Lamp2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.48376, 0)
-light_energy = 10.374
-omni_range = 4096.0
-
-[node name="LobbyCamera" type="Camera3D" parent="Lobby3D"]
-transform = Transform3D(-0.106403, 0, -0.994323, 0, 1, 0, 0.994323, 0, -0.106403, -24.3743, 13.8098, 0.233967)
-script = ExtResource("8_cdt1m")
-
 [node name="TV" type="Node3D" parent="Lobby3D"]
 transform = Transform3D(2.235, 0, 0, 0, 2.235, 0, 0, 0, 2.235, 29.317, 10.0878, -0.677451)
+metadata/_edit_group_ = true
 
 [node name="Frame" type="Node3D" parent="Lobby3D/TV"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00106621, 0.0167284, 4.86374e-05)
