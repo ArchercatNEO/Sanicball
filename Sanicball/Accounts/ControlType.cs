@@ -37,4 +37,14 @@ public static class ControlTypeImpl
 
         return force.Normalized();
     }
+
+    public static bool Confirmed(this ControlType controlType)
+    {
+        return controlType switch
+        {
+            ControlType.Keyboard => Input.IsKeyPressed(Key.C),
+            ControlType.Joystick1 => false,
+            _ => throw new InvalidCastException($"Invalid control type detected: {controlType}"),
+        };
+    }
 }

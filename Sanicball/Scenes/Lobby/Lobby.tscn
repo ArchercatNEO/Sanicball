@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://iy8o8k21l1n1"]
+[gd_scene load_steps=31 format=3 uid="uid://iy8o8k21l1n1"]
 
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://Scenes/Lobby/Decoration/clear_sky.tres" id="1_8ov4f"]
 [ext_resource type="Script" path="res://Music/MusicPlayer.cs" id="1_s8m6y"]
@@ -7,6 +7,7 @@
 [ext_resource type="Material" uid="uid://dmghyann0c8es" path="res://Scenes/Lobby/Decoration/TVFrame.tres" id="3_tnksi"]
 [ext_resource type="BoxMesh" uid="uid://c28lla3d5dqd1" path="res://Terrain/Grond.tres" id="4_5lno4"]
 [ext_resource type="Texture2D" uid="uid://dksr2t8ms7l81" path="res://SharedArt/MusicNote.png" id="4_cqtmi"]
+[ext_resource type="Script" path="res://Scenes/Lobby/CharacterSelectManager.cs" id="4_ri6yk"]
 [ext_resource type="Script" path="res://Scenes/Lobby/LobbyCamera.cs" id="8_cdt1m"]
 [ext_resource type="PackedScene" uid="uid://vljvs3rire1k" path="res://Scenes/Lobby/Decoration/Lamp.glb" id="8_vj3rq"]
 [ext_resource type="Script" path="res://Scenes/Lobby/LobbySpawner.cs" id="12_yaf6w"]
@@ -158,6 +159,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("4_ri6yk")
 
 [node name="TopBar" type="ColorRect" parent="Lobby2D"]
 layout_mode = 1
