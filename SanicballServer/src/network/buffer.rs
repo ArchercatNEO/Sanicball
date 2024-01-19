@@ -12,11 +12,6 @@ pub struct Buffer {
 }
 
 impl Buffer {
-    pub fn write<T: Writable>(&mut self, object: &T) -> &Self {
-        object.write(self);
-        self
-    }
-
     ///Write a single byte into the buffer and shift the pointer to the right.
     pub fn write_byte(&mut self, byte: u8) -> &mut Self {
         self.payload[self.ptr] = byte;
@@ -26,15 +21,30 @@ impl Buffer {
 
     pub fn write_bytes(&mut self, bytes: &[u8]) -> &mut Self {
         for byte in bytes.iter() {
-            self.payload[self.ptr] = *byte;
+            self.payload[self.ptr] = byte.clone();
             self.ptr += 1;
         }
 
         self
     }
 
+    /// Write a single object into the buffer
+    pub fn write<T: Writable>(&mut self, object: &T) -> &mut Self {
+        object.write(self);
+        self
+    }
+
+    /// Write a block into the buffer.
+    /// This is different to writing an array directly as the length is not used here
+    pub fn write_block<T: Writable>(&mut self, object: &[T]) -> &mut Self {
+        for el in object.iter() {
+            el.write(self);
+        }
+        self
+    }
+
     pub fn write_string(&mut self, string: &str) -> &mut Self {
-        let bytes = string.as_bytes();
+        let bytes: &[u8] = string.as_bytes();
 
         let mut size = bytes.len();
         while size >= 0x80 {
@@ -172,6 +182,12 @@ impl Writable for i32 {
 impl Writable for usize {
     fn write(&self, buffer: &mut Buffer) {
         buffer.write_bytes(&self.to_le_bytes());
+    }
+}
+
+impl Writable for bool {
+    fn write(&self, buffer: &mut Buffer) {
+        buffer.write_byte(u8::from(self.clone()));
     }
 }
 

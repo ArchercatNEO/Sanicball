@@ -40,7 +40,7 @@ impl<C: Connection> Server<C> {
         Buffer::default()
             .write_struct(&GameHeader::MatchMessage)
             .write_time(&self.start_time)
-            .write_string(&json)
+            .write(&json)
             .finish(Header::UserUnreliable) // ! Figure out how sequence works
     }
 

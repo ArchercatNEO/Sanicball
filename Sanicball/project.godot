@@ -22,7 +22,7 @@ project/solution_directory="~/Dev/Godot/Sanicball"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/PrivatePlugins/plugin.cfg")
+enabled=PackedStringArray("res://addons/NullExportWarnings/plugin.cfg", "res://addons/PathVisualizer/plugin.cfg")
 
 [input]
 

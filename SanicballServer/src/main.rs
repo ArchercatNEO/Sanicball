@@ -68,13 +68,3 @@ impl From<serde_json::Error> for FileOpenError {
         FileOpenError::JsonException(value)
     }
 }
-
-trait How {
-    fn generic_thing(&self);
-}
-
-impl<T> How for T {
-    fn generic_thing(&self) {
-        println!("Whaaaa...")
-    }
-}
