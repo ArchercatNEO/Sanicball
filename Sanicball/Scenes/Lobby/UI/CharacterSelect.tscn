@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://nkporthm2gp7"]
+[gd_scene load_steps=3 format=3 uid="uid://nkporthm2gp7"]
 
-[ext_resource type="Texture2D" uid="uid://c7j5kbaxvtgie" path="res://SharedArt/Circle.png" id="1_62x3y"]
+[ext_resource type="Texture2D" uid="uid://cmcdxwmo3jmx0" path="res://SharedArt/Circle.png" id="1_62x3y"]
+[ext_resource type="Script" path="res://Scenes/Lobby/UI/CharacterSelect.cs" id="1_joucb"]
 
 [node name="CharacterSelect" type="Control"]
 layout_mode = 3
@@ -9,6 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_joucb")
 
 [node name="Circle" type="TextureRect" parent="."]
 layout_mode = 1
