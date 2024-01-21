@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://c25nv87ab4yhj"]
+
+[ext_resource type="Texture2D" uid="uid://cwclstf3nab8e" path="res://Scenes/GreenHillZone/Models/Lighthouse/Concrete.png" id="1_t18fi"]
+
+[resource]
+albedo_texture = ExtResource("1_t18fi")

@@ -1,45 +1,75 @@
-[gd_scene load_steps=8 format=3 uid="uid://yvsf3gwttxet"]
+[gd_scene load_steps=14 format=3 uid="uid://yvsf3gwttxet"]
 
-[ext_resource type="Script" path="res://Ball/PlayerBall.cs" id="1_3o3rl"]
-[ext_resource type="Material" uid="uid://clt2irqu13knl" path="res://Characters/C01-Sanic/Sanic.tres" id="1_apvfp"]
-[ext_resource type="Material" uid="uid://cnrybb57xaqin" path="res://Characters/C02-Knackles/Knackles.tres" id="2_tnboy"]
+[ext_resource type="Shader" path="res://Shaders/sea.gdshader" id="1_byn0m"]
+[ext_resource type="Script" path="res://GameMechanics/TriggerRespawn.cs" id="1_roiel"]
+[ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://Scenes/Lobby/Decoration/clear_sky.tres" id="1_udlj8"]
+[ext_resource type="AudioStream" uid="uid://56egn88rk5bt" path="res://Music/Sea.ogg" id="4_wke57"]
+[ext_resource type="PackedScene" uid="uid://c77tmtg6splsc" path="res://Scenes/GreenHillZone/Models/Terrain/greenHillZone.blend" id="5_wtf51"]
+
+[sub_resource type="Environment" id="Environment_dgy8r"]
+background_mode = 2
+sky = ExtResource("1_udlj8")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6gej4"]
-size = Vector3(60, 2, 60)
+size = Vector3(5000, 2, 5000)
 
-[sub_resource type="BoxMesh" id="BoxMesh_h0f50"]
-size = Vector3(60, 2, 60)
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1g78f"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_v3ivl"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xyktn"]
+noise = SubResource("FastNoiseLite_1g78f")
 
-[sub_resource type="SphereMesh" id="SphereMesh_e8we3"]
-material = ExtResource("1_apvfp")
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jw165"]
 
-[node name="GreenHillZone" type="Node3D"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ohpw0"]
+as_normal_map = true
+noise = SubResource("FastNoiseLite_jw165")
 
-[node name="OmniLight3D" type="OmniLight3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 8.37745, 0)
-omni_range = 4096.0
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vlaa"]
+render_priority = 0
+shader = ExtResource("1_byn0m")
+shader_parameter/height_scale = 0.5
+shader_parameter/noise = SubResource("NoiseTexture2D_xyktn")
+shader_parameter/normalmap = SubResource("NoiseTexture2D_ohpw0")
 
-[node name="Ground" type="StaticBody3D" parent="."]
+[sub_resource type="PlaneMesh" id="PlaneMesh_pqdxx"]
+material = SubResource("ShaderMaterial_0vlaa")
+size = Vector2(10000, 10000)
+subdivide_width = 32
+subdivide_depth = 32
+
+[node name="GreenHillZone" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dgy8r")
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="."]
+
+[node name="Game2D" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Game3D" type="Node3D" parent="."]
+
+[node name="Sunlight" type="DirectionalLight3D" parent="Game3D"]
+editor_description = "Hello"
+transform = Transform3D(1, 0, 0, 0, 0.0242402, 0.999706, 0, -0.999706, 0.0242402, 0, 162.874, 0)
+
+[node name="Sea" type="Area3D" parent="Game3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00744236, -1, 0.00369409)
+script = ExtResource("1_roiel")
+metadata/_edit_group_ = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Game3D/Sea"]
 shape = SubResource("BoxShape3D_6gej4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
-mesh = SubResource("BoxMesh_h0f50")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Game3D/Sea"]
+mesh = SubResource("PlaneMesh_pqdxx")
 
-[node name="Ball" type="RigidBody3D" parent="."]
-transform = Transform3D(-0.976198, 0, 0.216882, 0, 1, 0, -0.216882, 0, -0.976198, 0, 6.7678, 0)
-script = ExtResource("1_3o3rl")
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Game3D/Sea"]
+stream = ExtResource("4_wke57")
+bus = &"Ambience"
 
-[node name="Camera3D" type="Camera3D" parent="Ball"]
-transform = Transform3D(0.241345, 0.465255, -0.85164, 0.0625, 0.868308, 0.492072, 0.968425, -0.171986, 0.180483, -7.80958, 3.2322, 1.73506)
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
-shape = SubResource("SphereShape3D_v3ivl")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball"]
-mesh = SubResource("SphereMesh_e8we3")
-surface_material_override/0 = ExtResource("2_tnboy")
+[node name="greenHillZone" parent="Game3D" instance=ExtResource("5_wtf51")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 219.889, 197.137, 271.418)
