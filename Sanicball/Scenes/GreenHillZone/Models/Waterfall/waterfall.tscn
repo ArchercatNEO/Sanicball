@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bph08krekqdl8"]
+
+[ext_resource type="PackedScene" uid="uid://dgish3v6xw2wn" path="res://Scenes/GreenHillZone/Models/Waterfall/waterfall.blend" id="1_g5u4h"]
+[ext_resource type="Material" uid="uid://boj5nn10gx63d" path="res://Particles/Smoke.tres" id="2_b4y1d"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_dqcer"]
+size = Vector2(0.1, 0.1)
+
+[sub_resource type="QuadMesh" id="QuadMesh_gkopo"]
+
+[node name="Waterfall" type="Node3D"]
+
+[node name="Renderer" parent="." instance=ExtResource("1_g5u4h")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 857.678, 0, -477.09)
+
+[node name="Ambience" type="AudioStreamPlayer3D" parent="."]
+
+[node name="FallingParticles" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -55.4912)
+process_material = ExtResource("2_b4y1d")
+draw_pass_1 = SubResource("QuadMesh_dqcer")
+
+[node name="RollingParticles" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 72.3984, 0)
+process_material = ExtResource("2_b4y1d")
+draw_pass_1 = SubResource("QuadMesh_gkopo")

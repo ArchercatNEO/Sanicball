@@ -1,10 +1,11 @@
-[gd_scene load_steps=14 format=3 uid="uid://yvsf3gwttxet"]
+[gd_scene load_steps=15 format=3 uid="uid://yvsf3gwttxet"]
 
 [ext_resource type="Shader" path="res://Shaders/sea.gdshader" id="1_byn0m"]
 [ext_resource type="Script" path="res://GameMechanics/TriggerRespawn.cs" id="1_roiel"]
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://Scenes/Lobby/Decoration/clear_sky.tres" id="1_udlj8"]
 [ext_resource type="AudioStream" uid="uid://56egn88rk5bt" path="res://Music/Sea.ogg" id="4_wke57"]
 [ext_resource type="PackedScene" uid="uid://c77tmtg6splsc" path="res://Scenes/GreenHillZone/Models/Terrain/greenHillZone.blend" id="5_wtf51"]
+[ext_resource type="PackedScene" uid="uid://c08vqn1nbmqlk" path="res://Ball/Ball.tscn" id="6_vmrgj"]
 
 [sub_resource type="Environment" id="Environment_dgy8r"]
 background_mode = 2
@@ -33,7 +34,7 @@ shader_parameter/normalmap = SubResource("NoiseTexture2D_ohpw0")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_pqdxx"]
 material = SubResource("ShaderMaterial_0vlaa")
-size = Vector2(10000, 10000)
+size = Vector2(5000, 5000)
 subdivide_width = 32
 subdivide_depth = 32
 
@@ -61,15 +62,18 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00744236, -1, 0.00369409)
 script = ExtResource("1_roiel")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Game3D/Sea"]
+[node name="Collider" type="CollisionShape3D" parent="Game3D/Sea"]
 shape = SubResource("BoxShape3D_6gej4")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Game3D/Sea"]
+[node name="Renderer" type="MeshInstance3D" parent="Game3D/Sea"]
 mesh = SubResource("PlaneMesh_pqdxx")
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="Game3D/Sea"]
+[node name="Ambience" type="AudioStreamPlayer3D" parent="Game3D/Sea"]
 stream = ExtResource("4_wke57")
 bus = &"Ambience"
 
-[node name="greenHillZone" parent="Game3D" instance=ExtResource("5_wtf51")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 219.889, 197.137, 271.418)
+[node name="Terrain" parent="Game3D" instance=ExtResource("5_wtf51")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 219.889, 186.897, 271.418)
+
+[node name="Ball" parent="Game3D" instance=ExtResource("6_vmrgj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -238.644, 188.853, 1173.88)
