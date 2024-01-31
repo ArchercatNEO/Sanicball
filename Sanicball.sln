@@ -2,11 +2,13 @@
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sanicball", "Sanicball\Sanicball.csproj", "{422DAF45-F65D-402A-AAA2-A6BDC9B05E9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoBadFilePaths", "SanicballDependency\NoBadFilePaths\NoBadFilePaths.csproj", "{F8C4CE79-91DD-41EC-AC25-F573E0921170}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanicballCore", "SanicballLegacy\SanicballCore\SanicballCore.csproj", "{ED8D5D1E-E70F-4005-A3BA-F03794FF7A40}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanicballServer", "SanicballLegacy\OldServer\SanicballServer.csproj", "{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoBadFilePaths", "+NoBadFilePaths\NoBadFilePaths.csproj", "{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NullableExports", "+NullableExports\NullableExports.csproj", "{C29CCB97-7583-4A9A-8E49-A215628FCE69}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,5 +41,17 @@ Global
 		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
 		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
 		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
