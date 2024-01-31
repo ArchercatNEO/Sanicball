@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://b8kobq01ga38m"]
+
+[ext_resource type="Texture2D" uid="uid://betj8w7f1s3v6" path="res://characters/C03-Taels/TaelsIcon.png" id="1_qvelh"]
+[ext_resource type="Material" uid="uid://bh2mgbe4kxfhq" path="res://characters/C03-Taels/TaelsMat.tres" id="2_vteb7"]
+[ext_resource type="Texture2D" uid="uid://copg3uv013vvj" path="res://characters/C03-Taels/TaelsMinimap.png" id="3_vwmec"]
+[ext_resource type="Script" path="res://characters/SanicCharacter.cs" id="4_ud2ol"]
+
+[resource]
+script = ExtResource("4_ud2ol")
+Name = "Taels"
+Credits = "Deviantart user Mew087123"
+Color = Color(0.917647, 0.780392, 0, 1)
+Material = ExtResource("2_vteb7")
+Icon = ExtResource("1_qvelh")
+MinimapIcon = ExtResource("3_vwmec")
+RollSpeed = 100.0
+AirSpeed = 15.0
+JumpHeight = 14.0
+Grip = 20.0
+BallSize = 1.0

@@ -1,6 +1,0 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bh2mgbe4kxfhq"]
-
-[ext_resource type="Texture2D" uid="uid://cafmvb4muh43c" path="res://Characters/C03-Taels/Taels.png" id="1_jn2fa"]
-
-[resource]
-albedo_texture = ExtResource("1_jn2fa")

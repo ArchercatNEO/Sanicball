@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://c08vqn1nbmqlk"]
 
-[ext_resource type="Material" uid="uid://cwc81l8nola2s" path="res://Characters/C00-Unknown/Unknown.tres" id="1_1reqn"]
+[ext_resource type="Material" uid="uid://cwc81l8nola2s" path="res://characters/C00-Unknown/UnknownMat.tres" id="1_1reqn"]
 [ext_resource type="AudioStream" uid="uid://d0d1qp8huoeq7" path="res://Ball/sfx/brake.wav" id="4_adk1e"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iyxud"]

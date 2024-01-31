@@ -1,7 +1,7 @@
-[gd_scene load_steps=15 format=3 uid="uid://yvsf3gwttxet"]
+[gd_scene load_steps=13 format=3 uid="uid://yvsf3gwttxet"]
 
 [ext_resource type="Shader" path="res://Shaders/sea.gdshader" id="1_byn0m"]
-[ext_resource type="Script" path="res://GameMechanics/TriggerRespawn.cs" id="1_roiel"]
+[ext_resource type="Script" path="res://game-mechanics/TriggerRespawn.cs" id="1_roiel"]
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://Scenes/Lobby/Decoration/clear_sky.tres" id="1_udlj8"]
 [ext_resource type="AudioStream" uid="uid://56egn88rk5bt" path="res://Music/Sea.ogg" id="4_wke57"]
 [ext_resource type="PackedScene" uid="uid://c77tmtg6splsc" path="res://Scenes/GreenHillZone/Models/Terrain/greenHillZone.blend" id="5_wtf51"]
@@ -19,18 +19,11 @@ size = Vector3(5000, 2, 5000)
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xyktn"]
 noise = SubResource("FastNoiseLite_1g78f")
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_jw165"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ohpw0"]
-as_normal_map = true
-noise = SubResource("FastNoiseLite_jw165")
-
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0vlaa"]
 render_priority = 0
 shader = ExtResource("1_byn0m")
 shader_parameter/height_scale = 0.5
 shader_parameter/noise = SubResource("NoiseTexture2D_xyktn")
-shader_parameter/normalmap = SubResource("NoiseTexture2D_ohpw0")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_pqdxx"]
 material = SubResource("ShaderMaterial_0vlaa")

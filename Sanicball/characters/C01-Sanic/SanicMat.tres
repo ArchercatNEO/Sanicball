@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://clt2irqu13knl"]
+
+[ext_resource type="Texture2D" uid="uid://526t3wg6u5r0" path="res://characters/C01-Sanic/SanicMap.png" id="1_b6p66"]
+
+[resource]
+albedo_texture = ExtResource("1_b6p66")
