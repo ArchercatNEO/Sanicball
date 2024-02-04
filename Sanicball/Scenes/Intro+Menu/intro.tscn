@@ -1,10 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://c2v1qe5fjww6e"]
+[gd_scene load_steps=7 format=3 uid="uid://c2v1qe5fjww6e"]
 
 [ext_resource type="Script" path="res://Scenes/Intro+Menu/IntroUI.cs" id="1_t1ji2"]
 [ext_resource type="Texture2D" uid="uid://xsb0tm45s6fr" path="res://Scenes/Intro+Menu/sanicteam.png" id="2_dxwkw"]
-[ext_resource type="Animation" uid="uid://dvx0mibhxokf1" path="res://Scenes/Transitions/autoLoadAnims.res" id="3_1ovxe"]
 [ext_resource type="Texture2D" uid="uid://beku0mlc4qaub" path="res://Scenes/Intro+Menu/notsega.png" id="3_h427x"]
-[ext_resource type="AnimationLibrary" uid="uid://dh3o4gghfry5y" path="res://Scenes/Transitions/AutoloadAnims.res" id="5_hcaom"]
 
 [sub_resource type="Animation" id="Animation_mt08v"]
 resource_name = "FadeInOut"
@@ -22,13 +20,26 @@ tracks/0/keys = {
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_87v0q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_7wsyt"]
 _data = {
 "FadeInOut": SubResource("Animation_mt08v"),
-"RESET": ExtResource("3_1ovxe")
+"RESET": SubResource("Animation_87v0q")
 }
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_ydk6f"]
 
 [node name="Intro" type="Control"]
 layout_mode = 3
@@ -66,8 +77,7 @@ texture = ExtResource("2_dxwkw")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="sanicteam"]
 libraries = {
-"": SubResource("AnimationLibrary_7wsyt"),
-"Autoload": SubResource("AnimationLibrary_ydk6f")
+"": SubResource("AnimationLibrary_7wsyt")
 }
 
 [node name="notsega" type="TextureRect" parent="."]
@@ -88,8 +98,7 @@ texture = ExtResource("3_h427x")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="notsega"]
 libraries = {
-"": SubResource("AnimationLibrary_7wsyt"),
-"Autoload": ExtResource("5_hcaom")
+"": SubResource("AnimationLibrary_7wsyt")
 }
 
 [node name="UsernameInput" type="Control" parent="."]

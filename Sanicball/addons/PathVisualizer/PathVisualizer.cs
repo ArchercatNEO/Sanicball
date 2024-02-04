@@ -1,3 +1,4 @@
+using System.Runtime.Loader;
 using Godot;
 using Sanicball.Scenes;
 
@@ -6,16 +7,18 @@ namespace Sanicball.Tools;
 [Tool]
 internal partial class PathVisualizer : EditorPlugin
 {
-	PathNode gizmo = new();
+	PathNode? gizmo = null;
 
     public override void _EnterTree()
     {
+        gizmo = new();
         AddNode3DGizmoPlugin(gizmo);
     }
 
     public override void _ExitTree()
     {
         RemoveNode3DGizmoPlugin(gizmo);
+        gizmo = null;
     }
 }
 

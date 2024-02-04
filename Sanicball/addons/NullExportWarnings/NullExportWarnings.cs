@@ -6,17 +6,18 @@ namespace Sanicball.Tools;
 [Tool]
 internal partial class NullExportWarnings : EditorPlugin
 {
-	NullExportChecker gizmo = new();
+	NullExportChecker? gizmo = null;
 
     public override void _EnterTree()
     {
-        GD.Print(GetTree().CurrentScene is null);
+        gizmo = new();
         AddInspectorPlugin(gizmo);
     }
 
     public override void _ExitTree()
     {
         RemoveInspectorPlugin(gizmo);
+        gizmo = null;
     }
 }
 

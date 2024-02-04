@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dhajtkl1x4fxr"]
 
-[ext_resource type="Texture2D" uid="uid://bui744bviv2m" path="res://Scenes/GreenHillZone/Models/Waterfall/Waterfall.jpg" id="1_yc515"]
+[ext_resource type="Texture2D" uid="uid://bui744bviv2m" path="res://Scenes/Z01-GreenHillZone/Models/Waterfall/Waterfall.jpg" id="1_yc515"]
 
 [resource]
 albedo_texture = ExtResource("1_yc515")

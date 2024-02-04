@@ -1,6 +1,6 @@
 [gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cfmhhvju0kxhe"]
 
-[ext_resource type="Texture2D" uid="uid://drmskueyts1sg" path="res://Scenes/GreenHillZone/Models/PalmTree/PalmBark.jpg" id="1_1qj5i"]
+[ext_resource type="Texture2D" uid="uid://drmskueyts1sg" path="res://Scenes/Z01-GreenHillZone/Models/PalmTree/PalmBark.jpg" id="1_1qj5i"]
 
 [resource]
 albedo_texture = ExtResource("1_1qj5i")

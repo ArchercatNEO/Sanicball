@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://game-mechanics/TriggerRespawn.cs" id="1_roiel"]
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://Scenes/Lobby/Decoration/clear_sky.tres" id="1_udlj8"]
 [ext_resource type="AudioStream" uid="uid://56egn88rk5bt" path="res://Music/Sea.ogg" id="4_wke57"]
-[ext_resource type="PackedScene" uid="uid://c77tmtg6splsc" path="res://Scenes/GreenHillZone/Models/Terrain/greenHillZone.blend" id="5_wtf51"]
+[ext_resource type="PackedScene" uid="uid://c77tmtg6splsc" path="res://Scenes/Z01-GreenHillZone/Models/Terrain/greenHillZone.blend" id="5_wtf51"]
 [ext_resource type="PackedScene" uid="uid://c08vqn1nbmqlk" path="res://Ball/Ball.tscn" id="6_vmrgj"]
 
 [sub_resource type="Environment" id="Environment_dgy8r"]

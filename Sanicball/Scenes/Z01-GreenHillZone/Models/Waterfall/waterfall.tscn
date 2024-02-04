@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bph08krekqdl8"]
 
-[ext_resource type="PackedScene" uid="uid://dgish3v6xw2wn" path="res://Scenes/GreenHillZone/Models/Waterfall/waterfall.blend" id="1_g5u4h"]
+[ext_resource type="PackedScene" uid="uid://dgish3v6xw2wn" path="res://Scenes/Z01-GreenHillZone/Models/Waterfall/waterfall.blend" id="1_g5u4h"]
 [ext_resource type="Material" uid="uid://boj5nn10gx63d" path="res://Particles/Smoke.tres" id="2_b4y1d"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_dqcer"]
