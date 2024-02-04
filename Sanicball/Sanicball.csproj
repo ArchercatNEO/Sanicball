@@ -6,6 +6,6 @@
   </PropertyGroup>
   
   <ItemGroup>
-    <ProjectReference Include="..\+NullableExports\NullableExports.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+    <ProjectReference Include="..\+NullableExports\NullableExports.csproj" OutputItemType="Analyzer"/>
   </ItemGroup>
 </Project>

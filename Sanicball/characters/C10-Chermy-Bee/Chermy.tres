@@ -1,6 +1,20 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bpl2lqeh1lm3t"]
+[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://d34tlt872spah"]
 
-[ext_resource type="Texture2D" uid="uid://oairvjfh0dit" path="res://Characters/C10-Chermy-Bee/Chermy.jpg" id="1_y81up"]
+[ext_resource type="Script" path="res://characters/SanicCharacter.cs" id="1_ijc62"]
+[ext_resource type="Texture2D" uid="uid://dbl24xir8b3ck" path="res://characters/C10-Chermy-Bee/ChermyIcon.png" id="1_x035g"]
+[ext_resource type="Material" uid="uid://bpl2lqeh1lm3t" path="res://characters/C10-Chermy-Bee/ChermyMat.tres" id="2_pdu8h"]
+[ext_resource type="Texture2D" uid="uid://cwsds0166auwj" path="res://characters/C10-Chermy-Bee/ChermyMinimap.png" id="3_177o2"]
 
 [resource]
-albedo_texture = ExtResource("1_y81up")
+script = ExtResource("1_ijc62")
+Name = "Chermy Bee"
+Credits = "DazeDream"
+Color = Color(0.501961, 0.466667, 0, 1)
+Material = ExtResource("2_pdu8h")
+Icon = ExtResource("1_x035g")
+MinimapIcon = ExtResource("3_177o2")
+RollSpeed = 50.0
+AirSpeed = 18.0
+JumpHeight = 30.0
+Grip = 20.0
+BallSize = 0.8

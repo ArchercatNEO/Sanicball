@@ -2,48 +2,71 @@
 using System.Text;
 using Microsoft.CodeAnalysis;
 
-namespace SourceGenerator
+namespace SourceGenerator;
+
+[Generator]
+public class HelloSourceGenerator : ISourceGenerator
 {
-    [Generator]
-    public class HelloSourceGenerator : ISourceGenerator
+    public void Execute(GeneratorExecutionContext context)
     {
-        public void Execute(GeneratorExecutionContext context)
-        {
-            var nullableContainingTypes = context.Compilation.Assembly.Modules
-                .Select(module => module.GlobalNamespace)
-                .SelectMany(rootNamespace => rootNamespace.GetTypeMembers())
-                .Where(type => type.GetMembers().Where(member => 
-                    member.GetAttributes().Any(attribute => attribute.AttributeClass!.Name == "ExportAttribute")
-                ).Any());
+        var nullableContainingTypes = context.Compilation.Assembly.Modules
+            .Select(module => module.GlobalNamespace)
+            .SelectMany(rootNamespace => rootNamespace.GetTypeMembers())
+            .Where(type => type.GetMembers().Where(member => 
+                member.GetAttributes().Any(attribute => attribute.AttributeClass!.Name == "ExportAttribute")
+            ).Any());
 
-            foreach (var nullableType in nullableContainingTypes)
+        foreach (var nullableType in nullableContainingTypes)
+        {
+            StringBuilder configurationWarnings = new();
+
+            configurationWarnings.Append($@"
+                public partial class {nullableType.Name}
+                {{
+            ");
+            
+            configurationWarnings.Append("""
+            public override string[] _GetConfigurationWarnings()
             {
-                StringBuilder configurationWarnings = new();
-
-                configurationWarnings.Append($@"
-                    public partial class {nullableType.Name}
-                    {{
-                ");
-                
-                configurationWarnings.Append("""
-                public override string[] _GetConfigurationWarnings()
-                {
-                    List<string> warnings = ["Bad"];
-                """);
-                   
-
-                configurationWarnings.Append(" return warnings.ToArray();} } ");
-                    
+                List<string> warnings = ["Bad"];
+            """);
                 
 
+            configurationWarnings.Append(" return warnings.ToArray();} } ");
+                
+            
 
-                context.AddSource(nullableType.Name + ".g.cs", configurationWarnings.ToString());
+
+            context.AddSource(nullableType.Name + ".g.cs", configurationWarnings.ToString());
+        }
+    }
+
+    public void Initialize(GeneratorInitializationContext context)
+    {
+        // No initialization required for this one
+    }
+}
+
+[Generator]
+public class NullableExportsGenerator : IIncrementalGenerator
+{
+    public void Initialize(IncrementalGeneratorInitializationContext context)
+    {
+        var project = context.AdditionalTextsProvider.Where(static _ => true);
+        context.RegisterSourceOutput(project, (source, context) => {
+            StringBuilder builder = new();
+            builder.Append("""
+            namespace Sanicball;
+
+            public class GodotActions
+            {
+                public static readonly world = "hello"
             }
-        }
-
-        public void Initialize(GeneratorInitializationContext context)
-        {
-            // No initialization required for this one
-        }
+            """);
+            source.AddSource("Project.cs", builder.ToString());
+            DiagnosticDescriptor error = new("SB0000", "No null required fields", "hello", "security", DiagnosticSeverity.Error, true);
+            Diagnostic diagnostic = Diagnostic.Create(error, null);
+            source.ReportDiagnostic(diagnostic);
+        });
     }
 }

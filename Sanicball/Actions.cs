@@ -1,6 +1,9 @@
 namespace Sanicball;
 
-public static class Actions
+public  class Actions
 {
-
+    public Actions()
+    {
+        
+    }
 }

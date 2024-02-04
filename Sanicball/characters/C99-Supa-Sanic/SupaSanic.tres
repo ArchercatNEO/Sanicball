@@ -1,6 +1,20 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dids4tmxjgtd1"]
+[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://b3im404xcmkeg"]
 
-[ext_resource type="Texture2D" uid="uid://mpic2334mnya" path="res://Characters/C99-Supa-Sanic/SuperSanic.png" id="1_hnvfd"]
+[ext_resource type="Texture2D" uid="uid://cl6k8ljrrbecq" path="res://characters/C99-Supa-Sanic/SuperSanicIcon.png" id="1_kh4m6"]
+[ext_resource type="Script" path="res://characters/SanicCharacter.cs" id="1_nsmfl"]
+[ext_resource type="Material" uid="uid://dids4tmxjgtd1" path="res://characters/C99-Supa-Sanic/SupaSanicMat.tres" id="2_ya5ui"]
+[ext_resource type="Texture2D" uid="uid://bbwsiwr7o8rw" path="res://characters/C99-Supa-Sanic/SuperSanicMinimap.png" id="3_r3121"]
 
 [resource]
-albedo_texture = ExtResource("1_hnvfd")
+script = ExtResource("1_nsmfl")
+Name = "Super Sanic"
+Credits = "Deviantart user franz888"
+Color = Color(0.490196, 0.92549, 0, 1)
+Material = ExtResource("2_ya5ui")
+Icon = ExtResource("1_kh4m6")
+MinimapIcon = ExtResource("3_r3121")
+RollSpeed = 400.0
+AirSpeed = 100.0
+JumpHeight = 14.0
+Grip = 50.0
+BallSize = 1.0

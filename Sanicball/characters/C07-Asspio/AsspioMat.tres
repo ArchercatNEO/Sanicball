@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bvi0iuhn45oct"]
+
+[ext_resource type="Texture2D" uid="uid://ddlf1t6748qex" path="res://characters/C07-Asspio/AsspioMap.png" id="1_dy12f"]
+
+[resource]
+albedo_texture = ExtResource("1_dy12f")

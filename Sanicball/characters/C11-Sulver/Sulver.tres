@@ -1,6 +1,20 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bnp30d2ch3nuh"]
+[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://28tsnhet0wlm"]
 
-[ext_resource type="Texture2D" uid="uid://cutsb2hcgjbgb" path="res://Characters/C11-Sulver/Sulver.png" id="1_egwqq"]
+[ext_resource type="Texture2D" uid="uid://bdi817m2kdd4k" path="res://characters/C11-Sulver/SulverIcon.png" id="1_0rkef"]
+[ext_resource type="Script" path="res://characters/SanicCharacter.cs" id="1_7p5tm"]
+[ext_resource type="Material" uid="uid://bnp30d2ch3nuh" path="res://characters/C11-Sulver/SulverMat.tres" id="2_5n2ef"]
+[ext_resource type="Texture2D" uid="uid://tyuutvsmdcnt" path="res://characters/C11-Sulver/SulverMinimap.png" id="3_m8wgj"]
 
 [resource]
-albedo_texture = ExtResource("1_egwqq")
+script = ExtResource("1_7p5tm")
+Name = "Sulver"
+Credits = "DazeDream"
+Color = Color(0.682353, 0.682353, 0.682353, 1)
+Material = ExtResource("2_5n2ef")
+Icon = ExtResource("1_0rkef")
+MinimapIcon = ExtResource("3_m8wgj")
+RollSpeed = 100.0
+AirSpeed = 15.0
+JumpHeight = 14.0
+Grip = 20.0
+BallSize = 1.0
