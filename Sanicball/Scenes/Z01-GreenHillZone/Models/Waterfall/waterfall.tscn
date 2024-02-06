@@ -1,26 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://bph08krekqdl8"]
+[gd_scene load_steps=5 format=3 uid="uid://clql52yt608p"]
 
-[ext_resource type="PackedScene" uid="uid://dgish3v6xw2wn" path="res://Scenes/Z01-GreenHillZone/Models/Waterfall/waterfall.blend" id="1_g5u4h"]
-[ext_resource type="Material" uid="uid://boj5nn10gx63d" path="res://Particles/Smoke.tres" id="2_b4y1d"]
+[ext_resource type="PackedScene" uid="uid://dgish3v6xw2wn" path="res://Scenes/Z01-GreenHillZone/Models/Waterfall/waterfall.blend" id="1_qh6hc"]
+[ext_resource type="Material" uid="uid://boj5nn10gx63d" path="res://Particles/Smoke.tres" id="2_x2cpf"]
 
-[sub_resource type="QuadMesh" id="QuadMesh_dqcer"]
+[sub_resource type="QuadMesh" id="QuadMesh_8d4o6"]
 size = Vector2(0.1, 0.1)
 
-[sub_resource type="QuadMesh" id="QuadMesh_gkopo"]
+[sub_resource type="QuadMesh" id="QuadMesh_gclld"]
 
-[node name="Waterfall" type="Node3D"]
+[node name="waterfall" instance=ExtResource("1_qh6hc")]
 
-[node name="Renderer" parent="." instance=ExtResource("1_g5u4h")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 857.678, 0, -477.09)
+[node name="Ambience" type="AudioStreamPlayer3D" parent="." index="1"]
 
-[node name="Ambience" type="AudioStreamPlayer3D" parent="."]
-
-[node name="FallingParticles" type="GPUParticles3D" parent="."]
+[node name="FallingParticles" type="GPUParticles3D" parent="." index="2"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -55.4912)
-process_material = ExtResource("2_b4y1d")
-draw_pass_1 = SubResource("QuadMesh_dqcer")
+process_material = ExtResource("2_x2cpf")
+draw_pass_1 = SubResource("QuadMesh_8d4o6")
 
-[node name="RollingParticles" type="GPUParticles3D" parent="."]
+[node name="RollingParticles" type="GPUParticles3D" parent="." index="3"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 72.3984, 0)
-process_material = ExtResource("2_b4y1d")
-draw_pass_1 = SubResource("QuadMesh_gkopo")
+process_material = ExtResource("2_x2cpf")
+draw_pass_1 = SubResource("QuadMesh_gclld")

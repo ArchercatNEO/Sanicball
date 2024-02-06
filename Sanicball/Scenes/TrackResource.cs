@@ -2,7 +2,6 @@ using Godot;
 
 namespace Sanicball.Scenes;
 
-[GlobalClass]
 public partial class TrackResource : Resource
 {
     [Export] public required string name;

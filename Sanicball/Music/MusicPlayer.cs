@@ -4,7 +4,7 @@ namespace Sanicball.Sound;
 
 public partial class MusicPlayer : AudioStreamPlayer
 {
-    [Export] private Label songName = null!;
+    [Export] public required Label songName;
     
     private readonly Song[] songs;
     private int songIndex = 0;

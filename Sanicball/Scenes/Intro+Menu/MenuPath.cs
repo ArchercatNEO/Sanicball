@@ -78,4 +78,3 @@ public partial class MenuPath : Node3D
         endMat = (StandardMaterial3D)CharacterMat.Duplicate(true);
     }
 }
-

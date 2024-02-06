@@ -24,7 +24,6 @@ public partial class XcfImporter : EditorPlugin
 	}
 }
 
-[Tool]
 public partial class XcfConverter : EditorImportPlugin
 {
     public override string _GetImporterName() => "GIMP file importer";

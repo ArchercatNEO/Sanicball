@@ -30,14 +30,14 @@ public partial class MenuCamera : Camera3D
             animation.TweenMethod(Callable.From<Vector3>(_ => LookAt(ballPosition)), ballPosition, ballPosition, time);
             animation.SetParallel(false);
 
-            animation.TweenCallback(Callable.From(Sanicball.Environment.FadeOut));
+            //animation.TweenCallback(Callable.From(Sanicball.Environment.FadeOut));
 
             animation.SetParallel(true);
             animation.TweenProperty(this, ":position", path.End, Position.DistanceTo(path.End) / speed);
             animation.TweenMethod(Callable.From<Vector3>(_ => LookAt(ballPosition)), ballPosition, ballPosition, Position.DistanceTo(path.End) / speed);
             animation.SetParallel(false);
             
-            animation.TweenCallback(Callable.From(Sanicball.Environment.FadeIn));
+            //animation.TweenCallback(Callable.From(Sanicball.Environment.FadeIn));
         }
     }
 }

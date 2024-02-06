@@ -1,10 +1,14 @@
+using System.Diagnostics.CodeAnalysis;
 using Godot;
+using SourceGenerator;
 
 namespace Sanicball.Characters;
 
-[GlobalClass]
 public partial class SanicCharacter : Resource
 {
+    [SetsRequiredMembers]
+    public SanicCharacter() {}
+
     //Useful metadata
     [Export] public required string Name;
     [Export] public required string Credits;
@@ -27,7 +31,7 @@ public partial class SanicCharacter : Resource
     [Export] public float Grip = 20;
     [Export] public float BallSize = 1;
 
-    public static readonly SanicCharacter Sanic = GD.Load<SanicCharacter>("characters/C01-Sanic/Sanic.tres");
-    public static readonly SanicCharacter Knackles = GD.Load<SanicCharacter>("characters/C02-Knackles/Knackles.tres");
-    public static readonly SanicCharacter Taels = GD.Load<SanicCharacter>("characters/C03-Taels/Taels.tres");
+    [Preload("characters/C01-Sanic/Sanic.tres")] public static readonly SanicCharacter Sanic;
+    //public static readonly SanicCharacter Knackles = GD.Load<SanicCharacter>("characters/C02-Knackles/Knackles.tres");
+    //public static readonly SanicCharacter Taels = GD.Load<SanicCharacter>("characters/C03-Taels/Taels.tres");
 }

@@ -23,11 +23,10 @@ namespace Sanicball.Scenes;
 /// 	</item>
 /// </list>
 /// </summary>
-[Tool]
 public partial class IntroUI : Control
 {
     [Export] public required Control input;
-    
+
     public override void _Ready()
     {
         Control input = GetNode<Control>($"UsernameInput");
@@ -60,5 +59,3 @@ public partial class IntroUI : Control
         };
     }
 }
-
-

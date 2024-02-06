@@ -20,6 +20,10 @@ config/icon="res://Icon.png"
 project/assembly_name="Sanicball"
 project/solution_directory="~/Dev/Godot/Sanicball"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/PathVisualizer/plugin.cfg")
+
 [input]
 
 keyboard_left={
