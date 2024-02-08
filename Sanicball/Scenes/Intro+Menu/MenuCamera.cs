@@ -16,13 +16,13 @@ public partial class MenuCamera : Camera3D
         Tween animation = GetTree().CreateTween();
         animation.BindNode(this);
         animation.SetLoops();
-        
+
         var paths = GetChildren().Cast<MenuPath>();
         foreach (MenuPath path in paths)
         {
             animation.TweenCallback(Callable.From(() => ballMesh.MaterialOverride = path.CharacterMat));
             animation.TweenCallback(Callable.From(() => Position = path.Start));
-            
+
             Vector3 target = path.End.MoveToward(path.Start, speed);
             float time = path.Start.DistanceTo(target) / speed;
             animation.SetParallel(true);
@@ -36,7 +36,7 @@ public partial class MenuCamera : Camera3D
             animation.TweenProperty(this, ":position", path.End, Position.DistanceTo(path.End) / speed);
             animation.TweenMethod(Callable.From<Vector3>(_ => LookAt(ballPosition)), ballPosition, ballPosition, Position.DistanceTo(path.End) / speed);
             animation.SetParallel(false);
-            
+
             //animation.TweenCallback(Callable.From(Sanicball.Environment.FadeIn));
         }
     }

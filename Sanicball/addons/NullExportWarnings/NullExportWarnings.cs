@@ -6,7 +6,7 @@ namespace Sanicball.Tools;
 [Tool]
 internal partial class NullExportWarnings : EditorPlugin
 {
-	NullExportChecker? gizmo = null;
+    NullExportChecker? gizmo = null;
 
     public override void _EnterTree()
     {
@@ -33,7 +33,7 @@ internal partial class NullExportChecker : EditorInspectorPlugin
         if ((usageFlags & PropertyUsageFlags.ScriptVariable) > 0)
         {
             object? field = @object.Get(name);
-            
+
             GD.Print(field);
         }
         return false;

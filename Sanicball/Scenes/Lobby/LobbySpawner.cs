@@ -21,7 +21,7 @@ public partial class LobbySpawner : StaticBody3D
         ball.ApplyImpulse(new(0, 10, 0));
         return ball;
     }
-    
+
     public override void _Ready()
     {
         Instance = this;

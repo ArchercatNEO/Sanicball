@@ -7,7 +7,7 @@ namespace Sanicball.Tools;
 [Tool]
 internal partial class PathVisualizer : EditorPlugin
 {
-	PathNode? gizmo = null;
+    PathNode? gizmo = null;
 
     public override void _EnterTree()
     {
@@ -25,7 +25,7 @@ internal partial class PathVisualizer : EditorPlugin
 internal partial class PathNode : EditorNode3DGizmoPlugin
 {
     private Mesh ball = null!;
-    
+
     public PathNode()
     {
         CreateMaterial("main", new Color(1, 0, 0));
@@ -63,7 +63,7 @@ internal partial class PathNode : EditorNode3DGizmoPlugin
         if (maybePosition is Vector3 position)
         {
             MenuPath path = (MenuPath)gizmo.GetNode3D();
-            if (handleId == 0) { path.Start =  position; }
+            if (handleId == 0) { path.Start = position; }
             else { path.End = position; }
         }
         else

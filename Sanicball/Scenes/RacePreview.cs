@@ -6,7 +6,7 @@ namespace Sanicball.Scenes;
 public partial class RacePreview : Node
 {
     private static readonly PackedScene prefab = GD.Load<PackedScene>("res://Scenes/RacePreview.tscn");
-    
+
     public static RacePreview Create(string stageName)
     {
         RacePreview preview = prefab.Instantiate<RacePreview>();
