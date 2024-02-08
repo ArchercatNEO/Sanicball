@@ -6,8 +6,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanicballCore", "SanicballL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanicballServer", "SanicballLegacy\OldServer\SanicballServer.csproj", "{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NoBadFilePaths", "+NoBadFilePaths\NoBadFilePaths.csproj", "{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NullableExports", "+NullableExports\NullableExports.csproj", "{C29CCB97-7583-4A9A-8E49-A215628FCE69}"
 EndProject
 Global
@@ -41,12 +39,6 @@ Global
 		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
 		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
 		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
-		{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
-		{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3C1AE4E-9BA3-4198-B49C-0B622092A43A}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
 		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
