@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="SanicCharacter" load_steps=6 format=3 uid="uid://dqatqe81xsjry"]
+[gd_resource type="Resource" load_steps=6 format=3 uid="uid://dqatqe81xsjry"]
 
 [ext_resource type="ArrayMesh" uid="uid://bbgpk5l1rqnlb" path="res://characters/C13-Vactor/VactorMesh.res" id="1_3fwhc"]
 [ext_resource type="Script" path="res://characters/SanicCharacter.cs" id="1_d5i4c"]

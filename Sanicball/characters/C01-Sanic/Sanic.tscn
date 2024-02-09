@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://2echx3irpl0c"]
+
+[ext_resource type="PackedScene" uid="uid://c08vqn1nbmqlk" path="res://characters/C00-Default/Ball.tscn" id="1_77rwl"]
+[ext_resource type="Texture2D" uid="uid://db2qysawjai8l" path="res://characters/C01-Sanic/SanicIcon.png" id="2_3rt8d"]
+[ext_resource type="Texture2D" uid="uid://dacukubaymh5n" path="res://characters/C01-Sanic/SanicMinimap.png" id="3_beqfw"]
+[ext_resource type="Material" uid="uid://clt2irqu13knl" path="res://characters/C01-Sanic/SanicMat.tres" id="4_4llcn"]
+
+[node name="Ball" instance=ExtResource("1_77rwl")]
+
+[node name="Character" parent="." index="0"]
+Name = "Sanic"
+Credits = "Deviantart user franz888"
+Color = Color(0, 0.298039, 1, 1)
+Icon = ExtResource("2_3rt8d")
+MinimapIcon = ExtResource("3_beqfw")
+
+[node name="Rendered" parent="." index="3"]
+material_override = ExtResource("4_4llcn")

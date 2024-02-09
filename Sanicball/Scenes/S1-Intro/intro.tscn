@@ -1,0 +1,138 @@
+[gd_scene load_steps=7 format=3 uid="uid://c2v1qe5fjww6e"]
+
+[ext_resource type="Script" path="res://Scenes/S1-Intro/IntroUI.cs" id="1_t1ji2"]
+[ext_resource type="Texture2D" uid="uid://xsb0tm45s6fr" path="res://Scenes/S0-Shared/sanicteam.png" id="2_dxwkw"]
+[ext_resource type="Texture2D" uid="uid://beku0mlc4qaub" path="res://Scenes/S0-Shared/notsega.png" id="3_h427x"]
+
+[sub_resource type="Animation" id="Animation_mt08v"]
+resource_name = "FadeInOut"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.8, 1.4, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_87v0q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7wsyt"]
+_data = {
+"FadeInOut": SubResource("Animation_mt08v"),
+"RESET": SubResource("Animation_87v0q")
+}
+
+[node name="Intro" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_t1ji2")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="sanicteam" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -100.0
+offset_right = 300.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_dxwkw")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="sanicteam"]
+libraries = {
+"": SubResource("AnimationLibrary_7wsyt")
+}
+
+[node name="notsega" type="TextureRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -100.0
+offset_right = 400.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_h427x")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="notsega"]
+libraries = {
+"": SubResource("AnimationLibrary_7wsyt")
+}
+
+[node name="UsernameInput" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UsernameInput"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -109.0
+offset_top = -23.0
+offset_right = 109.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Please enter your username"
+horizontal_alignment = 1
+
+[node name="TextEdit" type="LineEdit" parent="UsernameInput"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -262.0
+offset_right = 262.0
+offset_bottom = 31.0
+grow_horizontal = 2
+placeholder_text = "player"

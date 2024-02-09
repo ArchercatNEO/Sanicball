@@ -1,0 +1,24 @@
+[gd_scene load_steps=5 format=3 uid="uid://c08vqn1nbmqlk"]
+
+[ext_resource type="Material" uid="uid://cwc81l8nola2s" path="res://characters/C00-Default/UnknownMat.tres" id="1_1reqn"]
+[ext_resource type="Script" path="res://characters/SanicCharacter.cs" id="1_v3mlp"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_iyxud"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_310mg"]
+
+[node name="Ball" type="RigidBody3D"]
+
+[node name="Character" type="Node" parent="."]
+script = ExtResource("1_v3mlp")
+
+[node name="Controller" type="Node" parent="."]
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_iyxud")
+
+[node name="Rendered" type="MeshInstance3D" parent="."]
+material_override = ExtResource("1_1reqn")
+mesh = SubResource("SphereMesh_310mg")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
