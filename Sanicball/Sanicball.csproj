@@ -4,8 +4,12 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <ProjectReference Include="..\+NullableExports\NullableExports.csproj" OutputItemType="Analyzer"/>
+    <ProjectReference Include="..\+NullableExports\NullableExports.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+    <AdditionalFiles Include="**/*.tres"/>
+    <AdditionalFiles Include="**/*.tscn"/>
+    <AdditionalFiles Include="**/*.import"/>
+    <AdditionalFiles Include="**/*.png"/>
   </ItemGroup>
 </Project>

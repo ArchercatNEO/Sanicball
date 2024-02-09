@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Sanicball"
-run/main_scene="res://Scenes/Intro+Menu/intro.tscn"
+run/main_scene="res://Scenes/S1-Intro/intro.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://Icon.png"
 
@@ -19,10 +19,6 @@ config/icon="res://Icon.png"
 
 project/assembly_name="Sanicball"
 project/solution_directory="~/Dev/Godot/Sanicball"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/PathVisualizer/plugin.cfg")
 
 [input]
 
