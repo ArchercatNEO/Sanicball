@@ -27,7 +27,7 @@ public partial class XcfImporter : EditorPlugin
 public partial class XcfConverter : EditorImportPlugin
 {
     public override string _GetImporterName() => "GIMP file importer";
-    public override string _GetVisibleName() => "Texture2D";
+    public override string _GetVisibleName() => "GIMP image file";
 
     public override string[] _GetRecognizedExtensions() => ["xcf"];
     public override string _GetResourceType() => nameof(Texture2D);

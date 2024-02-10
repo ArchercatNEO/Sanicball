@@ -6,10 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\+NullableExports\NullableExports.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+    <ProjectReference Include="..\+GodotFiles\GodotFiles.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+    <!--Godot file types-->
     <AdditionalFiles Include="**/*.tres"/>
     <AdditionalFiles Include="**/*.tscn"/>
+    <AdditionalFiles Include="**/*.gdshader"/>
     <AdditionalFiles Include="**/*.import"/>
+    <!--Image file types-->
     <AdditionalFiles Include="**/*.png"/>
+    <AdditionalFiles Include="**/*.jpg"/>
+    <!--Sound file types-->
+    <AdditionalFiles Include="**/*.ogg"/>
+    <AdditionalFiles Include="**/*.mp3"/>
+    <AdditionalFiles Include="**/*.wav"/>
+    <!--3D object file types-->
+    <AdditionalFiles Include="**/*.blend"/>
   </ItemGroup>
 </Project>

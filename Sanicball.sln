@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanicballCore", "SanicballL
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanicballServer", "SanicballLegacy\OldServer\SanicballServer.csproj", "{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NullableExports", "+NullableExports\NullableExports.csproj", "{C29CCB97-7583-4A9A-8E49-A215628FCE69}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodotFiles", "+GodotFiles\GodotFiles.csproj", "{33E61641-B597-45A2-8BEC-D8AC16716892}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,11 +39,11 @@ Global
 		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
 		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
 		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
-		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
-		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
-		{C29CCB97-7583-4A9A-8E49-A215628FCE69}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{33E61641-B597-45A2-8BEC-D8AC16716892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33E61641-B597-45A2-8BEC-D8AC16716892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33E61641-B597-45A2-8BEC-D8AC16716892}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33E61641-B597-45A2-8BEC-D8AC16716892}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{33E61641-B597-45A2-8BEC-D8AC16716892}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{33E61641-B597-45A2-8BEC-D8AC16716892}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal
