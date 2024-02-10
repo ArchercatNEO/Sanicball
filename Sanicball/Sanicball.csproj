@@ -3,6 +3,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <Nullable>enable</Nullable>
+    <WarningsAsErrors>CS8785</WarningsAsErrors>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,6 +13,8 @@
     <AdditionalFiles Include="**/*.tscn"/>
     <AdditionalFiles Include="**/*.gdshader"/>
     <AdditionalFiles Include="**/*.import"/>
+    <!--Text file types-->
+    <AdditionalFiles Include="**/*.ttf"/>
     <!--Image file types-->
     <AdditionalFiles Include="**/*.png"/>
     <AdditionalFiles Include="**/*.jpg"/>
@@ -21,5 +24,7 @@
     <AdditionalFiles Include="**/*.wav"/>
     <!--3D object file types-->
     <AdditionalFiles Include="**/*.blend"/>
+    <AdditionalFiles Include="**/*.glb"/>
+    <AdditionalFiles Include="**/*.fbx"/>
   </ItemGroup>
 </Project>

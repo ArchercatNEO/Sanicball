@@ -1,7 +1,7 @@
 using Godot;
 using Sanicball.Scenes;
 
-namespace Sanicball.Tools;
+namespace Sanicball.Plugins;
 
 [Tool]
 internal partial class NullExportWarnings : EditorPlugin

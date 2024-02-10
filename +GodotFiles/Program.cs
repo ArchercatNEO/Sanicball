@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using Microsoft.CodeAnalysis;
 
-namespace NullableExports;
+namespace GodotFiles;
 
 struct FileWithImport
 {
@@ -19,46 +19,31 @@ public class PreloadGenerator : IIncrementalGenerator
 {
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
+        var resourceFiles = context.AdditionalTextsProvider.Where(file => file.Path.EndsWith(".tres") || file.Path.EndsWith(".tscn")).Collect();
         var resourceData = context.AdditionalTextsProvider.Where(file => !file.Path.EndsWith(".tres") && !file.Path.EndsWith(".tscn"));
-        var resouceImports = resourceData.Collect().SelectMany((files, token) => {
-            List<FileWithImport> importers = [];
-            Dictionary<string, AdditionalText> pendingImports = [];
-            Dictionary<string, AdditionalText> pendingData = [];
+        var resouceImports = resourceData.Collect().Select((files, token) => {
+            Dictionary<string, AdditionalText> map = [];
             foreach (var file in files)
             {
-                if (file.Path.EndsWith(".import"))
-                {
-                    string dataPath = Path.GetFileNameWithoutExtension(file.Path);
-                    if (!pendingData.ContainsKey(dataPath))
-                    {
-                        pendingImports.Add(file.Path, file);
-                        continue;
-                    }
-                    importers.Add(new()
-                    {
-                        data = pendingData[dataPath],
-                        import = file
-                    });
-                    pendingData.Remove(dataPath);
-                }
-                else
-                {
-                    string importPath = file.Path + ".import";
-                    if (!pendingImports.ContainsKey(importPath))
-                    {
-                        pendingData.Add(file.Path, file);
-                        continue;
-                    }
-                    importers.Add(new()
-                    {
-                        data = file,
-                        import = pendingImports[importPath]
-                    });
-                    pendingImports.Remove(importPath);
-                }
+                map.Add(file.Path, file);
+            }
+            return map;
+        }).SelectMany((map, token) => {
+            List<FileWithImport> importers = [];
+
+            foreach (var pair in map)
+            {
+                var path = pair.Key;
+                if (!path.EndsWith(".import")) { continue; }
+
+                importers.Add(new() {
+                    import = pair.Value,
+                    data = map[path.Replace(".import", "")]
+                });
             }
             return importers;
-        }).Select((file, token) => {
+        })
+        .Select((file, token) => {
             //Import the file
             return file.data;
         }).Collect().Select((files, token) => {
@@ -70,7 +55,6 @@ public class PreloadGenerator : IIncrementalGenerator
             return lookupTable;
         });
         
-        var resourceFiles = context.AdditionalTextsProvider.Where(file => file.Path.EndsWith(".tres") || file.Path.EndsWith(".tscn")).Collect();
         var resourceTree = resouceImports.Combine(resourceFiles).Select((files, token) => {
             Dictionary<string, AdditionalText> tree = files.Left;
             foreach (var file in files.Right)
@@ -79,6 +63,9 @@ public class PreloadGenerator : IIncrementalGenerator
             }
             return tree;
         });
+
+
+
        
         var syntax = context.SyntaxProvider
             .ForAttributeWithMetadataName("Sanicball.PreloadAttribute", SyntaxFilter, SyntaxTransformer)
@@ -130,11 +117,11 @@ public class PreloadGenerator : IIncrementalGenerator
                 DiagnosticDescriptor description = new(
                     "GD0000",
                     "Invalid Resource File Path",
-                    $"File path: {field.path} does not exist, {avalible} files exist",
+                    $"File path: {field.path} does not exist, {files} files exist",
                     "Compilation",
                     DiagnosticSeverity.Error,
                     true,
-                    $"File path: {field.path} does not exist, {avalible} files exist"
+                    $"File path: {field.path} does not exist, {files} files exist"
                 );
                 Diagnostic invalidPath = Diagnostic.Create(description, field.location);
                 ctx.ReportDiagnostic(invalidPath);

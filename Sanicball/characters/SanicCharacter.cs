@@ -29,5 +29,6 @@ public partial class SanicCharacter : Node
     [Export] public float Grip = 20;
     [Export] public float BallSize = 1;
 
-    [Preload("[hello]")] public static readonly SanicCharacter Sanic = new();
+    public static readonly SanicCharacter Sanic = new();
+    public static readonly SanicCharacter Knackles = new();
 }

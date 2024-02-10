@@ -2,7 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 
-namespace Sanicball.Tools;
+namespace Sanicball.Plugins;
 
 [Tool]
 public partial class XcfImporter : EditorPlugin
@@ -24,19 +24,29 @@ public partial class XcfImporter : EditorPlugin
     }
 }
 
+[Tool]
 public partial class XcfConverter : EditorImportPlugin
 {
     public override string _GetImporterName() => "GIMP file importer";
+    public string GetImporterName() => "GIMP file importer";
+    public string _get_importer_name() => "GIMP file importer";
     public override string _GetVisibleName() => "GIMP image file";
 
     public override string[] _GetRecognizedExtensions() => ["xcf"];
-    public override string _GetResourceType() => nameof(Texture2D);
+    public override string _GetResourceType() => nameof(Resource);
+    public override string _GetSaveExtension() => "res";
+
+    public override float _GetPriority() => 1.0f;
+    public override int _GetPresetCount() => 0;
+    public override int _GetImportOrder() => 0;
+
+     public override bool _GetOptionVisibility(string path, StringName optionName, Dictionary options) => true;
 
     public override Error _Import(string sourceFile, string savePath, Dictionary options, Array<string> platformVariants, Array<string> genFiles)
     {
         FileAccess file = FileAccess.Open(sourceFile, FileAccess.ModeFlags.Read);
         Texture2D image = new();
-        ResourceSaver.Save(image, savePath + ".xcf");
+        ResourceSaver.Save(image, savePath + ".res");
         return Error.Ok;
     }
 }
