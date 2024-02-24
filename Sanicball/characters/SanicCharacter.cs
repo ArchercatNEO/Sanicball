@@ -47,12 +47,12 @@ public partial class SanicCharacter : RigidBody3D
         BodyEntered += (body) => {
             if (body is TriggerRespawn respawn)
             {
-                OnRespawn.Invoke(this, respawn);
+                OnRespawn?.Invoke(this, respawn);
             }
         };
     }
     
-    public event EventHandler<TriggerRespawn> OnRespawn = (sender, args) => {};
+    public event EventHandler<TriggerRespawn>? OnRespawn;
 
     public override void _IntegrateForces(PhysicsDirectBodyState3D state)
     {
