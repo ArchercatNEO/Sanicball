@@ -18,6 +18,7 @@
     <!--Image file types-->
     <AdditionalFiles Include="**/*.png"/>
     <AdditionalFiles Include="**/*.jpg"/>
+    <AdditionalFiles Include="**/*.svg"/>
     <AdditionalFiles Include="**/*.xcf"/>
     <!--Sound file types-->
     <AdditionalFiles Include="**/*.ogg"/>
