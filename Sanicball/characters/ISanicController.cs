@@ -4,6 +4,7 @@ namespace Sanicball.Characters;
 
 public interface ISanicController
 {
+    void Initialise(SanicCharacter parent);
     ForceRequest InputTransformer(InputEvent @event);
 }
 

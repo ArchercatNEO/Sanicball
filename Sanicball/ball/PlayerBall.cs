@@ -8,7 +8,17 @@ namespace Sanicball.Ball;
 
 public partial class PlayerBall : ISanicController
 {
-    //TODO LobbyCamera.TrySubscribe(this);
+    public void Initialise(SanicCharacter parent)
+    {
+        LobbyCamera.Instance?.Subscribe(parent);
+
+        parent.OnRespawn += (sender, body) => {
+            SanicCharacter character = (SanicCharacter)sender!;
+            character.Position = new(0, 100, 0);
+        };
+    }
+
+    //TODO 
 
     public ForceRequest InputTransformer(InputEvent @event)
     {

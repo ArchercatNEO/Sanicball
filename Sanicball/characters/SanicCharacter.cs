@@ -4,7 +4,7 @@ using Sanicball.GameMechanics;
 
 namespace Sanicball.Characters;
 
-public partial class SanicCharacter : RigidBody3D, IRespawnable
+public partial class SanicCharacter : RigidBody3D
 {
     #region Editor-level dependencies
     //Useful metadata
@@ -41,20 +41,24 @@ public partial class SanicCharacter : RigidBody3D, IRespawnable
         return ball;
     }
 
+    public override void _Ready()
+    {
+        SetCollisionMaskValue(TriggerRespawn.layer, true);
+        BodyEntered += (body) => {
+            if (body is TriggerRespawn respawn)
+            {
+                OnRespawn.Invoke(this, respawn);
+            }
+        };
+    }
+    
+    public event EventHandler<TriggerRespawn> OnRespawn = (sender, args) => {};
+
     public override void _IntegrateForces(PhysicsDirectBodyState3D state)
     {
         if (state.LinearVelocity.Length() > MaxSpeed)
         {
             state.LinearVelocity = state.LinearVelocity.Normalized() * MaxSpeed;
         }
-    }
-
-    public event EventHandler OnRespawn = (sender, args) =>
-    {
-        GD.Print("Character respawning");
-    };
-
-    public void Respawn()
-    {
     }
 }

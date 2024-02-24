@@ -2,21 +2,12 @@ using Godot;
 
 namespace Sanicball.GameMechanics;
 
-internal partial class TriggerRespawn : Area3D
+public partial class TriggerRespawn : Area3D
 {
+    public const int layer = 10;
+    
     public override void _Ready()
     {
-        BodyEntered += (collider) =>
-        {
-            if (collider is IRespawnable respawnable)
-            {
-                respawnable.Respawn();
-            }
-        };
+        SetCollisionLayerValue(layer, true);
     }
-}
-
-public interface IRespawnable
-{
-    void Respawn();
 }

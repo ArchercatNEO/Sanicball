@@ -24,11 +24,10 @@ public partial class LobbyCamera : Camera3D
     }
 
     //Since vectors are passed by value we must instead poll the rotation to stay updated
-    public Func<Vector3> TrySubscribe(SanicCharacter ball)
+    public Func<Vector3> Subscribe(SanicCharacter ball)
     {
         balls.Add(ball);
         ball.TreeExited += () => { balls.Remove(ball); };
-
         return () => Rotation;
     }
 
