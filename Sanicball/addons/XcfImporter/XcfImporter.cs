@@ -7,12 +7,11 @@ namespace Sanicball.Plugins;
 [Tool]
 public partial class XcfImporter : EditorPlugin
 {
-    EditorImportPlugin? importer = null;
+    XcfConverter? importer = new();
 
     public override void _EnterTree()
     {
         // Initialization of the plugin goes here.
-        importer = new();
         AddImportPlugin(importer);
     }
 
@@ -20,33 +19,34 @@ public partial class XcfImporter : EditorPlugin
     {
         // Clean-up of the plugin goes here.
         RemoveImportPlugin(importer);
-        importer = null;
     }
 }
 
-[Tool]
 public partial class XcfConverter : EditorImportPlugin
 {
     public override string _GetImporterName() => "GIMP file importer";
-    public string GetImporterName() => "GIMP file importer";
-    public string _get_importer_name() => "GIMP file importer";
-    public override string _GetVisibleName() => "GIMP image file";
+    public override string _GetVisibleName() => "Texture2D";
 
     public override string[] _GetRecognizedExtensions() => ["xcf"];
-    public override string _GetResourceType() => nameof(Resource);
-    public override string _GetSaveExtension() => "res";
+    public override string _GetResourceType() => nameof(Texture2D);
+    public override string _GetSaveExtension() => "ctex";
 
     public override float _GetPriority() => 1.0f;
     public override int _GetPresetCount() => 0;
     public override int _GetImportOrder() => 0;
 
-     public override bool _GetOptionVisibility(string path, StringName optionName, Dictionary options) => true;
+    public override Array<Dictionary> _GetImportOptions(string path, int presetIndex)
+    {
+        return [];
+    }
+
+    public override bool _GetOptionVisibility(string path, StringName optionName, Dictionary options) => true;
 
     public override Error _Import(string sourceFile, string savePath, Dictionary options, Array<string> platformVariants, Array<string> genFiles)
     {
         FileAccess file = FileAccess.Open(sourceFile, FileAccess.ModeFlags.Read);
         Texture2D image = new();
-        ResourceSaver.Save(image, savePath + ".res");
+        ResourceSaver.Save(image, savePath + ".ctex");
         return Error.Ok;
     }
 }
