@@ -22,7 +22,7 @@ public partial class LobbyCamera : Camera3D
     {
         originRotation = Rotation;
     }
-    
+
     //Since vectors are passed by value we must instead poll the rotation to stay updated
     public Func<Vector3> TrySubscribe(SanicCharacter ball)
     {
