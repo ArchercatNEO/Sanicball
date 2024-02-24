@@ -1,20 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://labqgouqmjkt"]
+[gd_scene load_steps=3 format=3 uid="uid://labqgouqmjkt"]
 
 [ext_resource type="PackedScene" uid="uid://c08vqn1nbmqlk" path="res://characters/C00-Default/Ball.tscn" id="1_6r7ew"]
 [ext_resource type="PackedScene" uid="uid://0erj7pob1sif" path="res://characters/C13-Vactor/VactorBlend.blend" id="2_jo36h"]
-[ext_resource type="Texture2D" uid="uid://5ptt012therw" path="res://characters/C13-Vactor/VactorIcon.png" id="3_tqk4q"]
-[ext_resource type="Texture2D" uid="uid://dduv2dmocj8gi" path="res://characters/C13-Vactor/VactorMinimap.png" id="4_84102"]
 
 [node name="Ball" instance=ExtResource("1_6r7ew")]
 
-[node name="Character" parent="." index="0"]
-Name = "Vactor"
-Credits = "I don't even"
-Color = Color(0.482353, 0.721569, 0.0313726, 1)
-Icon = ExtResource("3_tqk4q")
-MinimapIcon = ExtResource("4_84102")
+[node name="RendererOverwrite" parent="." index="1" instance=ExtResource("2_jo36h")]
 
-[node name="RendererOverwrite" parent="." index="3" instance=ExtResource("2_jo36h")]
-
-[node name="Rendered" parent="." index="4"]
+[node name="Rendered" parent="." index="2"]
 visible = false

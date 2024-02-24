@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://t4ipany25cea"]
+
+[ext_resource type="PackedScene" uid="uid://c08vqn1nbmqlk" path="res://characters/C00-Default/Ball.tscn" id="1_3gcat"]
+
+[node name="Ball" instance=ExtResource("1_3gcat")]
