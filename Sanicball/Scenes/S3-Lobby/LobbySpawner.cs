@@ -8,14 +8,14 @@ public partial class LobbySpawner : StaticBody3D
 {
     public static LobbySpawner? Instance { get; private set; }
 
-    public static PlayerBall? SpawnBall()
+    public static SanicCharacter? SpawnBall()
     {
         if (Instance is null)
         {
             return null;
         }
 
-        PlayerBall ball = AbstractBall.Create<PlayerBall>(SanicCharacter.Sanic);
+        SanicCharacter ball = SanicCharacter.Sanic.Instantiate<SanicCharacter>();
         Instance.AddChild(ball);
         ball.Translate(new(0, 5, 0));
         ball.ApplyImpulse(new(0, 10, 0));

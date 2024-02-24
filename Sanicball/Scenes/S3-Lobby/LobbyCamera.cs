@@ -1,5 +1,5 @@
 using Godot;
-using Sanicball.Ball;
+using Sanicball.Characters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,38 +8,30 @@ namespace Sanicball.Scenes;
 
 public partial class LobbyCamera : Camera3D
 {
-    private static LobbyCamera? Instance = null;
+    //"Singleton" pattern
+    public static LobbyCamera? Instance { get; private set; }
+    public override void _EnterTree() { Instance = this; }
+    public override void _ExitTree() { Instance = null; }
 
-    //Since vectors are passed by value we must instead poll the rotation to stay updated
-    public static Func<Vector3>? TrySubscribe(AbstractBall ball)
-    {
-        if (Instance is null)
-        {
-            //? Consider adding checks to subscribers instead
-            return null;
-        }
 
-        Instance.balls.Add(ball);
-        ball.TreeExited += () => { Instance.balls.Remove(ball); };
 
-        return () => Instance.Rotation;
-    }
-
-    private readonly List<AbstractBall> balls = new();
+    private readonly List<SanicCharacter> balls = [];
     private readonly Vector3 originRotation;
 
     private LobbyCamera()
     {
         originRotation = Rotation;
     }
-
-    // Called when the node enters the scene tree for the first time.
-    public override void _Ready()
+    
+    //Since vectors are passed by value we must instead poll the rotation to stay updated
+    public Func<Vector3> TrySubscribe(SanicCharacter ball)
     {
-        Instance = this;
+        balls.Add(ball);
+        ball.TreeExited += () => { balls.Remove(ball); };
+
+        return () => Rotation;
     }
 
-    // Called every frame. 'delta' is the elapsed time since the previous frame.
     public override void _Process(double delta)
     {
         if (balls.Count == 0)
@@ -61,12 +53,5 @@ public partial class LobbyCamera : Camera3D
         float angle = cameraForwards.AngleTo(relativePosition);
 
         Rotate(normal, angle * (float)delta * 10);
-    }
-
-    public override void _ExitTree()
-    {
-        base._ExitTree();
-
-        Instance = null;
     }
 }

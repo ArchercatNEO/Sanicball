@@ -1,30 +1,20 @@
 using Godot;
 using Sanicball.Account;
+using Sanicball.Characters;
 using Sanicball.GameMechanics;
 using Sanicball.Scenes;
 
 namespace Sanicball.Ball;
 
-public partial class PlayerBall : AbstractBall, IBall, IRespawnable
+public partial class PlayerBall : ISanicController
 {
-    public static CSharpScript AsScript { get; } = GD.Load<CSharpScript>("res://Ball/PlayerBall.cs");
+    //TODO LobbyCamera.TrySubscribe(this);
 
-    public override void _Ready()
-    {
-        LobbyCamera.TrySubscribe(this);
-
-    }
-
-    public override void _Input(InputEvent @event)
+    public ForceRequest InputTransformer(InputEvent @event)
     {
         Vector3 force = ControlType.Keyboard.NormalizedForce();
-        force *= InputAcceleration;
+        force *= SanicCharacter.InputAcceleration;
 
-        ApplyForce(force);
-    }
-
-    public void Respawn()
-    {
-        Position = new(0, 100, 0);
+        return new(force);
     }
 }
