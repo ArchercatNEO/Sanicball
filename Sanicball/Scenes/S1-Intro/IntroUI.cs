@@ -25,6 +25,8 @@ namespace Sanicball.Scenes;
 /// </summary>
 public partial class IntroUI : Control
 {
+    public static readonly PackedScene Scene = GD.Load<PackedScene>("res://Scenes/S1-Intro/intro.tscn");
+    
     [Export] public required Control input;
 
     public override void _Ready()
@@ -54,7 +56,7 @@ public partial class IntroUI : Control
             }
             animations.Last().AnimationFinished += (name) =>
             {
-                GetTree().ChangeSceneToFile("res://Scenes/Intro+Menu/menu.tscn");
+                GetTree().ChangeSceneToPacked(MenuUI.Scene);
             };
         };
     }

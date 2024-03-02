@@ -4,6 +4,8 @@ namespace Sanicball.Scenes;
 
 public partial class MenuUI : Control
 {
+    public static readonly PackedScene Scene = GD.Load<PackedScene>("res://Scenes/S2-Menu/menu.tscn");
+    
     public override void _Ready()
     {
         //needs to spin
