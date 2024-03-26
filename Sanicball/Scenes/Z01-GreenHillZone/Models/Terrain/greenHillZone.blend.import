@@ -1,0 +1,88 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://c77tmtg6splsc"
+path="res://.godot/imported/greenHillZone.blend-bb4c92a7bfa9582649ad356158e242a9.scn"
+
+[deps]
+
+source_file="res://Scenes/Z01-GreenHillZone/Models/Terrain/greenHillZone.blend"
+dest_files=["res://.godot/imported/greenHillZone.blend-bb4c92a7bfa9582649ad356158e242a9.scn"]
+
+[params]
+
+nodes/root_type=""
+nodes/root_name=""
+nodes/apply_root_scale=true
+nodes/root_scale=1.0
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=true
+meshes/light_baking=1
+meshes/lightmap_texel_size=0.2
+meshes/force_disable_compression=false
+skins/use_named_skins=true
+animation/import=true
+animation/fps=30
+animation/trimming=false
+animation/remove_immutable_tracks=true
+import_script/path=""
+_subresources={
+"materials": {
+"Dirt": {
+"use_external/enabled": true,
+"use_external/path": "res://Scenes/GreenHillZone/Models/Terrain/TiledDirt.tres"
+},
+"Grass": {
+"use_external/enabled": true,
+"use_external/path": "res://Scenes/GreenHillZone/Models/Terrain/TiledGrass.tres"
+},
+"Road": {
+"use_external/enabled": true,
+"use_external/path": "res://Terrain/TiledPath.tres"
+},
+"Water": {
+"use_external/enabled": true,
+"use_external/path": "res://Scenes/GreenHillZone/Models/Waterfall/Waterfall.tres"
+},
+"Wood": {
+"use_external/enabled": true,
+"use_external/path": "res://Terrain/Wood.tres"
+}
+},
+"nodes": {
+"PATH:BridgePlanks": {
+"generate/physics": true,
+"physics/shape_type": 2
+},
+"PATH:MainIsland": {
+"generate/physics": true
+},
+"PATH:SideIsland": {
+"generate/physics": true
+},
+"PATH:UTurnIsland": {
+"generate/physics": true
+}
+}
+}
+gltf/naming_version=1
+gltf/embedded_image_handling=1
+blender/nodes/visible=0
+blender/nodes/punctual_lights=true
+blender/nodes/cameras=true
+blender/nodes/custom_properties=true
+blender/nodes/modifiers=1
+blender/meshes/colors=false
+blender/meshes/uvs=true
+blender/meshes/normals=true
+blender/meshes/tangents=true
+blender/meshes/skins=2
+blender/meshes/export_bones_deforming_mesh_only=false
+blender/materials/unpack_enabled=true
+blender/materials/export_materials=1
+blender/animation/limit_playback=true
+blender/animation/always_sample=true
+blender/animation/group_tracks=true
