@@ -3,6 +3,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <Nullable>enable</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <WarningsAsErrors>CS8785</WarningsAsErrors>
   </PropertyGroup>
 
