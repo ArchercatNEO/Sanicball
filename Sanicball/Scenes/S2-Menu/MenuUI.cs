@@ -4,7 +4,13 @@ namespace Sanicball.Scenes;
 
 public partial class MenuUI : Control
 {
-    public static readonly PackedScene Scene = GD.Load<PackedScene>("res://Scenes/S2-Menu/menu.tscn");
+    private static readonly PackedScene Scene = GD.Load<PackedScene>("res://Scenes/S2-Menu/menu.tscn");
+
+    public static void Activate(SceneTree tree)
+    {
+        tree.ChangeSceneToPacked(Scene);
+    } 
+        
     
     public override void _Ready()
     {

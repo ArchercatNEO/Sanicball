@@ -1,6 +1,7 @@
 using System.Linq;
 using Godot;
 using Sanicball.Data;
+using Sanicball.Plugins;
 
 namespace Sanicball.Scenes;
 
@@ -27,37 +28,37 @@ public partial class IntroUI : Control
 {
     public static readonly PackedScene Scene = GD.Load<PackedScene>("res://Scenes/S1-Intro/intro.tscn");
     
-    [Export] public required Control input;
+    [EnsureChild("UsernameInput")] public required Control inputUi;
+    [EnsureChild("TextEdit")] public required LineEdit usernameInput;
+    [EnsureChild("Credits")] public required Control credits;
 
     public override void _Ready()
     {
-        Control input = GetNode<Control>($"UsernameInput");
-        LineEdit internalText = input.GetNode<LineEdit>($"TextEdit");
-        internalText.TextSubmitted += (newString) =>
+        inputUi = GetNode<Control>("UsernameInput");
+        usernameInput = inputUi.GetNode<LineEdit>("TextEdit");
+        credits = GetNode<Control>("Credits");
+        var images = credits.GetChildren().OfType<TextureRect>();
+        
+        usernameInput.TextSubmitted += (newString) =>
         {
-            AccountSettings.Active.name = internalText.Text;
-            input.Hide();
+            AccountSettings.Active.name = usernameInput.Text;
+            inputUi.Hide();
 
-            AnimationPlayer[] animations = GetChildren()
-                .Where(node => node is TextureRect)
-                .Select(node => node.GetNode<AnimationPlayer>("AnimationPlayer"))
-                .ToArray();
+            Tween tween = CreateTween();
 
-            animations[0].Play("FadeInOut");
-            for (int i = 1; i < animations.Length; i++)
+            foreach (TextureRect image in images)
             {
-                AnimationPlayer current = animations[i - 1];
-                AnimationPlayer next = animations[i];
-
-                current.AnimationFinished += (name) =>
-                {
-                    next.Play("FadeInOut");
-                };
+                tween.TweenProperty(image, ":modulate", new Color(1, 1, 1, 1), 0.6); //fade in
+                tween.TweenInterval(0.6);
+                tween.TweenProperty(image, ":modulate", new Color(1, 1, 1, 0), 0.6); //fade out
             }
-            animations.Last().AnimationFinished += (name) =>
-            {
-                GetTree().ChangeSceneToPacked(MenuUI.Scene);
-            };
+
+            Callable switchToMenu = Callable.From(() => {
+                SceneTree tree = GetTree();
+                MenuUI.Activate(tree);
+            });
+
+            tween.TweenCallback(switchToMenu);
         };
     }
 }
