@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://w8dtpcak1qko"
-path="res://.godot/imported/StageOverview_DustyDesert.blend-e633ccbaf5578a419a293c4792fb01ce.scn"
+uid="uid://b8fxaxncw4pep"
+path="res://.godot/imported/GHZ-overview.blend-8320a5fa817c8e5ae48aec734d9f4c69.scn"
 
 [deps]
 
-source_file="res://Scenes/Z02-DustyDessert/StageOverview_DustyDesert.blend"
-dest_files=["res://.godot/imported/StageOverview_DustyDesert.blend-e633ccbaf5578a419a293c4792fb01ce.scn"]
+source_file="res://Scenes/Z01-GreenHillZone/GHZ-overview.blend"
+dest_files=["res://.godot/imported/GHZ-overview.blend-8320a5fa817c8e5ae48aec734d9f4c69.scn"]
 
 [params]
 

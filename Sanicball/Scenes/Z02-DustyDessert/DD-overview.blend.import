@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b8fxaxncw4pep"
-path="res://.godot/imported/StageOverview_GreenHillZone.blend-35842d7c575349b0debf8187993cad53.scn"
+uid="uid://w8dtpcak1qko"
+path="res://.godot/imported/DD-overview.blend-8a2ee1384e62b26da77e32e1817b775f.scn"
 
 [deps]
 
-source_file="res://Scenes/Z01-GreenHillZone/StageOverview_GreenHillZone.blend"
-dest_files=["res://.godot/imported/StageOverview_GreenHillZone.blend-35842d7c575349b0debf8187993cad53.scn"]
+source_file="res://Scenes/Z02-DustyDessert/DD-overview.blend"
+dest_files=["res://.godot/imported/DD-overview.blend-8a2ee1384e62b26da77e32e1817b775f.scn"]
 
 [params]
 
