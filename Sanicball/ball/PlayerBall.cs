@@ -6,6 +6,10 @@ using Sanicball.Scenes;
 
 namespace Sanicball.Ball;
 
+/// <summary>
+/// A ball controlled by the local machine
+/// This kind of ball is the only one players have any control over
+/// </summary>
 public partial class PlayerBall : ISanicController
 {
     public void Initialise(SanicCharacter parent)
