@@ -51,11 +51,6 @@ _subresources={
 "save_to_file/make_streamable": "",
 "save_to_file/path": "res://characters/C09-Dr.-Aggmen/AggmenMesh.res"
 }
-},
-"nodes": {
-"PATH:AggmenCollision": {
-"generate/physics": true
-}
 }
 }
 gltf/naming_version=1

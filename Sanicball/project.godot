@@ -11,6 +11,9 @@ config_version=5
 [application]
 
 config/name="Sanicball"
+config/description="The incredibly fast racer, reborn in godot.
+Get ready for some NEON races!"
+config/version="0.0"
 run/main_scene="res://Scenes/S1-Intro/intro.tscn"
 config/features=PackedStringArray("4.2", "C#", "GL Compatibility")
 config/icon="res://Icon.svg"

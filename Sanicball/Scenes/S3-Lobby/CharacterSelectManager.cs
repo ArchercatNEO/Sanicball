@@ -1,17 +1,33 @@
+using System;
+using System.Collections.Generic;
 using Godot;
+using Sanicball.Account;
 
 namespace Sanicball.Scenes;
 
+/// <summary>
+/// Manages players logging in/out.
+/// The CharacterSelect is then used to confirm the player's character and handle the selector logic
+/// </summary>
 public partial class CharacterSelectManager : Control
 {
-    public override void _Input(InputEvent @event)
+    private readonly HashSet<ControlType> activeControllers = [];
+    
+    public override void _UnhandledInput(InputEvent @event)
     {
-        base._Input(@event);
-
-        if (Input.IsKeyPressed(Key.D))
+        foreach (ControlType control in Enum.GetValues(typeof(ControlType)))
         {
-            CharacterSelect panel = CharacterSelect.Create(Account.ControlType.Keyboard);
-            AddChild(panel);
+            if (!activeControllers.Contains(control) && control.Confirmed())
+            {
+                activeControllers.Add(control);
+                
+                CharacterSelect panel = CharacterSelect.Create(control);
+                AddChild(panel);
+                
+                panel.OnPlayerConfirmed += (sender, confirmation) => {
+                    activeControllers.Remove(control);
+                };
+            }
         }
     }
 }

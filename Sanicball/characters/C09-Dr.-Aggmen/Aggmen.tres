@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="SanicCharacter" load_steps=6 format=3 uid="uid://tl8jud2o0uxq"]
+[gd_resource type="Resource" script_class="SanicCharacter" load_steps=7 format=3 uid="uid://tl8jud2o0uxq"]
 
 [ext_resource type="Texture2D" uid="uid://y0davh3ktveu" path="res://characters/C09-Dr.-Aggmen/AggmenIcon.png" id="1_3i7lb"]
+[ext_resource type="Shape3D" uid="uid://dnyvrlfjww608" path="res://characters/C09-Dr.-Aggmen/AggmenCol.tres" id="1_ej8b0"]
 [ext_resource type="Script" path="res://characters/SanicCharacter.cs" id="1_ldutv"]
 [ext_resource type="ArrayMesh" uid="uid://dexmgu1nt4lck" path="res://characters/C09-Dr.-Aggmen/AggmenMesh.res" id="1_pvpe0"]
 [ext_resource type="Material" uid="uid://ukkx8a5gt3x5" path="res://characters/C09-Dr.-Aggmen/AggmenMat.tres" id="2_u1xtd"]
@@ -10,11 +11,12 @@
 script = ExtResource("1_ldutv")
 Name = "Dr. Aggmen"
 Credits = "Artist Tyson Hesse"
-Color = Color(1, 0.847059, 0.521569, 1)
 Material = ExtResource("2_u1xtd")
+Color = Color(1, 0.847059, 0.521569, 1)
 Icon = ExtResource("1_3i7lb")
 MinimapIcon = ExtResource("3_6joe2")
-AlternativeMesh = ExtResource("1_pvpe0")
+MeshOverride = ExtResource("1_pvpe0")
+CollisionOverride = ExtResource("1_ej8b0")
 RollSpeed = 100.0
 AirSpeed = 15.0
 JumpHeight = 14.0

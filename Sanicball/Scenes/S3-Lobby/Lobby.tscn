@@ -2,7 +2,7 @@
 
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://Scenes/S3-Lobby/Decoration/clear_sky.tres" id="1_8ov4f"]
 [ext_resource type="Script" path="res://Music/MusicPlayer.cs" id="1_s8m6y"]
-[ext_resource type="Texture2D" uid="uid://bawb32fvt5hrb" path="res://Scenes/S3-Lobby/UI/TrianglesBackground.png" id="3_8rbhj"]
+[ext_resource type="Texture2D" uid="uid://bawb32fvt5hrb" path="res://Scenes/S3-Lobby/TrianglesBackground.png" id="3_8rbhj"]
 [ext_resource type="Shape3D" uid="uid://dpxtdelj4vkx4" path="res://Terrain/GroundCollider.tres" id="3_np11w"]
 [ext_resource type="Material" uid="uid://dmghyann0c8es" path="res://Scenes/S3-Lobby/Decoration/TVFrame.tres" id="3_tnksi"]
 [ext_resource type="BoxMesh" uid="uid://c28lla3d5dqd1" path="res://Terrain/GroundMesh.tres" id="4_5lno4"]
@@ -109,10 +109,9 @@ height = 6.0
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_wsstk")
 
-[node name="Music" type="AudioStreamPlayer" parent="."]
+[node name="Music" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("songName")]
 script = ExtResource("1_s8m6y")
-songName = Object(Label,"_import_path":NodePath(""),"unique_name_in_owner":false,"process_mode":0,"process_priority":0,"process_physics_priority":0,"process_thread_group":0,"editor_description":"","visible":true,"modulate":Color(1, 1, 1, 1),"self_modulate":Color(1, 1, 1, 1),"show_behind_parent":false,"top_level":false,"clip_children":0,"light_mask":1,"visibility_layer":1,"z_index":0,"z_as_relative":true,"y_sort_enabled":false,"texture_filter":0,"texture_repeat":0,"material":null,"use_parent_material":false,"clip_contents":false,"custom_minimum_size":Vector2(0, 0),"layout_direction":0,"layout_mode":3,"anchors_preset":0,"anchor_left":0.0,"anchor_top":0.0,"anchor_right":0.0,"anchor_bottom":0.0,"offset_left":0.0,"offset_top":0.0,"offset_right":0.0,"offset_bottom":0.0,"grow_horizontal":1,"grow_vertical":1,"rotation":0.0,"scale":Vector2(1, 1),"pivot_offset":Vector2(0, 0),"size_flags_horizontal":1,"size_flags_vertical":4,"size_flags_stretch_ratio":1.0,"auto_translate":true,"localize_numeral_system":true,"tooltip_text":"","focus_neighbor_left":NodePath(""),"focus_neighbor_top":NodePath(""),"focus_neighbor_right":NodePath(""),"focus_neighbor_bottom":NodePath(""),"focus_next":NodePath(""),"focus_previous":NodePath(""),"focus_mode":0,"mouse_filter":2,"mouse_force_pass_scroll_events":true,"mouse_default_cursor_shape":0,"shortcut_context":null,"theme":null,"theme_type_variation":&"","text":"","label_settings":null,"horizontal_alignment":0,"vertical_alignment":0,"autowrap_mode":0,"justification_flags":163,"clip_text":false,"text_overrun_behavior":0,"uppercase":false,"tab_stops":PackedFloat32Array(),"lines_skipped":0,"max_lines_visible":-1,"visible_characters":-1,"visible_characters_behavior":0,"visible_ratio":1.0,"text_direction":0,"language":"","structured_text_bidi_override":0,"structured_text_bidi_override_options":[],"script":null)
-
+songName = NodePath("CanvasLayer/ui/fitter/songName")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Music"]
 
@@ -133,6 +132,7 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 437.0
 grow_horizontal = 2
 grow_vertical = 2
 

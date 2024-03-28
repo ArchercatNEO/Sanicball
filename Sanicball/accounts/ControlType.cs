@@ -9,6 +9,7 @@ public enum ControlType
     Joystick1
 }
 
+//TODO Add rebindable keymaps
 public static class ControlTypeImpl
 {
     public static Vector3 NormalizedForce(this ControlType control)
@@ -42,7 +43,7 @@ public static class ControlTypeImpl
     {
         return controlType switch
         {
-            ControlType.Keyboard => Input.IsKeyPressed(Key.C),
+            ControlType.Keyboard => Input.IsKeyPressed(Key.Enter),
             ControlType.Joystick1 => false,
             _ => throw new InvalidCastException($"Invalid control type detected: {controlType}"),
         };

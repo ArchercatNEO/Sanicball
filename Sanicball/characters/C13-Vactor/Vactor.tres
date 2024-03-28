@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=6 format=3 uid="uid://dqatqe81xsjry"]
+[gd_resource type="Resource" script_class="SanicCharacter" load_steps=6 format=3 uid="uid://dqatqe81xsjry"]
 
 [ext_resource type="ArrayMesh" uid="uid://bbgpk5l1rqnlb" path="res://characters/C13-Vactor/VactorMesh.res" id="1_3fwhc"]
 [ext_resource type="Script" path="res://characters/SanicCharacter.cs" id="1_d5i4c"]
@@ -10,11 +10,11 @@
 script = ExtResource("1_d5i4c")
 Name = "Vactor"
 Credits = "I don't even"
-Color = Color(0.482353, 0.721569, 0.0313726, 1)
 Material = ExtResource("3_4hxx3")
+Color = Color(0.482353, 0.721569, 0.0313726, 1)
 Icon = ExtResource("2_i4q72")
 MinimapIcon = ExtResource("4_mjx3x")
-AlternativeMesh = ExtResource("1_3fwhc")
+MeshOverride = ExtResource("1_3fwhc")
 RollSpeed = 100.0
 AirSpeed = 15.0
 JumpHeight = 14.0

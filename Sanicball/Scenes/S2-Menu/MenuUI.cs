@@ -9,9 +9,9 @@ public partial class MenuUI : Control
     public static void Activate(SceneTree tree)
     {
         tree.ChangeSceneToPacked(Scene);
-    } 
-        
-    
+    }
+
+
     public override void _Ready()
     {
         //needs to spin

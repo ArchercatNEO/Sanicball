@@ -1,4 +1,3 @@
-using System.Runtime.Loader;
 using Godot;
 using Sanicball.Scenes;
 
@@ -7,30 +6,30 @@ namespace Sanicball.Plugins;
 [Tool]
 internal partial class PathVisualizer : EditorPlugin
 {
-    PathNode? gizmo = null;
+    private static readonly SphereMesh sphereMesh = GD.Load<SphereMesh>("res://addons/PathVisualizer/Sphere.tres");
+    
+    PathNode gizmo = new(sphereMesh);
 
     public override void _EnterTree()
     {
-        gizmo = new();
         AddNode3DGizmoPlugin(gizmo);
     }
 
     public override void _ExitTree()
     {
         RemoveNode3DGizmoPlugin(gizmo);
-        gizmo = null;
     }
 }
 
 internal partial class PathNode : EditorNode3DGizmoPlugin
 {
-    private Mesh ball = null!;
+    private Mesh ball;
 
-    public PathNode()
+    public PathNode(Mesh sphereMesh)
     {
         CreateMaterial("main", new Color(1, 0, 0));
         CreateHandleMaterial("mine");
-        Callable.From(() => { ball = GD.Load<SphereMesh>("res://Scenes/Intro+Menu/ball.tres"); }).CallDeferred();
+        ball = sphereMesh;
     }
 
     public override string _GetGizmoName() => "PathNode";

@@ -31,9 +31,21 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
 "materials": {
-"@MATERIAL:0": {
+"Skin": {
 "use_external/enabled": true,
 "use_external/path": "res://characters/C13-Vactor/VactorMat.tres"
+}
+},
+"meshes": {
+"VactorBlend_croc_body": {
+"generate/lightmap_uv": 0,
+"generate/lods": 0,
+"generate/shadow_meshes": 0,
+"lods/normal_merge_angle": 60.0,
+"lods/normal_split_angle": 25.0,
+"save_to_file/enabled": true,
+"save_to_file/make_streamable": "",
+"save_to_file/path": "res://characters/C13-Vactor/VactorMesh.res"
 }
 }
 }

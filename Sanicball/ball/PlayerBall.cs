@@ -1,7 +1,6 @@
 using Godot;
 using Sanicball.Account;
 using Sanicball.Characters;
-using Sanicball.GameMechanics;
 using Sanicball.Scenes;
 
 namespace Sanicball.Ball;
@@ -12,23 +11,25 @@ namespace Sanicball.Ball;
 /// </summary>
 public partial class PlayerBall : ISanicController
 {
-    public void Initialise(SanicCharacter parent)
+    private SanicBall sanicBall = null!;
+    private readonly ControlType controlType = ControlType.Keyboard;
+
+    public void Initialise(SanicBall parent)
     {
+        sanicBall = parent;
         LobbyCamera.Instance?.Subscribe(parent);
 
-        parent.OnRespawn += (sender, body) => {
-            SanicCharacter character = (SanicCharacter)sender!;
-            character.Position = new(0, 100, 0);
+        sanicBall.OnRespawn += (sender, body) =>
+        {
+            sanicBall.Position = new(0, 100, 0);
         };
     }
 
-    //TODO 
-
-    public ForceRequest InputTransformer(InputEvent @event)
+    public void Process(double delta)
     {
-        Vector3 force = ControlType.Keyboard.NormalizedForce();
-        force *= SanicCharacter.InputAcceleration;
+        Vector3 force = controlType.NormalizedForce();
+        force *= SanicBall.InputAcceleration;
 
-        return new(force);
+        sanicBall.ApplyForce(force);
     }
 }

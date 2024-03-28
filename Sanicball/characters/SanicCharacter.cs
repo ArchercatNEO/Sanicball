@@ -1,64 +1,28 @@
-using System;
 using Godot;
-using Sanicball.GameMechanics;
 
 namespace Sanicball.Characters;
 
-public partial class SanicCharacter : RigidBody3D
+[GlobalClass]
+public partial class SanicCharacter : Resource
 {
-    #region Editor-level dependencies
     //Useful metadata
-    [Export] public required string name;
-    [Export] public required string credits;
+    [Export] public required string Name;
+    [Export] public required string Credits;
 
     //Colours and renderers
-    [Export] public required Color color;
-    [Export] public required Texture icon;
-    [Export] public required Texture minimapIcon;
+    [Export] public required Material Material;
+    [Export] public required Color Color;
+    [Export] public required Texture Icon;
+    [Export] public required Texture MinimapIcon;
 
-    //Overwrite physics stats (big, bee)
-    [Export] public float rollSpeed = 100;
-    [Export] public float airSpeed = 15;
-    [Export] public float jumpHeight = 14;
-    [Export] public float grip = 20;
-    [Export] public float ballSize = 1;
-    #endregion Editor-level dependencies
+    //Rendering and collision overrrides (eggman, metal)
+    [Export] public Mesh? MeshOverride;
+    [Export] public Shape3D? CollisionOverride;
 
-    #region Static data
-    public const int MaxSpeed = 1000;
-    public const int InputAcceleration = 50;
-
-    private static readonly AudioStreamMP3 jump = GD.Load<AudioStreamMP3>("res://Ball/sfx/jump.mp3");
-    private static readonly AudioStreamWav roll = GD.Load<AudioStreamWav>("res://Ball/sfx/rolling.wav");
-    private static readonly AudioStreamWav speed = GD.Load<AudioStreamWav>("res://Ball/sfx/speednoise.wav");
-    private static readonly AudioStreamWav brake = GD.Load<AudioStreamWav>("res://Ball/sfx/brake.wav");
-    #endregion Static data
-
-    public static SanicCharacter Create<TController>(PackedScene? character = null)
-    {
-        character ??= Unknown;
-        SanicCharacter ball = character.Instantiate<SanicCharacter>();
-        return ball;
-    }
-
-    public override void _Ready()
-    {
-        SetCollisionMaskValue(TriggerRespawn.layer, true);
-        BodyEntered += (body) => {
-            if (body is TriggerRespawn respawn)
-            {
-                OnRespawn?.Invoke(this, respawn);
-            }
-        };
-    }
-    
-    public event EventHandler<TriggerRespawn>? OnRespawn;
-
-    public override void _IntegrateForces(PhysicsDirectBodyState3D state)
-    {
-        if (state.LinearVelocity.Length() > MaxSpeed)
-        {
-            state.LinearVelocity = state.LinearVelocity.Normalized() * MaxSpeed;
-        }
-    }
+    //Physics stats overrides (big, bee)
+    [Export] public float RollSpeed = 100;
+    [Export] public float AirSpeed = 15;
+    [Export] public float JumpHeight = 14;
+    [Export] public float Grip = 20;
+    [Export] public float BallSize = 1;
 }

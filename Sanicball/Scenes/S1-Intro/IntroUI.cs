@@ -27,7 +27,7 @@ namespace Sanicball.Scenes;
 public partial class IntroUI : Control
 {
     public static readonly PackedScene Scene = GD.Load<PackedScene>("res://Scenes/S1-Intro/intro.tscn");
-    
+
     [EnsureChild("UsernameInput")] public required Control inputUi;
     [EnsureChild("TextEdit")] public required LineEdit usernameInput;
     [EnsureChild("Credits")] public required Control credits;
@@ -38,7 +38,7 @@ public partial class IntroUI : Control
         usernameInput = inputUi.GetNode<LineEdit>("TextEdit");
         credits = GetNode<Control>("Credits");
         var images = credits.GetChildren().OfType<TextureRect>();
-        
+
         usernameInput.TextSubmitted += (newString) =>
         {
             AccountSettings.Active.name = usernameInput.Text;
@@ -53,7 +53,8 @@ public partial class IntroUI : Control
                 tween.TweenProperty(image, ":modulate", new Color(1, 1, 1, 0), 0.6); //fade out
             }
 
-            Callable switchToMenu = Callable.From(() => {
+            Callable switchToMenu = Callable.From(() =>
+            {
                 SceneTree tree = GetTree();
                 MenuUI.Activate(tree);
             });

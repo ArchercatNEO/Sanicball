@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://lgpxp6migsca"]
+
+[ext_resource type="Texture2D" uid="uid://dj3n0esbxgtfc" path="res://characters/C02-Knackles/KnacklesIcon.svg" id="1_3jvbb"]
+[ext_resource type="Script" path="res://characters/SanicCharacter.cs" id="1_bmay4"]
+[ext_resource type="Material" uid="uid://cnrybb57xaqin" path="res://characters/C02-Knackles/KnacklesMat.tres" id="2_mmg7j"]
+[ext_resource type="Texture2D" uid="uid://dl8dnr4wa4pqs" path="res://characters/C02-Knackles/KnacklesMinimap.svg" id="3_k5mej"]
+
+[resource]
+script = ExtResource("1_bmay4")
+Name = "Knackles"
+Credits = "???"
+Material = ExtResource("2_mmg7j")
+Color = Color(1, 0, 0, 1)
+Icon = ExtResource("1_3jvbb")
+MinimapIcon = ExtResource("3_k5mej")
+RollSpeed = 100.0
+AirSpeed = 15.0
+JumpHeight = 14.0
+Grip = 20.0
+BallSize = 1.0
