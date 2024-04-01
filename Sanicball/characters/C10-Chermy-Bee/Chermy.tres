@@ -1,18 +1,20 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://d34tlt872spah"]
+[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://d34tlt872spah"]
 
 [ext_resource type="Texture2D" uid="uid://0cqd8v012h8f" path="res://characters/C10-Chermy-Bee/ChermyIcon.svg" id="1_ap7jm"]
 [ext_resource type="Script" path="res://characters/SanicCharacter.cs" id="1_ijc62"]
 [ext_resource type="Texture2D" uid="uid://bjbpmbqlytqdi" path="res://characters/C10-Chermy-Bee/ChermyMinimap.svg" id="2_7ops8"]
+[ext_resource type="Material" uid="uid://bpl2lqeh1lm3t" path="res://characters/C10-Chermy-Bee/ChermyMat.tres" id="2_ivauc"]
 
 [resource]
 script = ExtResource("1_ijc62")
-name = ""
-credits = ""
-color = Color(0, 0, 0, 0)
-icon = ExtResource("1_ap7jm")
-minimapIcon = ExtResource("2_7ops8")
-rollSpeed = 100.0
-airSpeed = 15.0
-jumpHeight = 14.0
-grip = 20.0
-ballSize = 1.0
+Name = "Chermy Bee"
+Credits = ""
+Material = ExtResource("2_ivauc")
+Color = Color(0, 0, 0, 0)
+Icon = ExtResource("1_ap7jm")
+MinimapIcon = ExtResource("2_7ops8")
+RollSpeed = 100.0
+AirSpeed = 15.0
+JumpHeight = 14.0
+Grip = 20.0
+BallSize = 1.0

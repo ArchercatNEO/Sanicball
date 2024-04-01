@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://nkporthm2gp7"]
+[gd_scene load_steps=6 format=3 uid="uid://nkporthm2gp7"]
 
 [ext_resource type="Texture2D" uid="uid://cmcdxwmo3jmx0" path="res://SharedArt/Circle.png" id="1_62x3y"]
 [ext_resource type="Script" path="res://Scenes/S3-Lobby/CharacterSelect.cs" id="1_joucb"]
+[ext_resource type="Texture2D" uid="uid://bxmmjyaxc56rk" path="res://Scenes/S0-Shared/Keyboard.png" id="3_8e46h"]
+[ext_resource type="Texture2D" uid="uid://bb26ipkqm7b02" path="res://SharedArt/BigArrows.png" id="4_d8n23"]
+[ext_resource type="Texture2D" uid="uid://cxbkrmerbnq2y" path="res://characters/C00-Default/UnknownMinimap.svg" id="5_xuaqn"]
 
-[node name="CharacterSelect" type="Control"]
+[node name="PlayerJoin" type="Control" node_paths=PackedStringArray("characterName", "characterIcon")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -11,23 +14,40 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_joucb")
+characterName = NodePath("CharacterSelect/CharacterName")
+characterIcon = NodePath("CharacterSelect/CharacterIcon")
 
-[node name="Circle" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -65.0
-offset_top = -65.0
-offset_right = 65.0
-offset_bottom = 65.0
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_62x3y")
 
-[node name="Icon" type="TextureRect" parent="."]
+[node name="ControllerIcon" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -256.0
+offset_right = 256.0
+offset_bottom = 256.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_8e46h")
+
+[node name="CharacterSelect" type="Control" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -41,34 +61,82 @@ offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HotkeyLabel" type="Label" parent="."]
+[node name="SelectCharacter" type="Label" parent="CharacterSelect"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -82.0
+offset_top = -257.0
+offset_right = 82.0
+offset_bottom = 49.0
+grow_horizontal = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Select your character"
+horizontal_alignment = 1
+
+[node name="Arrows" type="TextureRect" parent="CharacterSelect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -29.0
-offset_top = -24.5
-offset_right = 29.0
-offset_bottom = 24.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_d8n23")
+
+[node name="CharacterIcon" type="TextureRect" parent="CharacterSelect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("5_xuaqn")
+
+[node name="CharacterName" type="Label" parent="CharacterSelect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -76.0
+offset_top = 175.0
+offset_right = 76.0
+offset_bottom = 201.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-text = "[Text 1]
-[Text 2]"
+theme_override_font_sizes/font_size = 27
+text = "[Character name]"
 
-[node name="Arrows" type="Control" parent="."]
+[node name="Label" type="Label" parent="CharacterSelect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+offset_left = -102.0
+offset_top = 241.0
+offset_right = 100.0
+offset_bottom = 290.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 20
+text = "[Move hotkey]: Move
+[Confirm hotkey]: Confirm"

@@ -25,12 +25,30 @@ public partial class SanicBall : RigidBody3D
     public static SanicBall Create(SanicCharacter character, ISanicController controller)
     {
         SanicBall ball = prefab.Instantiate<SanicBall>();
-        ball.character = character;
         ball.controller = controller;
+        ball.character = character;
+        
+        ball.Renderer ??= ball.GetNode<MeshInstance3D>("Renderer");
+        ball.Renderer.MaterialOverride = character.Material;
+        if (character.MeshOverride is not null)
+        {
+            ball.Renderer.Mesh = character.MeshOverride;
+        }
+        
+        ball.Collider ??= ball.GetNode<CollisionShape3D>("Collider");
+        if (character.CollisionOverride is not null)
+        {
+            ball.Collider.Shape = character.CollisionOverride;
+        }
+
+
         return ball;
     }
 
     public event EventHandler<TriggerRespawn>? OnRespawn;
+
+    [Export] private MeshInstance3D Renderer = null!;
+    [Export] private CollisionShape3D Collider = null!;
 
     private ISanicController controller = new PlayerBall();
     private SanicCharacter character = SanicCharacter.Unknown;

@@ -14,31 +14,64 @@ public partial class CharacterSelect : Control
     {
         CharacterSelect panel = prefab.Instantiate<CharacterSelect>();
         panel.controlType = controlType;
+        panel.characterName ??= panel.GetNode<Label>("CharacterSelect/CharacterName");
+        panel.characterIcon ??= panel.GetNode<TextureRect>("CharacterSelect/CharacterIcon");
         return panel;
     }
 
+    public event EventHandler<ConfirmationEvent>? OnPlayerConfirmed;
+    
+    [Export] private Label characterName = null!;
+    [Export] private TextureRect characterIcon = null!;
+    
+    private SanicCharacter[] characters = [null!, .. SanicCharacter.All];
     private ControlType controlType;
 
-    public event EventHandler<ConfirmationEvent>? OnPlayerConfirmed;
+    private int _characterIndex = 0;
+    private int CharacterIndex
+    {
+        get => _characterIndex;
+        set
+        {
+            _characterIndex = (value + 16) % 16;
+            SanicCharacter character = SanicCharacter.All[_characterIndex];
+            characterName.Text = character.Name;
+            characterIcon.Texture = character.Icon;
+        }
+    }
 
     public override void _Input(InputEvent @event)
     {
-        if (!controlType.Confirmed()) { return; }
-        
-        SanicBall player = SanicBall.Create(SanicCharacter.Sanic, new PlayerBall());
-        LobbySpawner.Instance!.AddChild(player);
-        player.Translate(new(0, 5, 0));
-        player.ApplyImpulse(new(0, 10, 0));
-        
-        OnPlayerConfirmed?.Invoke(this, new());
+        if (controlType.LeftPressed()) { CharacterIndex -= 1; }
+        if (controlType.RightPressed()) { CharacterIndex += 1; }
+        if (controlType.UpPressed()) { CharacterIndex -= 4; }
+        if (controlType.DownPressed()) { CharacterIndex += 4; }
 
-        GetViewport().SetInputAsHandled();
+        if (controlType.Confirmed())
+        {
+            //cancel index
+            if (_characterIndex == 0)
+            {
+                OnPlayerConfirmed?.Invoke(this, new());
+                QueueFree();
+                return;
+            }
 
-        QueueFree();
+            GetNode<Control>("CharacterSelect").Hide();
+
+            SanicBall player = SanicBall.Create(SanicCharacter.All[CharacterIndex], new PlayerBall());
+            LobbySpawner.Instance!.AddChild(player);
+            player.Translate(new(0, 5, 0));
+            player.ApplyImpulse(new(0, 10, 0));
+            
+            OnPlayerConfirmed?.Invoke(this, new() { SelectedCharacter = SanicCharacter.All[CharacterIndex] });
+
+            GetViewport().SetInputAsHandled();
+        }
     }
 }
 
 public class ConfirmationEvent
 {
-
+    public SanicCharacter? SelectedCharacter { get; init; }
 }

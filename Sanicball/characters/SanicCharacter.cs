@@ -12,8 +12,8 @@ public partial class SanicCharacter : Resource
     //Colours and renderers
     [Export] public required Material Material;
     [Export] public required Color Color;
-    [Export] public required Texture Icon;
-    [Export] public required Texture MinimapIcon;
+    [Export] public required Texture2D Icon;
+    [Export] public required Texture2D MinimapIcon;
 
     //Rendering and collision overrrides (eggman, metal)
     [Export] public Mesh? MeshOverride;

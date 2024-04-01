@@ -12,6 +12,46 @@ public enum ControlType
 //TODO Add rebindable keymaps
 public static class ControlTypeImpl
 {
+    public static bool LeftPressed(this ControlType control)
+    {
+        return control switch
+        {
+            ControlType.Keyboard => Input.IsActionJustPressed("keyboard_left"),
+            ControlType.Joystick1 => false,
+            _ => throw new InvalidCastException($"Invalid control type detected: {control}")
+        };
+    }
+
+    public static bool RightPressed(this ControlType control)
+    {
+        return control switch
+        {
+            ControlType.Keyboard => Input.IsActionJustPressed("keyboard_right"),
+            ControlType.Joystick1 => false,
+            _ => throw new InvalidCastException($"Invalid control type detected: {control}")
+        };
+    }
+
+    public static bool UpPressed(this ControlType control)
+    {
+        return control switch
+        {
+            ControlType.Keyboard => Input.IsActionJustPressed("keyboard_up"),
+            ControlType.Joystick1 => false,
+            _ => throw new InvalidCastException($"Invalid control type detected: {control}")
+        };
+    }
+
+    public static bool DownPressed(this ControlType control)
+    {
+        return control switch
+        {
+            ControlType.Keyboard => Input.IsActionJustPressed("keyboard_down"),
+            ControlType.Joystick1 => false,
+            _ => throw new InvalidCastException($"Invalid control type detected: {control}")
+        };
+    }
+
     public static Vector3 NormalizedForce(this ControlType control)
     {
         Vector3 force = new();
