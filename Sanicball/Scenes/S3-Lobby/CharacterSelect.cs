@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using Godot;
 using Sanicball.Account;
 using Sanicball.Ball;
@@ -6,7 +6,7 @@ using Sanicball.Characters;
 
 namespace Sanicball.Scenes;
 
-public partial class CharacterSelect : Control
+public partial class CharacterSelect : MarginContainer
 {
     private static readonly PackedScene prefab = GD.Load<PackedScene>("res://Scenes/S3-Lobby/CharacterSelect.tscn");
 
@@ -14,18 +14,31 @@ public partial class CharacterSelect : Control
     {
         CharacterSelect panel = prefab.Instantiate<CharacterSelect>();
         panel.controlType = controlType;
+        panel.characterSelect ??= panel.GetNode<Control>("CharacterSelect");
         panel.characterName ??= panel.GetNode<Label>("CharacterSelect/CharacterName");
         panel.characterIcon ??= panel.GetNode<TextureRect>("CharacterSelect/CharacterIcon");
         return panel;
     }
 
-    public event EventHandler<ConfirmationEvent>? OnPlayerConfirmed;
-    
+
+    private static readonly SanicCharacter cancel = new() {
+        Name = "Exit",
+        Credits = "Doesn't matter",
+        Material = new(),
+        Color = new(1, 0, 0, 1),
+        Icon = GD.Load<Texture2D>("res://SharedArt/Cancel.png"),
+        MinimapIcon = GD.Load<Texture2D>("res://SharedArt/Cancel.png"),
+    };
+
+    private static readonly SanicCharacter[] characters = [cancel, .. SanicCharacter.All];
+    private static readonly Dictionary<ControlType, SanicBall> players = [];
+
+    [Export] private Control characterSelect = null!;
     [Export] private Label characterName = null!;
     [Export] private TextureRect characterIcon = null!;
     
-    private SanicCharacter[] characters = [null!, .. SanicCharacter.All];
     private ControlType controlType;
+    private SanicBall? player;
 
     private int _characterIndex = 0;
     private int CharacterIndex
@@ -34,14 +47,33 @@ public partial class CharacterSelect : Control
         set
         {
             _characterIndex = (value + 16) % 16;
-            SanicCharacter character = SanicCharacter.All[_characterIndex];
-            characterName.Text = character.Name;
-            characterIcon.Texture = character.Icon;
+            SelectedCharacter = characters[_characterIndex];
+            characterName.Text = SelectedCharacter.Name;
+            characterIcon.Texture = SelectedCharacter.Icon;
         }
     }
 
+    private SanicCharacter SelectedCharacter = cancel;
+
     public override void _Input(InputEvent @event)
     {
+        if (!characterSelect.Visible)
+        {
+            if (controlType.Confirmed())
+            {
+                characterSelect.Show();
+                CharacterIndex = 0;
+
+                players.Remove(controlType);
+                if (player is not null)
+                {
+                    player.QueueFree();
+                    player = null;
+                }
+            }
+            return;
+        }
+
         if (controlType.LeftPressed()) { CharacterIndex -= 1; }
         if (controlType.RightPressed()) { CharacterIndex += 1; }
         if (controlType.UpPressed()) { CharacterIndex -= 4; }
@@ -50,28 +82,22 @@ public partial class CharacterSelect : Control
         if (controlType.Confirmed())
         {
             //cancel index
-            if (_characterIndex == 0)
-            {
-                OnPlayerConfirmed?.Invoke(this, new());
+            if (CharacterIndex == 0)
+            {                
                 QueueFree();
                 return;
             }
 
-            GetNode<Control>("CharacterSelect").Hide();
+            characterSelect.Hide();
 
-            SanicBall player = SanicBall.Create(SanicCharacter.All[CharacterIndex], new PlayerBall());
+            player = SanicBall.Create(SelectedCharacter, new PlayerBall());
             LobbySpawner.Instance!.AddChild(player);
             player.Translate(new(0, 5, 0));
             player.ApplyImpulse(new(0, 10, 0));
-            
-            OnPlayerConfirmed?.Invoke(this, new() { SelectedCharacter = SanicCharacter.All[CharacterIndex] });
+
+            players[controlType] = player;
 
             GetViewport().SetInputAsHandled();
         }
     }
-}
-
-public class ConfirmationEvent
-{
-    public SanicCharacter? SelectedCharacter { get; init; }
 }

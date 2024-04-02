@@ -12,6 +12,12 @@ public enum ControlType
 //TODO Add rebindable keymaps
 public static class ControlTypeImpl
 {
+    static ControlTypeImpl()
+    {
+        if (!InputMap.HasAction("keyboard_left")) { InputMap.AddAction("keyboard_left"); }
+        InputMap.ActionAddEvent("keyboard_left", new InputEventKey() { Keycode = Key.A });
+    }
+
     public static bool LeftPressed(this ControlType control)
     {
         return control switch
@@ -84,7 +90,7 @@ public static class ControlTypeImpl
         return controlType switch
         {
             ControlType.Keyboard => Input.IsKeyPressed(Key.Enter),
-            ControlType.Joystick1 => false,
+            ControlType.Joystick1 => Input.IsJoyButtonPressed(0, JoyButton.A),
             _ => throw new InvalidCastException($"Invalid control type detected: {controlType}"),
         };
     }

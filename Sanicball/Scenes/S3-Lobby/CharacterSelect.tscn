@@ -1,142 +1,81 @@
 [gd_scene load_steps=6 format=3 uid="uid://nkporthm2gp7"]
 
-[ext_resource type="Texture2D" uid="uid://cmcdxwmo3jmx0" path="res://SharedArt/Circle.png" id="1_62x3y"]
 [ext_resource type="Script" path="res://Scenes/S3-Lobby/CharacterSelect.cs" id="1_joucb"]
+[ext_resource type="Texture2D" uid="uid://bpu6mo8rc03xh" path="res://SharedArt/Circle.svg" id="2_vjsgb"]
 [ext_resource type="Texture2D" uid="uid://bxmmjyaxc56rk" path="res://Scenes/S0-Shared/Keyboard.png" id="3_8e46h"]
-[ext_resource type="Texture2D" uid="uid://bb26ipkqm7b02" path="res://SharedArt/BigArrows.png" id="4_d8n23"]
+[ext_resource type="Script" path="res://resources/AutoFontSize/AutoFontSize.cs" id="4_v3hdr"]
 [ext_resource type="Texture2D" uid="uid://cxbkrmerbnq2y" path="res://characters/C00-Default/UnknownMinimap.svg" id="5_xuaqn"]
 
-[node name="PlayerJoin" type="Control" node_paths=PackedStringArray("characterName", "characterIcon")]
-layout_mode = 3
+[node name="PlayerJoin" type="MarginContainer" node_paths=PackedStringArray("characterSelect", "characterName", "characterIcon")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_vertical = 3
 script = ExtResource("1_joucb")
-characterName = NodePath("CharacterSelect/CharacterName")
-characterIcon = NodePath("CharacterSelect/CharacterIcon")
+characterSelect = NodePath("ControllerIcon/VBoxContainer")
+characterName = NodePath("ControllerIcon/VBoxContainer/CharacterName")
+characterIcon = NodePath("ControllerIcon/VBoxContainer/CharacterIcon")
 
 [node name="Background" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -256.0
-offset_top = -256.0
-offset_right = 256.0
-offset_bottom = 256.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_62x3y")
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_vjsgb")
+expand_mode = 2
 
 [node name="ControllerIcon" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -256.0
-offset_top = -256.0
-offset_right = 256.0
-offset_bottom = 256.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 2
+size_flags_horizontal = 4
 texture = ExtResource("3_8e46h")
+expand_mode = 2
 
-[node name="CharacterSelect" type="Control" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="ControllerIcon"]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="SelectCharacter" type="Label" parent="CharacterSelect"]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -82.0
-offset_top = -257.0
-offset_right = 82.0
-offset_bottom = 49.0
-grow_horizontal = 2
+[node name="SelectCharacter" type="Label" parent="ControllerIcon/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 2
+size_flags_stretch_ratio = 1.5
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/font_size = 20
 text = "Select your character"
 horizontal_alignment = 1
+clip_text = true
+script = ExtResource("4_v3hdr")
 
-[node name="Arrows" type="TextureRect" parent="CharacterSelect"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -20.0
-offset_top = -20.0
-offset_right = 20.0
-offset_bottom = 20.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("4_d8n23")
-
-[node name="CharacterIcon" type="TextureRect" parent="CharacterSelect"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -128.0
-offset_top = -128.0
-offset_right = 128.0
-offset_bottom = 128.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="CharacterIcon" type="TextureRect" parent="ControllerIcon/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 5.0
 texture = ExtResource("5_xuaqn")
+expand_mode = 2
+stretch_mode = 5
 
-[node name="CharacterName" type="Label" parent="CharacterSelect"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -76.0
-offset_top = 175.0
-offset_right = 76.0
-offset_bottom = 201.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="CharacterName" type="Label" parent="ControllerIcon/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+size_flags_stretch_ratio = 0.75
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 27
+theme_override_font_sizes/font_size = 10
 text = "[Character name]"
+horizontal_alignment = 1
+script = ExtResource("4_v3hdr")
+MaximumSize = 10
 
-[node name="Label" type="Label" parent="CharacterSelect"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -102.0
-offset_top = 241.0
-offset_right = 100.0
-offset_bottom = 290.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Hotkeys" type="Label" parent="ControllerIcon/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 10
+size_flags_stretch_ratio = 0.5
 theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 20
+theme_override_font_sizes/font_size = 10
 text = "[Move hotkey]: Move
 [Confirm hotkey]: Confirm"
+horizontal_alignment = 1
+script = ExtResource("4_v3hdr")
+MaximumSize = 10
