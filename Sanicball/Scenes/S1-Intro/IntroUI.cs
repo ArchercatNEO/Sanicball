@@ -26,7 +26,7 @@ namespace Sanicball.Scenes;
 /// </summary>
 public partial class IntroUI : Control
 {
-    public static readonly PackedScene Scene = GD.Load<PackedScene>("res://Scenes/S1-Intro/intro.tscn");
+    private static readonly PackedScene Scene = GD.Load<PackedScene>("res://Scenes/S1-Intro/intro.tscn");
 
     [EnsureChild("UsernameInput")] public required Control inputUi;
     [EnsureChild("TextEdit")] public required LineEdit usernameInput;

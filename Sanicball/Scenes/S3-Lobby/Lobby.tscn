@@ -1,8 +1,9 @@
 [gd_scene load_steps=31 format=3 uid="uid://iy8o8k21l1n1"]
 
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://Scenes/S3-Lobby/Decoration/clear_sky.tres" id="1_8ov4f"]
+[ext_resource type="Script" path="res://Scenes/S3-Lobby/LobbyManager.cs" id="1_n55so"]
 [ext_resource type="Script" path="res://Music/MusicPlayer.cs" id="1_s8m6y"]
-[ext_resource type="Texture2D" uid="uid://bawb32fvt5hrb" path="res://Scenes/S3-Lobby/TrianglesBackground.png" id="3_8rbhj"]
+[ext_resource type="Texture2D" uid="uid://bawb32fvt5hrb" path="res://Scenes/S3-Lobby/Decoration/TrianglesBackground.png" id="3_8rbhj"]
 [ext_resource type="Shape3D" uid="uid://dpxtdelj4vkx4" path="res://Terrain/GroundCollider.tres" id="3_np11w"]
 [ext_resource type="Material" uid="uid://dmghyann0c8es" path="res://Scenes/S3-Lobby/Decoration/TVFrame.tres" id="3_tnksi"]
 [ext_resource type="BoxMesh" uid="uid://c28lla3d5dqd1" path="res://Terrain/GroundMesh.tres" id="4_5lno4"]
@@ -10,7 +11,6 @@
 [ext_resource type="Script" path="res://Scenes/S3-Lobby/CharacterSelectManager.cs" id="4_ri6yk"]
 [ext_resource type="Script" path="res://Scenes/S3-Lobby/LobbyCamera.cs" id="8_cdt1m"]
 [ext_resource type="PackedScene" uid="uid://vljvs3rire1k" path="res://Scenes/S3-Lobby/Decoration/Lamp.glb" id="8_vj3rq"]
-[ext_resource type="Script" path="res://Scenes/S3-Lobby/LobbySpawner.cs" id="12_yaf6w"]
 
 [sub_resource type="Environment" id="Environment_wsstk"]
 background_mode = 2
@@ -104,7 +104,9 @@ top_radius = 2.5
 bottom_radius = 2.5
 height = 6.0
 
-[node name="Lobby" type="Node"]
+[node name="Lobby" type="Node" node_paths=PackedStringArray("countdownText")]
+script = ExtResource("1_n55so")
+countdownText = NodePath("Lobby2D/Header/RaceCountdown")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_wsstk")
@@ -132,7 +134,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_right = 437.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -143,15 +144,22 @@ expand_mode = 2
 
 [node name="nowPlaying" type="Label" parent="Music/CanvasLayer/ui/fitter"]
 layout_mode = 2
-size_flags_horizontal = 0
+size_flags_vertical = 1
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 text = "Now playing:"
 horizontal_alignment = 2
+vertical_alignment = 1
 
 [node name="songName" type="Label" parent="Music/CanvasLayer/ui/fitter"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 1
+theme_override_font_sizes/font_size = 20
+text = "[Song name]"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Lobby2D" type="Control" parent="."]
 layout_mode = 3
@@ -161,14 +169,14 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="TopBar" type="ColorRect" parent="Lobby2D"]
+[node name="Header" type="ColorRect" parent="Lobby2D"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 57.0
 grow_horizontal = 2
 
-[node name="RaceCountdown" type="Label" parent="Lobby2D/TopBar"]
+[node name="RaceCountdown" type="Label" parent="Lobby2D/Header"]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
@@ -178,19 +186,19 @@ offset_bottom = 57.0
 grow_horizontal = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40
-text = "Match starts in 3"
+text = "Match starts in [3] seconds"
 
-[node name="BottomBar" type="ColorRect" parent="Lobby2D"]
+[node name="Footer" type="ColorRect" parent="Lobby2D"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -69.0
+offset_top = -51.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="CharacterSelectBox" type="HBoxContainer" parent="Lobby2D"]
+[node name="CharacterSelectBox" type="HBoxContainer" parent="Lobby2D" node_paths=PackedStringArray("playerSpawner")]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -202,6 +210,7 @@ grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
 script = ExtResource("4_ri6yk")
+playerSpawner = NodePath("../../Lobby3D/Spawner")
 
 [node name="Lobby3D" type="Node3D" parent="."]
 
@@ -357,7 +366,6 @@ mesh = SubResource("PlaneMesh_6l1j5")
 
 [node name="Spawner" type="StaticBody3D" parent="Lobby3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.20598, 0)
-script = ExtResource("12_yaf6w")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Lobby3D/Spawner"]
 shape = SubResource("CylinderShape3D_ruv3x")

@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://resources/AutoFontSize/AutoFontSize.cs" id="4_v3hdr"]
 [ext_resource type="Texture2D" uid="uid://cxbkrmerbnq2y" path="res://characters/C00-Default/UnknownMinimap.svg" id="5_xuaqn"]
 
-[node name="PlayerJoin" type="MarginContainer" node_paths=PackedStringArray("characterSelect", "characterName", "characterIcon")]
+[node name="PlayerJoin" type="MarginContainer" node_paths=PackedStringArray("background", "controllerIcon", "characterSelect", "characterIcon", "characterName", "hotkeyLabel")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -14,9 +14,12 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 3
 script = ExtResource("1_joucb")
+background = NodePath("Background")
+controllerIcon = NodePath("ControllerIcon")
 characterSelect = NodePath("ControllerIcon/VBoxContainer")
-characterName = NodePath("ControllerIcon/VBoxContainer/CharacterName")
 characterIcon = NodePath("ControllerIcon/VBoxContainer/CharacterIcon")
+characterName = NodePath("ControllerIcon/VBoxContainer/CharacterName")
+hotkeyLabel = NodePath("ControllerIcon/VBoxContainer/Hotkeys")
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 2

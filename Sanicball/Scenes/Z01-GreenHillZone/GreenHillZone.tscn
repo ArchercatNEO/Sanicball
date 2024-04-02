@@ -50,6 +50,9 @@ offset_bottom = 40.0
 editor_description = "Hello"
 transform = Transform3D(1, 0, 0, 0, 0.0242402, 0.999706, 0, -0.999706, 0.0242402, 0, 162.874, 0)
 
+[node name="DebugCamera" type="Camera3D" parent="Game3D"]
+transform = Transform3D(-0.366794, 0, 0.930302, 0, 1, 0, -0.930302, 0, -0.366794, 662.552, 246.746, -62.6788)
+
 [node name="Sea" type="Area3D" parent="Game3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00744236, -1, 0.00369409)
 script = ExtResource("1_roiel")

@@ -16,6 +16,9 @@ public static class ControlTypeImpl
     {
         if (!InputMap.HasAction("keyboard_left")) { InputMap.AddAction("keyboard_left"); }
         InputMap.ActionAddEvent("keyboard_left", new InputEventKey() { Keycode = Key.A });
+
+        if (!InputMap.HasAction("keyboard_ready")) { InputMap.AddAction("keyboard_ready"); }
+        InputMap.ActionAddEvent("keyboard_ready", new InputEventKey() { Keycode = Key.R });
     }
 
     public static bool LeftPressed(this ControlType control)
@@ -92,6 +95,26 @@ public static class ControlTypeImpl
             ControlType.Keyboard => Input.IsKeyPressed(Key.Enter),
             ControlType.Joystick1 => Input.IsJoyButtonPressed(0, JoyButton.A),
             _ => throw new InvalidCastException($"Invalid control type detected: {controlType}"),
+        };
+    }
+
+    public static bool Ready(this ControlType controlType)
+    {
+        return controlType switch
+        {
+            ControlType.Keyboard => Input.IsActionJustPressed("keyboard_ready"),
+            ControlType.Joystick1 => false,
+            _ => throw new InvalidCastException($"Invalid control type detected: {controlType}")
+        };
+    }
+
+    public static Texture2D Icon(this ControlType controlType)
+    {
+        return controlType switch
+        {
+            ControlType.Keyboard => GD.Load<Texture2D>("res://Scenes/S0-Shared/Keyboard.png"),
+            ControlType.Joystick1 => GD.Load<Texture2D>("res://Scenes/S0-Shared/Joystick1.png"),
+            _ => throw new InvalidCastException($"Invalid control type detected: {controlType}")
         };
     }
 }

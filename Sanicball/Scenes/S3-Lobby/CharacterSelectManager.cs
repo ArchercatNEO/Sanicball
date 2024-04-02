@@ -2,8 +2,6 @@ using System;
 using System.Collections.Generic;
 using Godot;
 using Sanicball.Account;
-using Sanicball.Ball;
-using Sanicball.Characters;
 
 namespace Sanicball.Scenes;
 
@@ -13,6 +11,8 @@ namespace Sanicball.Scenes;
 /// </summary>
 public partial class CharacterSelectManager : HBoxContainer
 {
+    [Export] private Node3D playerSpawner = null!;
+    
     private readonly HashSet<ControlType> activeControllers = [];
     
     public override void _UnhandledInput(InputEvent @event)
@@ -24,7 +24,7 @@ public partial class CharacterSelectManager : HBoxContainer
             
             activeControllers.Add(control);
             
-            CharacterSelect panel = CharacterSelect.Create(control);
+            CharacterSelect panel = CharacterSelect.Create(control, playerSpawner);
             AddChild(panel);
             
             panel.TreeExited += () => {

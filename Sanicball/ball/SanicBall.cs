@@ -41,7 +41,6 @@ public partial class SanicBall : RigidBody3D
             ball.Collider.Shape = character.CollisionOverride;
         }
 
-
         return ball;
     }
 
