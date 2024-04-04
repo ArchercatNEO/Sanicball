@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk4ksjpiil0o7"
-path="res://.godot/imported/TinySpinner.png-489561cc5cdcd0200a9dcd0820c08dac.ctex"
+uid="uid://m0yx2gms0gf0"
+path="res://.godot/imported/StageThumb_RainbowRoad.png-83e56deaec662a039d8f3cd69b71072f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SharedArt/TinySpinner.png"
-dest_files=["res://.godot/imported/TinySpinner.png-489561cc5cdcd0200a9dcd0820c08dac.ctex"]
+source_file="res://Scenes/Z05-RainbowRoad/StageThumb_RainbowRoad.png"
+dest_files=["res://.godot/imported/StageThumb_RainbowRoad.png-83e56deaec662a039d8f3cd69b71072f.ctex"]
 
 [params]
 

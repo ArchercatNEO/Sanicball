@@ -33,11 +33,11 @@ _subresources={
 "materials": {
 "Dirt": {
 "use_external/enabled": true,
-"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/Terrain/TiledDirt.tres"
+"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/Terrain/Dirt.tres"
 },
 "Grass": {
 "use_external/enabled": true,
-"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/Terrain/TiledGrass.tres"
+"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/Terrain/Grass.tres"
 },
 "Road": {
 "use_external/enabled": true,
@@ -58,13 +58,16 @@ _subresources={
 "physics/shape_type": 2
 },
 "PATH:MainIsland": {
-"generate/physics": true
+"generate/physics": true,
+"physics/shape_type": 2
 },
 "PATH:SideIsland": {
-"generate/physics": true
+"generate/physics": true,
+"physics/shape_type": 2
 },
 "PATH:UTurnIsland": {
-"generate/physics": true
+"generate/physics": true,
+"physics/shape_type": 2
 }
 }
 }

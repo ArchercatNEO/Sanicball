@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk4ksjpiil0o7"
-path="res://.godot/imported/TinySpinner.png-489561cc5cdcd0200a9dcd0820c08dac.ctex"
+uid="uid://cxhfpv0qmtg1m"
+path="res://.godot/imported/pinball.png-bea2c753a0375b1a8d966b006770c84c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SharedArt/TinySpinner.png"
-dest_files=["res://.godot/imported/TinySpinner.png-489561cc5cdcd0200a9dcd0820c08dac.ctex"]
+source_file="res://Scenes/Z06-Casino-Park/pinball.png"
+dest_files=["res://.godot/imported/pinball.png-bea2c753a0375b1a8d966b006770c84c.ctex"]
 
 [params]
 

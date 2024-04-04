@@ -1,13 +1,13 @@
 [gd_resource type="Resource" script_class="TrackResource" load_steps=5 format=3 uid="uid://bxm1o0c28oibx"]
 
 [ext_resource type="Script" path="res://Scenes/TrackResource.cs" id="1_xrm2x"]
-[ext_resource type="Texture2D" uid="uid://dieb4qakovlh6" path="res://Scenes/Z01-GreenHillZone/GHZ-flat.jpg" id="1_yj6xh"]
 [ext_resource type="PackedScene" uid="uid://yvsf3gwttxet" path="res://Scenes/Z01-GreenHillZone/GreenHillZone.tscn" id="2_avwi6"]
+[ext_resource type="Texture2D" uid="uid://dxpqbkjhcjl8h" path="res://Scenes/Z01-GreenHillZone/GHZ-flat.png" id="2_xgmii"]
 [ext_resource type="PackedScene" uid="uid://b8fxaxncw4pep" path="res://Scenes/Z01-GreenHillZone/GHZ-overview.blend" id="4_rl0cu"]
 
 [resource]
 script = ExtResource("1_xrm2x")
 name = "Green Hill Zone"
 RaceScene = ExtResource("2_avwi6")
-flatOverlay = ExtResource("1_yj6xh")
+flatOverlay = ExtResource("2_xgmii")
 solidOverlay = ExtResource("4_rl0cu")

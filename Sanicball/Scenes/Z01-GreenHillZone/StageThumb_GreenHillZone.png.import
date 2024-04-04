@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk4ksjpiil0o7"
-path="res://.godot/imported/TinySpinner.png-489561cc5cdcd0200a9dcd0820c08dac.ctex"
+uid="uid://bltibbnild0go"
+path="res://.godot/imported/StageThumb_GreenHillZone.png-f1b77545e4ce16d45363a1706e5b2e5a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SharedArt/TinySpinner.png"
-dest_files=["res://.godot/imported/TinySpinner.png-489561cc5cdcd0200a9dcd0820c08dac.ctex"]
+source_file="res://Scenes/Z01-GreenHillZone/StageThumb_GreenHillZone.png"
+dest_files=["res://.godot/imported/StageThumb_GreenHillZone.png-f1b77545e4ce16d45363a1706e5b2e5a.ctex"]
 
 [params]
 

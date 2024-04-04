@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk4ksjpiil0o7"
-path="res://.godot/imported/TinySpinner.png-489561cc5cdcd0200a9dcd0820c08dac.ctex"
+uid="uid://cdp24ebsalp0q"
+path="res://.godot/imported/Grass-Detail.png-1b3df3c859c0a7652a11db856731b125.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SharedArt/TinySpinner.png"
-dest_files=["res://.godot/imported/TinySpinner.png-489561cc5cdcd0200a9dcd0820c08dac.ctex"]
+source_file="res://Scenes/Z01-GreenHillZone/Models/Terrain/Grass-Detail.png"
+dest_files=["res://.godot/imported/Grass-Detail.png-1b3df3c859c0a7652a11db856731b125.ctex"]
 
 [params]
 

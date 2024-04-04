@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk4ksjpiil0o7"
-path="res://.godot/imported/TinySpinner.png-489561cc5cdcd0200a9dcd0820c08dac.ctex"
+uid="uid://k3kg8wh0hcgr"
+path="res://.godot/imported/StageThumb_FlameCore.png-53911b092d860f000b3ec97fb82df4ce.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SharedArt/TinySpinner.png"
-dest_files=["res://.godot/imported/TinySpinner.png-489561cc5cdcd0200a9dcd0820c08dac.ctex"]
+source_file="res://Scenes/Z03-FlameCore/StageThumb_FlameCore.png"
+dest_files=["res://.godot/imported/StageThumb_FlameCore.png-53911b092d860f000b3ec97fb82df4ce.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dk4ksjpiil0o7"
-path="res://.godot/imported/TinySpinner.png-489561cc5cdcd0200a9dcd0820c08dac.ctex"
+uid="uid://bj7ucppunhm2c"
+path="res://.godot/imported/DD-flat.png-d7058068a83c748a23c863f766739e40.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://SharedArt/TinySpinner.png"
-dest_files=["res://.godot/imported/TinySpinner.png-489561cc5cdcd0200a9dcd0820c08dac.ctex"]
+source_file="res://Scenes/Z02-DustyDessert/DD-flat.png"
+dest_files=["res://.godot/imported/DD-flat.png-d7058068a83c748a23c863f766739e40.ctex"]
 
 [params]
 
