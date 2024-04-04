@@ -1,6 +1,6 @@
 using System.Linq;
 using Godot;
-using Sanicball.Data;
+using Sanicball.Account;
 using Sanicball.Plugins;
 
 namespace Sanicball.Scenes;

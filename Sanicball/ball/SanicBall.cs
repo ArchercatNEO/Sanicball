@@ -56,7 +56,7 @@ public partial class SanicBall : RigidBody3D
     public override void _Ready()
     {
         controller.Initialise(this);
-        
+
         SetCollisionMaskValue(TriggerRespawn.layer, true);
         BodyEntered += (body) =>
         {
