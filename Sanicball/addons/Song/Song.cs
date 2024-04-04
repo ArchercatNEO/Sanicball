@@ -4,7 +4,7 @@ using Godot;
 namespace Sanicball.Sound;
 
 [GlobalClass]
-[Icon("res://resources/song/AudioPlusPlus.svg")]
+[Icon("res://addons/Song/AudioPlusPlus.svg")]
 public partial class Song : Resource
 {
     [Export] public required string name;

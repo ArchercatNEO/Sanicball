@@ -1,5 +1,4 @@
 using Godot;
-using Sanicball.Scenes;
 
 namespace Sanicball.Plugins;
 

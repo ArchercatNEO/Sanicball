@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ra0ofjse6b68"
-path="res://.godot/imported/AudioPlusPlus.svg-8fd2eddefca8a116b0eec5c06cc1e3b5.ctex"
+path="res://.godot/imported/AudioPlusPlus.svg-afe0ad319e70061168ee1a43c91090bc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/song/AudioPlusPlus.svg"
-dest_files=["res://.godot/imported/AudioPlusPlus.svg-8fd2eddefca8a116b0eec5c06cc1e3b5.ctex"]
+source_file="res://addons/Song/AudioPlusPlus.svg"
+dest_files=["res://.godot/imported/AudioPlusPlus.svg-afe0ad319e70061168ee1a43c91090bc.ctex"]
 
 [params]
 
