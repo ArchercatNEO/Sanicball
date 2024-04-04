@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://babombvdborm1"
+uid="uid://b8bgvi11m11rj"
 path="res://.godot/imported/palmTree.blend-83756851ac5c184b9bff9c81ec10bb42.scn"
 
 [deps]
@@ -33,16 +33,11 @@ _subresources={
 "materials": {
 "PalmTreeLeaf": {
 "use_external/enabled": true,
-"use_external/path": "res://Scenes/GreenHillZone/Models/PalmTree/PalmLeaf.tres"
+"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/PalmTree/PalmLeaf.tres"
 },
 "PalmTreeRoot": {
 "use_external/enabled": true,
-"use_external/path": "res://Scenes/GreenHillZone/Models/PalmTree/PalmBark.tres"
-}
-},
-"nodes": {
-"PATH:PalmTreeRoot": {
-"generate/physics": true
+"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/PalmTree/PalmBark.tres"
 }
 }
 }

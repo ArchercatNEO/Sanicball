@@ -3,9 +3,9 @@
 [ext_resource type="Shader" path="res://Shaders/sea.gdshader" id="1_byn0m"]
 [ext_resource type="Script" path="res://game-mechanics/TriggerRespawn.cs" id="1_roiel"]
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://Scenes/S3-Lobby/Decoration/clear_sky.tres" id="1_udlj8"]
+[ext_resource type="Script" path="res://Scenes/Z00-Shared/RaceManager.cs" id="1_wyt5t"]
 [ext_resource type="AudioStream" uid="uid://56egn88rk5bt" path="res://Music/Sea.ogg" id="4_wke57"]
 [ext_resource type="PackedScene" uid="uid://c77tmtg6splsc" path="res://Scenes/Z01-GreenHillZone/Models/Terrain/greenHillZone.blend" id="5_wtf51"]
-[ext_resource type="PackedScene" uid="uid://c08vqn1nbmqlk" path="res://ball/Ball.tscn" id="6_vmrgj"]
 
 [sub_resource type="Environment" id="Environment_dgy8r"]
 background_mode = 2
@@ -31,7 +31,10 @@ size = Vector2(5000, 5000)
 subdivide_width = 32
 subdivide_depth = 32
 
-[node name="GreenHillZone" type="Node"]
+[node name="GreenHillZone" type="Node" node_paths=PackedStringArray("viewportManager", "spawnPoint")]
+script = ExtResource("1_wyt5t")
+viewportManager = NodePath("Game2D/ScreenSplitter")
+spawnPoint = NodePath("Game3D/SpawnPoint")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_dgy8r")
@@ -40,21 +43,28 @@ environment = SubResource("Environment_dgy8r")
 
 [node name="Game2D" type="Control" parent="."]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScreenSplitter" type="HBoxContainer" parent="Game2D"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="Game3D" type="Node3D" parent="."]
 
 [node name="Sunlight" type="DirectionalLight3D" parent="Game3D"]
 editor_description = "Hello"
-transform = Transform3D(1, 0, 0, 0, 0.0242402, 0.999706, 0, -0.999706, 0.0242402, 0, 162.874, 0)
-
-[node name="DebugCamera" type="Camera3D" parent="Game3D"]
-transform = Transform3D(-0.366794, 0, 0.930302, 0, 1, 0, -0.930302, 0, -0.366794, 662.552, 246.746, -62.6788)
+transform = Transform3D(1, 0, 0, 0, 0.0242402, 0.999706, 0, -0.999706, 0.0242402, 0, 0, 0)
 
 [node name="Sea" type="Area3D" parent="Game3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00744236, -1, 0.00369409)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 script = ExtResource("1_roiel")
 metadata/_edit_group_ = true
 
@@ -71,5 +81,5 @@ bus = &"Ambience"
 [node name="Terrain" parent="Game3D" instance=ExtResource("5_wtf51")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 219.889, 186.897, 271.418)
 
-[node name="Ball" parent="Game3D" instance=ExtResource("6_vmrgj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -238.644, 188.853, 1173.88)
+[node name="SpawnPoint" type="Node3D" parent="Game3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 721.283, 155.604, -128.63)

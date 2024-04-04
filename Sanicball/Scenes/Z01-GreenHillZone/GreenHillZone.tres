@@ -8,6 +8,6 @@
 [resource]
 script = ExtResource("1_xrm2x")
 name = "Green Hill Zone"
-prefab = ExtResource("2_avwi6")
+RaceScene = ExtResource("2_avwi6")
 flatOverlay = ExtResource("1_yj6xh")
 solidOverlay = ExtResource("4_rl0cu")

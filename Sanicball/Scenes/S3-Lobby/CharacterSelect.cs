@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using Godot;
 using Sanicball.Account;
 using Sanicball.Ball;
@@ -22,6 +22,7 @@ public partial class CharacterSelect : MarginContainer
         panel.controllerIcon ??= panel.GetNode<TextureRect>("CharacterSelect");
         panel.controllerIcon.Texture = controlType.Icon();
         panel.characterSelect ??= panel.GetNode<Control>("CharacterSelect");
+        panel.characterSelect.Hide();
         panel.characterIcon ??= panel.GetNode<TextureRect>("CharacterSelect/CharacterIcon");
         panel.characterName ??= panel.GetNode<Label>("CharacterSelect/CharacterName");
         panel.hotkeyLabel.Text = """
@@ -45,7 +46,6 @@ public partial class CharacterSelect : MarginContainer
     };
 
     private static readonly SanicCharacter[] characters = [cancel, .. SanicCharacter.All];
-    private static readonly Dictionary<ControlType, SanicBall> players = [];
 
     [Export] private TextureRect background = null!;
     [Export] private TextureRect controllerIcon = null!;
@@ -55,10 +55,11 @@ public partial class CharacterSelect : MarginContainer
     [Export] private Label hotkeyLabel = null!;
     private Node3D playerSpawner = null!;
     
+    public SanicBall? Player { get; private set; }
     private ControlType controlType;
 
     private bool ready = false;
-    private SanicBall? player;
+    public event EventHandler<bool>? OnReadyChanged;
 
     private int _characterIndex = 0;
     private int CharacterIndex
@@ -76,63 +77,47 @@ public partial class CharacterSelect : MarginContainer
     private SanicCharacter SelectedCharacter = cancel;
 
     public override void _Input(InputEvent @event)
-    {
+    {        
         if (!characterSelect.Visible)
         {
-            if (controlType.Ready())
+            if (controlType.Ready(@event) && Player is not null)
             {
                 ready = !ready;
-                if (!ready)
-                {
-                    background.Texture = whiteButton;
-                    LobbyManager.Instance.ReadyPlayers--;
-                }
-                else
-                {
-                    background.Texture = blueButton;
-                    LobbyManager.Instance.ReadyPlayers++;
-                }
+                OnReadyChanged?.Invoke(this, ready);
+                background.Texture = ready ? blueButton : whiteButton;
             }
 
-            if (controlType.Confirmed())
+            if (controlType.Confirmed(@event))
             {
                 characterSelect.Show();
                 CharacterIndex = 0;
 
-                players.Remove(controlType);
-                if (player is not null)
+                if (Player is not null)
                 {
-                    player.QueueFree();
-                    player = null;
+                    Player.QueueFree();
+                    Player = null;
                 }
             }
+            
             return;
         }
 
-        if (controlType.LeftPressed()) { CharacterIndex -= 1; }
-        if (controlType.RightPressed()) { CharacterIndex += 1; }
-        if (controlType.UpPressed()) { CharacterIndex -= 4; }
-        if (controlType.DownPressed()) { CharacterIndex += 4; }
+        if (controlType.LeftPressed(@event)) { CharacterIndex -= 1; }
+        if (controlType.RightPressed(@event)) { CharacterIndex += 1; }
+        if (controlType.UpPressed(@event)) { CharacterIndex -= 4; }
+        if (controlType.DownPressed(@event)) { CharacterIndex += 4; }
 
-        if (controlType.Confirmed())
+        if (controlType.Confirmed(@event))
         {
-            //cancel index
-            if (CharacterIndex == 0)
-            {                
-                QueueFree();
-                return;
-            }
-
             characterSelect.Hide();
+            
+            //cancel index
+            if (CharacterIndex == 0) { return; }
 
-            player = SanicBall.Create(SelectedCharacter, new PlayerBall());
-            playerSpawner.AddChild(player);
-            player.Translate(new(0, 5, 0));
-            player.ApplyImpulse(new(0, 10, 0));
-
-            players[controlType] = player;
-
-            GetViewport().SetInputAsHandled();
+            Player = SanicBall.Create(SelectedCharacter, new PlayerBall() { ControlType = controlType });
+            playerSpawner.AddChild(Player);
+            Player.Translate(new(0, 5, 0));
+            Player.ApplyImpulse(new(0, 10, 0));
         }
     }
 }

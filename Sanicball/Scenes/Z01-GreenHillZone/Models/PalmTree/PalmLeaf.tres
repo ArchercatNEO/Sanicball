@@ -3,4 +3,5 @@
 [ext_resource type="Texture2D" uid="uid://cmvi1sj8vu8ws" path="res://Scenes/Z01-GreenHillZone/Models/PalmTree/PalmLeaf.png" id="1_7clhj"]
 
 [resource]
+transparency = 1
 albedo_texture = ExtResource("1_7clhj")

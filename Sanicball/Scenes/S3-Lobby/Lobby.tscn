@@ -104,8 +104,9 @@ top_radius = 2.5
 bottom_radius = 2.5
 height = 6.0
 
-[node name="Lobby" type="Node" node_paths=PackedStringArray("countdownText")]
+[node name="Lobby" type="Node" node_paths=PackedStringArray("characterSelectManager", "countdownText")]
 script = ExtResource("1_n55so")
+characterSelectManager = NodePath("Lobby2D/CharacterSelectBox")
 countdownText = NodePath("Lobby2D/Header/RaceCountdown")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -113,6 +114,7 @@ environment = SubResource("Environment_wsstk")
 
 [node name="Music" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("songName")]
 script = ExtResource("1_s8m6y")
+muted = true
 songName = NodePath("CanvasLayer/ui/fitter/songName")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="Music"]
@@ -231,6 +233,7 @@ omni_range = 4096.0
 
 [node name="LobbyCamera" type="Camera3D" parent="Lobby3D"]
 transform = Transform3D(-0.106403, 0, -0.994323, 0, 1, 0, 0.994323, 0, -0.106403, -24.3743, 13.8098, 0.233967)
+current = true
 script = ExtResource("8_cdt1m")
 
 [node name="Walls" type="Node3D" parent="Lobby3D"]

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Sanicball.Data;
+namespace Sanicball.Account;
 
 public class AccountSettings
 {

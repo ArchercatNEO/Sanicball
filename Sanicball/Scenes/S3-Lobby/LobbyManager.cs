@@ -1,33 +1,49 @@
+using System.Linq;
 using Godot;
+using Sanicball.Ball;
 
 namespace Sanicball.Scenes;
 
+/// <summary>
+/// The top level handler of the lobby scene, 
+/// mainly compiles information known by other nodes for purposes of networking and scene transitions
+/// <see cref="CharacterSelect"/>
+/// For information on where player input is handled
+/// <see cref="LobbySettings"/>
+/// For information on match settings are handled
+/// </summary>
 public partial class LobbyManager : Node
 {
     public static LobbyManager? Instance { get; private set; }
     public override void _EnterTree() { Instance = this; }
     public override void _ExitTree() { Instance = null; }
 
+    //Sub-managers that actually do stuff
+    [Export] private CharacterSelectManager characterSelectManager = null!;
     [Export] private Label countdownText = null!;
 
-    private int _readyPlayers = 0;
-    public int ReadyPlayers
+    public override void _Ready()
     {
-        get => _readyPlayers;
-        set
+        characterSelectManager.OnReadyPlayerChange += (sender, readyPlayers) =>
         {
-            _readyPlayers = value;
-            if (_readyPlayers > 0)
+            //All the players that are actually in the game
+            var players = characterSelectManager.activePanels
+                .Where(panel => panel.Value.Player is not null)
+                .Select(panel => (panel.Key, panel.Value.Player!))
+                .ToDictionary();
+
+            countdownText.Text = $"{readyPlayers}/{players.Count} players ready: waiting for more players";
+
+            if (readyPlayers == players.Count)
             {
                 Tween tween = CreateTween();
                 
-                Callable setCoundownCallback = Callable.From<float>(SetCountdownText);
-                tween.TweenMethod(setCoundownCallback, 5, 0, 5);
-
-                tween.TweenCallback(Callable.From(() => TrackResource.GreenHillZone.Activate(GetTree())));
+                void SetCountdownText(float time) => countdownText.Text = $"{readyPlayers}/{players.Count} players ready: Match starting in {time} seconds";
+                tween.TweenMethod(Callable.From<float>(SetCountdownText), 5, 0, 5);
+                
+                void startRaceCallback() => RaceManager.Activate(GetTree(), TrackResource.GreenHillZone, players);
+                tween.TweenCallback(Callable.From(startRaceCallback));
             }
-        }
+        };
     }
-
-    private void SetCountdownText(float time) => countdownText.Text = $"1/1 players ready: Match starting in {time} seconds";
 }

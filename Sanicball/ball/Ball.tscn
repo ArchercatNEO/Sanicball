@@ -8,10 +8,11 @@ material = ExtResource("2_ma1vw")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iyxud"]
 
-[node name="Ball" type="RigidBody3D" node_paths=PackedStringArray("Renderer", "Collider")]
+[node name="Ball" type="RigidBody3D" node_paths=PackedStringArray("Renderer", "Collider", "Camera")]
 script = ExtResource("1_rwvnl")
 Renderer = NodePath("Renderer")
 Collider = NodePath("Collider")
+Camera = NodePath("Camera3D")
 
 [node name="Renderer" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_310mg")
@@ -20,3 +21,11 @@ mesh = SubResource("SphereMesh_310mg")
 shape = SubResource("SphereShape3D_iyxud")
 
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0154074, 1.09356, 2.29618)
+update_rotation = false
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.96091, 0.276862, 0, -0.276862, 0.96091, -0.0154074, 1.09356, 2.29618)
+top_level = true

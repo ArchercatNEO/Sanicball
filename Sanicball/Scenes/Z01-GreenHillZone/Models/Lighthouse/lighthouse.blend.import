@@ -33,11 +33,11 @@ _subresources={
 "materials": {
 "Concrete": {
 "use_external/enabled": true,
-"use_external/path": "res://Scenes/GreenHillZone/Models/Lighthouse/Concrete.tres"
+"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/Lighthouse/Concrete.tres"
 },
 "Cylinder": {
 "use_external/enabled": true,
-"use_external/path": "res://Scenes/GreenHillZone/Models/Lighthouse/LighthouseCylinder.tres"
+"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/Lighthouse/LighthouseCylinder.tres"
 }
 }
 }

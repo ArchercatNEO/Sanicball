@@ -1,7 +1,10 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dak2ja1mgu3h2"]
+[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://dak2ja1mgu3h2"]
 
 [ext_resource type="Texture2D" uid="uid://dlxyai3gymw2" path="res://Scenes/Z01-GreenHillZone/Models/Terrain/Grass.png" id="1_3wbv2"]
+[ext_resource type="Texture2D" uid="uid://dgp5iv27jjlnw" path="res://Scenes/Z01-GreenHillZone/Models/Terrain/GrassDetail.jpg" id="2_r3ngm"]
 
 [resource]
 albedo_texture = ExtResource("1_3wbv2")
+detail_mask = ExtResource("2_r3ngm")
+detail_albedo = ExtResource("1_3wbv2")
 uv1_scale = Vector3(101.32, 101.32, 101.32)

@@ -48,8 +48,9 @@ public partial class SanicBall : RigidBody3D
 
     [Export] private MeshInstance3D Renderer = null!;
     [Export] private CollisionShape3D Collider = null!;
+    [Export] private Camera3D Camera = null!;
 
-    private ISanicController controller = new PlayerBall();
+    private ISanicController controller = new PlayerBall() { ControlType = Account.ControlType.Keyboard};
     private SanicCharacter character = SanicCharacter.Unknown;
 
     public override void _Ready()
@@ -78,5 +79,16 @@ public partial class SanicBall : RigidBody3D
         {
             state.LinearVelocity = state.LinearVelocity.Normalized() * MaxSpeed;
         }
+    }
+
+    public void ActivateLobby()
+    {
+
+    }
+
+    //TODO Add UI and stuff
+    public void ActivateRace()
+    {
+        controller.ActivateRace();
     }
 }

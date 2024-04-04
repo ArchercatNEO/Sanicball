@@ -9,14 +9,9 @@ namespace Sanicball.Scenes;
 public partial class TrackResource : Resource
 {
     [Export] public required string name;
-    [Export] public required PackedScene prefab;
+    [Export] public required PackedScene RaceScene;
     [Export] public required Texture2D flatOverlay;
     [Export] public required PackedScene solidOverlay;
-
-    public void Activate(SceneTree tree)
-    {
-        tree.ChangeSceneToPacked(prefab);
-    }
 
     public static readonly TrackResource GreenHillZone = GD.Load<TrackResource>("res://Scenes/Z01-GreenHillZone/GreenHillZone.tres");
 }

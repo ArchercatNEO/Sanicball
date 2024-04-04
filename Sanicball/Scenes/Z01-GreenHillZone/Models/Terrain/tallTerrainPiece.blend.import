@@ -33,11 +33,11 @@ _subresources={
 "materials": {
 "Dirt": {
 "use_external/enabled": true,
-"use_external/path": "res://Scenes/GreenHillZone/Models/Terrain/TiledDirt.tres"
+"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/Terrain/TiledDirt.tres"
 },
 "Grass": {
 "use_external/enabled": true,
-"use_external/path": "res://Scenes/GreenHillZone/Models/Terrain/TiledGrass.tres"
+"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/Terrain/TiledGrass.tres"
 }
 },
 "nodes": {

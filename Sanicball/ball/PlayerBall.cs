@@ -12,7 +12,7 @@ namespace Sanicball.Ball;
 public partial class PlayerBall : ISanicController
 {
     private SanicBall sanicBall = null!;
-    private readonly ControlType controlType = ControlType.Keyboard;
+    public required  ControlType ControlType { get; init; }
 
     public void Initialise(SanicBall parent)
     {
@@ -27,9 +27,14 @@ public partial class PlayerBall : ISanicController
 
     public void Process(double delta)
     {
-        Vector3 force = controlType.NormalizedForce();
+        Vector3 force = ControlType.NormalizedForce();
         force *= SanicBall.InputAcceleration;
 
         sanicBall.ApplyForce(force);
+    }
+
+    public void ActivateRace()
+    {
+        sanicBall.AddChild(new Camera3D());
     }
 }

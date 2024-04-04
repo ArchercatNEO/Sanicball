@@ -33,11 +33,11 @@ _subresources={
 "materials": {
 "Dirt": {
 "use_external/enabled": true,
-"use_external/path": "res://Scenes/GreenHillZone/Models/Terrain/TiledDirt.tres"
+"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/Terrain/TiledDirt.tres"
 },
 "Grass": {
 "use_external/enabled": true,
-"use_external/path": "res://Scenes/GreenHillZone/Models/Terrain/TiledGrass.tres"
+"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/Terrain/TiledGrass.tres"
 }
 },
 "meshes": {
@@ -49,7 +49,7 @@ _subresources={
 "lods/normal_split_angle": 25.0,
 "save_to_file/enabled": false,
 "save_to_file/make_streamable": "",
-"save_to_file/path": "res://Scenes/GreenHillZone/Models/Terrain/smallTerrainPiece_Mesh.res"
+"save_to_file/path": "res://Scenes/Z01-GreenHillZone/Models/Terrain/smallTerrainPiece_Mesh.res"
 }
 },
 "nodes": {
