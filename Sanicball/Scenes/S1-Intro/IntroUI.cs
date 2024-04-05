@@ -35,7 +35,7 @@ public partial class IntroUI : Control
     public override void _Ready()
     {
         inputUi = GetNode<Control>("UsernameInput");
-        usernameInput = inputUi.GetNode<LineEdit>("TextEdit");
+        usernameInput = GetNode<LineEdit>("UsernameInput/TextEdit");
         credits = GetNode<Control>("Credits");
         var images = credits.GetChildren().OfType<TextureRect>();
 

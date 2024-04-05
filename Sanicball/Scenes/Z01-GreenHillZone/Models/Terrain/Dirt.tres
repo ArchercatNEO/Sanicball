@@ -1,12 +1,7 @@
-[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://dpoe5q8p5g55t"]
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://dpoe5q8p5g55t"]
 
 [ext_resource type="Texture2D" uid="uid://dw2ayd7vj3vao" path="res://Scenes/Z01-GreenHillZone/Models/Terrain/Dirt-Map.png" id="1_58at0"]
 
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_od6h2"]
-load_path = "res://.godot/imported/Dirt-Detail.jpg-64b0f691fa1276faccce1b4b85ecba2a.s3tc.ctex"
-
 [resource]
 albedo_texture = ExtResource("1_58at0")
-detail_mask = SubResource("CompressedTexture2D_od6h2")
-detail_albedo = ExtResource("1_58at0")
-uv1_scale = Vector3(81.08, 81.08, 81.08)
+uv1_scale = Vector3(80, 80, 80)

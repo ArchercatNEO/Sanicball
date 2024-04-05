@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using Sanicball.Account;
 using Sanicball.Characters;
 using Sanicball.Scenes;
@@ -17,6 +18,9 @@ public partial class PlayerBall : ISanicController
     public void Initialise(SanicBall parent)
     {
         sanicBall = parent;
+        sanicBall.ContactMonitor = true;
+        sanicBall.MaxContactsReported = 3;
+
         LobbyCamera.Instance?.Subscribe(parent);
 
         sanicBall.OnRespawn += (sender, body) =>
@@ -27,14 +31,25 @@ public partial class PlayerBall : ISanicController
 
     public void Process(double delta)
     {
+        Array<Node3D> collisions = sanicBall.GetCollidingBodies();
+        
+        //TODO better floor check
+        //? How can we detect a loop vs a wall?
+        if (collisions.Count == 0) { return; }
+        
         Vector3 force = ControlType.NormalizedForce();
-        force *= SanicBall.InputAcceleration;
+        //TODO use lobby camera if omnicamera is not found
+        if (sanicBall.Camera is not null)
+        {
+            force = Quaternion.FromEuler(sanicBall.Camera.Rotation) * force;
+        }
+        
+        //TODO use floor collision to determine where "up" is 
+        Vector3 up = Vector3.Up; 
+        
+        Vector3 torque = -force.Cross(up);
+        torque *= SanicBall.InputAcceleration;
 
-        sanicBall.ApplyForce(force);
-    }
-
-    public void ActivateRace()
-    {
-        sanicBall.AddChild(new Camera3D());
+        sanicBall.ApplyTorque(torque);
     }
 }

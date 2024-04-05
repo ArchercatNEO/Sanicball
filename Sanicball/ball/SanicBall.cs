@@ -1,4 +1,5 @@
 using System;
+using System.Dynamic;
 using Godot;
 using Sanicball.Characters;
 using Sanicball.GameMechanics;
@@ -12,7 +13,7 @@ namespace Sanicball.Ball;
 /// </summary>
 public partial class SanicBall : RigidBody3D
 {
-    public const int MaxSpeed = 1000;
+    public const int MaxSpeed = 80;
     public const int InputAcceleration = 50;
 
     private static readonly AudioStreamMP3 jump = GD.Load<AudioStreamMP3>("res://ball/S1-Sound/jump.mp3");
@@ -48,7 +49,7 @@ public partial class SanicBall : RigidBody3D
 
     [Export] private MeshInstance3D Renderer = null!;
     [Export] private CollisionShape3D Collider = null!;
-    [Export] private Camera3D Camera = null!;
+    [Export] public Camera3D Camera { get; private set; } = null!;
 
     private ISanicController controller = new PlayerBall() { ControlType = Account.ControlType.Keyboard};
     private SanicCharacter character = SanicCharacter.Unknown;
@@ -75,9 +76,9 @@ public partial class SanicBall : RigidBody3D
 
     public override void _IntegrateForces(PhysicsDirectBodyState3D state)
     {
-        if (state.LinearVelocity.Length() > MaxSpeed)
+        if (state.AngularVelocity.Length() > MaxSpeed)
         {
-            state.LinearVelocity = state.LinearVelocity.Normalized() * MaxSpeed;
+            state.AngularVelocity = state.AngularVelocity.Normalized() * MaxSpeed;
         }
     }
 

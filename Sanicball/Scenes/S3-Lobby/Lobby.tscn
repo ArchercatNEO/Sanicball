@@ -232,7 +232,7 @@ light_energy = 10.374
 omni_range = 4096.0
 
 [node name="LobbyCamera" type="Camera3D" parent="Lobby3D"]
-transform = Transform3D(-0.106403, 0, -0.994323, 0, 1, 0, 0.994323, 0, -0.106403, -24.3743, 13.8098, 0.233967)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.65379, 7.51354, 23.7507)
 current = true
 script = ExtResource("8_cdt1m")
 

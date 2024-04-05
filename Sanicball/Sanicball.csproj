@@ -18,9 +18,7 @@
     <AdditionalFiles Include="**/*.ttf"/>
     <!--Image file types-->
     <AdditionalFiles Include="**/*.png"/>
-    <AdditionalFiles Include="**/*.jpg"/>
     <AdditionalFiles Include="**/*.svg"/>
-    <AdditionalFiles Include="**/*.xcf"/>
     <!--Sound file types-->
     <AdditionalFiles Include="**/*.ogg"/>
     <AdditionalFiles Include="**/*.mp3"/>
@@ -28,6 +26,5 @@
     <!--3D object file types-->
     <AdditionalFiles Include="**/*.blend"/>
     <AdditionalFiles Include="**/*.glb"/>
-    <AdditionalFiles Include="**/*.fbx"/>
   </ItemGroup>
 </Project>

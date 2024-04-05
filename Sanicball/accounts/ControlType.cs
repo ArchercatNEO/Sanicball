@@ -57,10 +57,10 @@ public static class ControlTypeImpl
         switch (control)
         {
             case ControlType.Keyboard:
-                if (Input.IsActionPressed("keyboard_down")) { force.X -= 1; }
-                if (Input.IsActionPressed("keyboard_left")) { force.Z -= 1; }
-                if (Input.IsActionPressed("keyboard_right")) { force.Z += 1; }
-                if (Input.IsActionPressed("keyboard_up")) { force.X += 1; }
+                if (Input.IsActionPressed("keyboard_up")) { force += Vector3.Forward; }
+                if (Input.IsActionPressed("keyboard_down")) { force += Vector3.Back; }
+                if (Input.IsActionPressed("keyboard_left")) { force += Vector3.Left; }
+                if (Input.IsActionPressed("keyboard_right")) { force += Vector3.Right; }
                 break;
 
             case ControlType.Joystick1:
