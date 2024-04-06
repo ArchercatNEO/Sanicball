@@ -46,6 +46,7 @@ public partial class BallCamera : Camera3D
     }
 
     private float orbitAngle;
+    private Vector3 previousOrbit;
 
     public override void _Ready()
     {
@@ -56,15 +57,18 @@ public partial class BallCamera : Camera3D
     public override void _PhysicsProcess(double delta)
     {
         //Position updates
-        Vector3 normalizedVelocity = sanicBall.LinearVelocity.Normalized() * OrbitRadius;
         //TODO Use ball's up instead of global up
+        //TODO handle zooming in/out
+        
+        Vector3 normalizedVelocity = sanicBall.LinearVelocity.Normalized() * OrbitRadius;
         Vector3 rotationAxis = normalizedVelocity.Cross(Vector3.Up).Normalized();
         //Normalisation will fail if velocity and "up" are aligned
         if (rotationAxis.IsNormalized())
         {
             Vector3 orbitVector = normalizedVelocity.Rotated(rotationAxis, -orbitAngle);
-            //TODO handle zooming in/out
-            GlobalPosition = sanicBall.GlobalPosition + orbitVector;
+            Vector3 offsetVector = previousOrbit.Lerp(orbitVector, (float)delta);
+            previousOrbit = offsetVector;
+            GlobalPosition = sanicBall.GlobalPosition + offsetVector;
         }
 
         //Rotation updates
