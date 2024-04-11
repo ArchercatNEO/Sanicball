@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 using Godot;
 using Sanicball.Account;
 using Sanicball.Ball;
+using Sanicball.GameMechanics;
 
 namespace Sanicball.Scenes;
 
@@ -28,13 +28,15 @@ public partial class RaceManager : Node
     }
 
     [Export] private HBoxContainer viewportManager = null!;
-    [Export] private Node3D spawnPoint = null!;
+    [Export] private Checkpoint finishLine = null!;
 
     public override void _Ready()
     {
         float offset = 10;
         foreach (var (control, player) in raceBalls)
         {
+            player.ActivateRace(finishLine);
+
             SubViewport screen = new();
             screen.AddChild(player);
             SubViewportContainer screenFitter = new()
@@ -45,7 +47,7 @@ public partial class RaceManager : Node
             };
             screenFitter.AddChild(screen);
             viewportManager.AddChild(screenFitter);
-            player.GlobalPosition = spawnPoint.GlobalPosition with { Y = spawnPoint.GlobalPosition.Y + offset};
+            player.GlobalPosition = finishLine.GlobalPosition with { Y = finishLine.GlobalPosition.Y + offset};
             offset += 10;
         }
     }

@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://ceh3dfqf61qqe"]
+
+[ext_resource type="Script" path="res://game-mechanics/Checkpoint/Checkpoint.cs" id="1_lp28u"]
+[ext_resource type="PackedScene" uid="uid://dfpimlrrv6qe8" path="res://game-mechanics/Checkpoint/Checkpoint.blend" id="2_rffva"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_vhnkf"]
+height = 0.1
+radius = 1.0
+
+[node name="Checkpoint" type="Area3D"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0)
+script = ExtResource("1_lp28u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_vhnkf")
+
+[node name="Renderer" parent="." instance=ExtResource("2_rffva")]

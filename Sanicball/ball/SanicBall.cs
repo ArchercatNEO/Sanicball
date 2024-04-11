@@ -1,5 +1,4 @@
 using System;
-using System.Dynamic;
 using Godot;
 using Sanicball.Characters;
 using Sanicball.GameMechanics;
@@ -45,27 +44,21 @@ public partial class SanicBall : RigidBody3D
         return ball;
     }
 
-    public event EventHandler<TriggerRespawn>? OnRespawn;
-
+    [Export] public Camera3D Camera { get; private set; } = null!;
     [Export] private MeshInstance3D Renderer = null!;
     [Export] private CollisionShape3D Collider = null!;
-    [Export] public Camera3D Camera { get; private set; } = null!;
 
     private ISanicController controller = new PlayerBall() { ControlType = Account.ControlType.Keyboard};
     private SanicCharacter character = SanicCharacter.Unknown;
+
+    private Checkpoint currentCheckpoint = null!;
+    private Checkpoint nextCheckpoint = null!;
 
     public override void _Ready()
     {
         controller.Initialise(this);
 
         SetCollisionMaskValue(TriggerRespawn.layer, true);
-        BodyEntered += (body) =>
-        {
-            if (body is TriggerRespawn respawn)
-            {
-                OnRespawn?.Invoke(this, respawn);
-            }
-        };
     }
 
     public override void _Process(double delta)
@@ -82,14 +75,37 @@ public partial class SanicBall : RigidBody3D
         }
     }
 
+    public void OnCheckpointCollision(Checkpoint checkpoint)
+    {
+        if (checkpoint != nextCheckpoint)
+        {
+            GD.Print("Bad checpoint hit");
+        }
+        else
+        {
+            GD.Print("Checkpoint hit"); 
+            currentCheckpoint = checkpoint;
+            nextCheckpoint = checkpoint.next;
+        }
+    }
+
+    public void OnRespawn()
+    {
+        AngularVelocity = new Vector3(0, 0, 0);
+        LinearVelocity = new Vector3(0, 0, 0);
+        Position = currentCheckpoint.Position + new Vector3(0, 10, 0);
+    }
+
     public void ActivateLobby()
     {
 
     }
 
     //TODO Add UI and stuff
-    public void ActivateRace()
+    public void ActivateRace(Checkpoint finishLine)
     {
+        currentCheckpoint = finishLine;
+        nextCheckpoint = finishLine.next;
         controller.ActivateRace();
     }
 }

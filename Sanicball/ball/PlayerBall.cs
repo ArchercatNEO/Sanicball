@@ -10,7 +10,7 @@ namespace Sanicball.Ball;
 /// A ball controlled by the local machine.
 /// This kind of ball is the only one players have any control over
 /// </summary>
-public partial class PlayerBall : ISanicController
+public class PlayerBall : ISanicController
 {
     private SanicBall sanicBall = null!;
     public required  ControlType ControlType { get; init; }
@@ -22,11 +22,6 @@ public partial class PlayerBall : ISanicController
         sanicBall.MaxContactsReported = 3;
 
         LobbyCamera.Instance?.Subscribe(parent);
-
-        sanicBall.OnRespawn += (sender, body) =>
-        {
-            sanicBall.Position = new(0, 100, 0);
-        };
     }
 
     public void Process(double delta)
