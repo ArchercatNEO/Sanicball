@@ -13,7 +13,7 @@ background_mode = 2
 sky = ExtResource("1_udlj8")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6gej4"]
-size = Vector3(5000, 2, 5000)
+size = Vector3(2500, 2, 2500)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_1g78f"]
 
@@ -28,7 +28,7 @@ shader_parameter/noise = SubResource("NoiseTexture2D_xyktn")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_pqdxx"]
 material = SubResource("ShaderMaterial_0vlaa")
-size = Vector2(5000, 5000)
+size = Vector2(2500, 2500)
 subdivide_width = 32
 subdivide_depth = 32
 
@@ -58,14 +58,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Game3D" type="Node3D" parent="."]
+[node name="Game3D" parent="." instance=ExtResource("5_wtf51")]
 
 [node name="Sunlight" type="DirectionalLight3D" parent="Game3D"]
-editor_description = "Hello"
-transform = Transform3D(1, 0, 0, 0, 0.0242402, 0.999706, 0, -0.999706, 0.0242402, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -0.564131, 0.825685, 0, -0.825685, -0.564131, 0, 0, 0)
 
 [node name="Sea" type="Area3D" parent="Game3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -41.7354, 0)
 script = ExtResource("1_roiel")
 metadata/_edit_group_ = true
 
@@ -79,10 +78,8 @@ mesh = SubResource("PlaneMesh_pqdxx")
 stream = ExtResource("4_wke57")
 bus = &"Ambience"
 
-[node name="Terrain" parent="Game3D" instance=ExtResource("5_wtf51")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 40.7354, 0)
-
 [node name="Checkpoints" type="Node3D" parent="Game3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -40.7354, 0)
 
 [node name="FinishLine" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
 transform = Transform3D(-4.94321, -8.69279, -3.79974e-07, 0, -4.37114e-07, 10, -8.69279, 4.94321, 2.16075e-07, -81.3422, 40.9393, 175.875)
@@ -94,13 +91,13 @@ transform = Transform3D(0.386947, -13.5895, 5.94016e-07, 0, -5.94256e-07, -13.59
 next = NodePath("../Checkpoint2")
 
 [node name="Checkpoint2" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
-transform = Transform3D(4.57446, -14.2855, 6.24437e-07, 0, -6.55671e-07, -15, 14.2855, 4.57446, -1.99956e-07, 99.5201, 21.8097, -84.1141)
+transform = Transform3D(4.57445, -14.2855, 6.24437e-07, 0, -6.55671e-07, -15, 14.2855, 4.57445, -1.99956e-07, 99.5201, 21.8097, -84.1141)
 next = NodePath("../Checkpoint3")
 
 [node name="Checkpoint3" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
-transform = Transform3D(1.62343, 12.2126, -5.33828e-07, 0, -5.38524e-07, -12.32, -12.2126, 1.62343, -7.09624e-08, -169.798, 16.8091, -23.364)
+transform = Transform3D(1.64715, 12.391, -5.41628e-07, 0, -5.46392e-07, -12.5, -12.391, 1.64715, -7.1999e-08, -169.798, 16.8091, -23.364)
 next = NodePath("../Checkpoint4")
 
 [node name="Checkpoint4" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
-transform = Transform3D(10.4016, -1.98891, 8.69379e-08, 0, -4.62904e-07, -10.59, 1.98891, 10.4016, -4.54666e-07, -78.6377, 24.4562, 62.2761)
+transform = Transform3D(10.8043, -2.0659, 9.03035e-08, 0, -4.80825e-07, -11, 2.0659, 10.8043, -4.72269e-07, -78.6377, 24.4562, 62.2761)
 next = NodePath("../FinishLine")
