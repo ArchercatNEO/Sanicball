@@ -84,14 +84,14 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -40.7354, 0)
 [node name="FinishLine" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
 transform = Transform3D(-4.94321, -8.69279, -3.79974e-07, 0, -4.37114e-07, 10, -8.69279, 4.94321, 2.16075e-07, -81.3422, 40.9393, 175.875)
 isFinishLine = true
-next = NodePath("../Checkpoint")
+next = NodePath(".")
 
 [node name="Checkpoint" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
 transform = Transform3D(0.386947, -13.5895, 5.94016e-07, 0, -5.94256e-07, -13.595, 13.5895, 0.386947, -1.6914e-08, 202.225, 44.6477, 41.0371)
 next = NodePath("../Checkpoint2")
 
 [node name="Checkpoint2" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
-transform = Transform3D(4.57445, -14.2855, 6.24437e-07, 0, -6.55671e-07, -15, 14.2855, 4.57445, -1.99956e-07, 99.5201, 21.8097, -84.1141)
+transform = Transform3D(4.57445, -14.2855, 0, 0, -6.55671e-07, -15, 14.2855, 4.57445, -1.99956e-07, 99.5201, 21.8097, -84.1141)
 next = NodePath("../Checkpoint3")
 
 [node name="Checkpoint3" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]

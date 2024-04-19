@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Godot.Collections;
 using Sanicball.Characters;
 using Sanicball.GameMechanics;
 
@@ -48,8 +49,30 @@ public partial class SanicBall : RigidBody3D
     [Export] private MeshInstance3D Renderer = null!;
     [Export] private CollisionShape3D Collider = null!;
 
-    private ISanicController controller = new PlayerBall() { ControlType = Account.ControlType.Keyboard};
-    private SanicCharacter character = SanicCharacter.Unknown;
+    /// <summary>
+    /// The last recorded normal relative to the floor. Neccesary for things like loops to work properly
+    /// </summary>
+    public Vector3 UpOverride { get; private set; } = Vector3.Up;
+    public bool IsGrounded { get; private set; } = false;
+
+    /// <summary>
+    /// Emmited when the ball passes through a checkpoint
+    /// </summary>
+    public event EventHandler<int>? CurrentLapChanged;
+    private int _currentLap = 0;
+    public int CurrentLap
+    {
+        get => _currentLap;
+        set
+        {
+            _currentLap = value;
+            CurrentLapChanged?.Invoke(this, value);
+        }
+    }
+    
+
+    private ISanicController controller = new PlayerBall() { ControlType = Account.ControlType.Keyboard };
+    public SanicCharacter character = SanicCharacter.Unknown;
 
     private Checkpoint currentCheckpoint = null!;
     private Checkpoint nextCheckpoint = null!;
@@ -66,6 +89,23 @@ public partial class SanicBall : RigidBody3D
         controller.Process(delta);
     }
 
+    public override void _PhysicsProcess(double delta)
+    {
+        Array<Node3D> collisions = GetCollidingBodies();
+        
+        //TODO better floor check
+        //? How can we detect a loop vs a wall?
+        if (collisions.Count == 0)
+        {
+            IsGrounded = false;
+        }
+        else
+        {
+            IsGrounded = true;
+            //TODO get a normal somehow to use as up
+        }
+    }
+
 
     public override void _IntegrateForces(PhysicsDirectBodyState3D state)
     {
@@ -77,15 +117,15 @@ public partial class SanicBall : RigidBody3D
 
     public void OnCheckpointCollision(Checkpoint checkpoint)
     {
-        if (checkpoint != nextCheckpoint)
+        if (checkpoint == nextCheckpoint)
         {
-            GD.Print("Bad checpoint hit");
-        }
-        else
-        {
-            GD.Print("Checkpoint hit"); 
             currentCheckpoint = checkpoint;
             nextCheckpoint = checkpoint.next;
+
+            if (currentCheckpoint.isFinishLine)
+            {
+                CurrentLap++;
+            }
         }
     }
 
@@ -106,6 +146,13 @@ public partial class SanicBall : RigidBody3D
     {
         currentCheckpoint = finishLine;
         nextCheckpoint = finishLine.next;
+
+        ObjectMarker checkpointMarker = ObjectMarker.Create(Camera, nextCheckpoint, new Color(0, 0, 0, 0));
+        AddChild(checkpointMarker);
+
+        BallUI uiOverlay = BallUI.Create(this);
+        AddChild(uiOverlay);
+
         controller.ActivateRace();
     }
 }

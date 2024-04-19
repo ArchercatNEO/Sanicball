@@ -1,5 +1,4 @@
 using Godot;
-using Godot.Collections;
 using Sanicball.Account;
 using Sanicball.Characters;
 using Sanicball.Scenes;
@@ -26,23 +25,18 @@ public class PlayerBall : ISanicController
 
     public void Process(double delta)
     {
-        Array<Node3D> collisions = sanicBall.GetCollidingBodies();
-        
-        //TODO better floor check
-        //? How can we detect a loop vs a wall?
-        if (collisions.Count == 0) { return; }
-        
         Vector3 force = ControlType.NormalizedForce();
         //TODO use lobby camera if omnicamera is not found
         if (sanicBall.Camera is not null)
         {
+            //Rotate force so that Vector3.Forwards == Camera.Forwards
             force = Quaternion.FromEuler(sanicBall.Camera.Rotation) * force;
         }
         
-        //TODO use floor collision to determine where "up" is 
-        Vector3 up = Vector3.Up; 
+        //Convert a linear force into the axis of rotation
+        Vector3 torque = -force.Cross(sanicBall.UpOverride);
         
-        Vector3 torque = -force.Cross(up);
+        torque *= sanicBall.character.AngularAcceleration;
         torque *= SanicBall.InputAcceleration;
 
         sanicBall.ApplyTorque(torque);

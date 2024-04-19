@@ -57,14 +57,13 @@ public partial class BallCamera : Camera3D
     public override void _PhysicsProcess(double delta)
     {
         //Position updates
-        //TODO Use ball's up instead of global up
         //TODO handle zooming in/out
 
         //Check if velocity and the up vector are not aligned so the cross product will work
-        if (sanicBall.LinearVelocity.Dot(Vector3.Up) - sanicBall.LinearVelocity.Length() * Vector3.Up.Length() != 0)
+        if (sanicBall.LinearVelocity.Dot(sanicBall.UpOverride) - sanicBall.LinearVelocity.Length() * sanicBall.UpOverride.Length() != 0)
         {
             Vector3 normalizedVelocity = sanicBall.LinearVelocity.Normalized() * OrbitRadius;
-            Vector3 rotationAxis = normalizedVelocity.Cross(Vector3.Up).Normalized();
+            Vector3 rotationAxis = normalizedVelocity.Cross(sanicBall.UpOverride).Normalized();
             Vector3 orbitVector = normalizedVelocity.Rotated(rotationAxis, -orbitAngle);
             Vector3 offsetVector = previousOrbit.Lerp(orbitVector, (float)delta);
             previousOrbit = offsetVector;

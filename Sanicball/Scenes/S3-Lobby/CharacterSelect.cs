@@ -32,10 +32,6 @@ public partial class CharacterSelect : MarginContainer
         return panel;
     }
 
-    private static readonly Texture2D whiteButton = GD.Load<Texture2D>("res://SharedArt/Circle.svg");
-    private static readonly Texture2D blueButton = GD.Load<Texture2D>("res://SharedArt/CircleBlue.svg");
-
-
     private static readonly SanicCharacter cancel = new() {
         Name = "Exit",
         Credits = "Doesn't matter",
@@ -84,7 +80,7 @@ public partial class CharacterSelect : MarginContainer
             {
                 ready = !ready;
                 OnReadyChanged?.Invoke(this, ready);
-                background.Texture = ready ? blueButton : whiteButton;
+                background.Modulate = ready ? new Color(0, 0, 1) : new Color(1, 1, 1);
             }
 
             if (controlType.Confirmed(@event))
