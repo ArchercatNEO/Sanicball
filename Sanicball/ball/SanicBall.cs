@@ -195,6 +195,6 @@ public partial class SanicBall : RigidBody3D
     {
         AngularVelocity = new Vector3(0, 0, 0);
         LinearVelocity = new Vector3(0, 0, 0);
-        Position = CurrentCheckpoint.Position + new Vector3(0, 10, 0);
+        Position = CurrentCheckpoint.Position + new Vector3(0, 1, 0);
     }
 }

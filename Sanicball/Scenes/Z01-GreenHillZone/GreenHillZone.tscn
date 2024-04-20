@@ -61,10 +61,10 @@ grow_vertical = 2
 [node name="Game3D" parent="." instance=ExtResource("5_wtf51")]
 
 [node name="Sunlight" type="DirectionalLight3D" parent="Game3D"]
-transform = Transform3D(1, 0, 0, 0, -0.564131, 0.825685, 0, -0.825685, -0.564131, 0, 0, 0)
+transform = Transform3D(-4.37114e-08, 0.700909, -0.71325, 0, 0.71325, 0.700909, 1, 3.06377e-08, -3.11772e-08, 0, 0, 0)
 
 [node name="Sea" type="Area3D" parent="Game3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -41.7354, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -41.5868, 0)
 script = ExtResource("1_roiel")
 metadata/_edit_group_ = true
 
@@ -79,7 +79,7 @@ stream = ExtResource("4_wke57")
 bus = &"Ambience"
 
 [node name="Checkpoints" type="Node3D" parent="Game3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -40.7354, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -40.0263, 0)
 
 [node name="FinishLine" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
 transform = Transform3D(-4.94321, -8.69279, -3.79974e-07, 0, -4.37114e-07, 10, -8.69279, 4.94321, 2.16075e-07, -81.3422, 40.9393, 175.875)

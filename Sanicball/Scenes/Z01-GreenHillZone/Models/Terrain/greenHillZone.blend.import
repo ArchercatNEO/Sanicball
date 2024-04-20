@@ -31,26 +31,6 @@ animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
 "materials": {
-"Dirt": {
-"use_external/enabled": true,
-"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/Terrain/Dirt.tres"
-},
-"Grass": {
-"use_external/enabled": true,
-"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/Terrain/Grass.tres"
-},
-"Road": {
-"use_external/enabled": true,
-"use_external/path": "res://Terrain/TiledPath.tres"
-},
-"Water": {
-"use_external/enabled": true,
-"use_external/path": "res://Scenes/Z01-GreenHillZone/Models/Waterfall/Waterfall.tres"
-},
-"Wood": {
-"use_external/enabled": true,
-"use_external/path": "res://Terrain/Wood.tres"
-}
 },
 "nodes": {
 "PATH:BridgePlanks": {
