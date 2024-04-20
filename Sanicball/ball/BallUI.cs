@@ -7,7 +7,7 @@ namespace Sanicball.Ball;
 /// Contains things like the speed counter and the place counter
 /// </summary>
 public partial class BallUI : Control
-{    
+{
     [Export] private SanicBall sanicBall = null!;
     [Export] private Label lapCounter = null!;
 

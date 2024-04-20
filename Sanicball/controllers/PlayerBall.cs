@@ -16,7 +16,7 @@ public class PlayerBall : ISanicController
     /// </summary>
     /// <see cref="Account.ControlType"/>
     public required ControlType ControlType { get; init; }
-    
+
     private SanicBall sanicBall = null!;
 
     public void Initialise(SanicBall parent)
@@ -29,13 +29,13 @@ public class PlayerBall : ISanicController
     public void Process(double delta)
     {
         Vector3 force = ControlType.NormalizedForce();
-        
+
         //Rotate force so that Vector3.Forwards == Camera.Forwards
         force = Quaternion.FromEuler(sanicBall.Camera.Rotation) * force;
-        
+
         //Convert a linear force into the axis of rotation
         Vector3 torque = -force.Cross(sanicBall.UpOverride);
-        
+
         torque *= sanicBall.character.AngularAcceleration;
 
         sanicBall.ApplyTorque(torque);

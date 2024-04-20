@@ -12,7 +12,7 @@ public enum ControlType
     Joystick2,
     Joystick3,
     Joystick4,
-    Keyboard 
+    Keyboard
 }
 
 public static class ControlTypeImpl

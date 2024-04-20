@@ -20,10 +20,10 @@ public partial class ObjectMarker : Control
 
         marker.origin = origin;
         origin.TreeExited += marker.QueueFree;
-        
+
         marker.target = target;
         target.TreeExited += marker.QueueFree;
-        
+
         marker.Modulate = color;
         return marker;
     }

@@ -7,7 +7,7 @@ namespace Sanicball.Plugins;
 internal partial class PathVisualizer : EditorPlugin
 {
     private static readonly SphereMesh sphereMesh = GD.Load<SphereMesh>("res://addons/PathVisualizer/Sphere.tres");
-    
+
     PathNode gizmo = new(sphereMesh);
 
     public override void _EnterTree()

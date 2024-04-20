@@ -45,10 +45,10 @@ public partial class LobbyManager : Node
                 };
 
                 Tween tween = CreateTween();
-                
+
                 void SetCountdownText(float time) => countdownText.Text = $"{readyPlayers}/{players.Count} players ready: Match starting in {time} seconds";
                 tween.TweenMethod(Callable.From<float>(SetCountdownText), 5, 0, 5);
-                
+
                 void startRaceCallback() => RaceManager.Activate(GetTree(), options);
                 tween.TweenCallback(Callable.From(startRaceCallback));
             }

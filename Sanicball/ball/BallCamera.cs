@@ -22,20 +22,22 @@ namespace Sanicball.Ball;
 public partial class BallCamera : Camera3D
 {
     [Export] private SanicBall sanicBall = null!;
-    
+
     private float _orbitHeight;
-    [Export] public float OrbitHeight
+    [Export]
+    public float OrbitHeight
     {
         get => _orbitHeight;
         private set
         {
             _orbitHeight = value;
             Position = Position with { Y = value };
-        } 
+        }
     }
 
     private float _orbitRadius;
-    [Export] public float OrbitRadius
+    [Export]
+    public float OrbitRadius
     {
         get => _orbitRadius;
         private set
@@ -69,7 +71,7 @@ public partial class BallCamera : Camera3D
             previousOrbit = offsetVector;
             GlobalPosition = sanicBall.GlobalPosition + offsetVector;
         }
-        
+
 
         //Rotation updates
         LookAt(sanicBall.Position);

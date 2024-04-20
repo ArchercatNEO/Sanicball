@@ -6,12 +6,12 @@ namespace Sanicball.Characters;
 public partial class SanicCharacter : Resource
 {
     #region Names and credits
-    
+
     /// <summary>
     /// The full name of the character, distinct from the name of the controller
     /// </summary>
     [Export] public required string Name;
-    
+
     /// <summary>
     /// The creator of all the art associated with the character
     /// </summary>
@@ -20,7 +20,7 @@ public partial class SanicCharacter : Resource
     #endregion Names and credits
 
     #region Materials, Colours and Icons
-    
+
     /// <summary>
     /// The material that will be applied on the mesh of the ball
     /// </summary>
@@ -44,7 +44,7 @@ public partial class SanicCharacter : Resource
     #endregion Materials, Colours and Icons
 
     #region Rendering and collision overrides
-    
+
     /// <summary>
     /// If present, this mesh will be used instead of a ball, Aggmen and metal Sanic use this
     /// </summary>

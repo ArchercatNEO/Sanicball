@@ -68,7 +68,7 @@ public partial class SanicBall : RigidBody3D
     /// Inside the lobby it will be the global lobby camera. In a race it will be the camera attached to the ball itself
     /// </value>
     public Camera3D Camera { get; private set; } = null!;
-    
+
     /// <summary>
     /// The last recorded normal relative to the floor. Neccesary for things like loops to work properly
     /// </summary>
@@ -89,12 +89,12 @@ public partial class SanicBall : RigidBody3D
             CurrentLapChanged?.Invoke(this, value);
         }
     }
-    
+
 
     private ISanicController controller = new PlayerBall() { ControlType = Account.ControlType.Keyboard };
     public SanicCharacter character = SanicCharacter.Unknown;
 
-    
+
     private ObjectMarker? checkpointMarker;
     private Checkpoint? _currentCheckpoint;
     private Checkpoint? CurrentCheckpoint
@@ -105,13 +105,13 @@ public partial class SanicBall : RigidBody3D
             ArgumentNullException.ThrowIfNull(value);
 
             _currentCheckpoint = value;
-            
+
             checkpointMarker?.QueueFree();
             checkpointMarker = ObjectMarker.Create(Camera, value.next, new Color(0, 0, 0, 0));
             AddChild(checkpointMarker);
         }
     }
-    
+
 
     public override void _Ready()
     {
@@ -121,7 +121,7 @@ public partial class SanicBall : RigidBody3D
         {
             Renderer.Mesh = character.MeshOverride;
         }
-        
+
         Collider ??= GetNode<CollisionShape3D>("Collider");
         if (character.CollisionOverride is not null)
         {
@@ -154,7 +154,7 @@ public partial class SanicBall : RigidBody3D
     public override void _PhysicsProcess(double delta)
     {
         Array<Node3D> collisions = GetCollidingBodies();
-        
+
         //TODO better floor check
         //? How can we detect a loop vs a wall?
         if (collisions.Count == 0)

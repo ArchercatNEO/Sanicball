@@ -32,7 +32,8 @@ public partial class CharacterSelect : MarginContainer
         return panel;
     }
 
-    private static readonly SanicCharacter cancel = new() {
+    private static readonly SanicCharacter cancel = new()
+    {
         Name = "Exit",
         Credits = "Doesn't matter",
         Material = new(),
@@ -50,7 +51,7 @@ public partial class CharacterSelect : MarginContainer
     [Export] private Label characterName = null!;
     [Export] private Label hotkeyLabel = null!;
     private Node3D playerSpawner = null!;
-    
+
     public SanicBall? Player { get; private set; }
     private ControlType controlType;
 
@@ -73,7 +74,7 @@ public partial class CharacterSelect : MarginContainer
     private SanicCharacter SelectedCharacter = cancel;
 
     public override void _Input(InputEvent @event)
-    {        
+    {
         if (!characterSelect.Visible)
         {
             if (controlType.Ready(@event) && Player is not null)
@@ -94,7 +95,7 @@ public partial class CharacterSelect : MarginContainer
                     Player = null;
                 }
             }
-            
+
             return;
         }
 
@@ -106,7 +107,7 @@ public partial class CharacterSelect : MarginContainer
         if (controlType.Confirmed(@event))
         {
             characterSelect.Hide();
-            
+
             //cancel index
             if (CharacterIndex == 0) { return; }
 

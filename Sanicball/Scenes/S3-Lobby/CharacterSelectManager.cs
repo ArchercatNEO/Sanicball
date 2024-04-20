@@ -22,7 +22,7 @@ public partial class CharacterSelectManager : HBoxContainer
         _readyPlayers += ready ? 1 : -1;
         OnReadyPlayerChange?.Invoke(this, _readyPlayers);
     }
-    
+
     public readonly Dictionary<ControlType, CharacterSelect> activePanels = [];
 
     public override void _Ready()

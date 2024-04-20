@@ -6,7 +6,8 @@ namespace Sanicball.Plugins;
 public partial class AutoFontSize : Label
 {
     private int _minimumSize = 10;
-    [Export] public int MinimumSize
+    [Export]
+    public int MinimumSize
     {
         get => _minimumSize;
         set
@@ -17,7 +18,8 @@ public partial class AutoFontSize : Label
     }
 
     private int _maximumSize = 20;
-    [Export] public int MaximumSize
+    [Export]
+    public int MaximumSize
     {
         get => _maximumSize;
         set

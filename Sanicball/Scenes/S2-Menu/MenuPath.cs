@@ -5,7 +5,8 @@ namespace Sanicball.Scenes;
 public partial class MenuPath : Node3D
 {
     private StandardMaterial3D characterMat = new();
-    [Export] public StandardMaterial3D CharacterMat
+    [Export]
+    public StandardMaterial3D CharacterMat
     {
         get => characterMat;
         set
@@ -22,7 +23,8 @@ public partial class MenuPath : Node3D
 
     public Transform3D startTranform = Transform3D.Identity;
     private Vector3 start = Vector3.Zero;
-    [Export] public Vector3 Start
+    [Export]
+    public Vector3 Start
     {
         get => start;
         set
@@ -34,7 +36,8 @@ public partial class MenuPath : Node3D
 
     public required StandardMaterial3D startMat;
     private Color startColor = new(0, 1, 0, 1);
-    [Export] private Color StartColor
+    [Export]
+    private Color StartColor
     {
         get => startColor;
         set
@@ -46,7 +49,8 @@ public partial class MenuPath : Node3D
 
     public Transform3D endTranform = Transform3D.Identity;
     private Vector3 end = Vector3.Zero;
-    [Export] public Vector3 End
+    [Export]
+    public Vector3 End
     {
         get => end;
         set
@@ -58,7 +62,8 @@ public partial class MenuPath : Node3D
 
     public required StandardMaterial3D endMat;
     private Color endColor = new(1, 0, 0, 1);
-    [Export] private Color EndColor
+    [Export]
+    private Color EndColor
     {
         get => endColor;
         set

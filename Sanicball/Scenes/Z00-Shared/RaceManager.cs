@@ -13,7 +13,7 @@ public partial class RaceManager : Node
     public override void _ExitTree() { Instance = null; }
 
     private static List<(SanicCharacter character, ISanicController controller)> players = [];
-    
+
     public static void Activate(SceneTree tree, RaceOptions options)
     {
         players = options.Players;
