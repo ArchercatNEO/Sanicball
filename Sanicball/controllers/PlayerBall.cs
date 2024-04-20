@@ -11,33 +11,32 @@ namespace Sanicball.Ball;
 /// </summary>
 public class PlayerBall : ISanicController
 {
+    /// <summary>
+    /// The controller of this player, used to determine where the ball needs to turn towards
+    /// </summary>
+    /// <see cref="Account.ControlType"/>
+    public required ControlType ControlType { get; init; }
+    
     private SanicBall sanicBall = null!;
-    public required  ControlType ControlType { get; init; }
 
     public void Initialise(SanicBall parent)
     {
         sanicBall = parent;
         sanicBall.ContactMonitor = true;
         sanicBall.MaxContactsReported = 3;
-
-        LobbyCamera.Instance?.Subscribe(parent);
     }
 
     public void Process(double delta)
     {
         Vector3 force = ControlType.NormalizedForce();
-        //TODO use lobby camera if omnicamera is not found
-        if (sanicBall.Camera is not null)
-        {
-            //Rotate force so that Vector3.Forwards == Camera.Forwards
-            force = Quaternion.FromEuler(sanicBall.Camera.Rotation) * force;
-        }
+        
+        //Rotate force so that Vector3.Forwards == Camera.Forwards
+        force = Quaternion.FromEuler(sanicBall.Camera.Rotation) * force;
         
         //Convert a linear force into the axis of rotation
         Vector3 torque = -force.Cross(sanicBall.UpOverride);
         
         torque *= sanicBall.character.AngularAcceleration;
-        torque *= SanicBall.InputAcceleration;
 
         sanicBall.ApplyTorque(torque);
     }

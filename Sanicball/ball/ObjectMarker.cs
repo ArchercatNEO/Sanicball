@@ -24,7 +24,7 @@ public partial class ObjectMarker : Control
         marker.target = target;
         target.TreeExited += marker.QueueFree;
         
-        //TODO implement color changes
+        marker.Modulate = color;
         return marker;
     }
 

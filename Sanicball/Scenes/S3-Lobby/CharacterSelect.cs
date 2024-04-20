@@ -110,7 +110,7 @@ public partial class CharacterSelect : MarginContainer
             //cancel index
             if (CharacterIndex == 0) { return; }
 
-            Player = SanicBall.Create(SelectedCharacter, new PlayerBall() { ControlType = controlType });
+            Player = SanicBall.CreateLobby(SelectedCharacter, new PlayerBall() { ControlType = controlType });
             playerSpawner.AddChild(Player);
             Player.Translate(new(0, 5, 0));
             Player.ApplyImpulse(new(0, 10, 0));
