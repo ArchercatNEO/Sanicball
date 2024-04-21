@@ -3,7 +3,6 @@ using Godot;
 using Godot.Collections;
 using Sanicball.Characters;
 using Sanicball.GameMechanics;
-using Sanicball.Scenes;
 
 namespace Sanicball.Ball;
 
@@ -21,8 +20,10 @@ public partial class SanicBall : RigidBody3D
     private static readonly AudioStreamWav speed = GD.Load<AudioStreamWav>("res://ball/S1-Sound/speednoise.wav");
     private static readonly AudioStreamWav brake = GD.Load<AudioStreamWav>("res://ball/S1-Sound/brake.wav");
 
+    /// <summary>
+    /// Contains: the ball, a renderer and a collider
+    /// </summary>
     private static readonly PackedScene lobbyPrefab = GD.Load<PackedScene>("res://ball/LobbyBall.tscn");
-    private static readonly PackedScene racePrefab = GD.Load<PackedScene>("res://ball/RaceBall.tscn");
 
     public static SanicBall CreateLobby(SanicCharacter character, ISanicController controller)
     {
@@ -30,11 +31,14 @@ public partial class SanicBall : RigidBody3D
         instance.controller = controller;
         instance.character = character;
 
-        LobbyCamera.Instance?.Subscribe(instance);
-
         return instance;
     }
 
+    /// <summary>
+    /// Contains everything lobbyPrefab contains as well as a viewport + container and a camera
+    /// </summary>
+    private static readonly PackedScene racePrefab = GD.Load<PackedScene>("res://ball/RaceBall.tscn");
+    
     /// <summary>
     /// Create a Sanicball from the race prefab with a viewport and associated camera
     /// </summary>

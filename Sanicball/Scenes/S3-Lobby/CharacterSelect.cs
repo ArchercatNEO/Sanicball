@@ -55,8 +55,8 @@ public partial class CharacterSelect : MarginContainer
     public SanicBall? Player { get; private set; }
     private ControlType controlType;
 
-    private bool ready = false;
     public event EventHandler<bool>? OnReadyChanged;
+    private bool ready = false;
 
     private int _characterIndex = 0;
     private int CharacterIndex
@@ -65,13 +65,11 @@ public partial class CharacterSelect : MarginContainer
         set
         {
             _characterIndex = (value + 16) % 16;
-            SelectedCharacter = characters[_characterIndex];
-            characterName.Text = SelectedCharacter.Name;
-            characterIcon.Texture = SelectedCharacter.Icon;
+            SanicCharacter selectedCharacter = characters[_characterIndex];
+            characterName.Text = selectedCharacter.Name;
+            characterIcon.Texture = selectedCharacter.Icon;
         }
     }
-
-    private SanicCharacter SelectedCharacter = cancel;
 
     public override void _Input(InputEvent @event)
     {
@@ -89,11 +87,8 @@ public partial class CharacterSelect : MarginContainer
                 characterSelect.Show();
                 CharacterIndex = 0;
 
-                if (Player is not null)
-                {
-                    Player.QueueFree();
-                    Player = null;
-                }
+                Player?.QueueFree();
+                Player = null;
             }
 
             return;
@@ -111,8 +106,10 @@ public partial class CharacterSelect : MarginContainer
             //cancel index
             if (CharacterIndex == 0) { return; }
 
-            Player = SanicBall.CreateLobby(SelectedCharacter, new PlayerBall() { ControlType = controlType });
+            SanicCharacter selected = characters[CharacterIndex];
+            Player = SanicBall.CreateLobby(selected, new PlayerBall() { ControlType = controlType });
             playerSpawner.AddChild(Player);
+            LobbyCamera.Instance?.Subscribe(Player);
             Player.Translate(new(0, 5, 0));
             Player.ApplyImpulse(new(0, 10, 0));
         }
