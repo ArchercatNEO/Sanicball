@@ -1,0 +1,9 @@
+[gd_resource type="SphereMesh" load_steps=3 format=3 uid="uid://ctrirqb48lcyn"]
+
+[ext_resource type="Texture2D" uid="uid://dtso6vgbqofho" path="res://src/characters/C01-Sanic/SanicMap.svg" id="1_e6n7q"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_01l0q"]
+albedo_texture = ExtResource("1_e6n7q")
+
+[resource]
+material = SubResource("StandardMaterial3D_01l0q")

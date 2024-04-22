@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://djfqfpl5msp5e"]
+
+[ext_resource type="Texture2D" uid="uid://ceg74pgf8rb6g" path="res://src/characters/C05-Shedew/ShedewIcon.png" id="1_qjibn"]
+[ext_resource type="Script" path="res://src/characters/SanicCharacter.cs" id="1_ys7ju"]
+[ext_resource type="Material" uid="uid://ckdetghdrmpb6" path="res://src/characters/C05-Shedew/ShedewMat.tres" id="2_t8wu0"]
+[ext_resource type="Texture2D" uid="uid://i7d53fm0jycs" path="res://src/characters/C05-Shedew/ShedewMinimap.png" id="3_865os"]
+
+[resource]
+script = ExtResource("1_ys7ju")
+Name = "Shedew"
+Credits = "Deviantart user GalaxyTheHedgehog1"
+Color = Color(0.141176, 0.141176, 0.141176, 1)
+Material = ExtResource("2_t8wu0")
+Icon = ExtResource("1_qjibn")
+MinimapIcon = ExtResource("3_865os")
+AngularAcceleration = 100.0
+AirSpeed = 15.0
+JumpHeight = 14.0
+Grip = 20.0
+BallSize = 1.0

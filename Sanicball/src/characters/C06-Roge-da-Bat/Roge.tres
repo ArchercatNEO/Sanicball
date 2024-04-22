@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://2d1mpv0e8w8i"]
+
+[ext_resource type="Texture2D" uid="uid://bvx2xgbatyrou" path="res://src/characters/C06-Roge-da-Bat/RogeIcon.png" id="1_2ajhl"]
+[ext_resource type="Script" path="res://src/characters/SanicCharacter.cs" id="1_7oul3"]
+[ext_resource type="Material" uid="uid://dfqmnl7lgbosx" path="res://src/characters/C06-Roge-da-Bat/RogeMat.tres" id="2_o33sw"]
+[ext_resource type="Texture2D" uid="uid://bpbansksgbgsw" path="res://src/characters/C06-Roge-da-Bat/RogeMinimap.png" id="3_0hrih"]
+
+[resource]
+script = ExtResource("1_7oul3")
+Name = "Roge"
+Credits = "Artist Tyson Hesse"
+Color = Color(0.941176, 0.941176, 0.941176, 1)
+Material = ExtResource("2_o33sw")
+Icon = ExtResource("1_2ajhl")
+MinimapIcon = ExtResource("3_0hrih")
+AngularAcceleration = 100.0
+AirSpeed = 15.0
+JumpHeight = 14.0
+Grip = 20.0
+BallSize = 1.0

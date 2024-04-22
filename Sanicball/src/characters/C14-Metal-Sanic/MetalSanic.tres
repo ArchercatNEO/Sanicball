@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="SanicCharacter" load_steps=7 format=3 uid="uid://co63ey6mxlir7"]
+
+[ext_resource type="Script" path="res://src/characters/SanicCharacter.cs" id="1_m27ng"]
+[ext_resource type="Texture2D" uid="uid://di110kdkpjt4s" path="res://src/characters/C14-Metal-Sanic/MetalSanicIcon.png" id="1_t6yfd"]
+[ext_resource type="Material" uid="uid://b4qxdmu3rhgyd" path="res://src/characters/C14-Metal-Sanic/MetalSanicMat.tres" id="2_spd70"]
+[ext_resource type="Texture2D" uid="uid://ctmps6iiwkwrj" path="res://src/characters/C14-Metal-Sanic/MetalSanicMinimap.png" id="3_muqsb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_2vevi"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_1u2ii"]
+
+[resource]
+script = ExtResource("1_m27ng")
+Name = "Metal Sanic"
+Credits = "Deviantart user franz888"
+Color = Color(0.286275, 0.396078, 0.792157, 1)
+Material = ExtResource("2_spd70")
+Icon = ExtResource("1_t6yfd")
+MinimapIcon = ExtResource("3_muqsb")
+AlternativeMesh = SubResource("BoxMesh_2vevi")
+CollisionMesh = SubResource("BoxShape3D_1u2ii")
+AngularAcceleration = 100.0
+AirSpeed = 15.0
+JumpHeight = 14.0
+Grip = 20.0
+BallSize = 1.0
