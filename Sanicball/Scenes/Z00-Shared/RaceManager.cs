@@ -28,7 +28,9 @@ public partial class RaceManager : Node
         float offset = 10;
         foreach (var (character, controller) in players)
         {
-            SanicBall raceBall = SanicBall.CreateRace(character, controller, finishLine);
+            CheckpointReciever reciever = new(finishLine, 3);
+            reciever.RaceFinished += (sender, e) => LobbyManager.Activate(GetTree());
+            SanicBall raceBall = SanicBall.CreateRace(character, controller, reciever);
 
             Node viewportContainer = raceBall.GetNode("../..");
             viewportManager.AddChild(viewportContainer);

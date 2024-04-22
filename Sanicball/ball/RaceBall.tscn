@@ -61,4 +61,3 @@ lapCounter = NodePath("Label")
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
-text = "Lap 1/3"

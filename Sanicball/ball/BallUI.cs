@@ -1,4 +1,6 @@
+using System;
 using Godot;
+using Sanicball.GameMechanics;
 
 namespace Sanicball.Ball;
 
@@ -11,11 +13,22 @@ public partial class BallUI : Control
     [Export] private SanicBall sanicBall = null!;
     [Export] private Label lapCounter = null!;
 
+    private CheckpointReciever chachedReciever = null!;
+
     public override void _Ready()
     {
-        sanicBall.CurrentLapChanged += (sender, lap) =>
+        return;
+        ArgumentNullException.ThrowIfNull(sanicBall.checkpointReciever);
+        
+        chachedReciever = sanicBall.checkpointReciever;
+        chachedReciever.NextLap += (sender, lap) =>
         {
             lapCounter.Text = $"Lap: {lap + 1}/3";
+        };
+
+        chachedReciever.RaceFinished += (sender, args) =>
+        {
+            lapCounter.AddThemeColorOverride("default_color", new(0, 0, 1));
         };
     }
 }

@@ -20,6 +20,13 @@ public partial class LobbyManager : Node
     public override void _EnterTree() { Instance = this; }
     public override void _ExitTree() { Instance = null; }
 
+    private static readonly PackedScene prefab = GD.Load<PackedScene>("res://Scenes/S3-Lobby/Lobby.tscn");
+
+    public static void Activate(SceneTree tree)
+    {
+        tree.ChangeSceneToPacked(prefab);
+    }
+
     //Sub-managers that actually do stuff
     [Export] private CharacterSelectManager characterSelectManager = null!;
     [Export] private Label countdownText = null!;

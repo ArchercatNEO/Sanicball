@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using Godot.Collections;
 using Sanicball.Characters;
@@ -11,7 +10,7 @@ namespace Sanicball.Ball;
 /// Contains its controller (ai/player/remote)
 /// Contains its character and associated personality
 /// </summary>
-public partial class SanicBall : RigidBody3D
+public partial class SanicBall : RigidBody3D, ICheckpointReciever
 {
     public const int MaxSpeed = 80;
 
@@ -46,7 +45,7 @@ public partial class SanicBall : RigidBody3D
     /// <param name="controller">The controller that will move the ball (player/ai/remote)</param>
     /// <param name="finishLine">As all stages are a loop finish line will be used as the stating checkpoint</param>
     /// <returns></returns>
-    public static SanicBall CreateRace(SanicCharacter character, ISanicController controller, Checkpoint finishLine)
+    public static SanicBall CreateRace(SanicCharacter character, ISanicController controller, CheckpointReciever reciever)
     {
         //Making the root a container makes split screen easier
         Node viewportContainer = racePrefab.Instantiate();
@@ -55,7 +54,7 @@ public partial class SanicBall : RigidBody3D
         instance.controller = controller;
         instance.character = character;
 
-        instance._currentCheckpoint = finishLine;
+        instance.checkpointReciever = reciever;
 
         controller.ActivateRace();
 
@@ -72,50 +71,21 @@ public partial class SanicBall : RigidBody3D
     /// Inside the lobby it will be the global lobby camera. In a race it will be the camera attached to the ball itself
     /// </value>
     public Camera3D Camera { get; private set; } = null!;
+    public CheckpointReciever? checkpointReciever = null;
 
+    public CheckpointReciever? GetReciever()
+    {
+        return checkpointReciever;
+    }
+
+    private ISanicController controller = new PlayerBall() { ControlType = Account.ControlType.Keyboard };
+    public SanicCharacter character = SanicCharacter.Unknown;
+    
     /// <summary>
     /// The last recorded normal relative to the floor. Neccesary for things like loops to work properly
     /// </summary>
     public Vector3 UpOverride { get; private set; } = Vector3.Up;
     public bool IsGrounded { get; private set; } = false;
-
-    /// <summary>
-    /// Emmited when the ball passes through a checkpoint
-    /// </summary>
-    public event EventHandler<int>? CurrentLapChanged;
-    private int _currentLap = 0;
-    public int CurrentLap
-    {
-        get => _currentLap;
-        set
-        {
-            _currentLap = value;
-            CurrentLapChanged?.Invoke(this, value);
-        }
-    }
-
-
-    private ISanicController controller = new PlayerBall() { ControlType = Account.ControlType.Keyboard };
-    public SanicCharacter character = SanicCharacter.Unknown;
-
-
-    private ObjectMarker? checkpointMarker;
-    private Checkpoint? _currentCheckpoint;
-    private Checkpoint? CurrentCheckpoint
-    {
-        get => _currentCheckpoint;
-        set
-        {
-            ArgumentNullException.ThrowIfNull(value);
-
-            _currentCheckpoint = value;
-
-            checkpointMarker?.QueueFree();
-            checkpointMarker = ObjectMarker.Create(Camera, value.next, new Color(0, 0, 0, 0));
-            AddChild(checkpointMarker);
-        }
-    }
-
 
     public override void _Ready()
     {
@@ -136,14 +106,15 @@ public partial class SanicBall : RigidBody3D
         //In a race it will be the camera attached to the ball
         Camera = GetViewport().GetCamera3D();
 
-        //TODO fix this up
-        //the marker needs a camera but we only got it now so it must be created late
-        if (_currentCheckpoint is not null)
+        Label counter = new();
+        AddChild(counter);
+        checkpointReciever?.AddCounter(counter);
+
+        ObjectMarker? checkpointMarker = checkpointReciever?.AddTracking(Camera);
+        if (checkpointMarker != null)
         {
-            checkpointMarker = ObjectMarker.Create(Camera, _currentCheckpoint.next, new Color(0, 0, 0, 0));
             AddChild(checkpointMarker);
         }
-
 
         controller.Initialise(this);
 
@@ -172,7 +143,7 @@ public partial class SanicBall : RigidBody3D
         }
     }
 
-
+    //TODO use character stats instead of a const
     public override void _IntegrateForces(PhysicsDirectBodyState3D state)
     {
         if (state.AngularVelocity.Length() > MaxSpeed)
@@ -181,24 +152,15 @@ public partial class SanicBall : RigidBody3D
         }
     }
 
-    public void OnCheckpointCollision(Checkpoint checkpoint)
-    {
-        if (checkpoint == CurrentCheckpoint?.next)
-        {
-            CurrentCheckpoint = checkpoint;
-
-            if (CurrentCheckpoint.isFinishLine)
-            {
-                CurrentLap++;
-            }
-        }
-    }
-
-    //TODO set respawn as lobby floor during lobby
     public void OnRespawn()
     {
         AngularVelocity = new Vector3(0, 0, 0);
         LinearVelocity = new Vector3(0, 0, 0);
-        Position = CurrentCheckpoint.Position + new Vector3(0, 1, 0);
+
+        //TODO set respawn as lobby floor during lobby
+        //Lobby -> lobby spawner
+        //Race -> last checkpoint
+        //Race after finished -> finish line
+        Position = checkpointReciever.CurrentCheckpoint.Position + new Vector3(0, 1, 0);
     }
 }
