@@ -1,6 +1,0 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bnp30d2ch3nuh"]
-
-[ext_resource type="Texture2D" uid="uid://b4h34h8p0hbq1" path="res://characters/C11-Sulver/SulverMap.png" id="1_3r6mm"]
-
-[resource]
-albedo_texture = ExtResource("1_3r6mm")

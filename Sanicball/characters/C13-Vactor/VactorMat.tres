@@ -1,9 +1,0 @@
-[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://b154uef3bq4q8"]
-
-[ext_resource type="Texture2D" uid="uid://b1yqmw7nbacov" path="res://characters/C13-Vactor/VactorMap.png" id="1_pcoav"]
-[ext_resource type="Texture2D" uid="uid://768wqg5dldsr" path="res://characters/C13-Vactor/VactorNormalMap.png" id="2_2bbcy"]
-
-[resource]
-albedo_texture = ExtResource("1_pcoav")
-normal_enabled = true
-normal_texture = ExtResource("2_2bbcy")

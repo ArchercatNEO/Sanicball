@@ -1,6 +1,0 @@
-[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://bajdniss4ni2l"]
-
-[ext_resource type="Texture2D" uid="uid://bcxqa1cfbybbv" path="res://characters/C15-Ogre/OgreMap.png" id="1_mm28r"]
-
-[resource]
-albedo_texture = ExtResource("1_mm28r")

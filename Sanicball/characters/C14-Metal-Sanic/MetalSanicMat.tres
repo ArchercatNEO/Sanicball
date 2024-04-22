@@ -1,9 +1,0 @@
-[gd_resource type="StandardMaterial3D" load_steps=3 format=3 uid="uid://b4qxdmu3rhgyd"]
-
-[ext_resource type="Texture2D" uid="uid://ftsqjxa6aj17" path="res://characters/C14-Metal-Sanic/MetalSanicMap.png" id="1_3nol4"]
-[ext_resource type="Texture2D" uid="uid://cxs5d1tforwem" path="res://characters/C14-Metal-Sanic/MetalSanicEmission.png" id="2_gsmd8"]
-
-[resource]
-albedo_texture = ExtResource("1_3nol4")
-emission_enabled = true
-emission_texture = ExtResource("2_gsmd8")
