@@ -5,7 +5,7 @@
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://src/scenes/S3-Lobby/Decoration/clear_sky.tres" id="1_udlj8"]
 [ext_resource type="Script" path="res://src/scenes/Z00-Shared/RaceManager.cs" id="1_wyt5t"]
 [ext_resource type="AudioStream" uid="uid://56egn88rk5bt" path="res://assets/music/Sea.ogg" id="4_wke57"]
-[ext_resource type="PackedScene" uid="uid://c77tmtg6splsc" path="res://src/scenes/Z01-GreenHillZone/Models/Terrain/greenHillZone.blend" id="5_wtf51"]
+[ext_resource type="PackedScene" uid="uid://c77tmtg6splsc" path="res://src/scenes/Z01-GreenHillZone/assets/greenHillZone.blend" id="5_wtf51"]
 [ext_resource type="PackedScene" uid="uid://ceh3dfqf61qqe" path="res://src/game-mechanics/Checkpoint/Checkpoint.tscn" id="7_hucb3"]
 
 [sub_resource type="Environment" id="Environment_dgy8r"]
@@ -61,9 +61,9 @@ grow_vertical = 2
 [node name="Game3D" parent="." instance=ExtResource("5_wtf51")]
 
 [node name="Sunlight" type="DirectionalLight3D" parent="Game3D"]
+transform = Transform3D(1, 0, 0, 0, -0.396619, 0.917983, 0, -0.917983, -0.396619, 0, 0, 0)
 
 [node name="Sea" type="Area3D" parent="Game3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -45.3806, 0)
 script = ExtResource("1_roiel")
 metadata/_edit_group_ = true
 
@@ -78,7 +78,7 @@ stream = ExtResource("4_wke57")
 bus = &"Ambience"
 
 [node name="Checkpoints" type="Node3D" parent="Game3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -32.4683, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5618, 0)
 
 [node name="FinishLine" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
 transform = Transform3D(-4.94321, -8.69279, -3.79974e-07, 0, -4.37114e-07, 10, -8.69279, 4.94321, 2.16075e-07, -81.3422, 40.9393, 175.875)

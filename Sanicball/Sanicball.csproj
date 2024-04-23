@@ -8,23 +8,23 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\+GodotFiles\GodotFiles.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+    <ProjectReference Include="..\+GodotFiles\GodotFiles.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <!--Godot file types-->
-    <AdditionalFiles Include="**/*.tres"/>
-    <AdditionalFiles Include="**/*.tscn"/>
-    <AdditionalFiles Include="**/*.gdshader"/>
-    <AdditionalFiles Include="**/*.import"/>
+    <AdditionalFiles Include="**/*.tres" />
+    <AdditionalFiles Include="**/*.tscn" />
+    <AdditionalFiles Include="**/*.gdshader" />
+    <AdditionalFiles Include="**/*.import" />
     <!--Text file types-->
-    <AdditionalFiles Include="**/*.ttf"/>
+    <AdditionalFiles Include="**/*.ttf" />
     <!--Image file types-->
-    <AdditionalFiles Include="**/*.png"/>
-    <AdditionalFiles Include="**/*.svg"/>
+    <AdditionalFiles Include="**/*.png" />
+    <AdditionalFiles Include="**/*.svg" />
     <!--Sound file types-->
-    <AdditionalFiles Include="**/*.ogg"/>
-    <AdditionalFiles Include="**/*.mp3"/>
-    <AdditionalFiles Include="**/*.wav"/>
+    <AdditionalFiles Include="**/*.ogg" />
+    <AdditionalFiles Include="**/*.mp3" />
+    <AdditionalFiles Include="**/*.wav" />
     <!--3D object file types-->
-    <AdditionalFiles Include="**/*.blend"/>
-    <AdditionalFiles Include="**/*.glb"/>
+    <AdditionalFiles Include="**/*.blend" />
+    <AdditionalFiles Include="**/*.glb" />
   </ItemGroup>
 </Project>

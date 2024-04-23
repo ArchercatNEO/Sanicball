@@ -8,6 +8,7 @@
 [ext_resource type="SphereMesh" uid="uid://ctrirqb48lcyn" path="res://src/scenes/S2-Menu/ball.tres" id="5_x72ac"]
 [ext_resource type="Texture2D" uid="uid://ddt0lnqi20nb8" path="res://src/scenes/S0-Shared/sanicball.png" id="6_2ivgr"]
 [ext_resource type="Script" path="res://src/scenes/S2-Menu/MenuPanel.cs" id="7_mnpnq"]
+[ext_resource type="Script" path="res://src/scenes/S2-Menu/MenuPath.cs" id="8_mnpnq"]
 
 [sub_resource type="Environment" id="Environment_ftve1"]
 background_energy_multiplier = 0.0
@@ -178,15 +179,15 @@ lightingEnv = NodePath("../../WorldEnvironment")
 
 [node name="Sanic" type="Node3D" parent="Menu3D/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 0.995023, -0.0996496, 0, 0.0996496, 0.995023, -0.2, -14.6579, -38.4146)
+script = ExtResource("8_mnpnq")
 
 [node name="Knackles" type="Node3D" parent="Menu3D/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 0.995023, -0.0996496, 0, 0.0996496, 0.995023, -0.2, -14.6579, -38.4146)
-metadata/characterMat = ExtResource("2_pedrv")
-metadata/Start = Vector3(30, 30, 30)
-metadata/End = Vector3(25, 25, 25)
+script = ExtResource("8_mnpnq")
 
 [node name="Shedew" type="Node3D" parent="Menu3D/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 0.995023, -0.0996496, 0, 0.0996496, 0.995023, -0.2, -14.6579, -38.4146)
+script = ExtResource("8_mnpnq")
 
 [node name="Ground" type="MeshInstance3D" parent="Menu3D"]
 mesh = SubResource("BoxMesh_yf5th")
