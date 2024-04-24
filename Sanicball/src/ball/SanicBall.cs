@@ -121,11 +121,6 @@ public partial class SanicBall : RigidBody3D, ICheckpointReciever
         SetCollisionMaskValue(TriggerRespawn.layer, true);
     }
 
-    public override void _Process(double delta)
-    {
-        controller.Process(delta);
-    }
-
     public override void _PhysicsProcess(double delta)
     {
         Array<Node3D> collisions = GetCollidingBodies();
@@ -141,14 +136,16 @@ public partial class SanicBall : RigidBody3D, ICheckpointReciever
             IsGrounded = true;
             //TODO get a normal somehow to use as up
         }
+
+        controller.Process(delta);
     }
 
     //TODO use character stats instead of a const
     public override void _IntegrateForces(PhysicsDirectBodyState3D state)
     {
-        if (state.AngularVelocity.Length() > MaxSpeed)
+        if (state.AngularVelocity.Length() > character.MaxAngularSpeed)
         {
-            state.AngularVelocity = state.AngularVelocity.Normalized() * MaxSpeed;
+            state.AngularVelocity = state.AngularVelocity.Normalized() * character.MaxAngularSpeed;
         }
     }
 

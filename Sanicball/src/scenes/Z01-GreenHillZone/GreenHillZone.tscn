@@ -13,7 +13,7 @@ background_mode = 2
 sky = ExtResource("1_udlj8")
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6gej4"]
-size = Vector3(2500, 2, 2500)
+size = Vector3(1000, 2, 1000)
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_1g78f"]
 
@@ -28,7 +28,7 @@ shader_parameter/noise = SubResource("NoiseTexture2D_xyktn")
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_pqdxx"]
 material = SubResource("ShaderMaterial_0vlaa")
-size = Vector2(2500, 2500)
+size = Vector2(1000, 1000)
 subdivide_width = 32
 subdivide_depth = 32
 
@@ -78,19 +78,18 @@ stream = ExtResource("4_wke57")
 bus = &"Ambience"
 
 [node name="Checkpoints" type="Node3D" parent="Game3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10.5618, 0)
 
 [node name="FinishLine" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
-transform = Transform3D(-4.94321, -8.69279, -3.79974e-07, 0, -4.37114e-07, 10, -8.69279, 4.94321, 2.16075e-07, -81.3422, 40.9393, 175.875)
+transform = Transform3D(-4.94321, -8.69279, -3.79974e-07, 0, -4.37114e-07, 10, -8.69279, 4.94321, 2.16075e-07, -81.3422, 44.3072, 175.875)
 isFinishLine = true
-next = NodePath(".")
+next = NodePath("../Checkpoint")
 
 [node name="Checkpoint" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
-transform = Transform3D(0.386947, -13.5895, 5.94016e-07, 0, -5.94256e-07, -13.595, 13.5895, 0.386947, -1.6914e-08, 202.225, 44.6477, 41.0371)
-next = NodePath(".")
+transform = Transform3D(0.386947, -13.5895, 5.94016e-07, 0, -5.94256e-07, -13.595, 13.5895, 0.386947, -1.6914e-08, 204.756, 45.0111, 41.6596)
+next = NodePath("../Checkpoint2")
 
 [node name="Checkpoint2" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
-transform = Transform3D(4.57445, -14.2855, 0, 0, -6.55671e-07, -15, 14.2855, 4.57445, -1.99956e-07, 99.5201, 21.8097, -84.1141)
+transform = Transform3D(4.57445, -14.2855, 0, 0, -6.55671e-07, -15, 14.2855, 4.57445, -1.99956e-07, 102.356, 24.9915, -86.804)
 next = NodePath("../Checkpoint3")
 
 [node name="Checkpoint3" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]

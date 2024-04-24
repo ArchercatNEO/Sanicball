@@ -9,11 +9,12 @@
 script = ExtResource("4_ud2ol")
 Name = "Taels"
 Credits = "Deviantart user Mew087123"
-Color = Color(0.917647, 0.780392, 0, 1)
 Material = ExtResource("2_vteb7")
+Color = Color(0.917647, 0.780392, 0, 1)
 Icon = ExtResource("1_qvelh")
 MinimapIcon = ExtResource("3_vwmec")
-AngularAcceleration = 100.0
+AngularAcceleration = 31.4159
+MaxAngularSpeed = 62.8319
 AirSpeed = 15.0
 JumpHeight = 14.0
 Grip = 20.0

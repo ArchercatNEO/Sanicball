@@ -60,9 +60,10 @@ public partial class SanicCharacter : Resource
     #region Physics stats
 
     /// <summary>
-    /// The angular acceleration (in rad/s²) of this character while turning on the ground
+    /// The angular acceleration (in rad/s²) of this character while turning on the ground. Default is 1 rotation/s²
     /// </summary>
-    [Export] public float AngularAcceleration = 100;
+    [Export] public float AngularAcceleration = 5 * Mathf.Tau;
+    [Export] public float MaxAngularSpeed = 10 * Mathf.Tau;
     [Export] public float AirSpeed = 15;
     [Export] public float JumpHeight = 14;
     [Export] public float Grip = 20;
