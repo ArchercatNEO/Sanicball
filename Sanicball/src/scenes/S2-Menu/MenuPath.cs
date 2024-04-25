@@ -2,6 +2,7 @@ using Godot;
 
 namespace Sanicball.Scenes;
 
+[GlobalClass]
 public partial class MenuPath : Node3D
 {
     private StandardMaterial3D characterMat = new();

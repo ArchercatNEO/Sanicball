@@ -33,7 +33,27 @@ internal partial class PathNode : EditorNode3DGizmoPlugin
     }
 
     public override string _GetGizmoName() => "PathNode";
-    public override bool _HasGizmo(Node3D forNode3D) => forNode3D is MenuPath;
+    public override bool _HasGizmo(Node3D forNode3D)
+    {
+        Variant maybeScript = forNode3D.GetScript();
+        if (maybeScript.VariantType == Variant.Type.Nil)
+        {
+            return false;
+        }
+
+        if (maybeScript.As<Script>().ResourcePath == "res://src/scenes/S2-Menu/MenuPath.cs")
+        {
+            GD.Print("Menu path found");
+            GD.Print(forNode3D.GetType());
+        }
+
+        if (forNode3D is MenuPath)
+        {
+            GD.Print("Also it's known as the type");
+        }
+
+        return forNode3D is MenuPath;
+    }
 
     public override void _Redraw(EditorNode3DGizmo gizmo)
     {
