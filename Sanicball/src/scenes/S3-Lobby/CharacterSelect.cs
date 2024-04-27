@@ -32,6 +32,25 @@ public partial class CharacterSelect : MarginContainer
         return panel;
     }
 
+    public static CharacterSelect CreatePlayer(ControlType controlType, Node3D spawner, SanicCharacter character)
+    {
+        CharacterSelect panel = prefab.Instantiate<CharacterSelect>();
+        panel.playerSpawner = spawner;
+        panel.controlType = controlType;
+        panel.controllerIcon ??= panel.GetNode<TextureRect>("CharacterSelect");
+        panel.controllerIcon.Texture = controlType.Icon();
+        panel.characterSelect ??= panel.GetNode<Control>("CharacterSelect");
+        panel.characterSelect.Hide();
+        panel.characterIcon ??= panel.GetNode<TextureRect>("CharacterSelect/CharacterIcon");
+        panel.characterName ??= panel.GetNode<Label>("CharacterSelect/CharacterName");
+        panel.hotkeyLabel.Text = """
+        [Arrow keys]: Select character,
+        [Enter]: Confirm
+        """;
+        panel.SpawnPlayer(character);
+        return panel;
+    }
+
     private static readonly SanicCharacter cancel = new()
     {
         Name = "Exit",
@@ -53,7 +72,7 @@ public partial class CharacterSelect : MarginContainer
     private Node3D playerSpawner = null!;
 
     public SanicBall? Player { get; private set; }
-    private ControlType controlType;
+    public ControlType controlType;
 
     public event EventHandler<bool>? OnReadyChanged;
     private bool ready = false;
@@ -107,11 +126,16 @@ public partial class CharacterSelect : MarginContainer
             if (CharacterIndex == 0) { return; }
 
             SanicCharacter selected = characters[CharacterIndex];
-            Player = SanicBall.CreateLobby(selected, new PlayerBall() { ControlType = controlType });
-            playerSpawner.AddChild(Player);
-            LobbyCamera.Instance?.Subscribe(Player);
-            Player.Translate(new(0, 5, 0));
-            Player.ApplyImpulse(new(0, 10, 0));
+            SpawnPlayer(selected);
         }
+    }
+
+    private void SpawnPlayer(SanicCharacter selected)
+    {
+        Player = SanicBall.CreateLobby(selected, new PlayerBall() { ControlType = controlType });
+        playerSpawner.AddChild(Player);
+        Player.Translate(new(0, 5, 0));
+        Player.ApplyImpulse(new(0, 10, 0));
+        LobbyCamera.Instance?.Subscribe(Player);
     }
 }

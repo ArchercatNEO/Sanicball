@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Godot;
 using Sanicball.Ball;
@@ -12,7 +13,7 @@ public partial class RaceManager : Node
     public override void _EnterTree() { Instance = this; }
     public override void _ExitTree() { Instance = null; }
 
-    private static List<(SanicCharacter character, ISanicController controller)> players = [];
+    private static List<SanicBallDescriptor> players = [];
 
     public static void Activate(SceneTree tree, RaceOptions options)
     {
@@ -23,13 +24,24 @@ public partial class RaceManager : Node
     [Export] private HBoxContainer viewportManager = null!;
     [Export] private Checkpoint finishLine = null!;
 
+    private int playersFinished = 0;
+
+    private void OnPlayerFinishRace(object? sender, EventArgs e)
+    {
+        playersFinished++;
+        if (playersFinished == players.Count)
+        {
+            LobbyManager.Activate(GetTree(), players);
+        }
+    }
+
     public override void _Ready()
     {
         float offset = 10;
         foreach (var (character, controller) in players)
         {
             CheckpointReciever reciever = new(finishLine, 3);
-            reciever.RaceFinished += (sender, e) => LobbyManager.Activate(GetTree());
+            reciever.RaceFinished += OnPlayerFinishRace;
             SanicBall raceBall = SanicBall.CreateRace(character, controller, reciever);
 
             Node viewportContainer = raceBall.GetNode("../..");

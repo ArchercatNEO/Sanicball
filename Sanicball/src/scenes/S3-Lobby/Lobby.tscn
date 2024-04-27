@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://iy8o8k21l1n1"]
+[gd_scene load_steps=30 format=3 uid="uid://iy8o8k21l1n1"]
 
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://src/scenes/S3-Lobby/Decoration/clear_sky.tres" id="1_8ov4f"]
 [ext_resource type="Script" path="res://src/scenes/S3-Lobby/LobbyManager.cs" id="1_n55so"]
@@ -8,7 +8,6 @@
 [ext_resource type="Material" uid="uid://dmghyann0c8es" path="res://src/scenes/S3-Lobby/Decoration/TVFrame.tres" id="3_tnksi"]
 [ext_resource type="BoxMesh" uid="uid://c28lla3d5dqd1" path="res://assets/terrain/GroundMesh.tres" id="4_5lno4"]
 [ext_resource type="Texture2D" uid="uid://dksr2t8ms7l81" path="res://assets/art/MusicNote.png" id="4_cqtmi"]
-[ext_resource type="Script" path="res://src/scenes/S3-Lobby/CharacterSelectManager.cs" id="4_ri6yk"]
 [ext_resource type="Script" path="res://src/scenes/S3-Lobby/LobbyCamera.cs" id="8_cdt1m"]
 [ext_resource type="PackedScene" uid="uid://vljvs3rire1k" path="res://src/scenes/S3-Lobby/Decoration/Lamp.glb" id="8_vj3rq"]
 
@@ -104,10 +103,11 @@ top_radius = 2.5
 bottom_radius = 2.5
 height = 6.0
 
-[node name="Lobby" type="Node" node_paths=PackedStringArray("characterSelectManager", "countdownText")]
+[node name="Lobby" type="Node" node_paths=PackedStringArray("characterSelectContainer", "countdownText", "playerSpawner")]
 script = ExtResource("1_n55so")
-characterSelectManager = NodePath("Lobby2D/CharacterSelectBox")
+characterSelectContainer = NodePath("Lobby2D/CharacterSelectBox")
 countdownText = NodePath("Lobby2D/Header/RaceCountdown")
+playerSpawner = NodePath("Lobby3D/Spawner")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_wsstk")
@@ -200,7 +200,7 @@ offset_top = -51.0
 grow_horizontal = 2
 grow_vertical = 0
 
-[node name="CharacterSelectBox" type="HBoxContainer" parent="Lobby2D" node_paths=PackedStringArray("playerSpawner")]
+[node name="CharacterSelectBox" type="HBoxContainer" parent="Lobby2D"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -211,8 +211,6 @@ offset_bottom = -2.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
-script = ExtResource("4_ri6yk")
-playerSpawner = NodePath("../../Lobby3D/Spawner")
 
 [node name="Lobby3D" type="Node3D" parent="."]
 

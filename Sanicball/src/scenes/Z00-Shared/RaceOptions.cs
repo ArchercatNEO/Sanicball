@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Sanicball.Characters;
+using Sanicball.Ball;
 
 namespace Sanicball.Scenes;
 
@@ -8,7 +8,7 @@ public class RaceOptions
     /// <summary>
     /// All local + remote players, described by their character and controller
     /// </summary>
-    public required List<(SanicCharacter character, ISanicController controller)> Players { get; init; }
+    public required List<SanicBallDescriptor> Players { get; init; }
 
     /// <summary>
     /// The stage that has been selected for the race
