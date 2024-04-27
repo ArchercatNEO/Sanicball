@@ -14,10 +14,6 @@
         };
     in {
 
-        packages."${system}".default = pkgs.mkPackage {
-
-        };
-
         devShells."${system}".default = pkgs.mkShell {
 
             packages = with pkgs; [
