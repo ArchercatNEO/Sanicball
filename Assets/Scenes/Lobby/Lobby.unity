@@ -7387,50 +7387,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1132615336}
   m_CullTransparentMesh: 1
---- !u!1 &1146614287
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1146614288}
-  - component: {fileID: 1146614289}
-  m_Layer: 0
-  m_Name: BallSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 8467475693731670952, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1146614288
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1146614287}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071067}
-  m_LocalPosition: {x: 0, y: -5.5, z: -3.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
---- !u!114 &1146614289
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1146614287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af9f55fa4ddc61f4ab4a6196d0c7906f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1147140282
 GameObject:
   m_ObjectHideFlags: 0
@@ -8487,7 +8443,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1315172452}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -155}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10618,7 +10574,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &1570268958
 Canvas:
   m_ObjectHideFlags: 0
@@ -15094,11 +15050,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 2002385380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 571ce3babde09f042a6566b2b85bb3ae, type: 3}
+  m_Script: {fileID: 11500000, guid: df130b0955cbce997a4b2a36481a5282, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDistance: 2
-  moveTime: 0.5
 --- !u!1001 &2029334220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15940,7 +15894,6 @@ SceneRoots:
   - {fileID: 923472071}
   - {fileID: 1753376318}
   - {fileID: 957605523}
-  - {fileID: 1146614288}
   - {fileID: 1477523730}
   - {fileID: 406337698}
   - {fileID: 1893059363}
