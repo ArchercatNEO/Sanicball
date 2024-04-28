@@ -1,0 +1,49 @@
+﻿Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sanicball", "Sanicball\Sanicball.csproj", "{422DAF45-F65D-402A-AAA2-A6BDC9B05E9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanicballCore", "SanicballLegacy\SanicballCore\SanicballCore.csproj", "{ED8D5D1E-E70F-4005-A3BA-F03794FF7A40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanicballServer", "SanicballLegacy\OldServer\SanicballServer.csproj", "{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodotFiles", "+GodotFiles\GodotFiles.csproj", "{33E61641-B597-45A2-8BEC-D8AC16716892}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		ExportDebug|Any CPU = ExportDebug|Any CPU
+		ExportRelease|Any CPU = ExportRelease|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{422DAF45-F65D-402A-AAA2-A6BDC9B05E9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{422DAF45-F65D-402A-AAA2-A6BDC9B05E9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{422DAF45-F65D-402A-AAA2-A6BDC9B05E9C}.ExportDebug|Any CPU.ActiveCfg = ExportDebug|Any CPU
+		{422DAF45-F65D-402A-AAA2-A6BDC9B05E9C}.ExportDebug|Any CPU.Build.0 = ExportDebug|Any CPU
+		{422DAF45-F65D-402A-AAA2-A6BDC9B05E9C}.ExportRelease|Any CPU.ActiveCfg = ExportRelease|Any CPU
+		{422DAF45-F65D-402A-AAA2-A6BDC9B05E9C}.ExportRelease|Any CPU.Build.0 = ExportRelease|Any CPU
+		{F8C4CE79-91DD-41EC-AC25-F573E0921170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8C4CE79-91DD-41EC-AC25-F573E0921170}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8C4CE79-91DD-41EC-AC25-F573E0921170}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8C4CE79-91DD-41EC-AC25-F573E0921170}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{F8C4CE79-91DD-41EC-AC25-F573E0921170}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8C4CE79-91DD-41EC-AC25-F573E0921170}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{ED8D5D1E-E70F-4005-A3BA-F03794FF7A40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED8D5D1E-E70F-4005-A3BA-F03794FF7A40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED8D5D1E-E70F-4005-A3BA-F03794FF7A40}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED8D5D1E-E70F-4005-A3BA-F03794FF7A40}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{ED8D5D1E-E70F-4005-A3BA-F03794FF7A40}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED8D5D1E-E70F-4005-A3BA-F03794FF7A40}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{59A6555C-1D7D-4D8B-94FB-1E1B093CE4CA}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{33E61641-B597-45A2-8BEC-D8AC16716892}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33E61641-B597-45A2-8BEC-D8AC16716892}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33E61641-B597-45A2-8BEC-D8AC16716892}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33E61641-B597-45A2-8BEC-D8AC16716892}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{33E61641-B597-45A2-8BEC-D8AC16716892}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{33E61641-B597-45A2-8BEC-D8AC16716892}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+	EndGlobalSection
+EndGlobal

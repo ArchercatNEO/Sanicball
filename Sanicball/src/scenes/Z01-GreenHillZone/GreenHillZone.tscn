@@ -1,0 +1,101 @@
+[gd_scene load_steps=14 format=3 uid="uid://yvsf3gwttxet"]
+
+[ext_resource type="Shader" path="res://assets/shaders/sea.gdshader" id="1_byn0m"]
+[ext_resource type="Script" path="res://src/game-mechanics/TriggerRespawn.cs" id="1_roiel"]
+[ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://src/scenes/S3-Lobby/Decoration/clear_sky.tres" id="1_udlj8"]
+[ext_resource type="Script" path="res://src/scenes/Z00-Shared/RaceManager.cs" id="1_wyt5t"]
+[ext_resource type="AudioStream" uid="uid://56egn88rk5bt" path="res://assets/music/Sea.ogg" id="4_wke57"]
+[ext_resource type="PackedScene" uid="uid://c77tmtg6splsc" path="res://src/scenes/Z01-GreenHillZone/assets/greenHillZone.blend" id="5_wtf51"]
+[ext_resource type="PackedScene" uid="uid://ceh3dfqf61qqe" path="res://src/game-mechanics/Checkpoint/Checkpoint.tscn" id="7_hucb3"]
+
+[sub_resource type="Environment" id="Environment_dgy8r"]
+background_mode = 2
+sky = ExtResource("1_udlj8")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6gej4"]
+size = Vector3(1000, 2, 1000)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1g78f"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xyktn"]
+noise = SubResource("FastNoiseLite_1g78f")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0vlaa"]
+render_priority = 0
+shader = ExtResource("1_byn0m")
+shader_parameter/height_scale = 0.5
+shader_parameter/noise = SubResource("NoiseTexture2D_xyktn")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_pqdxx"]
+material = SubResource("ShaderMaterial_0vlaa")
+size = Vector2(1000, 1000)
+subdivide_width = 32
+subdivide_depth = 32
+
+[node name="GreenHillZone" type="Node" node_paths=PackedStringArray("viewportManager", "finishLine")]
+script = ExtResource("1_wyt5t")
+viewportManager = NodePath("Game2D/ScreenSplitter")
+finishLine = NodePath("Game3D/Checkpoints/FinishLine")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_dgy8r")
+
+[node name="GameMusic" type="AudioStreamPlayer" parent="."]
+
+[node name="Game2D" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScreenSplitter" type="HBoxContainer" parent="Game2D"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Game3D" parent="." instance=ExtResource("5_wtf51")]
+
+[node name="Sunlight" type="DirectionalLight3D" parent="Game3D"]
+transform = Transform3D(1, 0, 0, 0, -0.396619, 0.917983, 0, -0.917983, -0.396619, 0, 0, 0)
+
+[node name="Sea" type="Area3D" parent="Game3D"]
+script = ExtResource("1_roiel")
+metadata/_edit_group_ = true
+
+[node name="Collider" type="CollisionShape3D" parent="Game3D/Sea"]
+shape = SubResource("BoxShape3D_6gej4")
+
+[node name="Renderer" type="MeshInstance3D" parent="Game3D/Sea"]
+mesh = SubResource("PlaneMesh_pqdxx")
+
+[node name="Ambience" type="AudioStreamPlayer3D" parent="Game3D/Sea"]
+stream = ExtResource("4_wke57")
+bus = &"Ambience"
+
+[node name="Checkpoints" type="Node3D" parent="Game3D"]
+
+[node name="FinishLine" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
+transform = Transform3D(-4.94321, -8.69279, -3.79974e-07, 0, -4.37114e-07, 10, -8.69279, 4.94321, 2.16075e-07, -81.3422, 44.3072, 175.875)
+isFinishLine = true
+next = NodePath("../Checkpoint")
+
+[node name="Checkpoint" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
+transform = Transform3D(0.386947, -13.5895, 5.94016e-07, 0, -5.94256e-07, -13.595, 13.5895, 0.386947, -1.6914e-08, 204.756, 45.0111, 41.6596)
+next = NodePath("../Checkpoint2")
+
+[node name="Checkpoint2" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
+transform = Transform3D(4.57445, -14.2855, 0, 0, -6.55671e-07, -15, 14.2855, 4.57445, -1.99956e-07, 102.356, 24.9915, -86.804)
+next = NodePath("../Checkpoint3")
+
+[node name="Checkpoint3" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
+transform = Transform3D(1.64715, 12.391, -5.41628e-07, 0, -5.46392e-07, -12.5, -12.391, 1.64715, -7.1999e-08, -169.798, 16.8091, -23.364)
+next = NodePath("../Checkpoint4")
+
+[node name="Checkpoint4" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
+transform = Transform3D(10.8043, -2.0659, 9.03035e-08, 0, -4.80825e-07, -11, 2.0659, 10.8043, -4.72269e-07, -78.6377, 24.4562, 62.2761)
+next = NodePath("../FinishLine")

@@ -1,0 +1,23 @@
+[gd_resource type="Resource" script_class="SanicCharacter" load_steps=6 format=3 uid="uid://dqatqe81xsjry"]
+
+[ext_resource type="ArrayMesh" uid="uid://bbgpk5l1rqnlb" path="res://src/characters/C13-Vactor/VactorMesh.res" id="1_3fwhc"]
+[ext_resource type="Script" path="res://src/characters/SanicCharacter.cs" id="1_d5i4c"]
+[ext_resource type="Texture2D" uid="uid://5ptt012therw" path="res://src/characters/C13-Vactor/VactorIcon.png" id="2_i4q72"]
+[ext_resource type="Material" uid="uid://b154uef3bq4q8" path="res://src/characters/C13-Vactor/VactorMat.tres" id="3_4hxx3"]
+[ext_resource type="Texture2D" uid="uid://dduv2dmocj8gi" path="res://src/characters/C13-Vactor/VactorMinimap.png" id="4_mjx3x"]
+
+[resource]
+script = ExtResource("1_d5i4c")
+Name = "Vactor"
+Credits = "I don't even"
+Material = ExtResource("3_4hxx3")
+Color = Color(0.482353, 0.721569, 0.0313726, 1)
+Icon = ExtResource("2_i4q72")
+MinimapIcon = ExtResource("4_mjx3x")
+MeshOverride = ExtResource("1_3fwhc")
+AngularAcceleration = 31.4159
+MaxAngularSpeed = 62.8319
+AirSpeed = 15.0
+JumpHeight = 14.0
+Grip = 20.0
+BallSize = 1.0

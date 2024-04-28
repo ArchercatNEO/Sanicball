@@ -1,0 +1,32 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Rust server",
+            "type": "shell",
+            "command": "~/.cargo/bin/cargo",
+            "args": [
+                "run",
+                "--manifest-path",
+                "SanicballServer/Cargo.toml"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Rust web",
+            "type": "shell",
+            "command": "~/.cargo/bin/trunk",
+            "args": [
+                "serve",
+                "SanicballWeb/index.html"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://v2mtbslixfig"]
+
+[ext_resource type="Texture2D" uid="uid://biqjtkfq4j3an" path="res://src/characters/C08-Big-da-Cat/BigIcon.png" id="1_3arkd"]
+[ext_resource type="Script" path="res://src/characters/SanicCharacter.cs" id="1_rsyfm"]
+[ext_resource type="Material" uid="uid://ct7g6jspwk60l" path="res://src/characters/C08-Big-da-Cat/BigMat.tres" id="2_aj3a5"]
+[ext_resource type="Texture2D" uid="uid://diqc1cbvfik4" path="res://src/characters/C08-Big-da-Cat/BigMinimap.png" id="3_70jar"]
+
+[resource]
+script = ExtResource("1_rsyfm")
+Name = "Big"
+Credits = "Reddit user EdulokoX"
+Color = Color(0.615686, 0, 1, 1)
+Material = ExtResource("2_aj3a5")
+Icon = ExtResource("1_3arkd")
+MinimapIcon = ExtResource("3_70jar")
+AngularAcceleration = 31.4159
+MaxAngularSpeed = 62.8319
+AirSpeed = 15.0
+JumpHeight = 8.0
+Grip = 20.0
+BallSize = 2.0

@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://bc0dl5u7fswvk"]
+
+[ext_resource type="Script" path="res://src/ball/BallUI.cs" id="1_neu6o"]
+
+[node name="BallUi" type="Control" node_paths=PackedStringArray("lapCounter")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_neu6o")
+lapCounter = NodePath("LapCounter")
+
+[node name="LapCounter" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -53.0
+offset_right = 252.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Lap 1/3"
