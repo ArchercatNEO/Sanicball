@@ -44,6 +44,7 @@ public partial class LobbyManager : Node
     //ui
     [Export] private HBoxContainer characterSelectContainer = null!;
     [Export] private Label countdownText = null!;
+    [Export] private Control pauseMenu = null!;
     
     //3d
     [Export] private Node3D playerSpawner = null!;
@@ -59,10 +60,34 @@ public partial class LobbyManager : Node
         Input.JoyConnectionChanged += OnDeviceConnected;
     }
 
+    public override void _Ready()
+    {
+        pauseMenu.GetNode<Button>("VBoxContainer/Unpause").Pressed += pauseMenu.Hide;
+        Button ctxSensitive = pauseMenu.GetNode<Button>("VBoxContainer/Context");
+        //TODO settings
+        ctxSensitive.Pressed += pauseMenu.Hide;
+        ctxSensitive.Text = "Settings";
+        pauseMenu.GetNode<Button>("VBoxContainer/Quit").Pressed += () => MenuUI.Activate(GetTree());
+        pauseMenu.Hide();
+    }
+
     public override void _ExitTree()
     {
         Input.JoyConnectionChanged -= OnDeviceConnected;
         Instance = null;
+    }
+
+    public override void _Input(InputEvent @event)
+    {
+        if (@event is InputEventKey inputEvent)
+        {
+            if (inputEvent.Keycode == Key.P)
+            {
+                pauseMenu.Show();
+                pauseMenu.GetNode<Button>("VBoxContainer/Unpause").GrabFocus();
+                //TODO pause game
+            }
+        }
     }
 
     private void OnDeviceConnected(long device, bool connected)

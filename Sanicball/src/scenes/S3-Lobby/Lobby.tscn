@@ -103,10 +103,11 @@ top_radius = 2.5
 bottom_radius = 2.5
 height = 6.0
 
-[node name="Lobby" type="Node" node_paths=PackedStringArray("characterSelectContainer", "countdownText", "playerSpawner")]
+[node name="Lobby" type="Node" node_paths=PackedStringArray("characterSelectContainer", "countdownText", "pauseMenu", "playerSpawner")]
 script = ExtResource("1_n55so")
 characterSelectContainer = NodePath("Lobby2D/CharacterSelectBox")
 countdownText = NodePath("Lobby2D/Header/RaceCountdown")
+pauseMenu = NodePath("Lobby2D/PauseMenu")
 playerSpawner = NodePath("Lobby3D/Spawner")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -189,6 +190,41 @@ grow_horizontal = 0
 theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40
 text = "Match starts in [3] seconds"
+
+[node name="PauseMenu" type="ColorRect" parent="Lobby2D"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -113.0
+offset_top = -247.0
+offset_right = 121.0
+offset_bottom = 187.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Lobby2D/PauseMenu"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Unpause" type="Button" parent="Lobby2D/PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "Unpause"
+
+[node name="Context" type="Button" parent="Lobby2D/PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "Context"
+
+[node name="Quit" type="Button" parent="Lobby2D/PauseMenu/VBoxContainer"]
+layout_mode = 2
+text = "Quit"
 
 [node name="Footer" type="ColorRect" parent="Lobby2D"]
 layout_mode = 1
