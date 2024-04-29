@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 using Sanicball.Ball;
 using Sanicball.Characters;
@@ -42,11 +43,26 @@ public partial class RaceManager : Node
         {
             CheckpointReciever reciever = new(finishLine, 3);
             reciever.RaceFinished += OnPlayerFinishRace;
+            
             SanicBall raceBall = SanicBall.CreateRace(character, controller, reciever);
+            RaceUI raceUI = RaceUI.Create(raceBall);
 
-            Node viewportContainer = raceBall.GetNode("../..");
-            viewportManager.AddChild(viewportContainer);
+            viewportManager.AddChild(raceUI);
 
+            raceBall.GlobalPosition = finishLine.GlobalPosition with { Y = finishLine.GlobalPosition.Y + offset };
+            offset += 10;
+        }
+
+        foreach (int count in Enumerable.Range(0, 5))
+        {
+            CheckpointReciever reciever = new(finishLine, 3);
+            
+            AiBall aiBall = new();
+            
+            SanicBall raceBall = SanicBall.CreateRace(SanicCharacter.Asspio, aiBall, reciever);
+            
+            AddChild(raceBall);
+            
             raceBall.GlobalPosition = finishLine.GlobalPosition with { Y = finishLine.GlobalPosition.Y + offset };
             offset += 10;
         }

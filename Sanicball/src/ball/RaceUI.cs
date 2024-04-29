@@ -8,11 +8,24 @@ namespace Sanicball.Ball;
 /// A UI overlay for balls inside a race
 /// Contains things like the speed counter and the place counter
 /// </summary>
-public partial class BallUI : Control
+public partial class RaceUI : SubViewportContainer
 {
-    [Export] private SanicBall sanicBall = null!;
-    [Export] private Label lapCounter = null!;
+    private static readonly PackedScene prefab = GD.Load<PackedScene>("res://src/ball/RaceUI.tscn");
 
+    public static RaceUI Create(SanicBall sanicBall)
+    {
+        RaceUI instance = prefab.Instantiate<RaceUI>();
+
+        instance.sanicBall = sanicBall;
+
+        instance.GetNode("SubViewport").AddChild(sanicBall);
+
+        return instance;
+    }
+
+    [Export] public required Label LapCounter { get; set; }
+
+    private SanicBall sanicBall = null!;
     private CheckpointReciever chachedReciever = null!;
 
     public override void _Ready()
@@ -23,12 +36,12 @@ public partial class BallUI : Control
         chachedReciever = sanicBall.checkpointReciever;
         chachedReciever.NextLap += (sender, lap) =>
         {
-            lapCounter.Text = $"Lap: {lap + 1}/3";
+            LapCounter.Text = $"Lap: {lap + 1}/3";
         };
 
         chachedReciever.RaceFinished += (sender, args) =>
         {
-            lapCounter.AddThemeColorOverride("default_color", new(0, 0, 1));
+            LapCounter.AddThemeColorOverride("default_color", new(0, 0, 1));
         };
     }
 }

@@ -1,63 +1,34 @@
-[gd_scene load_steps=7 format=3 uid="uid://c08vqn1nbmqlk"]
+[gd_scene load_steps=6 format=3 uid="uid://c08vqn1nbmqlk"]
 
 [ext_resource type="Script" path="res://src/ball/SanicBall.cs" id="1_rwvnl"]
 [ext_resource type="Material" uid="uid://bmh8yt0alvuji" path="res://src/characters/C00-Default/UnknownMat.tres" id="2_ma1vw"]
 [ext_resource type="Script" path="res://src/ball/BallCamera.cs" id="3_vxvjh"]
-[ext_resource type="Script" path="res://src/ball/BallUI.cs" id="4_7ptif"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_310mg"]
 material = ExtResource("2_ma1vw")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iyxud"]
 
-[node name="SubViewportContainer" type="SubViewportContainer"]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-size_flags_horizontal = 3
-stretch = true
-
-[node name="SubViewport" type="SubViewport" parent="."]
-handle_input_locally = false
-size = Vector2i(1152, 648)
-render_target_update_mode = 4
-
-[node name="Ball" type="RigidBody3D" parent="SubViewport" node_paths=PackedStringArray("Renderer", "Collider")]
+[node name="Ball" type="RigidBody3D" node_paths=PackedStringArray("Renderer", "Collider")]
 mass = 3.0
 script = ExtResource("1_rwvnl")
 Renderer = NodePath("Renderer")
 Collider = NodePath("Collider")
 
-[node name="Renderer" type="MeshInstance3D" parent="SubViewport/Ball"]
+[node name="Renderer" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_310mg")
 
-[node name="Collider" type="CollisionShape3D" parent="SubViewport/Ball"]
+[node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_iyxud")
 
-[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="SubViewport/Ball"]
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 
-[node name="TransformSeparator" type="Node" parent="SubViewport/Ball"]
+[node name="TransformSeparator" type="Node" parent="."]
 editor_description = "This is here to prevent the ball rotation from rotating the camera"
 
-[node name="Camera3D" type="Camera3D" parent="SubViewport/Ball/TransformSeparator" node_paths=PackedStringArray("sanicBall")]
+[node name="Camera3D" type="Camera3D" parent="TransformSeparator" node_paths=PackedStringArray("sanicBall")]
 transform = Transform3D(1, 0, 0, 0, 0.96091, 0.276862, 0, -0.276862, 0.96091, -0.0154074, 1.02, 1.45)
 script = ExtResource("3_vxvjh")
 sanicBall = NodePath("../..")
 OrbitHeight = 15.205
 OrbitRadius = 5.105
-
-[node name="RaceUI" type="Control" parent="SubViewport/Ball" node_paths=PackedStringArray("sanicBall", "lapCounter")]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-script = ExtResource("4_7ptif")
-sanicBall = NodePath("..")
-lapCounter = NodePath("Label")
-
-[node name="Label" type="Label" parent="SubViewport/Ball/RaceUI"]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0

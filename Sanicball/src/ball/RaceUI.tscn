@@ -1,0 +1,27 @@
+[gd_scene load_steps=2 format=3 uid="uid://bryvlet2w7asd"]
+
+[ext_resource type="Script" path="res://src/ball/RaceUI.cs" id="1_neu6o"]
+
+[node name="RaceUi" type="SubViewportContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+stretch = true
+script = ExtResource("1_neu6o")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="LapCounter" type="Label" parent="SubViewport"]
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -69.0
+offset_right = 178.0
+grow_vertical = 0
+theme_override_font_sizes/font_size = 50
+text = "Lap 1/3"

@@ -47,13 +47,10 @@ public partial class SanicBall : RigidBody3D, ICheckpointReciever
     /// <returns></returns>
     public static SanicBall CreateRace(SanicCharacter character, ISanicController controller, CheckpointReciever reciever)
     {
-        //Making the root a container makes split screen easier
-        Node viewportContainer = racePrefab.Instantiate();
-
-        SanicBall instance = viewportContainer.GetNode<SanicBall>("SubViewport/Ball");
+        SanicBall instance = racePrefab.Instantiate<SanicBall>();
+        
         instance.controller = controller;
         instance.character = character;
-
         instance.checkpointReciever = reciever;
 
         controller.ActivateRace();
