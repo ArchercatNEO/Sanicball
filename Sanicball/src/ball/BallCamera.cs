@@ -66,6 +66,10 @@ public partial class BallCamera : Camera3D
         {
             Vector3 normalizedVelocity = sanicBall.LinearVelocity.Normalized() * OrbitRadius;
             Vector3 rotationAxis = normalizedVelocity.Cross(sanicBall.UpOverride).Normalized();
+            if (!rotationAxis.IsNormalized())
+            {
+                return;
+            }
             Vector3 orbitVector = normalizedVelocity.Rotated(rotationAxis, -orbitAngle);
             Vector3 offsetVector = previousOrbit.Lerp(orbitVector, (float)delta);
             previousOrbit = offsetVector;
