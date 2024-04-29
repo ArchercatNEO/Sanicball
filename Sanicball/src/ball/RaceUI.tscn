@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://src/ball/RaceUI.cs" id="1_neu6o"]
 
-[node name="RaceUi" type="SubViewportContainer"]
+[node name="RaceUi" type="SubViewportContainer" node_paths=PackedStringArray("LapCounter")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -10,6 +10,7 @@ grow_horizontal = 2
 grow_vertical = 2
 stretch = true
 script = ExtResource("1_neu6o")
+LapCounter = NodePath("SubViewport/LapCounter")
 
 [node name="SubViewport" type="SubViewport" parent="."]
 handle_input_locally = false
