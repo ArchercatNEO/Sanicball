@@ -17,7 +17,7 @@ float height(vec2 position, float time) {
 	return d;
 }
 
-
+// Ran for each vertex
 void vertex() {
 	vec2 pos = VERTEX.xz;
 	float h = height(pos, TIME);
@@ -25,6 +25,7 @@ void vertex() {
 	VERTEX.y = (h - h / 2.0) * height_scale;
 }
 
+// Runs for each pixel on the mesh
 void fragment() {
 	float fresnel = sqrt(1.0 - dot(NORMAL, VIEW));
 	
