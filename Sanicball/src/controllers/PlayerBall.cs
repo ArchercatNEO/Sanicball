@@ -22,8 +22,6 @@ public class PlayerBall : ISanicController
     public void Initialise(SanicBall parent)
     {
         sanicBall = parent;
-        sanicBall.ContactMonitor = true;
-        sanicBall.MaxContactsReported = 3;
     }
 
     public void Process(double delta)

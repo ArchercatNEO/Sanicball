@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://yvsf3gwttxet"]
+[gd_scene load_steps=14 format=3 uid="uid://yvsf3gwttxet"]
 
 [ext_resource type="Shader" path="res://assets/shaders/sea.gdshader" id="1_byn0m"]
 [ext_resource type="Script" path="res://src/game-mechanics/TriggerRespawn.cs" id="1_roiel"]
@@ -31,8 +31,6 @@ material = SubResource("ShaderMaterial_0vlaa")
 size = Vector2(1000, 1000)
 subdivide_width = 32
 subdivide_depth = 32
-
-[sub_resource type="NavigationMesh" id="NavigationMesh_ju20n"]
 
 [node name="GreenHillZone" type="Node" node_paths=PackedStringArray("viewportManager", "finishLine")]
 script = ExtResource("1_wyt5t")
@@ -102,10 +100,4 @@ next = NodePath("../Checkpoint4")
 transform = Transform3D(10.8043, -2.0659, 9.03035e-08, 0, -4.80825e-07, -11, 2.0659, 10.8043, -4.72269e-07, -78.6377, 24.4562, 62.2761)
 next = NodePath("../FinishLine")
 
-[node name="AiNodes" type="NavigationRegion3D" parent="Game3D"]
-navigation_mesh = SubResource("NavigationMesh_ju20n")
-
-[node name="NavigationLink3D" type="NavigationLink3D" parent="Game3D/AiNodes"]
-bidirectional = false
-start_position = Vector3(-81.342, 47.907, 175.875)
-end_position = Vector3(6.531, 43.448, 163.583)
+[node name="AiNodes" type="Node3D" parent="Game3D"]

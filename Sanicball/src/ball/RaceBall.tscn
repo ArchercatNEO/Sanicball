@@ -11,6 +11,8 @@ material = ExtResource("2_ma1vw")
 
 [node name="Ball" type="RigidBody3D" node_paths=PackedStringArray("Renderer", "Collider")]
 mass = 3.0
+max_contacts_reported = 3
+contact_monitor = true
 script = ExtResource("1_rwvnl")
 Renderer = NodePath("Renderer")
 Collider = NodePath("Collider")
