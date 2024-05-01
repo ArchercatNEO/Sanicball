@@ -11,6 +11,7 @@ namespace Sanicball.Scenes;
 /// Looks towards the mean position of all players in the lobby.
 /// If there are no players it will default to wherever it was looking when it was instantiated
 /// </summary>
+//TODO moving around enough causes the camera to flip, avoid that
 public partial class LobbyCamera : Camera3D
 {
     public static LobbyCamera? Instance { get; private set; }

@@ -3,6 +3,7 @@ using Godot;
 namespace Sanicball.Scenes;
 
 [GlobalClass]
+//TODO Add animation paths and remove dependence on StandardMaterial3Ds
 public partial class MenuPath : Node3D
 {
     private StandardMaterial3D characterMat = new();

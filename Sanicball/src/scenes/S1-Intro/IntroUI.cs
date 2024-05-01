@@ -24,6 +24,7 @@ namespace Sanicball.Scenes;
 /// 	</item>
 /// </list>
 /// </summary>
+//TODO Implement account selection (guest/named account)
 public partial class IntroUI : Control
 {
     private static readonly PackedScene Scene = GD.Load<PackedScene>("res://src/scenes/S1-Intro/intro.tscn");

@@ -11,6 +11,7 @@ namespace Sanicball.Scenes;
 /// The top level handler of the lobby scene,
 /// this is the only place the amount of players should increase
 /// </summary>
+//TODO Implement lobby settings
 public partial class LobbyManager : Node
 {
     private static LobbyManager? Instance { get; set; }

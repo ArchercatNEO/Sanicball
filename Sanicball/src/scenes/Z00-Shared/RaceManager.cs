@@ -8,6 +8,11 @@ using Sanicball.GameMechanics;
 
 namespace Sanicball.Scenes;
 
+//TODO Implement AI Balls
+//TODO Implement end of match displays
+//TODO Implenent minimap
+//TODO Implement Race UI
+//TODO Improve splitscreen
 public partial class RaceManager : Node
 {
     public static RaceManager? Instance { get; private set; }
