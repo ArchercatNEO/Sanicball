@@ -9,4 +9,6 @@ public interface ISanicController
 
     void ActivateLobby() { }
     void ActivateRace() { }
+
+    void AiNodePassed(AiNode node) {}
 }

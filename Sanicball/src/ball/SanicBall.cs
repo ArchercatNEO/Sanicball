@@ -157,4 +157,9 @@ public partial class SanicBall : RigidBody3D, ICheckpointReciever
         //Race after finished -> finish line
         Position = checkpointReciever.CurrentCheckpoint.Position + new Vector3(0, 1, 0);
     }
+
+    public void AiNodePassed(AiNode node)
+    {
+        controller.AiNodePassed(node);
+    }
 }

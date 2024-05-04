@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxid7hpqoqjkl"]
+
+[ext_resource type="Script" path="res://src/controllers/AINode.cs" id="1_6py23"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bm2pr"]
+height = 0.776545
+radius = 1.24704
+
+[node name="AiNode" type="Area3D"]
+script = ExtResource("1_6py23")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.027974, -0.999609, 0, 0.999609, 0.027974, 0, 0, 0)
+shape = SubResource("CylinderShape3D_bm2pr")

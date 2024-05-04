@@ -29,6 +29,7 @@ public partial class RaceManager : Node
 
     [Export] private HBoxContainer viewportManager = null!;
     [Export] private Checkpoint finishLine = null!;
+    [Export] private AiNode initialNode = null!;
 
     private int playersFinished = 0;
 
@@ -62,7 +63,7 @@ public partial class RaceManager : Node
         {
             CheckpointReciever reciever = new(finishLine, 3);
             
-            AiBall aiBall = new();
+            AiBall aiBall = new(initialNode);
             
             SanicBall raceBall = SanicBall.CreateRace(SanicCharacter.Asspio, aiBall, reciever);
             
