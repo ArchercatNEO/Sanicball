@@ -4,4 +4,4 @@
 
 [node name="RainbowRoad" type="Node"]
 
-[node name="RainbowRoad2" parent="." instance=ExtResource("1_kvsvf")]
+[node name="World3D" parent="." instance=ExtResource("1_kvsvf")]
