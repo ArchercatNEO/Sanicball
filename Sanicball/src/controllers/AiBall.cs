@@ -24,10 +24,10 @@ public class AiBall(AiNode initialTarget) : ISanicController
 
     public void Process(double delta)
     {
-        Vector3 displacement = AiTarget.Position - ball.Position;
+        Vector3 displacement = AiTarget.GlobalPosition - ball.GlobalPosition;
         displacement = displacement.Normalized();
 
-        Vector3 torque = displacement.Cross(ball.UpOverride);
+        Vector3 torque = -displacement.Cross(ball.UpOverride);
 
         torque *= ball.character.AngularAcceleration;
 
@@ -36,9 +36,9 @@ public class AiBall(AiNode initialTarget) : ISanicController
 
     public void AiNodePassed(AiNode node)
     {
-        if (AiTarget?.NextNode == node)
+        if (AiTarget == node)
         {
-            AiTarget = node;
+            AiTarget = AiTarget.NextNode;
         }
     }
 }

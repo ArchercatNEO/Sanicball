@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://d1yc8kk84khl5"
+uid="uid://gxo8i6rku4d6"
 path="res://.godot/imported/GreenHillZone.blend-85dfa131e850259409e39e68611ec712.scn"
 
 [deps]
@@ -11,8 +11,10 @@ path="res://.godot/imported/GreenHillZone.blend-85dfa131e850259409e39e68611ec712
 source_file="res://scenes/Z01-GreenHillZone/GreenHillZone.blend"
 dest_files=["res://.godot/imported/GreenHillZone.blend-85dfa131e850259409e39e68611ec712.scn"]
 
+[params]
+
 nodes/root_type=""
-nodes/root_name="World3D"
+nodes/root_name="Game3D"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 meshes/ensure_tangents=true
@@ -28,7 +30,6 @@ animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""
 _subresources={
-"materials": {},
 "nodes": {
 "PATH:BridgePlanks": {
 "generate/physics": true,
