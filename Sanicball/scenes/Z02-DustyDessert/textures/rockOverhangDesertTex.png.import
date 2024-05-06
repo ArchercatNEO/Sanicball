@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://613mr6n6m35j"
-path="res://.godot/imported/rockOverhangDesertTex.png-281f96f64f5e6653084dbf533e375fa7.ctex"
+path="res://.godot/imported/rockOverhangDesertTex.png-87039f7ce5168b8560aa290305e748f6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://scenes/Z02-DustyDessert/rockOverhangDesertTex.png"
-dest_files=["res://.godot/imported/rockOverhangDesertTex.png-281f96f64f5e6653084dbf533e375fa7.ctex"]
+source_file="res://scenes/Z02-DustyDessert/textures/rockOverhangDesertTex.png"
+dest_files=["res://.godot/imported/rockOverhangDesertTex.png-87039f7ce5168b8560aa290305e748f6.ctex"]
 
 [params]
 
