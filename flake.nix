@@ -1,25 +1,36 @@
 {
-    description = "The sanicball dev environment";
+  description = "The sanicball dev environment";
 
-    inputs = {
-        nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
-        nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    };
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    flake-utils.url = "github:numtide/flake-utils";
+  };
 
-    outputs = { self, nixpkgs, nixunstable }:
-    let
-        system = "x86_64-linux";
-        pkgs = import nixunstable {
-            inherit system;
-        };
+  outputs = {
+    self,
+    nixpkgs,
+    flake-utils,
+  }:
+    flake-utils.lib.eachSystem [ "x86_64-linux" ] (system: let
+      pkgs = import nixpkgs {inherit system overlays;};
+      overlays = [
+        (self: super: {
+          godot = super.callPackage ./godot2.nix {};
+        })
+      ];
     in {
+      devShells = pkgs.callPackage ./shell.nix {};
 
-        devShells."${system}".default = pkgs.mkShell {
+      packages = rec {
+        default = sanicball;
+        sanicball = pkgs.callPackage ./Sanicball {};
+      };
 
-            packages = with pkgs; [
-                dotnet-sdk_8
-                godot_4
-            ];
+      apps = {
+        default = {
+          type = "app";
+          program = "${self.packages."${system}".sanicball}";
         };
-    };
+      };
+    });
 }
