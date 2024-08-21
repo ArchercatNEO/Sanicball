@@ -1,15 +1,16 @@
-{ mkShell
-, dotnet-sdk_8
-, godot
-, blender
-, ...
+{
+  mkShell,
+  godot,
+  dotnetCorePackages,
+  blender,
+  ...
 }: {
   default = mkShell {
     name = "sanicball-generic-shell";
 
     packages = [
-      dotnet-sdk_8
       godot
+      dotnetCorePackages.sdk_8_0
     ];
   };
 
@@ -18,7 +19,7 @@
 
     packages = [
       godot
-      dotnet-sdk_8
+      dotnetCorePackages.sdk_8_0
     ];
 
     shellHook = ''

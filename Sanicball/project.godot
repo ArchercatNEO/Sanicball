@@ -23,10 +23,6 @@ config/icon="res://assets/Icon.svg"
 project/assembly_name="Sanicball"
 project/solution_directory="../"
 
-[filesystem]
-
-import/blender/enabled=false
-
 [input]
 
 keyboard_left={

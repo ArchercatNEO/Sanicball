@@ -1,3 +1,5 @@
+#if TOOLS
+
 using Godot;
 using Godot.Collections;
 using System;
@@ -50,3 +52,5 @@ public partial class XcfConverter : EditorImportPlugin
         return Error.Ok;
     }
 }
+
+#endif

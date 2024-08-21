@@ -1,3 +1,5 @@
+#if TOOLS
+
 using Godot;
 using Sanicball.Scenes;
 
@@ -91,3 +93,5 @@ internal partial class PathNode : EditorNode3DGizmoPlugin
         }
     }
 }
+
+#endif

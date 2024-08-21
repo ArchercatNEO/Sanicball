@@ -1,56 +1,53 @@
 {
-  debug ? true,
   lib,
   stdenv,
-  bash,
-  buildDotnetModule,
-  dotnetCorePackages,
+  patchelf,
+
   godot,
+  godot-template,
+
+  dotnetCorePackages,
+
+  icu,
   ...
-}: let
-  dotnet = buildDotnetModule {
+}: 
+  stdenv.mkDerivation {
     pname = "sanicball";
     version = "0.2-alpha";
 
     src = ./.;
 
-    projectFile = "./Sanicball.csproj";
-    dotnet-sdk = dotnetCorePackages.sdk_9_0;
-    dotnet-runtime = dotnetCorePackages.runtime_9_0;
-    nugetDeps = ./deps.nix;
+    nativeBuildInputs = [
+      patchelf
+      dotnetCorePackages.sdk_8_0
+      godot
+    ];
+
+    buildInputs = [
+      icu
+    ];
+
+    configurePhase = ''
+      ln -s ${godot-template}/lib templates
+    '';
+
+    buildPhase = ''
+      godot --verbose --headless --export-debug "Linux"
+    '';
+
+    installPhase = ''
+      mkdir -p $out/bin
+      cp -r ./bin $out/bin
+    '';
+
+    fixupPhase = ''
+      patchelf --add-rpath ${icu}/lib $out/bin/data_Sanicball_linux_x86_64/libcoreclr.so
+      patchelf --add-rpath ${icu}/lib $out/bin/data_Sanicball_linux_x86_64/libSystem.Globalization.Native.so
+    '';
 
     meta = {
       homepage = "https://github.com/ArchercatNEO/Sanicball";
       description = "The incredibly fast racer";
       licesnse = lib.licenses.mit;
     };
-  };
-in
-  stdenv.mkDerivation {
-    pname = "sanicball";
-    version = "0.0";
-
-    src = ./.;
-
-    nativeBuildInputs = [
-      dotnetCorePackages.sdk_9_0
-    ];
-
-    runtimeDependencies = [
-      godot
-    ];
-
-    buildPhase = ''
-      dotnet build
-    '';
-
-    installPhase = ''
-      mkdir -p $out/share
-      mkdir $out/bin
-      cp -r . $out/share
-      cp -r ./.godot $out/share/
-      echo "#!${bash/bin/bash}" &> $out/bin/sanicball
-      echo "godot4 --path $out/share/project.godot --verbose" &> $out/bin/sanicball
-      chmod +x $out/bin/sanicball
-    '';
   }

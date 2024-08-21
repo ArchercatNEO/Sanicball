@@ -11,26 +11,31 @@
     nixpkgs,
     flake-utils,
   }:
-    flake-utils.lib.eachSystem [ "x86_64-linux" ] (system: let
+    flake-utils.lib.eachSystem ["x86_64-linux"] (system: let
       pkgs = import nixpkgs {inherit system overlays;};
       overlays = [
         (self: super: {
-          godot = super.callPackage ./godot2.nix {};
-        })
+          godot = super.callPackage ./godot.nix {};
+          godot-template = super.callPackage ./godot-template.nix {};
+          })
       ];
     in {
-      devShells = pkgs.callPackage ./shell.nix {};
-
-      packages = rec {
-        default = sanicball;
-        sanicball = pkgs.callPackage ./Sanicball {};
-      };
-
-      apps = {
-        default = {
-          type = "app";
-          program = "${self.packages."${system}".sanicball}";
+        devShells = {
+          inherit (pkgs.callPackage ./shell.nix {}) default blender godot;
         };
-      };
-    });
+
+        packages = rec {
+          default = sanicball;
+          sanicball = pkgs.callPackage ./Sanicball {};
+          templates = pkgs.godot-template;
+        };
+
+        apps = {
+          default = {
+            type = "app";
+            program = "${self.packages."${system}".sanicball}";
+          };
+        };
+      }
+  );
 }

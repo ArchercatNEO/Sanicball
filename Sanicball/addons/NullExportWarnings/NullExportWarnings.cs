@@ -1,3 +1,5 @@
+#if TOOLS
+
 using Godot;
 
 namespace Sanicball.Plugins;
@@ -38,3 +40,5 @@ internal partial class NullExportChecker : EditorInspectorPlugin
         return false;
     }
 }
+
+#endif
