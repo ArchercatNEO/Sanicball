@@ -11,10 +11,8 @@ path="res://.godot/imported/GreenHillZone.blend-85dfa131e850259409e39e68611ec712
 source_file="res://scenes/Z01-GreenHillZone/GreenHillZone.blend"
 dest_files=["res://.godot/imported/GreenHillZone.blend-85dfa131e850259409e39e68611ec712.scn"]
 
-[params]
-
 nodes/root_type=""
-nodes/root_name=""
+nodes/root_name="World3D"
 nodes/apply_root_scale=true
 nodes/root_scale=1.0
 meshes/ensure_tangents=true
@@ -29,7 +27,27 @@ animation/fps=30
 animation/trimming=false
 animation/remove_immutable_tracks=true
 import_script/path=""
-_subresources={}
+_subresources={
+"materials": {},
+"nodes": {
+"PATH:BridgePlanks": {
+"generate/physics": true,
+"physics/shape_type": 2
+},
+"PATH:MainIsland": {
+"generate/physics": true,
+"physics/shape_type": 2
+},
+"PATH:SideIsland": {
+"generate/physics": true,
+"physics/shape_type": 2
+},
+"PATH:UTurnIsland": {
+"generate/physics": true,
+"physics/shape_type": 2
+}
+}
+}
 gltf/naming_version=1
 gltf/embedded_image_handling=1
 blender/nodes/visible=0

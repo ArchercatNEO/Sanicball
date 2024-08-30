@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ci2f42ragdt6r"]
 
-[ext_resource type="PackedScene" uid="uid://cjwv17mnwsib8" path="res://src/game-mechanics/FinishLine/FinishLineBanner.blend" id="1_7uv72"]
+[ext_resource type="PackedScene" uid="uid://byp7wcygwg681" path="res://src/game-mechanics/FinishLine/FinishLine.blend" id="1_7uv72"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_g4a1e"]
 size = Vector3(1, 7.495, 63.655)
