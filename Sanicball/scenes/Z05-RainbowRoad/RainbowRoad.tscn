@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://2twpn6kagwnv"]
+
+[ext_resource type="PackedScene" uid="uid://dxwyu6ptcjbai" path="res://scenes/Z05-RainbowRoad/RainbowRoad.blend" id="1_kvsvf"]
+
+[node name="RainbowRoad" type="Node"]
+
+[node name="RainbowRoad2" parent="." instance=ExtResource("1_kvsvf")]

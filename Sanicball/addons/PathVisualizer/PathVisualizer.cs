@@ -41,7 +41,7 @@ internal partial class PathNode : EditorNode3DGizmoPlugin
             return false;
         }
 
-        if (maybeScript.As<Script>().ResourcePath == "res://src/scenes/S2-Menu/MenuPath.cs")
+        if (maybeScript.As<Script>().ResourcePath == "res://scenes/S2-Menu/MenuPath.cs")
         {
             GD.Print("Menu path found");
             GD.Print(forNode3D.GetType());

@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="TrackResource" load_steps=5 format=3 uid="uid://c8u6e84dg6nh4"]
+
+[ext_resource type="Script" path="res://scenes/TrackResource.cs" id="1_3xswc"]
+[ext_resource type="PackedScene" uid="uid://disr0vhga7fo6" path="res://scenes/Z02-DustyDessert/DustyDesert.tscn" id="2_ul5t0"]
+[ext_resource type="Texture2D" uid="uid://bj7ucppunhm2c" path="res://scenes/Z02-DustyDessert/DD-flat.png" id="2_wpj1y"]
+[ext_resource type="PackedScene" uid="uid://w8dtpcak1qko" path="res://scenes/Z02-DustyDessert/DD-overview.blend" id="3_wui7e"]
+
+[resource]
+script = ExtResource("1_3xswc")
+name = "Dusty Desert"
+RaceScene = ExtResource("2_ul5t0")
+flatOverlay = ExtResource("2_wpj1y")
+solidOverlay = ExtResource("3_wui7e")

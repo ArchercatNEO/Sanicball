@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cum5aun7yaq54"]
+
+[ext_resource type="PackedScene" uid="uid://x5u8j2qqoj5g" path="res://scenes/Z04-IceMountain/IceMountain.blend" id="1_qoi11"]
+
+[node name="IceMountain" type="Node"]
+
+[node name="3D" parent="." instance=ExtResource("1_qoi11")]

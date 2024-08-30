@@ -44,8 +44,8 @@ public static class ControlTypeImpl
     {
         return controlType switch
         {
-            ControlType.Keyboard => GD.Load<Texture2D>("res://src/scenes/S0-Shared/Keyboard.png"),
-            ControlType.Joystick1 => GD.Load<Texture2D>("res://src/scenes/S0-Shared/Joystick1.png"),
+            ControlType.Keyboard => GD.Load<Texture2D>("res://scenes/S0-Shared/Keyboard.png"),
+            ControlType.Joystick1 => GD.Load<Texture2D>("res://scenes/S0-Shared/Joystick1.png"),
             _ => throw new InvalidCastException($"Invalid control type detected: {controlType}")
         };
     }

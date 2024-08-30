@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://c0m5kumj3m4cy"]
+
+[ext_resource type="PackedScene" uid="uid://q25g3wp7ypq8" path="res://scenes/Z03-FlameCore/FlameCore.blend" id="1_l6ce5"]
+
+[node name="FlameCore" type="Node"]
+
+[node name="3D" parent="." instance=ExtResource("1_l6ce5")]

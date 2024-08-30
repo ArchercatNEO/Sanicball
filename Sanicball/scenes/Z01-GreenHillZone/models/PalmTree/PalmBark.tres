@@ -1,0 +1,6 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://cfmhhvju0kxhe"]
+
+[ext_resource type="Texture2D" uid="uid://ckwpfp6dvau8q" path="res://scenes/Z01-GreenHillZone/assets/PalmTree/PalmBark.png" id="1_3wqlt"]
+
+[resource]
+albedo_texture = ExtResource("1_3wqlt")

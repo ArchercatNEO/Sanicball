@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://disr0vhga7fo6"]
+
+[ext_resource type="PackedScene" uid="uid://cqf8ersf3ura3" path="res://scenes/Z02-DustyDessert/DustyDesert.blend" id="1_domaq"]
+
+[node name="DustyDesert" type="Node"]
+
+[node name="3D" parent="." instance=ExtResource("1_domaq")]
