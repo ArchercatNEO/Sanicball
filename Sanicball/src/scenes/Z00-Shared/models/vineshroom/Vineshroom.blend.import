@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bgd6fyc23uq6h"
-path="res://.godot/imported/Vineshroom.blend-e7ebf75b446d88b9dc867f5c7323e279.scn"
+path="res://.godot/imported/Vineshroom.blend-44b34eddb7901057f60af11f11931a10.scn"
 
 [deps]
 
-source_file="res://src/scenes/Z00-Shared/Easter eggs/Vineshroom.blend"
-dest_files=["res://.godot/imported/Vineshroom.blend-e7ebf75b446d88b9dc867f5c7323e279.scn"]
+source_file="res://src/scenes/Z00-Shared/models/vineshroom/Vineshroom.blend"
+dest_files=["res://.godot/imported/Vineshroom.blend-44b34eddb7901057f60af11f11931a10.scn"]
 
 [params]
 

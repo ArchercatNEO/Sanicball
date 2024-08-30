@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://c63h21ond6c2j"
-path="res://.godot/imported/podium.blend-dce9b7c541a25db8f682346e3c97a195.scn"
+path="res://.godot/imported/podium.blend-74d166d38a0cd54a0699d0c2eba00e74.scn"
 
 [deps]
 
-source_file="res://src/scenes/Z00-Shared/podium.blend"
-dest_files=["res://.godot/imported/podium.blend-dce9b7c541a25db8f682346e3c97a195.scn"]
+source_file="res://src/scenes/Z00-Shared/models/podium/podium.blend"
+dest_files=["res://.godot/imported/podium.blend-74d166d38a0cd54a0699d0c2eba00e74.scn"]
 
 [params]
 

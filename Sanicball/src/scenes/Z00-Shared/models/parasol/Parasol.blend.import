@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://b51lp210q7yff"
-path="res://.godot/imported/Parasol.blend-a6fc0de90dbe13e8d87d4b7616bd0edd.scn"
+path="res://.godot/imported/Parasol.blend-06230aed0a6d6414c5566306d797a44b.scn"
 
 [deps]
 
-source_file="res://src/scenes/Z00-Shared/Easter eggs/Parasol.blend"
-dest_files=["res://.godot/imported/Parasol.blend-a6fc0de90dbe13e8d87d4b7616bd0edd.scn"]
+source_file="res://src/scenes/Z00-Shared/models/parasol/Parasol.blend"
+dest_files=["res://.godot/imported/Parasol.blend-06230aed0a6d6414c5566306d797a44b.scn"]
 
 [params]
 

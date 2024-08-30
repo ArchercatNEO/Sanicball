@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://534xuyffmr1y"
-path="res://.godot/imported/Chair.blend-660446d5f2b91ec511c02eeebb6d32dc.scn"
+path="res://.godot/imported/Chair.blend-0824367daa2eb366685693de2e326e37.scn"
 
 [deps]
 
-source_file="res://src/scenes/Z00-Shared/Easter eggs/Picnic/Chair.blend"
-dest_files=["res://.godot/imported/Chair.blend-660446d5f2b91ec511c02eeebb6d32dc.scn"]
+source_file="res://src/scenes/Z00-Shared/models/Picnic/Chair.blend"
+dest_files=["res://.godot/imported/Chair.blend-0824367daa2eb366685693de2e326e37.scn"]
 
 [params]
 

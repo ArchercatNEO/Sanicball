@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bx75p2rh07pii"
-path="res://.godot/imported/ChipsBag.blend-bf19412356c61038bbe463ffaad60aba.scn"
+path="res://.godot/imported/ChipsBag.blend-2f20c6539f66417168a539411c90d296.scn"
 
 [deps]
 
-source_file="res://src/scenes/Z00-Shared/Easter eggs/Picnic/ChipsBag.blend"
-dest_files=["res://.godot/imported/ChipsBag.blend-bf19412356c61038bbe463ffaad60aba.scn"]
+source_file="res://src/scenes/Z00-Shared/models/Picnic/ChipsBag.blend"
+dest_files=["res://.godot/imported/ChipsBag.blend-2f20c6539f66417168a539411c90d296.scn"]
 
 [params]
 

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bgg6ba4javnna"
-path="res://.godot/imported/DankTrain.blend-d535ee7ec503620de9db717c53bd43a3.scn"
+path="res://.godot/imported/DankTrain.blend-0d9b02dff753abec6eb770cbe4d02a99.scn"
 
 [deps]
 
-source_file="res://src/scenes/Z00-Shared/Easter eggs/DankTrain.blend"
-dest_files=["res://.godot/imported/DankTrain.blend-d535ee7ec503620de9db717c53bd43a3.scn"]
+source_file="res://src/scenes/Z00-Shared/models/dank-train/DankTrain.blend"
+dest_files=["res://.godot/imported/DankTrain.blend-0d9b02dff753abec6eb770cbe4d02a99.scn"]
 
 [params]
 

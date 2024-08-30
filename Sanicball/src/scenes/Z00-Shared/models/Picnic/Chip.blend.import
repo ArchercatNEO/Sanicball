@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://ds22k3kbqh8j1"
-path="res://.godot/imported/Chip.blend-223b49f75f52352a89e52b99cacc4626.scn"
+path="res://.godot/imported/Chip.blend-75d0c9e16a56058b9fb6f6c846895160.scn"
 
 [deps]
 
-source_file="res://src/scenes/Z00-Shared/Easter eggs/Picnic/Chip.blend"
-dest_files=["res://.godot/imported/Chip.blend-223b49f75f52352a89e52b99cacc4626.scn"]
+source_file="res://src/scenes/Z00-Shared/models/Picnic/Chip.blend"
+dest_files=["res://.godot/imported/Chip.blend-75d0c9e16a56058b9fb6f6c846895160.scn"]
 
 [params]
 

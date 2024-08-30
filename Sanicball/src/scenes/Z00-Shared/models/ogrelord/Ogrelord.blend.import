@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cbkpmxn1ldyu1"
-path="res://.godot/imported/Ogrelord.blend-56e50680f79724251279839454fb34d3.scn"
+path="res://.godot/imported/Ogrelord.blend-679a5703d657348ccfc846d50d8e8643.scn"
 
 [deps]
 
-source_file="res://src/scenes/Z00-Shared/Easter eggs/Ogrelord.blend"
-dest_files=["res://.godot/imported/Ogrelord.blend-56e50680f79724251279839454fb34d3.scn"]
+source_file="res://src/scenes/Z00-Shared/models/ogrelord/Ogrelord.blend"
+dest_files=["res://.godot/imported/Ogrelord.blend-679a5703d657348ccfc846d50d8e8643.scn"]
 
 [params]
 

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://bi66jwr30u7dj"
-path="res://.godot/imported/RockOverhang.blend-aead41ea1578a406b91b7992bb5b1afa.scn"
+path="res://.godot/imported/RockOverhang.blend-24cf18fda3cd4a0b7a3f54e18dec39da.scn"
 
 [deps]
 
-source_file="res://src/scenes/Z00-Shared/Models/RockOverhang.blend"
-dest_files=["res://.godot/imported/RockOverhang.blend-aead41ea1578a406b91b7992bb5b1afa.scn"]
+source_file="res://src/scenes/Z00-Shared/models/rocks/RockOverhang.blend"
+dest_files=["res://.godot/imported/RockOverhang.blend-24cf18fda3cd4a0b7a3f54e18dec39da.scn"]
 
 [params]
 

@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cpqy77tcf6s2r"
-path="res://.godot/imported/RockRamp.blend-a7a81e21afc37c85854a544bde9f96a9.scn"
+path="res://.godot/imported/RockRamp.blend-620c4eb5fe17e0bc59533251a9240d65.scn"
 
 [deps]
 
-source_file="res://src/scenes/Z00-Shared/Models/RockRamp.blend"
-dest_files=["res://.godot/imported/RockRamp.blend-a7a81e21afc37c85854a544bde9f96a9.scn"]
+source_file="res://src/scenes/Z00-Shared/models/rocks/RockRamp.blend"
+dest_files=["res://.godot/imported/RockRamp.blend-620c4eb5fe17e0bc59533251a9240d65.scn"]
 
 [params]
 

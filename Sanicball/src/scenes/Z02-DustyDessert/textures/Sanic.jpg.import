@@ -2,8 +2,8 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://q21tromk402d"
-path.s3tc="res://.godot/imported/Wood_Normal.png-96902152d37b11124cd93d0ea0adcb19.s3tc.ctex"
+uid="uid://dxea8wt5dhdj2"
+path.s3tc="res://.godot/imported/Sanic.jpg-bc81b2861d51479980aecce6cfeb7440.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://src/scenes/Z03-FlameCore/Wood_Normal.png"
-dest_files=["res://.godot/imported/Wood_Normal.png-96902152d37b11124cd93d0ea0adcb19.s3tc.ctex"]
+source_file="res://src/scenes/Z02-DustyDessert/textures/Sanic.jpg"
+dest_files=["res://.godot/imported/Sanic.jpg-bc81b2861d51479980aecce6cfeb7440.s3tc.ctex"]
 
 [params]
 
@@ -20,12 +20,12 @@ compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1
-compress/normal_map=1
+compress/normal_map=0
 compress/channel_pack=0
 mipmaps/generate=true
 mipmaps/limit=-1
-roughness/mode=1
-roughness/src_normal="res://src/scenes/Z03-FlameCore/Wood_Normal.png"
+roughness/mode=0
+roughness/src_normal=""
 process/fix_alpha_border=true
 process/premult_alpha=false
 process/normal_map_invert_y=false

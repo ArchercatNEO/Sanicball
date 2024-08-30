@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://b50leiqyok7lv"
-path="res://.godot/imported/Vase.blend-fd5bf2409171167345e51f4390da6e4a.scn"
+path="res://.godot/imported/Vase.blend-d7fbbe7e94df3416a9225dbb27c8bfae.scn"
 
 [deps]
 
-source_file="res://src/scenes/Z00-Shared/Easter eggs/Picnic/Vase.blend"
-dest_files=["res://.godot/imported/Vase.blend-fd5bf2409171167345e51f4390da6e4a.scn"]
+source_file="res://src/scenes/Z00-Shared/models/Picnic/Vase.blend"
+dest_files=["res://.godot/imported/Vase.blend-d7fbbe7e94df3416a9225dbb27c8bfae.scn"]
 
 [params]
 
