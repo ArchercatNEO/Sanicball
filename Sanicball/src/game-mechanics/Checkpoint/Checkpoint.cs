@@ -2,13 +2,13 @@ using Godot;
 
 namespace Sanicball.GameMechanics;
 
-[GlobalClass]
+
 public partial class Checkpoint : Area3D
 {
-    [Export] public bool isFinishLine = false;
-    [Export] public Checkpoint next = null!;
+    [BindProperty] public bool isFinishLine = false;
+    [BindProperty] public Checkpoint next = null!;
 
-    public override void _Ready()
+    protected override void _Ready()
     {
         BodyEntered += (body) =>
         {

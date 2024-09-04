@@ -7,10 +7,10 @@ namespace Sanicball.Ball;
 /// An AI navigation Node
 /// </summary>
 //TODO Tool debug things
-[GlobalClass]
+
 public partial class AiNode : Area3D
 {   
-    [Export] private AiNode[] nextOptions = [];
+    [BindProperty] private AiNode[] nextOptions = [];
     //TODO Weights
 
     public AiNode NextNode
@@ -38,7 +38,7 @@ public partial class AiNode : Area3D
         }
     }
 
-    public override void _Ready()
+    protected override void _Ready()
     {
         BodyEntered += (body) =>
         {

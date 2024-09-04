@@ -2,17 +2,17 @@ using System;
 
 namespace Godot;
 
-public class PackedScene<T>(PackedScene scene) where T : Node
+public class PackedScene<T>(PackedScene scene) where T : class /* Allows for interfaces */
 {
     public T Instantiate()
     {
-        return (T)scene.Instantiate();
+        return (T)(object)scene.Instantiate();
     }
 
     public static explicit operator PackedScene<T>(PackedScene castedScene)
     {
-        string owner = castedScene.GetState().GetNodeType(0);
-        string wanted = typeof(T).Name;
+        StringName owner = castedScene.GetState().GetNodeType(0);
+        StringName wanted = new StringName(typeof(T).Name);
         if (owner != wanted)
         {
             throw new InvalidCastException($"Object of type {owner} cannot be casted to type {wanted} (check type of {castedScene.ResourcePath})");

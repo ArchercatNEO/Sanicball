@@ -58,8 +58,8 @@ public partial class SanicBall : RigidBody3D, ICheckpointReciever
         return instance;
     }
 
-    [Export] private MeshInstance3D Renderer = null!;
-    [Export] private CollisionShape3D Collider = null!;
+    [BindProperty] private MeshInstance3D Renderer = null!;
+    [BindProperty] private CollisionShape3D Collider = null!;
 
     /// <summary>
     /// The camera this ball will use to rotate input
@@ -84,16 +84,16 @@ public partial class SanicBall : RigidBody3D, ICheckpointReciever
     public Vector3 UpOverride { get; private set; } = Vector3.Up;
     public bool IsGrounded { get; private set; } = false;
 
-    public override void _Ready()
+    protected override void _Ready()
     {
-        Renderer ??= GetNode<MeshInstance3D>("Renderer");
+        Renderer ??= GetNode<MeshInstance3D>(new NodePath("Renderer"));
         Renderer.MaterialOverride = character.Material;
         if (character.MeshOverride is not null)
         {
             Renderer.Mesh = character.MeshOverride;
         }
 
-        Collider ??= GetNode<CollisionShape3D>("Collider");
+        Collider ??= GetNode<CollisionShape3D>(new NodePath("Collider"));
         if (character.CollisionOverride is not null)
         {
             Collider.Shape = character.CollisionOverride;
@@ -118,9 +118,9 @@ public partial class SanicBall : RigidBody3D, ICheckpointReciever
         SetCollisionMaskValue(TriggerRespawn.layer, true);
     }
 
-    public override void _PhysicsProcess(double delta)
+    protected override void _PhysicsProcess(double delta)
     {
-        Array<Node3D> collisions = GetCollidingBodies();
+        GodotArray<Node3D> collisions = GetCollidingBodies();
 
         //TODO better floor check
         //? How can we detect a loop vs a wall?
@@ -138,7 +138,7 @@ public partial class SanicBall : RigidBody3D, ICheckpointReciever
     }
 
     //TODO use character stats instead of a const
-    public override void _IntegrateForces(PhysicsDirectBodyState3D state)
+    protected override void _IntegrateForces(PhysicsDirectBodyState3D state)
     {
         if (state.AngularVelocity.Length() > character.MaxAngularSpeed)
         {

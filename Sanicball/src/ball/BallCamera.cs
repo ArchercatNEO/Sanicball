@@ -19,12 +19,13 @@ namespace Sanicball.Ball;
 /// 	</item>
 /// </list>
 /// </summary>
+[GodotClass]
 public partial class BallCamera : Camera3D
 {
-    [Export] private SanicBall sanicBall = null!;
+    [BindProperty] private SanicBall sanicBall = null!;
 
     private float _orbitHeight;
-    [Export]
+    [BindProperty]
     public float OrbitHeight
     {
         get => _orbitHeight;
@@ -36,7 +37,7 @@ public partial class BallCamera : Camera3D
     }
 
     private float _orbitRadius;
-    [Export]
+    [BindProperty]
     public float OrbitRadius
     {
         get => _orbitRadius;
@@ -50,13 +51,13 @@ public partial class BallCamera : Camera3D
     private float orbitAngle;
     private Vector3 previousOrbit;
 
-    public override void _Ready()
+    protected override void _Ready()
     {
         Position = new(0, OrbitHeight, OrbitRadius);
         orbitAngle = Position.AngleTo(Vector3.Forward) + Mathf.Pi / 2;
     }
 
-    public override void _PhysicsProcess(double delta)
+    protected override void _PhysicsProcess(double delta)
     {
         //Position updates
         //TODO handle zooming in/out

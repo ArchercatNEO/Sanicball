@@ -106,7 +106,7 @@ public class CheckpointReciever(Checkpoint initialCheckpoint, int maxLaps)
 
         RaceFinished += (sender, e) =>
         {
-            display.AddThemeColorOverride("font_color", new(0, 0, 1));
+            display.AddThemeColorOverride(new StringName("font_color"), new(0, 0, 1));
         };
     }
 

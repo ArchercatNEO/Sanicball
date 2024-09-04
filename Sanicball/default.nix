@@ -1,53 +1,38 @@
 {
   lib,
-  stdenv,
-  patchelf,
-
   godot,
   godot-template,
-
+  godot-dotnet,
+  buildDotnetModule,
   dotnetCorePackages,
-
-  icu,
   ...
-}: 
-  stdenv.mkDerivation {
-    pname = "sanicball";
-    version = "0.2-alpha";
+}:
+buildDotnetModule {
+  pname = "sanicball";
+  version = "0.2-alpha";
 
-    src = ./.;
+  src = ./.;
 
-    nativeBuildInputs = [
-      patchelf
-      dotnetCorePackages.sdk_8_0
-      godot
-    ];
+  dotnet-sdk = dotnetCorePackages.sdk_8_0;
+  dotnet-runtime = dotnetCorePackages.runtime_8_0;
+  projectFile = ./Sanicball.csproj;
+  nugetDeps = ./deps.nix;
 
-    buildInputs = [
-      icu
-    ];
+  nativeBuildInputs = [
+    godot
+  ];
 
-    configurePhase = ''
-      ln -s ${godot-template}/lib templates
-    '';
+  buildInputs = [
+    godot-template
+  ];
 
-    buildPhase = ''
-      godot --verbose --headless --export-debug "Linux"
-    '';
+  projectReferences = [
+    godot-dotnet
+  ];
 
-    installPhase = ''
-      mkdir -p $out/bin
-      cp -r ./bin $out/bin
-    '';
-
-    fixupPhase = ''
-      patchelf --add-rpath ${icu}/lib $out/bin/data_Sanicball_linux_x86_64/libcoreclr.so
-      patchelf --add-rpath ${icu}/lib $out/bin/data_Sanicball_linux_x86_64/libSystem.Globalization.Native.so
-    '';
-
-    meta = {
-      homepage = "https://github.com/ArchercatNEO/Sanicball";
-      description = "The incredibly fast racer";
-      licesnse = lib.licenses.mit;
-    };
-  }
+  meta = {
+    homepage = "https://github.com/ArchercatNEO/Sanicball";
+    description = "The incredibly fast racer";
+    licesnse = lib.licenses.mit;
+  };
+}

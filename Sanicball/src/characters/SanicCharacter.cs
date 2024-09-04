@@ -2,7 +2,7 @@ using Godot;
 
 namespace Sanicball.Characters;
 
-[GlobalClass]
+
 public partial class SanicCharacter : Resource
 {
     #region Names and credits
@@ -10,12 +10,12 @@ public partial class SanicCharacter : Resource
     /// <summary>
     /// The full name of the character, distinct from the name of the controller
     /// </summary>
-    [Export] public required string Name;
+    [BindProperty] public required string Name;
 
     /// <summary>
     /// The creator of all the art associated with the character
     /// </summary>
-    [Export] public required string Credits;
+    [BindProperty] public required string Credits;
 
     #endregion Names and credits
 
@@ -24,22 +24,22 @@ public partial class SanicCharacter : Resource
     /// <summary>
     /// The material that will be applied on the mesh of the ball
     /// </summary>
-    [Export] public required Material Material;
+    [BindProperty] public required Material Material;
 
     /// <summary>
     /// A colour associated with the character, for use in markers and other ui elements
     /// </summary>
-    [Export] public required Color Color;
+    [BindProperty] public required Color Color;
 
     /// <summary>
     /// The icon that will be used in the character select menu to display this character
     /// </summary>
-    [Export] public required Texture2D Icon;
+    [BindProperty] public required Texture2D Icon;
 
     /// <summary>
     /// The icon displayed on a minimap during a race
     /// </summary>
-    [Export] public required Texture2D MinimapIcon;
+    [BindProperty] public required Texture2D MinimapIcon;
 
     #endregion Materials, Colours and Icons
 
@@ -48,12 +48,12 @@ public partial class SanicCharacter : Resource
     /// <summary>
     /// If present, this mesh will be used instead of a ball, Aggmen and metal Sanic use this
     /// </summary>
-    [Export] public Mesh? MeshOverride;
+    [BindProperty] public Mesh? MeshOverride;
 
     /// <summary>
     /// If present, this shape will be used for collision instead of a ball
     /// </summary>
-    [Export] public Shape3D? CollisionOverride;
+    [BindProperty] public Shape3D? CollisionOverride;
 
     #endregion Rendering and collision overrides
 
@@ -62,12 +62,12 @@ public partial class SanicCharacter : Resource
     /// <summary>
     /// The angular acceleration (in rad/s²) of this character while turning on the ground. Default is 1 rotation/s²
     /// </summary>
-    [Export] public float AngularAcceleration = 5 * Mathf.Tau;
-    [Export] public float MaxAngularSpeed = 10 * Mathf.Tau;
-    [Export] public float AirSpeed = 15;
-    [Export] public float JumpHeight = 14;
-    [Export] public float Grip = 20;
-    [Export] public float BallSize = 1;
+    [BindProperty] public float AngularAcceleration = 5 * Mathf.Tau;
+    [BindProperty] public float MaxAngularSpeed = 10 * Mathf.Tau;
+    [BindProperty] public float AirSpeed = 15;
+    [BindProperty] public float JumpHeight = 14;
+    [BindProperty] public float Grip = 20;
+    [BindProperty] public float BallSize = 1;
 
     #endregion Physics stats
 }

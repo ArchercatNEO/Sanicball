@@ -2,12 +2,12 @@ using Godot;
 
 namespace Sanicball.Scenes;
 
-[GlobalClass]
+
 //TODO Add animation paths and remove dependence on StandardMaterial3Ds
 public partial class MenuPath : Node3D
 {
     private StandardMaterial3D characterMat = new();
-    [Export]
+    [BindProperty]
     public StandardMaterial3D CharacterMat
     {
         get => characterMat;
@@ -25,7 +25,7 @@ public partial class MenuPath : Node3D
 
     public Transform3D startTranform = Transform3D.Identity;
     private Vector3 start = Vector3.Zero;
-    [Export]
+    [BindProperty]
     public Vector3 Start
     {
         get => start;
@@ -38,7 +38,7 @@ public partial class MenuPath : Node3D
 
     public required StandardMaterial3D startMat;
     private Color startColor = new(0, 1, 0, 1);
-    [Export]
+    [BindProperty]
     private Color StartColor
     {
         get => startColor;
@@ -51,7 +51,7 @@ public partial class MenuPath : Node3D
 
     public Transform3D endTranform = Transform3D.Identity;
     private Vector3 end = Vector3.Zero;
-    [Export]
+    [BindProperty]
     public Vector3 End
     {
         get => end;
@@ -64,7 +64,7 @@ public partial class MenuPath : Node3D
 
     public required StandardMaterial3D endMat;
     private Color endColor = new(1, 0, 0, 1);
-    [Export]
+    [BindProperty]
     private Color EndColor
     {
         get => endColor;

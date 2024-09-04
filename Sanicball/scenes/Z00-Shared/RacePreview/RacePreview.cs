@@ -14,11 +14,11 @@ public partial class RacePreview : Node
         return preview;
     }
 
-    [Export] private Label stageName = null!;
-    [Export] private Label startRaceHotkey = null!;
-    [Export] private HBoxContainer controlPanel = null!;
+    [BindProperty] private Label stageName = null!;
+    [BindProperty] private Label startRaceHotkey = null!;
+    [BindProperty] private HBoxContainer controlPanel = null!;
 
-    public override void _Ready()
+    protected override void _Ready()
     {
         //Reset volume to 0 and fade the music back in
         /* Tween soundReset = CreateTween();
@@ -27,9 +27,9 @@ public partial class RacePreview : Node
         Tween loopPaths = CreateTween();
     }
 
-    public override void _Input(InputEvent @event)
+    protected override void _Input(InputEvent @event)
     {
-        if (Input.IsKeyPressed(Key.F1))
+        if (@event is InputEventKey { Keycode: Key.F1})
         {
             controlPanel.Hide();
         }

@@ -16,8 +16,8 @@ namespace Sanicball.Scenes;
 public partial class RaceManager : Node
 {
     public static RaceManager? Instance { get; private set; }
-    public override void _EnterTree() { Instance = this; }
-    public override void _ExitTree() { Instance = null; }
+    protected override void _EnterTree() { Instance = this; }
+    protected override void _ExitTree() { Instance = null; }
 
     private static List<SanicBallDescriptor> players = [];
 
@@ -27,9 +27,9 @@ public partial class RaceManager : Node
         tree.ChangeSceneToPacked(options.SelectedStage.RaceScene);
     }
 
-    [Export] private HBoxContainer viewportManager = null!;
-    [Export] private Checkpoint finishLine = null!;
-    [Export] private AiNode initialNode = null!;
+    [BindProperty] private HBoxContainer viewportManager = null!;
+    [BindProperty] private Checkpoint finishLine = null!;
+    [BindProperty] private AiNode initialNode = null!;
 
     private int playersFinished = 0;
 
@@ -42,7 +42,7 @@ public partial class RaceManager : Node
         }
     }
 
-    public override void _Ready()
+    protected override void _Ready()
     {
         float offset = 10;
         foreach (var (character, controller) in players)

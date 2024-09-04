@@ -29,15 +29,12 @@ public partial class IntroUI : Control
 {
     private static readonly PackedScene Scene = GD.Load<PackedScene>("res://scenes/S1-Intro/intro.tscn");
 
-    [EnsureChild("UsernameInput")] public required Control inputUi;
-    [EnsureChild("TextEdit")] public required LineEdit usernameInput;
-    [EnsureChild("Credits")] public required Control credits;
+    [BindProperty] public required Control inputUi;
+    [BindProperty] public required LineEdit usernameInput;
+    [BindProperty] public required Control credits;
 
-    public override void _Ready()
+    protected override void _Ready()
     {
-        inputUi = GetNode<Control>("UsernameInput");
-        usernameInput = GetNode<LineEdit>("UsernameInput/TextEdit");
-        credits = GetNode<Control>("Credits");
         var images = credits.GetChildren().OfType<TextureRect>();
 
         usernameInput.TextSubmitted += (newString) =>
@@ -49,9 +46,9 @@ public partial class IntroUI : Control
 
             foreach (TextureRect image in images)
             {
-                tween.TweenProperty(image, ":modulate", new Color(1, 1, 1, 1), 0.6); //fade in
+                tween.TweenProperty(image, new NodePath(":modulate"), new Color(1, 1, 1, 1), 0.6); //fade in
                 tween.TweenInterval(0.6);
-                tween.TweenProperty(image, ":modulate", new Color(1, 1, 1, 0), 0.6); //fade out
+                tween.TweenProperty(image, new NodePath(":modulate"), new Color(1, 1, 1, 0), 0.6); //fade out
             }
 
             Callable switchToMenu = Callable.From(() =>

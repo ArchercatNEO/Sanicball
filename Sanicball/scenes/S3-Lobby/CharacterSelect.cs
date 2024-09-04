@@ -20,12 +20,12 @@ public partial class CharacterSelect : MarginContainer
         CharacterSelect panel = prefab.Instantiate<CharacterSelect>();
         panel.playerSpawner = spawner;
         panel.controlType = controlType;
-        panel.controllerIcon ??= panel.GetNode<TextureRect>("CharacterSelect");
+        panel.controllerIcon ??= panel.GetNode<TextureRect>(new NodePath("CharacterSelect"));
         panel.controllerIcon.Texture = controlType.Icon();
-        panel.characterSelect ??= panel.GetNode<Control>("CharacterSelect");
+        panel.characterSelect ??= panel.GetNode<Control>(new NodePath("CharacterSelect"));
         panel.characterSelect.Hide();
-        panel.characterIcon ??= panel.GetNode<TextureRect>("CharacterSelect/CharacterIcon");
-        panel.characterName ??= panel.GetNode<Label>("CharacterSelect/CharacterName");
+        panel.characterIcon ??= panel.GetNode<TextureRect>(new NodePath("CharacterSelect/CharacterIcon"));
+        panel.characterName ??= panel.GetNode<Label>(new NodePath("CharacterSelect/CharacterName"));
         panel.hotkeyLabel.Text = """
         [Arrow keys]: Select character,
         [Enter]: Confirm
@@ -38,12 +38,12 @@ public partial class CharacterSelect : MarginContainer
         CharacterSelect panel = prefab.Instantiate<CharacterSelect>();
         panel.playerSpawner = spawner;
         panel.controlType = controlType;
-        panel.controllerIcon ??= panel.GetNode<TextureRect>("CharacterSelect");
+        panel.controllerIcon ??= panel.GetNode<TextureRect>(new NodePath("CharacterSelect"));
         panel.controllerIcon.Texture = controlType.Icon();
-        panel.characterSelect ??= panel.GetNode<Control>("CharacterSelect");
+        panel.characterSelect ??= panel.GetNode<Control>(new NodePath("CharacterSelect"));
         panel.characterSelect.Hide();
-        panel.characterIcon ??= panel.GetNode<TextureRect>("CharacterSelect/CharacterIcon");
-        panel.characterName ??= panel.GetNode<Label>("CharacterSelect/CharacterName");
+        panel.characterIcon ??= panel.GetNode<TextureRect>(new NodePath("CharacterSelect/CharacterIcon"));
+        panel.characterName ??= panel.GetNode<Label>(new NodePath("CharacterSelect/CharacterName"));
         panel.hotkeyLabel.Text = """
         [Arrow keys]: Select character,
         [Enter]: Confirm
@@ -64,12 +64,12 @@ public partial class CharacterSelect : MarginContainer
 
     private static readonly SanicCharacter[] characters = [cancel, .. SanicCharacter.All];
 
-    [Export] private TextureRect background = null!;
-    [Export] private TextureRect controllerIcon = null!;
-    [Export] private Control characterSelect = null!;
-    [Export] private TextureRect characterIcon = null!;
-    [Export] private Label characterName = null!;
-    [Export] private Label hotkeyLabel = null!;
+    [BindProperty] private TextureRect background = null!;
+    [BindProperty] private TextureRect controllerIcon = null!;
+    [BindProperty] private Control characterSelect = null!;
+    [BindProperty] private TextureRect characterIcon = null!;
+    [BindProperty] private Label characterName = null!;
+    [BindProperty] private Label hotkeyLabel = null!;
     private Node3D playerSpawner = null!;
 
     public SanicBall? Player { get; private set; }
@@ -91,7 +91,7 @@ public partial class CharacterSelect : MarginContainer
         }
     }
 
-    public override void _Input(InputEvent @event)
+    protected override void _Input(InputEvent @event)
     {
         if (!characterSelect.Visible)
         {

@@ -8,12 +8,12 @@ namespace Sanicball.Scenes;
 /// </summary>
 public partial class MenuCamera : Camera3D
 {
-    [Export] private float speed = 20;
+    [BindProperty] private float speed = 20;
 
-    [Export] private MeshInstance3D ballMesh = null!;
-    [Export] private WorldEnvironment? lightingEnv;
+    [BindProperty] private MeshInstance3D ballMesh = null!;
+    [BindProperty] private WorldEnvironment? lightingEnv;
 
-    public override void _Ready()
+    protected override void _Ready()
     {
         Vector3 ballPosition = ballMesh.Position;
 
@@ -30,23 +30,23 @@ public partial class MenuCamera : Camera3D
             float time = path.Start.DistanceTo(target) / speed;
 
             animation.SetParallel(true);
-            animation.TweenProperty(this, ":position", target, time);
+            animation.TweenProperty(this, new NodePath(":position"), target, time);
             animation.TweenMethod(Callable.From<Vector3>(_ => LookAt(ballPosition)), ballPosition, ballPosition, time);
             animation.SetParallel(false);
 
             if (lightingEnv is not null)
             {
-                animation.TweenProperty(lightingEnv.CameraAttributes, ":exposure_multiplier", 0, time);
+                animation.TweenProperty(lightingEnv.CameraAttributes, new NodePath(":exposure_multiplier"), 0, time);
             }
 
             animation.SetParallel(true);
-            animation.TweenProperty(this, ":position", path.End, Position.DistanceTo(path.End) / speed);
+            animation.TweenProperty(this, new NodePath(":position"), path.End, Position.DistanceTo(path.End) / speed);
             animation.TweenMethod(Callable.From<Vector3>(_ => LookAt(ballPosition)), ballPosition, ballPosition, Position.DistanceTo(path.End) / speed);
             animation.SetParallel(false);
 
             if (lightingEnv is not null)
             {
-                animation.TweenProperty(lightingEnv.CameraAttributes, ":exposure_multiplier", 1, time);
+                animation.TweenProperty(lightingEnv.CameraAttributes, new NodePath(":exposure_multiplier"), 1, time);
             }
         }
     }

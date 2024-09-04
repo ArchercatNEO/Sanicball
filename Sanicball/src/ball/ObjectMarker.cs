@@ -31,11 +31,11 @@ public partial class ObjectMarker : Control
     private Camera3D origin = null!;
     private Node3D target = null!;
 
-    public override void _Process(double delta)
+    protected override void _Process(double delta)
     {
         Projection projectionMatrix = origin.GetCameraProjection();
         Vector3 thing = origin.Transform * target.Position;
         Vector3 projectedVector = projectionMatrix * thing;
-        Position = Position with { X = projectedVector.X, Y = projectedVector.Y };
+        //Position = Position with { X = projectedVector.X, Y = projectedVector.Y };
     }
 }

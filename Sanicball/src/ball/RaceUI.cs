@@ -17,18 +17,18 @@ public partial class RaceUI : SubViewportContainer
         RaceUI instance = prefab.Instantiate<RaceUI>();
 
         instance.sanicBall = sanicBall;
-
-        instance.GetNode("SubViewport").AddChild(sanicBall);
+        instance.SubViewport.AddChild(sanicBall);
 
         return instance;
     }
 
-    [Export] public required Label LapCounter { get; set; }
+    [BindProperty] public required Label SubViewport { get; set; }
+    [BindProperty] public required Label LapCounter { get; set; }
 
     private SanicBall sanicBall = null!;
     private CheckpointReciever chachedReciever = null!;
 
-    public override void _Ready()
+    protected override void _Ready()
     {
         return;
         ArgumentNullException.ThrowIfNull(sanicBall.checkpointReciever);
@@ -41,7 +41,7 @@ public partial class RaceUI : SubViewportContainer
 
         chachedReciever.RaceFinished += (sender, args) =>
         {
-            LapCounter.AddThemeColorOverride("default_color", new(0, 0, 1));
+            LapCounter.AddThemeColorOverride(new StringName("default_color"), new(0, 0, 1));
         };
     }
 }

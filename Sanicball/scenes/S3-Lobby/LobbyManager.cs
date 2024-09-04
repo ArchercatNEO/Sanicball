@@ -43,49 +43,49 @@ public partial class LobbyManager : Node
     }
 
     //ui
-    [Export] private HBoxContainer characterSelectContainer = null!;
-    [Export] private Label countdownText = null!;
-    [Export] private Control pauseMenu = null!;
+    [BindProperty] private HBoxContainer characterSelectContainer = null!;
+    [BindProperty] private Label countdownText = null!;
+    [BindProperty] private Control pauseMenu = null!;
     
     //3d
-    [Export] private Node3D playerSpawner = null!;
+    [BindProperty] private Node3D playerSpawner = null!;
 
 
     private int readyPlayers = 0;
     private readonly List<SanicBallDescriptor> players = [];
     private readonly Dictionary<ControlType, CharacterSelect> activePanels = [];
 
-    public override void _EnterTree()
+    protected override void _EnterTree()
     {
         Instance = this;
-        Input.JoyConnectionChanged += OnDeviceConnected;
+        Input.Singleton.JoyConnectionChanged += OnDeviceConnected;
     }
 
-    public override void _Ready()
+    protected override void _Ready()
     {
-        pauseMenu.GetNode<Button>("VBoxContainer/Unpause").Pressed += pauseMenu.Hide;
-        Button ctxSensitive = pauseMenu.GetNode<Button>("VBoxContainer/Context");
+        pauseMenu.GetNode<Button>(new NodePath("VBoxContainer/Unpause")).Pressed += pauseMenu.Hide;
+        Button ctxSensitive = pauseMenu.GetNode<Button>(new NodePath("VBoxContainer/Context"));
         //TODO settings
         ctxSensitive.Pressed += pauseMenu.Hide;
         ctxSensitive.Text = "Settings";
-        pauseMenu.GetNode<Button>("VBoxContainer/Quit").Pressed += () => MenuUI.Activate(GetTree());
+        pauseMenu.GetNode<Button>(new NodePath("VBoxContainer/Quit")).Pressed += () => MenuUI.Activate(GetTree());
         pauseMenu.Hide();
     }
 
-    public override void _ExitTree()
+    protected override void _ExitTree()
     {
-        Input.JoyConnectionChanged -= OnDeviceConnected;
+        Input.Singleton.JoyConnectionChanged -= OnDeviceConnected;
         Instance = null;
     }
 
-    public override void _Input(InputEvent @event)
+    protected override void _Input(InputEvent @event)
     {
         if (@event is InputEventKey inputEvent)
         {
             if (inputEvent.Keycode == Key.P)
             {
                 pauseMenu.Show();
-                pauseMenu.GetNode<Button>("VBoxContainer/Unpause").GrabFocus();
+                pauseMenu.GetNode<Button>(new NodePath("VBoxContainer/Unpause")).GrabFocus();
                 //TODO pause game
             }
         }

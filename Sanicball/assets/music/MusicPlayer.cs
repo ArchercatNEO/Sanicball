@@ -4,8 +4,8 @@ namespace Sanicball.Sound;
 
 public partial class MusicPlayer : AudioStreamPlayer
 {
-    [Export] public required bool muted = false;
-    [Export] public required Label songName;
+    [BindProperty] public required bool muted = false;
+    [BindProperty] public required Label songName;
 
     private readonly Song[] songs;
     private int songIndex = 0;
@@ -18,7 +18,7 @@ public partial class MusicPlayer : AudioStreamPlayer
         ];
     }
 
-    public override void _Ready()
+    protected override void _Ready()
     {
         if (muted) { return; }
         Song first = songs[0];

@@ -19,7 +19,7 @@ public class AiBall(AiNode initialTarget) : ISanicController
     public void Initialise(SanicBall parent)
     {
         ball = parent;
-        parent.Name = $"{parent.character.Name} (AI)";
+        parent.Name = new StringName($"{parent.character.Name} (AI)");
     }
 
     public void Process(double delta)

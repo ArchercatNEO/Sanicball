@@ -5,19 +5,19 @@ using Sanicball.Scenes;
 
 namespace Sanicball.Plugins;
 
-[Tool]
+[GodotClass(Tool = true)]
 internal partial class PathVisualizer : EditorPlugin
 {
     private static readonly SphereMesh sphereMesh = GD.Load<SphereMesh>("res://addons/PathVisualizer/Sphere.tres");
 
     PathNode gizmo = new(sphereMesh);
 
-    public override void _EnterTree()
+    protected override void _EnterTree()
     {
         AddNode3DGizmoPlugin(gizmo);
     }
 
-    public override void _ExitTree()
+    protected override void _ExitTree()
     {
         RemoveNode3DGizmoPlugin(gizmo);
     }
@@ -34,8 +34,8 @@ internal partial class PathNode : EditorNode3DGizmoPlugin
         ball = sphereMesh;
     }
 
-    public override string _GetGizmoName() => "PathNode";
-    public override bool _HasGizmo(Node3D forNode3D)
+    protected override string _GetGizmoName() => "PathNode";
+    protected override bool _HasGizmo(Node3D forNode3D)
     {
         Variant maybeScript = forNode3D.GetScript();
         if (maybeScript.VariantType == Variant.Type.Nil)
@@ -57,7 +57,7 @@ internal partial class PathNode : EditorNode3DGizmoPlugin
         return forNode3D is MenuPath;
     }
 
-    public override void _Redraw(EditorNode3DGizmo gizmo)
+    protected override void _Redraw(EditorNode3DGizmo gizmo)
     {
         gizmo.Clear();
 
@@ -69,14 +69,14 @@ internal partial class PathNode : EditorNode3DGizmoPlugin
         gizmo.AddHandles([path.Start, path.End], GetMaterial("mine", gizmo), []);
     }
 
-    public override Variant _GetHandleValue(EditorNode3DGizmo gizmo, int handleId, bool secondary)
+    protected override Variant _GetHandleValue(EditorNode3DGizmo gizmo, int handleId, bool secondary)
     {
         MenuPath path = (MenuPath)gizmo.GetNode3D();
         if (handleId == 0) { return path.Start; }
         else { return path.End; }
     }
 
-    public override void _SetHandle(EditorNode3DGizmo gizmo, int handleId, bool secondary, Camera3D camera, Vector2 screenPos)
+    protected override void _SetHandle(EditorNode3DGizmo gizmo, int handleId, bool secondary, Camera3D camera, Vector2 screenPos)
     {
         Vector3 origin = camera.ProjectRayOrigin(screenPos);
         Vector3 normal = camera.ProjectRayNormal(screenPos);

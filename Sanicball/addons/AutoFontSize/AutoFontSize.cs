@@ -2,11 +2,10 @@ using Godot;
 
 namespace Sanicball.Plugins;
 
-[GlobalClass, Tool]
 public partial class AutoFontSize : Label
 {
     private int _minimumSize = 10;
-    [Export]
+    [BindProperty]
     public int MinimumSize
     {
         get => _minimumSize;
@@ -18,7 +17,7 @@ public partial class AutoFontSize : Label
     }
 
     private int _maximumSize = 20;
-    [Export]
+    [BindProperty]
     public int MaximumSize
     {
         get => _maximumSize;
@@ -31,21 +30,21 @@ public partial class AutoFontSize : Label
 
     private void ResizeText()
     {
-        float area = Size.X * Size.Y;
+        float area = 100; //size.X * size.Y;
         float pxRes = area / Text.Length;
         int fontSize = Mathf.RoundToInt(pxRes);
         int clampedSize = Mathf.Clamp(fontSize, MinimumSize, MaximumSize);
-        AddThemeFontSizeOverride("font_size", clampedSize);
+        AddThemeFontSizeOverride(new StringName("font_size"), clampedSize);
     }
 
-    public override void _Ready()
+    protected override void _Ready()
     {
         ClipText = true;
     }
 
-    public override bool _Set(StringName property, Variant value)
+    protected override bool _Set(StringName property, Variant value)
     {
-        if (property == "text")
+        if (property == new StringName("text"))
         {
             Text = value.AsString();
             ResizeText();

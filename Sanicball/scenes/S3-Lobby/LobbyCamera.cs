@@ -15,11 +15,11 @@ namespace Sanicball.Scenes;
 public partial class LobbyCamera : Camera3D
 {
     public static LobbyCamera? Instance { get; private set; }
-    public override void _EnterTree() { Instance = this; }
-    public override void _ExitTree() { Instance = null; }
+    protected override void _EnterTree() { Instance = this; }
+    protected override void _ExitTree() { Instance = null; }
 
 
-    [Export] private float rotationSpeed = 10;
+    [BindProperty] private float rotationSpeed = 10;
 
     private readonly List<SanicBall> balls = [];
     private readonly Vector3 originRotation;
@@ -37,7 +37,7 @@ public partial class LobbyCamera : Camera3D
         return () => Rotation;
     }
 
-    public override void _Process(double delta)
+    protected override void _Process(double delta)
     {
         //Prevent a div 0 by returning to starting location
         if (balls.Count == 0)
