@@ -19,23 +19,33 @@ in
   mkShell {
     name = "sanicball-shell";
 
-    packages = [
+    nativeBuildInputs = [
       blender
-      dotnet
+      dotnetCorePackages.sdk_9_0
       stdenv.cc
       godot
     ];
 
+    buildInputs = [
+      icu
+      openssl
+      zlib
+      zlib.dev
+    ];
+
     env = {
-      NIX_LD = "${stdenv.cc}/nix-support/dynamic-linker";
       NIX_LD_LIBRARY_PATH = lib.makeLibraryPath [
         zlib
         zlib.dev
+        stdenv.cc.cc.lib
         openssl
         icu
       ];
       LIBRARY_PATH = lib.makeLibraryPath [
+        icu
+        openssl
         zlib
+        zlib.dev
       ];
     };
 

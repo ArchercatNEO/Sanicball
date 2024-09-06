@@ -1,0 +1,9 @@
+[configuration]
+
+entry_symbol = "init"
+compatibility_minimum = 4.3
+
+[libraries]
+
+linux.x86_64.debug = "res://bin/Release/net9.0/linux-x64/publish/Sanicball.so"
+linux.x86_64.release = "res://bin/Release/net9.0/linux-x64/publish/Sanicball.so"
