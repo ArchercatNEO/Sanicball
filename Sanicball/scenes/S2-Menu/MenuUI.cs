@@ -3,7 +3,8 @@ using Godot;
 namespace Sanicball.Scenes;
 
 //TODO Sanicball translate and expand animation
-//TODO Press any key hide + spin animation 
+//TODO Press any key hide + spin animation
+[GodotClass]
 public partial class MenuUI : Control
 {
     private static readonly PackedScene Scene = GD.Load<PackedScene>("res://scenes/S2-Menu/menu.tscn");

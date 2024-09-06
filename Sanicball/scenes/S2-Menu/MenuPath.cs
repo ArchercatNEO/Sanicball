@@ -4,6 +4,7 @@ namespace Sanicball.Scenes;
 
 
 //TODO Add animation paths and remove dependence on StandardMaterial3Ds
+[GodotClass]
 public partial class MenuPath : Node3D
 {
     private StandardMaterial3D characterMat = new();
@@ -36,7 +37,7 @@ public partial class MenuPath : Node3D
         }
     }
 
-    public required StandardMaterial3D startMat;
+    public  StandardMaterial3D startMat;
     private Color startColor = new(0, 1, 0, 1);
     [BindProperty]
     private Color StartColor
@@ -62,7 +63,7 @@ public partial class MenuPath : Node3D
         }
     }
 
-    public required StandardMaterial3D endMat;
+    public  StandardMaterial3D endMat;
     private Color endColor = new(1, 0, 0, 1);
     [BindProperty]
     private Color EndColor

@@ -25,13 +25,14 @@ namespace Sanicball.Scenes;
 /// </list>
 /// </summary>
 //TODO Implement account selection (guest/named account)
+[GodotClass]
 public partial class IntroUI : Control
 {
     private static readonly PackedScene Scene = GD.Load<PackedScene>("res://scenes/S1-Intro/intro.tscn");
 
-    [BindProperty] public required Control inputUi;
-    [BindProperty] public required LineEdit usernameInput;
-    [BindProperty] public required Control credits;
+    [BindProperty] public  Control inputUi;
+    [BindProperty] public  LineEdit usernameInput;
+    [BindProperty] public  Control credits;
 
     protected override void _Ready()
     {

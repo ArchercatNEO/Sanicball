@@ -12,6 +12,7 @@ namespace Sanicball.Scenes;
 /// this is the only place the amount of players should increase
 /// </summary>
 //TODO Implement lobby settings
+[GodotClass]
 public partial class LobbyManager : Node
 {
     private static LobbyManager? Instance { get; set; }

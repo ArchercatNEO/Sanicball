@@ -13,6 +13,7 @@ namespace Sanicball.Scenes;
 //TODO Implenent minimap
 //TODO Implement Race UI
 //TODO Improve splitscreen
+[GodotClass]
 public partial class RaceManager : Node
 {
     public static RaceManager? Instance { get; private set; }

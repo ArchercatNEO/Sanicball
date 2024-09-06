@@ -3,6 +3,7 @@ using Godot;
 namespace Sanicball.Ball;
 
 
+[GodotClass]
 public partial class ObjectMarker : Control
 {
     private static readonly PackedScene prefab = GD.Load<PackedScene>("res://src/ball/ObjectMarker.tscn");

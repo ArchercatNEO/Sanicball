@@ -15,7 +15,7 @@ public class PlayerBall : ISanicController
     /// The controller of this player, used to determine where the ball needs to turn towards
     /// </summary>
     /// <see cref="Account.ControlType"/>
-    public required ControlType ControlType { get; init; }
+    public  ControlType ControlType { get; init; }
 
     private SanicBall sanicBall = null!;
 

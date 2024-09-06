@@ -11,6 +11,7 @@ namespace Sanicball.Scenes;
 /// Handles setting ready, player joining and leaving
 /// </summary>
 //TODO Implement a preview grid to see what character is near
+[GodotClass]
 public partial class CharacterSelect : MarginContainer
 {
     private static readonly PackedScene prefab = GD.Load<PackedScene>("res://scenes/S3-Lobby/CharacterSelect.tscn");

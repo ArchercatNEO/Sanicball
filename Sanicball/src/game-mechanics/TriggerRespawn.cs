@@ -3,6 +3,7 @@ using Sanicball.Ball;
 
 namespace Sanicball.GameMechanics;
 
+[GodotClass]
 public partial class TriggerRespawn : Area3D
 {
     public const int layer = 10;

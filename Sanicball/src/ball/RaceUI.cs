@@ -8,6 +8,7 @@ namespace Sanicball.Ball;
 /// A UI overlay for balls inside a race
 /// Contains things like the speed counter and the place counter
 /// </summary>
+[GodotClass]
 public partial class RaceUI : SubViewportContainer
 {
     private static readonly PackedScene prefab = GD.Load<PackedScene>("res://src/ball/RaceUI.tscn");
@@ -22,8 +23,8 @@ public partial class RaceUI : SubViewportContainer
         return instance;
     }
 
-    [BindProperty] public required Label SubViewport { get; set; }
-    [BindProperty] public required Label LapCounter { get; set; }
+    [BindProperty] public  Label SubViewport { get; set; }
+    [BindProperty] public  Label LapCounter { get; set; }
 
     private SanicBall sanicBall = null!;
     private CheckpointReciever chachedReciever = null!;

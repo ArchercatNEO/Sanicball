@@ -1,5 +1,6 @@
 using System;
 using Godot;
+using Godot.Collections;
 
 namespace Sanicball.Ball;
 
@@ -8,9 +9,10 @@ namespace Sanicball.Ball;
 /// </summary>
 //TODO Tool debug things
 
+[GodotClass]
 public partial class AiNode : Area3D
 {   
-    [BindProperty] private AiNode[] nextOptions = [];
+    [BindProperty] private GodotArray<AiNode> nextOptions = [];
     //TODO Weights
 
     public AiNode NextNode
@@ -21,10 +23,10 @@ public partial class AiNode : Area3D
             
             double totalWeight = 0;
             int index;
-            for (index = 0; index < nextOptions.Length; index++)
+            for (index = 0; index < nextOptions.Count; index++)
             {
                 //Should be the weight value from the weight array
-                double weight = 1 / nextOptions.Length;
+                double weight = 1 / nextOptions.Count;
                 
                 if (totalWeight < rng && rng < totalWeight + weight)
                 {

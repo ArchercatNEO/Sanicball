@@ -12,6 +12,7 @@ namespace Sanicball.Scenes;
 /// If there are no players it will default to wherever it was looking when it was instantiated
 /// </summary>
 //TODO moving around enough causes the camera to flip, avoid that
+[GodotClass]
 public partial class LobbyCamera : Camera3D
 {
     public static LobbyCamera? Instance { get; private set; }

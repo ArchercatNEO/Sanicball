@@ -10,6 +10,7 @@ namespace Sanicball.Ball;
 /// Contains its controller (ai/player/remote)
 /// Contains its character and associated personality
 /// </summary>
+[GodotClass]
 public partial class SanicBall : RigidBody3D, ICheckpointReciever
 {
     public const int MaxSpeed = 80;

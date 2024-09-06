@@ -6,6 +6,7 @@ namespace Sanicball.Scenes;
 /// <summary>
 /// Responsible for the ball animations in the background
 /// </summary>
+[GodotClass]
 public partial class MenuCamera : Camera3D
 {
     [BindProperty] private float speed = 20;

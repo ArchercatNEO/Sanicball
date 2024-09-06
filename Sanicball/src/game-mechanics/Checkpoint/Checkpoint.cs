@@ -3,6 +3,7 @@ using Godot;
 namespace Sanicball.GameMechanics;
 
 
+[GodotClass]
 public partial class Checkpoint : Area3D
 {
     [BindProperty] public bool isFinishLine = false;

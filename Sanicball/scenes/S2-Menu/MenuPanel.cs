@@ -2,6 +2,7 @@ using Godot;
 
 namespace Sanicball.Scenes;
 
+[GodotClass]
 public partial class MenuPanel : ColorRect
 {
     protected override void _Ready()

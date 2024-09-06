@@ -3,6 +3,7 @@ using Godot;
 namespace Sanicball.Characters;
 
 
+[GodotClass]
 public partial class SanicCharacter : Resource
 {
     #region Names and credits
@@ -10,12 +11,12 @@ public partial class SanicCharacter : Resource
     /// <summary>
     /// The full name of the character, distinct from the name of the controller
     /// </summary>
-    [BindProperty] public required string Name;
+    [BindProperty] public  string Name;
 
     /// <summary>
     /// The creator of all the art associated with the character
     /// </summary>
-    [BindProperty] public required string Credits;
+    [BindProperty] public  string Credits;
 
     #endregion Names and credits
 
@@ -24,22 +25,22 @@ public partial class SanicCharacter : Resource
     /// <summary>
     /// The material that will be applied on the mesh of the ball
     /// </summary>
-    [BindProperty] public required Material Material;
+    [BindProperty] public  Material Material;
 
     /// <summary>
     /// A colour associated with the character, for use in markers and other ui elements
     /// </summary>
-    [BindProperty] public required Color Color;
+    [BindProperty] public  Color Color;
 
     /// <summary>
     /// The icon that will be used in the character select menu to display this character
     /// </summary>
-    [BindProperty] public required Texture2D Icon;
+    [BindProperty] public  Texture2D Icon;
 
     /// <summary>
     /// The icon displayed on a minimap during a race
     /// </summary>
-    [BindProperty] public required Texture2D MinimapIcon;
+    [BindProperty] public  Texture2D MinimapIcon;
 
     #endregion Materials, Colours and Icons
 
