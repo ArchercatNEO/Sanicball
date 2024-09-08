@@ -1,12 +1,10 @@
-[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://b3im404xcmkeg"]
+[gd_resource type="SanicCharacter" load_steps=5 format=3 uid="uid://b3im404xcmkeg"]
 
 [ext_resource type="Texture2D" uid="uid://cl6k8ljrrbecq" path="res://src/characters/C99-Supa-Sanic/SuperSanicIcon.png" id="1_kh4m6"]
-[ext_resource type="Script" path="res://src/characters/SanicCharacter.cs" id="1_nsmfl"]
 [ext_resource type="Material" uid="uid://dids4tmxjgtd1" path="res://src/characters/C99-Supa-Sanic/SupaSanicMat.tres" id="2_ya5ui"]
 [ext_resource type="Texture2D" uid="uid://bbwsiwr7o8rw" path="res://src/characters/C99-Supa-Sanic/SuperSanicMinimap.png" id="3_r3121"]
 
 [resource]
-script = ExtResource("1_nsmfl")
 Name = "Super Sanic"
 Credits = "Deviantart user franz888"
 Color = Color(0.490196, 0.92549, 0, 1)

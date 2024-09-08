@@ -1,12 +1,10 @@
-[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://btwwtdcqguo8c"]
+[gd_resource type="SanicCharacter" load_steps=5 format=3 uid="uid://btwwtdcqguo8c"]
 
-[ext_resource type="Script" path="res://src/characters/SanicCharacter.cs" id="1_p1vpv"]
 [ext_resource type="Texture2D" uid="uid://btm5iss7rswcc" path="res://src/characters/C04-Ame-Roes/AmeIcon.png" id="1_y6e4v"]
 [ext_resource type="Material" uid="uid://buvt6d1na11en" path="res://src/characters/C04-Ame-Roes/AmeMat.tres" id="2_iagt6"]
 [ext_resource type="Texture2D" uid="uid://b7vhfv6pduwm" path="res://src/characters/C04-Ame-Roes/AmeMinimap.png" id="3_3q3fa"]
 
 [resource]
-script = ExtResource("1_p1vpv")
 Name = "Ame Roes"
 Credits = "Reddit user o_opc"
 Color = Color(1, 0.698039, 0.992157, 1)

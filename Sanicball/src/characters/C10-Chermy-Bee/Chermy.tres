@@ -1,12 +1,10 @@
-[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://d34tlt872spah"]
+[gd_resource type="SanicCharacter" load_steps=5 format=3 uid="uid://d34tlt872spah"]
 
 [ext_resource type="Texture2D" uid="uid://0cqd8v012h8f" path="res://src/characters/C10-Chermy-Bee/ChermyIcon.svg" id="1_ap7jm"]
-[ext_resource type="Script" path="res://src/characters/SanicCharacter.cs" id="1_ijc62"]
 [ext_resource type="Texture2D" uid="uid://bjbpmbqlytqdi" path="res://src/characters/C10-Chermy-Bee/ChermyMinimap.svg" id="2_7ops8"]
 [ext_resource type="Material" uid="uid://bpl2lqeh1lm3t" path="res://src/characters/C10-Chermy-Bee/ChermyMat.tres" id="2_ivauc"]
 
 [resource]
-script = ExtResource("1_ijc62")
 Name = "Chermy Bee"
 Credits = ""
 Material = ExtResource("2_ivauc")

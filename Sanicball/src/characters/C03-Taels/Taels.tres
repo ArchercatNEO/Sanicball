@@ -1,12 +1,10 @@
-[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://b8kobq01ga38m"]
+[gd_resource type="SanicCharacter" load_steps=5 format=3 uid="uid://b8kobq01ga38m"]
 
 [ext_resource type="Texture2D" uid="uid://betj8w7f1s3v6" path="res://src/characters/C03-Taels/TaelsIcon.png" id="1_qvelh"]
 [ext_resource type="Material" uid="uid://bh2mgbe4kxfhq" path="res://src/characters/C03-Taels/TaelsMat.tres" id="2_vteb7"]
 [ext_resource type="Texture2D" uid="uid://copg3uv013vvj" path="res://src/characters/C03-Taels/TaelsMinimap.png" id="3_vwmec"]
-[ext_resource type="Script" path="res://src/characters/SanicCharacter.cs" id="4_ud2ol"]
 
 [resource]
-script = ExtResource("4_ud2ol")
 Name = "Taels"
 Credits = "Deviantart user Mew087123"
 Material = ExtResource("2_vteb7")

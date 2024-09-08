@@ -1,14 +1,12 @@
-[gd_resource type="Resource" script_class="SanicCharacter" load_steps=7 format=3 uid="uid://tl8jud2o0uxq"]
+[gd_resource type="SanicCharacter" load_steps=7 format=3 uid="uid://tl8jud2o0uxq"]
 
 [ext_resource type="Texture2D" uid="uid://y0davh3ktveu" path="res://src/characters/C09-Dr.-Aggmen/AggmenIcon.png" id="1_3i7lb"]
 [ext_resource type="Shape3D" uid="uid://dnyvrlfjww608" path="res://src/characters/C09-Dr.-Aggmen/AggmenCol.tres" id="1_ej8b0"]
-[ext_resource type="Script" path="res://src/characters/SanicCharacter.cs" id="1_ldutv"]
 [ext_resource type="ArrayMesh" uid="uid://dexmgu1nt4lck" path="res://src/characters/C09-Dr.-Aggmen/AggmenMesh.res" id="1_pvpe0"]
 [ext_resource type="Material" uid="uid://ukkx8a5gt3x5" path="res://src/characters/C09-Dr.-Aggmen/AggmenMat.tres" id="2_u1xtd"]
 [ext_resource type="Texture2D" uid="uid://dpd6ixg6q3lne" path="res://src/characters/C09-Dr.-Aggmen/AggmenMinimap.png" id="3_6joe2"]
 
 [resource]
-script = ExtResource("1_ldutv")
 Name = "Dr. Aggmen"
 Credits = "Artist Tyson Hesse"
 Material = ExtResource("2_u1xtd")

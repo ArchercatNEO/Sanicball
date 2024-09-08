@@ -1,17 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://c2v1qe5fjww6e"]
+[gd_scene load_steps=3 format=3 uid="uid://c2v1qe5fjww6e"]
 
-[ext_resource type="Script" path="res://scenes/S1-Intro/IntroUI.cs" id="1_t1ji2"]
 [ext_resource type="Texture2D" uid="uid://xsb0tm45s6fr" path="res://scenes/S0-Shared/sanicteam.png" id="2_dxwkw"]
 [ext_resource type="Texture2D" uid="uid://beku0mlc4qaub" path="res://scenes/S0-Shared/notsega.png" id="3_h427x"]
 
-[node name="Intro" type="Control"]
-layout_mode = 3
+[node name="Intro" type="IntroUI" node_paths=PackedStringArray("inputUi", "usernameInput", "credits")]
+inputUi = NodePath("UsernameInput")
+usernameInput = NodePath("UsernameInput/TextEdit")
+credits = NodePath("Credits")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_t1ji2")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1

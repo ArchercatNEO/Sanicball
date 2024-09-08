@@ -5,6 +5,8 @@
 
     <PublishAot>true</PublishAot>
 
+    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <WarningsAsErrors>CS8785</WarningsAsErrors>

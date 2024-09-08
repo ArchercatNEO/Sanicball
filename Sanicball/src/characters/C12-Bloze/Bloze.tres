@@ -1,12 +1,10 @@
-[gd_resource type="Resource" script_class="SanicCharacter" load_steps=5 format=3 uid="uid://t8x8wr6p3sx"]
+[gd_resource type="SanicCharacter" load_steps=5 format=3 uid="uid://t8x8wr6p3sx"]
 
 [ext_resource type="Texture2D" uid="uid://bv2dlmhss00hu" path="res://src/characters/C12-Bloze/BlozeIcon.png" id="1_nic1i"]
-[ext_resource type="Script" path="res://src/characters/SanicCharacter.cs" id="1_r4tkv"]
 [ext_resource type="Material" uid="uid://wvt14xas5816" path="res://src/characters/C12-Bloze/BlozeMat.tres" id="2_04osw"]
 [ext_resource type="Texture2D" uid="uid://hwu1tq0n4ywi" path="res://src/characters/C12-Bloze/BlozeMinimap.png" id="3_l3evk"]
 
 [resource]
-script = ExtResource("1_r4tkv")
 Name = "Bloze"
 Credits = "Deviantart user RoyalJellySandwich"
 Color = Color(0.639216, 0.52549, 0.662745, 1)

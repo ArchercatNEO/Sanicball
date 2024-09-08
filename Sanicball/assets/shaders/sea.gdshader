@@ -28,10 +28,10 @@ void vertex() {
 // Runs for each pixel on the mesh
 void fragment() {
 	float fresnel = sqrt(1.0 - dot(NORMAL, VIEW));
-	
+
 	RIM = 0.2;
 	METALLIC = 0.0;
 	ROUGHNESS = 0.01 * (1.0 - fresnel);
-	
+
 	ALBEDO = vec3(0.1, 0.3, 0.5) * (1.0 - fresnel);
 }
