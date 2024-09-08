@@ -1,4 +1,4 @@
-﻿namespace SanicballCore.MatchMessages
+namespace SanicballCore.MatchMessages
 {
     public delegate void MatchMessageHandler<T>(T message, float travelTime) where T : MatchMessage;
     public abstract record class MatchMessage;

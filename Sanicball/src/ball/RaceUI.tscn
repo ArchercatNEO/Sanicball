@@ -1,8 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://bryvlet2w7asd"]
 
-[ext_resource type="Script" path="res://src/ball/RaceUI.cs" id="1_neu6o"]
-
-[node name="RaceUi" type="SubViewportContainer" node_paths=PackedStringArray("LapCounter")]
+[node name="RaceUi" type="RaceUi" node_paths=PackedStringArray("LapCounter")]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -10,7 +8,6 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 3
 stretch = true
-script = ExtResource("1_neu6o")
 LapCounter = NodePath("SubViewport/LapCounter")
 
 [node name="SubViewport" type="SubViewport" parent="."]

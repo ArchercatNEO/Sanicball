@@ -11,7 +11,7 @@ namespace Sanicball.Ball;
 
 [GodotClass]
 public partial class AiNode : Area3D
-{   
+{
     [BindProperty] private GodotArray<AiNode> nextOptions = [];
     //TODO Weights
 
@@ -20,14 +20,14 @@ public partial class AiNode : Area3D
         get
         {
             double rng = Random.Shared.NextDouble();
-            
+
             double totalWeight = 0;
             int index;
             for (index = 0; index < nextOptions.Count; index++)
             {
                 //Should be the weight value from the weight array
                 double weight = 1 / nextOptions.Count;
-                
+
                 if (totalWeight < rng && rng < totalWeight + weight)
                 {
                     break;

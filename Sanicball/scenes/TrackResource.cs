@@ -8,10 +8,10 @@ namespace Sanicball.Scenes;
 [GodotClass]
 public partial class TrackResource : Resource
 {
-    [BindProperty] public  string name;
-    [BindProperty] public  PackedScene RaceScene;
-    [BindProperty] public  Texture2D flatOverlay;
-    [BindProperty] public  PackedScene solidOverlay;
+    [BindProperty] public string name;
+    [BindProperty] public PackedScene RaceScene;
+    [BindProperty] public Texture2D flatOverlay;
+    [BindProperty] public PackedScene solidOverlay;
 
     public static readonly TrackResource GreenHillZone = GD.Load<TrackResource>("res://scenes/Z01-GreenHillZone/GreenHillZone.tres");
 }

@@ -48,7 +48,7 @@ public class CheckpointReciever(Checkpoint initialCheckpoint, int maxLaps)
     }
 
     #region Marker Tracking
-    
+
 
     //null if tracking has not been added OR we finished the race
     private ObjectMarker? checkpointMarker;
@@ -61,7 +61,7 @@ public class CheckpointReciever(Checkpoint initialCheckpoint, int maxLaps)
         }
 
         checkpointMarker = ObjectMarker.Create(origin, CurrentCheckpoint, new(0, 0, 1));
-        
+
         NextCheckpoint += (sender, checkpoint) =>
         {
             if (checkpointMarker == null)
@@ -87,7 +87,7 @@ public class CheckpointReciever(Checkpoint initialCheckpoint, int maxLaps)
             checkpointMarker.QueueFree();
             checkpointMarker = null;
         };
-        
+
         return checkpointMarker;
     }
 

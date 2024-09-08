@@ -1,9 +1,12 @@
-[gd_scene load_steps=13 format=3 uid="uid://b0vnhh1ow6ecl"]
+[gd_scene load_steps=12 format=3 uid="uid://b0vnhh1ow6ecl"]
 
 [ext_resource type="Texture2D" uid="uid://xsb0tm45s6fr" path="res://scenes/S0-Shared/sanicteam.png" id="3_pt5a7"]
+[ext_resource type="Material" uid="uid://dnr313oibwn6s" path="res://src/characters/C01-Sanic/SanicMat.tres" id="4_h0mib"]
 [ext_resource type="Texture2D" uid="uid://beku0mlc4qaub" path="res://scenes/S0-Shared/notsega.png" id="4_yac6h"]
+[ext_resource type="Material" uid="uid://cnrybb57xaqin" path="res://src/characters/C02-Knackles/KnacklesMat.tres" id="5_5g6mb"]
 [ext_resource type="SphereMesh" uid="uid://ctrirqb48lcyn" path="res://scenes/S2-Menu/ball.tres" id="5_x72ac"]
 [ext_resource type="Texture2D" uid="uid://ddt0lnqi20nb8" path="res://scenes/S0-Shared/sanicball.png" id="6_2ivgr"]
+[ext_resource type="Material" uid="uid://ckdetghdrmpb6" path="res://src/characters/C05-Shedew/ShedewMat.tres" id="6_vltqy"]
 
 [sub_resource type="Environment" id="Environment_ftve1"]
 background_energy_multiplier = 0.0
@@ -28,7 +31,6 @@ environment = SubResource("Environment_ftve1")
 camera_attributes = SubResource("CameraAttributesPractical_3u1qq")
 
 [node name="Menu2D" type="MenuUI" parent="."]
-layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -165,18 +167,21 @@ spot_range = 4096.0
 spot_angle = 6.82
 
 [node name="Camera3D" type="MenuCamera" parent="Menu3D" node_paths=PackedStringArray("ballMesh", "lightingEnv")]
-transform = Transform3D(1, 0, 0, 0, 0.995023, 0.0996497, 0, -0.0996497, 0.995023, 0.2, 18.4129, 36.7627)
 ballMesh = NodePath("../Ball")
 lightingEnv = NodePath("../../WorldEnvironment")
+transform = Transform3D(1, 0, 0, 0, 0.995023, 0.0996497, 0, -0.0996497, 0.995023, 0.2, 18.4129, 36.7627)
 
 [node name="Sanic" type="MenuPath" parent="Menu3D/Camera3D"]
-transform = Transform3D(1, 0, 0, 0, 0.995023, -0.0996496, 0, 0.0996496, 0.995023, -0.2, -14.6579, -38.4146)
+CharacterMat = ExtResource("4_h0mib")
 Start = Vector3(13.6, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.995023, -0.0996496, 0, 0.0996496, 0.995023, -0.2, -14.6579, -38.4146)
 
 [node name="Knackles" type="MenuPath" parent="Menu3D/Camera3D"]
+CharacterMat = ExtResource("5_5g6mb")
 transform = Transform3D(1, 0, 0, 0, 0.995023, -0.0996496, 0, 0.0996496, 0.995023, -0.2, -14.6579, -38.4146)
 
 [node name="Shedew" type="MenuPath" parent="Menu3D/Camera3D"]
+CharacterMat = ExtResource("6_vltqy")
 transform = Transform3D(1, 0, 0, 0, 0.995023, -0.0996496, 0, 0.0996496, 0.995023, -0.2, -14.6579, -38.4146)
 
 [node name="Ground" type="MeshInstance3D" parent="Menu3D"]

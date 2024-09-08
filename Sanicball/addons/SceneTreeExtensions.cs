@@ -14,7 +14,7 @@ public static class SceneTreeExtensions
 
         Node next = scene.Instantiate();
         root.AddChild(next);
-        
+
         sceneTree.CurrentScene = next;
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace SanicballCore
+namespace SanicballCore
 {
     public class GameVersion
     {

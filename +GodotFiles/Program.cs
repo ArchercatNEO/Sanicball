@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,14 +21,16 @@ public class PreloadGenerator : IIncrementalGenerator
     {
         var resourceFiles = context.AdditionalTextsProvider.Where(file => file.Path.EndsWith(".tres") || file.Path.EndsWith(".tscn")).Collect();
         var resourceData = context.AdditionalTextsProvider.Where(file => !file.Path.EndsWith(".tres") && !file.Path.EndsWith(".tscn"));
-        var resouceImports = resourceData.Collect().Select((files, token) => {
+        var resouceImports = resourceData.Collect().Select((files, token) =>
+        {
             Dictionary<string, AdditionalText> map = [];
             foreach (var file in files)
             {
                 map.Add(file.Path, file);
             }
             return map;
-        }).SelectMany((map, token) => {
+        }).SelectMany((map, token) =>
+        {
             List<FileWithImport> importers = [];
 
             foreach (var pair in map)
@@ -36,17 +38,20 @@ public class PreloadGenerator : IIncrementalGenerator
                 var path = pair.Key;
                 if (!path.EndsWith(".import")) { continue; }
 
-                importers.Add(new() {
+                importers.Add(new()
+                {
                     import = pair.Value,
                     data = map[path.Replace(".import", "")]
                 });
             }
             return importers;
         })
-        .Select((file, token) => {
+        .Select((file, token) =>
+        {
             //Import the file
             return file.data;
-        }).Collect().Select((files, token) => {
+        }).Collect().Select((files, token) =>
+        {
             Dictionary<string, AdditionalText> lookupTable = [];
             foreach (var file in files)
             {
@@ -54,8 +59,9 @@ public class PreloadGenerator : IIncrementalGenerator
             }
             return lookupTable;
         });
-        
-        var resourceTree = resouceImports.Combine(resourceFiles).Select((files, token) => {
+
+        var resourceTree = resouceImports.Combine(resourceFiles).Select((files, token) =>
+        {
             Dictionary<string, AdditionalText> tree = files.Left;
             foreach (var file in files.Right)
             {
@@ -66,11 +72,12 @@ public class PreloadGenerator : IIncrementalGenerator
 
 
 
-       
+
         var syntax = context.SyntaxProvider
             .ForAttributeWithMetadataName("Sanicball.PreloadAttribute", SyntaxFilter, SyntaxTransformer)
             .Collect()
-            .SelectMany((fields, token) => {
+            .SelectMany((fields, token) =>
+            {
                 Dictionary<string, ClassAndFields> sorted = [];
                 foreach (var field in fields)
                 {
@@ -90,7 +97,8 @@ public class PreloadGenerator : IIncrementalGenerator
                 }
                 return sorted.Values;
             }).Combine(resourceTree);
-        context.RegisterSourceOutput(syntax, (ctx, compilationContext) => {
+        context.RegisterSourceOutput(syntax, (ctx, compilationContext) =>
+        {
             var (classData, resourceTree) = compilationContext;
 
             int files = resourceTree.Count;
@@ -135,7 +143,8 @@ public class PreloadGenerator : IIncrementalGenerator
             ctx.AddSource($"{classData.className}.g.cs", builder.ToString());
         });
 
-        context.RegisterPostInitializationOutput(ctx => {
+        context.RegisterPostInitializationOutput(ctx =>
+        {
             ctx.AddSource("PreloadAttribute.g.cs", @"
                 namespace Sanicball;
                 #pragma warning disable CS9113 // Parameter is unread.
@@ -155,7 +164,8 @@ public class PreloadGenerator : IIncrementalGenerator
 
     private static FieldDescriptor SyntaxTransformer(GeneratorAttributeSyntaxContext context, CancellationToken _cancellationToken)
     {
-        return new(){
+        return new()
+        {
             containingNamespace = context.TargetSymbol.ContainingNamespace.Name,
             className = context.TargetSymbol.ContainingType.Name,
             location = context.TargetNode.GetLocation(),

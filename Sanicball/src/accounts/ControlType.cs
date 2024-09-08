@@ -32,7 +32,7 @@ public static class ControlTypeImpl
         AddActionIfMissing(new StringName("keyboard_down"), new InputEventKey() { Keycode = Key.S });
         AddActionIfMissing(new StringName("keyboard_ready"), new InputEventKey() { Keycode = Key.R });
         AddActionIfMissing(new StringName("keyboard_confirm"), new InputEventKey() { Keycode = Key.Enter });
-        
+
         AddActionIfMissing(new StringName("joy1_left"), new InputEventJoypadButton() { Device = 0, ButtonIndex = JoyButton.LeftStick });
         AddActionIfMissing(new StringName("joy1_right"), new InputEventJoypadButton() { Device = 0, ButtonIndex = JoyButton.LeftStick });
         AddActionIfMissing(new StringName("joy1_up"), new InputEventJoypadButton() { Device = 0, ButtonIndex = JoyButton.LeftStick });

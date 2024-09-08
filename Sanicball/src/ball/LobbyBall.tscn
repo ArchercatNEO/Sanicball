@@ -1,6 +1,5 @@
 [gd_scene load_steps=5 format=3 uid="uid://c08vqn1nbmqlk"]
 
-[ext_resource type="Script" path="res://src/ball/SanicBall.cs" id="1_8bkyr"]
 [ext_resource type="Material" uid="uid://bmh8yt0alvuji" path="res://src/characters/C00-Default/UnknownMat.tres" id="2_hrcur"]
 
 [sub_resource type="SphereMesh" id="SphereMesh_310mg"]
@@ -8,11 +7,10 @@ material = ExtResource("2_hrcur")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_iyxud"]
 
-[node name="Ball" type="RigidBody3D" node_paths=PackedStringArray("Renderer", "Collider")]
+[node name="Ball" type="SanicBall" node_paths=PackedStringArray("Renderer", "Collider")]
 mass = 3.0
 max_contacts_reported = 2
 contact_monitor = true
-script = ExtResource("1_8bkyr")
 Renderer = NodePath("Renderer")
 Collider = NodePath("Collider")
 

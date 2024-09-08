@@ -23,8 +23,8 @@ public partial class RaceUI : SubViewportContainer
         return instance;
     }
 
-    [BindProperty] public  Label SubViewport { get; set; }
-    [BindProperty] public  Label LapCounter { get; set; }
+    [BindProperty] public Label SubViewport { get; set; }
+    [BindProperty] public Label LapCounter { get; set; }
 
     private SanicBall sanicBall = null!;
     private CheckpointReciever chachedReciever = null!;
@@ -33,7 +33,7 @@ public partial class RaceUI : SubViewportContainer
     {
         return;
         ArgumentNullException.ThrowIfNull(sanicBall.checkpointReciever);
-        
+
         chachedReciever = sanicBall.checkpointReciever;
         chachedReciever.NextLap += (sender, lap) =>
         {

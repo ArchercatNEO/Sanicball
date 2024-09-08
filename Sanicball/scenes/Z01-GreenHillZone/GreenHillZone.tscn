@@ -1,9 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://yvsf3gwttxet"]
 
 [ext_resource type="Shader" path="res://assets/shaders/sea.gdshader" id="1_byn0m"]
-[ext_resource type="Script" path="res://src/game-mechanics/TriggerRespawn.cs" id="1_roiel"]
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://scenes/S3-Lobby/Decoration/clear_sky.tres" id="1_udlj8"]
-[ext_resource type="Script" path="res://scenes/Z00-Shared/RaceManager.cs" id="1_wyt5t"]
 [ext_resource type="AudioStream" uid="uid://56egn88rk5bt" path="res://assets/music/Sea.ogg" id="4_wke57"]
 [ext_resource type="PackedScene" uid="uid://gxo8i6rku4d6" path="res://scenes/Z01-GreenHillZone/GreenHillZone.blend" id="5_wtf51"]
 [ext_resource type="PackedScene" uid="uid://ceh3dfqf61qqe" path="res://src/game-mechanics/Checkpoint/Checkpoint.tscn" id="7_hucb3"]
@@ -33,8 +31,7 @@ size = Vector2(1000, 1000)
 subdivide_width = 32
 subdivide_depth = 32
 
-[node name="GreenHillZone" type="Node" node_paths=PackedStringArray("viewportManager", "finishLine", "initialNode")]
-script = ExtResource("1_wyt5t")
+[node name="GreenHillZone" type="RaceManager" node_paths=PackedStringArray("viewportManager", "finishLine", "initialNode")]
 viewportManager = NodePath("Game2D/ScreenSplitter")
 finishLine = NodePath("Game3D/Checkpoints/FinishLine")
 initialNode = NodePath("Game3D/AiNodes/AiNode1")
@@ -65,8 +62,7 @@ grow_vertical = 2
 [node name="Sunlight" type="DirectionalLight3D" parent="Game3D"]
 transform = Transform3D(1, 0, 0, 0, -0.396619, 0.917983, 0, -0.917983, -0.396619, 0, 0, 0)
 
-[node name="Sea" type="Area3D" parent="Game3D"]
-script = ExtResource("1_roiel")
+[node name="Sea" type="TriggerRespawn" parent="Game3D"]
 metadata/_edit_group_ = true
 
 [node name="Collider" type="CollisionShape3D" parent="Game3D/Sea"]

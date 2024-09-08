@@ -9,10 +9,10 @@ public partial class MenuPanel : ColorRect
     {
         SceneTree tree = GetTree();
         GetNode<Button>(new NodePath("Content/Local")).ButtonDown += () => LobbyManager.Activate(tree, []);
-        
+
         //TODO activate online mode
         GetNode<Button>(new NodePath("Content/Online")).ButtonDown += () => LobbyManager.Activate(tree, []);
-        
+
         //TODO store race records in player's account
         GetNode<Button>(new NodePath("Content/Records")).ButtonDown += () => GD.Print("Unimplemented");
 

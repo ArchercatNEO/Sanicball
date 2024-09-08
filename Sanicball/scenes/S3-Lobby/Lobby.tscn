@@ -1,14 +1,11 @@
 [gd_scene load_steps=30 format=3 uid="uid://iy8o8k21l1n1"]
 
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://scenes/S3-Lobby/Decoration/clear_sky.tres" id="1_8ov4f"]
-[ext_resource type="Script" path="res://scenes/S3-Lobby/LobbyManager.cs" id="1_n55so"]
-[ext_resource type="Script" path="res://assets/music/MusicPlayer.cs" id="1_s8m6y"]
 [ext_resource type="Texture2D" uid="uid://bawb32fvt5hrb" path="res://scenes/S3-Lobby/Decoration/TrianglesBackground.png" id="3_8rbhj"]
 [ext_resource type="Shape3D" uid="uid://dpxtdelj4vkx4" path="res://assets/terrain/GroundCollider.tres" id="3_np11w"]
 [ext_resource type="Material" uid="uid://dmghyann0c8es" path="res://scenes/S3-Lobby/Decoration/TVFrame.tres" id="3_tnksi"]
 [ext_resource type="BoxMesh" uid="uid://c28lla3d5dqd1" path="res://assets/terrain/GroundMesh.tres" id="4_5lno4"]
 [ext_resource type="Texture2D" uid="uid://dksr2t8ms7l81" path="res://assets/art/MusicNote.png" id="4_cqtmi"]
-[ext_resource type="Script" path="res://scenes/S3-Lobby/LobbyCamera.cs" id="8_cdt1m"]
 [ext_resource type="PackedScene" uid="uid://vljvs3rire1k" path="res://scenes/S3-Lobby/Decoration/Lamp.glb" id="8_vj3rq"]
 
 [sub_resource type="Environment" id="Environment_wsstk"]
@@ -103,8 +100,7 @@ top_radius = 2.5
 bottom_radius = 2.5
 height = 6.0
 
-[node name="Lobby" type="Node" node_paths=PackedStringArray("characterSelectContainer", "countdownText", "pauseMenu", "playerSpawner")]
-script = ExtResource("1_n55so")
+[node name="Lobby" type="LobbyManager" node_paths=PackedStringArray("characterSelectContainer", "countdownText", "pauseMenu", "playerSpawner")]
 characterSelectContainer = NodePath("Lobby2D/CharacterSelectBox")
 countdownText = NodePath("Lobby2D/Header/RaceCountdown")
 pauseMenu = NodePath("Lobby2D/PauseMenu")
@@ -113,8 +109,7 @@ playerSpawner = NodePath("Lobby3D/Spawner")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_wsstk")
 
-[node name="Music" type="AudioStreamPlayer" parent="." node_paths=PackedStringArray("songName")]
-script = ExtResource("1_s8m6y")
+[node name="Music" type="MusicPlayer" parent="." node_paths=PackedStringArray("songName")]
 muted = true
 songName = NodePath("CanvasLayer/ui/fitter/songName")
 
@@ -265,10 +260,9 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.48376, 0)
 light_energy = 10.374
 omni_range = 4096.0
 
-[node name="LobbyCamera" type="Camera3D" parent="Lobby3D"]
+[node name="LobbyCamera" type="LobbyCamera" parent="Lobby3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.65379, 7.51354, 23.7507)
 current = true
-script = ExtResource("8_cdt1m")
 
 [node name="Walls" type="Node3D" parent="Lobby3D"]
 metadata/_edit_group_ = true

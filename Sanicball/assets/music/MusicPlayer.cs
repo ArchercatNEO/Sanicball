@@ -4,8 +4,8 @@ namespace Sanicball.Sound;
 
 public partial class MusicPlayer : AudioStreamPlayer
 {
-    [BindProperty] public  bool muted = false;
-    [BindProperty] public  Label songName;
+    [BindProperty] public bool muted = false;
+    [BindProperty] public Label songName;
 
     private readonly Song[] songs;
     private int songIndex = 0;

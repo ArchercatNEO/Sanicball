@@ -29,7 +29,7 @@ public partial class LobbyManager : Node
             GD.Print("No keyboard player detected, adding one in");
             Instance.OnDeviceConnected((long)ControlType.Keyboard, true);
         }
-        
+
         Instance.players.AddRange(players);
         foreach (var descriptor in players)
         {
@@ -47,7 +47,7 @@ public partial class LobbyManager : Node
     [BindProperty] private HBoxContainer characterSelectContainer = null!;
     [BindProperty] private Label countdownText = null!;
     [BindProperty] private Control pauseMenu = null!;
-    
+
     //3d
     [BindProperty] private Node3D playerSpawner = null!;
 
@@ -132,7 +132,7 @@ public partial class LobbyManager : Node
             countdownText.Text = $"{readyPlayers}/{players.Count} players ready: waiting for more players";
             return;
         }
-        
+
         RaceOptions options = new()
         {
             Players = players,

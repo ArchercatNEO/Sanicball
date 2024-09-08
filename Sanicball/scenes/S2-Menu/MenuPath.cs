@@ -37,7 +37,7 @@ public partial class MenuPath : Node3D
         }
     }
 
-    public  StandardMaterial3D startMat;
+    public StandardMaterial3D startMat;
     private Color startColor = new(0, 1, 0, 1);
     [BindProperty]
     private Color StartColor
@@ -63,7 +63,7 @@ public partial class MenuPath : Node3D
         }
     }
 
-    public  StandardMaterial3D endMat;
+    public StandardMaterial3D endMat;
     private Color endColor = new(1, 0, 0, 1);
     [BindProperty]
     private Color EndColor

@@ -13,7 +13,7 @@ public class AiBall(AiNode initialTarget) : ISanicController
     //Respawn -> after a certain amount of time
 
     public AiNode? AiTarget { get; private set; } = initialTarget;
-    
+
     SanicBall ball = null!;
 
     public void Initialise(SanicBall parent)

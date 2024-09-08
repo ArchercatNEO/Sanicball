@@ -1,4 +1,4 @@
-﻿
+
 namespace SanicballServer;
 
 internal class Program

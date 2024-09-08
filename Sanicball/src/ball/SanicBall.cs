@@ -38,7 +38,7 @@ public partial class SanicBall : RigidBody3D, ICheckpointReciever
     /// Contains everything lobbyPrefab contains as well as a viewport + container and a camera
     /// </summary>
     private static readonly PackedScene racePrefab = GD.Load<PackedScene>("res://src/ball/RaceBall.tscn");
-    
+
     /// <summary>
     /// Create a Sanicball from the race prefab with a viewport and associated camera
     /// </summary>
@@ -49,7 +49,7 @@ public partial class SanicBall : RigidBody3D, ICheckpointReciever
     public static SanicBall CreateRace(SanicCharacter character, ISanicController controller, CheckpointReciever reciever)
     {
         SanicBall instance = racePrefab.Instantiate<SanicBall>();
-        
+
         instance.controller = controller;
         instance.character = character;
         instance.checkpointReciever = reciever;
@@ -78,7 +78,7 @@ public partial class SanicBall : RigidBody3D, ICheckpointReciever
 
     private ISanicController controller = new PlayerBall() { ControlType = Account.ControlType.Keyboard };
     public SanicCharacter character = SanicCharacter.Unknown;
-    
+
     /// <summary>
     /// The last recorded normal relative to the floor. Neccesary for things like loops to work properly
     /// </summary>

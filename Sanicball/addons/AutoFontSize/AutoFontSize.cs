@@ -2,6 +2,7 @@ using Godot;
 
 namespace Sanicball.Plugins;
 
+[GodotClass]
 public partial class AutoFontSize : Label
 {
     private int _minimumSize = 10;

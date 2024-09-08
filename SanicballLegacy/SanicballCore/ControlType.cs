@@ -1,4 +1,4 @@
-﻿namespace SanicballCore
+namespace SanicballCore
 {
     /// <summary>
     /// Represents different ways to control the game, for splitscreen play and similar features.

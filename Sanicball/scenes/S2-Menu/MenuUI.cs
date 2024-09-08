@@ -7,11 +7,10 @@ namespace Sanicball.Scenes;
 [GodotClass]
 public partial class MenuUI : Control
 {
-    private static readonly PackedScene Scene = GD.Load<PackedScene>("res://scenes/S2-Menu/menu.tscn");
-
     public static void Activate(SceneTree tree)
     {
-        tree.ChangeSceneToPacked(Scene);
+        PackedScene scene = GD.Load<PackedScene>("res://scenes/S2-Menu/menu.tscn");
+        tree.ChangeSceneToPacked(scene);
     }
 
 

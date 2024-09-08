@@ -1,4 +1,4 @@
-﻿namespace SanicballServer;
+namespace SanicballServer;
 
 //Used as response when a client sends a server a discovery request.
 internal struct ServerConfig
