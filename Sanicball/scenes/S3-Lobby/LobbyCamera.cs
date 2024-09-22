@@ -1,9 +1,7 @@
-using Godot;
-using Sanicball.Ball;
-using Sanicball.Characters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Godot;
 
 namespace Sanicball.Scenes;
 
@@ -22,7 +20,7 @@ public partial class LobbyCamera : Camera3D
 
     [BindProperty] private float rotationSpeed = 10;
 
-    private readonly List<SanicBall> balls = [];
+    private readonly List<Node3D> balls = [];
     private readonly Vector3 originRotation;
 
     private LobbyCamera()
@@ -31,7 +29,7 @@ public partial class LobbyCamera : Camera3D
     }
 
     //Since vectors are passed by value we must instead poll the rotation to stay updated
-    public Func<Vector3> Subscribe(SanicBall ball)
+    public Func<Vector3> Subscribe(Node3D ball)
     {
         balls.Add(ball);
         ball.TreeExited += () => { balls.Remove(ball); };

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 using Sanicball.Account;
-using Sanicball.Ball;
+using Sanicball.Characters;
 
 namespace Sanicball.Scenes;
 
@@ -15,32 +15,14 @@ namespace Sanicball.Scenes;
 [GodotClass]
 public partial class LobbyManager : Node
 {
-    private static LobbyManager? Instance { get; set; }
-
-    private static readonly PackedScene prefab = GD.Load<PackedScene>("res://scenes/S3-Lobby/Lobby.tscn");
-
-    public static void Activate(SceneTree tree, List<SanicBallDescriptor> players)
+    public static void Activate(SceneTree tree, List<Character> players)
     {
-        tree.ChangeSceneAsync(prefab);
-
-        GD.Print("Activating scene");
-        if (!players.Any(player => player.Controller is PlayerBall { ControlType: ControlType.Keyboard }))
-        {
-            GD.Print("No keyboard player detected, adding one in");
-            Instance.OnDeviceConnected((long)ControlType.Keyboard, true);
-        }
-
-        Instance.players.AddRange(players);
-        foreach (var descriptor in players)
-        {
-            if (descriptor.Controller is PlayerBall player)
-            {
-                CharacterSelect panel = CharacterSelect.CreatePlayer(player.ControlType, Instance.playerSpawner, descriptor.Character);
-                Instance.characterSelectContainer.AddChild(panel);
-                Instance.activePanels.Add(player.ControlType, panel);
-                panel.OnReadyChanged += Instance.OnReadyChanged;
-            }
-        }
+        GD.Print("Entering lobby");
+        var prefab = GD.Load<PackedScene<LobbyManager>>("res://scenes/S3-Lobby/Lobby.tscn");
+        var instance = tree.ChangeSceneAsync(prefab);
+        
+        GD.Print("Adding players to LobbyManager");
+        instance.players.AddRange(players);
     }
 
     //ui
@@ -53,17 +35,35 @@ public partial class LobbyManager : Node
 
 
     private int readyPlayers = 0;
-    private readonly List<SanicBallDescriptor> players = [];
+    private readonly List<Character> players = [];
     private readonly Dictionary<ControlType, CharacterSelect> activePanels = [];
 
     protected override void _EnterTree()
     {
-        Instance = this;
         Input.Singleton.JoyConnectionChanged += OnDeviceConnected;
     }
 
     protected override void _Ready()
     {
+        GD.Print("Calling ready on lobby manager");
+
+        if (!players.Any(player => player.controller is PlayerController { ControlType: ControlType.Keyboard }))
+        {
+            GD.Print("No keyboard player detected, adding one in");
+            OnDeviceConnected((long)ControlType.Keyboard, true);
+        }
+
+        foreach (var player in players)
+        {
+            if (player.controller is PlayerController controller)
+            {
+                CharacterSelect panel = CharacterSelect.Create(controller.ControlType, playerSpawner, player);
+                characterSelectContainer.AddChild(panel);
+                activePanels.Add(controller.ControlType, panel);
+                panel.OnReadyChanged += OnReadyChanged;
+            }
+        }
+
         pauseMenu.GetNode<Button>(new NodePath("VBoxContainer/Unpause")).Pressed += pauseMenu.Hide;
         Button ctxSensitive = pauseMenu.GetNode<Button>(new NodePath("VBoxContainer/Context"));
         //TODO settings
@@ -76,7 +76,6 @@ public partial class LobbyManager : Node
     protected override void _ExitTree()
     {
         Input.Singleton.JoyConnectionChanged -= OnDeviceConnected;
-        Instance = null;
     }
 
     protected override void _Input(InputEvent @event)
@@ -97,7 +96,7 @@ public partial class LobbyManager : Node
         ControlType controller = (ControlType)device;
         if (connected && !activePanels.ContainsKey(controller))
         {
-            CharacterSelect panel = CharacterSelect.Create(controller, playerSpawner);
+            CharacterSelect panel = CharacterSelect.Create(controller, playerSpawner, null);
             characterSelectContainer.AddChild(panel);
             activePanels.Add(controller, panel);
             panel.OnReadyChanged += OnReadyChanged;
@@ -119,12 +118,12 @@ public partial class LobbyManager : Node
         if (ready)
         {
             readyPlayers++;
-            players.Add(new(panel.Player!.character, new PlayerBall() { ControlType = panel.controlType }));
+            players.Add(panel.Player!);
         }
         else
         {
             readyPlayers--;
-            players.RemoveAll(ball => ball.Controller is PlayerBall player && player.ControlType == panel.controlType);
+            players.RemoveAll(ball => ball.controller is PlayerController player && player.ControlType == panel.controlType);
         }
 
         if (readyPlayers < players.Count)
@@ -136,7 +135,7 @@ public partial class LobbyManager : Node
         RaceOptions options = new()
         {
             Players = players,
-            SelectedStage = TrackResource.GreenHillZone
+            SelectedStage = GD.Load<TrackResource>("res://scenes/Z01-GreenHillZone/GreenHillZone.tres")
         };
 
         Tween tween = CreateTween();

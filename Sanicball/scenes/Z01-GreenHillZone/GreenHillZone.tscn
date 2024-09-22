@@ -5,7 +5,7 @@
 [ext_resource type="AudioStream" uid="uid://56egn88rk5bt" path="res://assets/music/Sea.ogg" id="4_wke57"]
 [ext_resource type="PackedScene" uid="uid://gxo8i6rku4d6" path="res://scenes/Z01-GreenHillZone/GreenHillZone.blend" id="5_wtf51"]
 [ext_resource type="PackedScene" uid="uid://ceh3dfqf61qqe" path="res://src/game-mechanics/Checkpoint/Checkpoint.tscn" id="7_hucb3"]
-[ext_resource type="PackedScene" uid="uid://dxid7hpqoqjkl" path="res://src/controllers/AiNode.tscn" id="8_q7lne"]
+[ext_resource type="PackedScene" path="res://src/characters/AiNode.tscn" id="8_q7lne"]
 
 [sub_resource type="Environment" id="Environment_dgy8r"]
 background_mode = 2

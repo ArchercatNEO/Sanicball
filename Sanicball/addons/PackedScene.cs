@@ -12,7 +12,7 @@ public class PackedScene<T>(PackedScene scene) where T : class /* Allows for int
     public static explicit operator PackedScene<T>(PackedScene castedScene)
     {
         StringName owner = castedScene.GetState().GetNodeType(0);
-        StringName wanted = new StringName(typeof(T).Name);
+        StringName wanted = new(typeof(T).Name);
         if (owner != wanted)
         {
             throw new InvalidCastException($"Object of type {owner} cannot be casted to type {wanted} (check type of {castedScene.ResourcePath})");

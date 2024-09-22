@@ -8,31 +8,64 @@ using Sanicball.GameMechanics;
 
 namespace Sanicball.Scenes;
 
-//TODO Implement AI Balls
-//TODO Implement end of match displays
-//TODO Implenent minimap
-//TODO Implement Race UI
-//TODO Improve splitscreen
+//TODO: Implement AI Balls
+//TODO: Implement end of match displays
+//TODO: Implenent minimap
+//TODO: Implement Race UI
+//TODO: Improve splitscreen
 [GodotClass]
 public partial class RaceManager : Node
 {
-    public static RaceManager? Instance { get; private set; }
-    protected override void _EnterTree() { Instance = this; }
-    protected override void _ExitTree() { Instance = null; }
-
-    private static List<SanicBallDescriptor> players = [];
-
     public static void Activate(SceneTree tree, RaceOptions options)
     {
-        players = options.Players;
-        tree.ChangeSceneToPacked(options.SelectedStage.RaceScene);
+        var self = tree.ChangeSceneAsync<RaceManager>(options.SelectedStage.RaceScene);
+        self.players = options.Players;
     }
 
     [BindProperty] private HBoxContainer viewportManager = null!;
     [BindProperty] private Checkpoint finishLine = null!;
     [BindProperty] private AiNode initialNode = null!;
 
+    private List<Character> players = [];
     private int playersFinished = 0;
+
+    protected override void _Ready()
+    {
+        float offset = 10;
+        foreach (var character in players)
+        {
+            character.CheckpointPassed += null;
+            
+            RaceUI raceUI = RaceUI.Create();
+            //TODO: Implement RaceUI
+            
+            //Subvieports don't expand to the size of parent UI containers
+            //SubviewportContiner is needed to wrap the SubViewport
+            SubViewportContainer expander = new();
+            expander.AddChild(raceUI);
+            viewportManager.AddChild(expander);
+            
+            character.GlobalPosition = finishLine.GlobalPosition with { Y = finishLine.GlobalPosition.Y + offset };
+            offset += 10;
+        }
+
+        foreach (int count in Enumerable.Range(0, 5))
+        {
+            //TODO: Make ai balls configurable from lobby
+            Character ai = new Asspio()
+            {
+                controller = new AiController()
+                {
+                    InitialNode = initialNode
+                }
+            };
+
+            AddChild(ai);
+            ai.CheckpointPassed += null;
+            ai.GlobalPosition = finishLine.GlobalPosition with { Y = finishLine.GlobalPosition.Y + offset };
+            offset += 10;
+        }
+    }
 
     private void OnPlayerFinishRace(object? sender, EventArgs e)
     {
@@ -40,38 +73,6 @@ public partial class RaceManager : Node
         if (playersFinished == players.Count)
         {
             LobbyManager.Activate(GetTree(), players);
-        }
-    }
-
-    protected override void _Ready()
-    {
-        float offset = 10;
-        foreach (var (character, controller) in players)
-        {
-            CheckpointReciever reciever = new(finishLine, 3);
-            reciever.RaceFinished += OnPlayerFinishRace;
-
-            SanicBall raceBall = SanicBall.CreateRace(character, controller, reciever);
-            RaceUI raceUI = RaceUI.Create(raceBall);
-
-            viewportManager.AddChild(raceUI);
-
-            raceBall.GlobalPosition = finishLine.GlobalPosition with { Y = finishLine.GlobalPosition.Y + offset };
-            offset += 10;
-        }
-
-        foreach (int count in Enumerable.Range(0, 5))
-        {
-            CheckpointReciever reciever = new(finishLine, 3);
-
-            AiBall aiBall = new(initialNode);
-
-            SanicBall raceBall = SanicBall.CreateRace(SanicCharacter.Asspio, aiBall, reciever);
-
-            AddChild(raceBall);
-
-            raceBall.GlobalPosition = finishLine.GlobalPosition with { Y = finishLine.GlobalPosition.Y + offset };
-            offset += 10;
         }
     }
 }

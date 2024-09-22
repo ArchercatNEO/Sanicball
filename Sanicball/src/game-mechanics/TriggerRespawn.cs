@@ -1,5 +1,5 @@
 using Godot;
-using Sanicball.Ball;
+using Sanicball.Characters;
 
 namespace Sanicball.GameMechanics;
 
@@ -13,7 +13,7 @@ public partial class TriggerRespawn : Area3D
         SetCollisionLayerValue(layer, true);
         BodyEntered += (body) =>
         {
-            if (body is SanicBall ball)
+            if (body is Character ball)
             {
                 ball.OnRespawn();
             }

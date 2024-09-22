@@ -1,7 +1,6 @@
 using System;
 using Godot;
 using Sanicball.Account;
-using Sanicball.Ball;
 using Sanicball.Characters;
 
 namespace Sanicball.Scenes;
@@ -14,56 +13,28 @@ namespace Sanicball.Scenes;
 [GodotClass]
 public partial class CharacterSelect : MarginContainer
 {
-    private static readonly PackedScene prefab = GD.Load<PackedScene>("res://scenes/S3-Lobby/CharacterSelect.tscn");
-
-    public static CharacterSelect Create(ControlType controlType, Node3D spawner)
+    public static CharacterSelect Create(ControlType controlType, Node3D spawner, Character? character)
     {
-        CharacterSelect panel = prefab.Instantiate<CharacterSelect>();
-        panel.playerSpawner = spawner;
-        panel.controlType = controlType;
-        panel.controllerIcon ??= panel.GetNode<TextureRect>(new NodePath("CharacterSelect"));
-        panel.controllerIcon.Texture = controlType.Icon();
-        panel.characterSelect ??= panel.GetNode<Control>(new NodePath("CharacterSelect"));
-        panel.characterSelect.Hide();
-        panel.characterIcon ??= panel.GetNode<TextureRect>(new NodePath("CharacterSelect/CharacterIcon"));
-        panel.characterName ??= panel.GetNode<Label>(new NodePath("CharacterSelect/CharacterName"));
-        panel.hotkeyLabel.Text = """
+        var prefab = GD.Load<PackedScene<CharacterSelect>>("res://scenes/S3-Lobby/CharacterSelect.tscn");
+
+        CharacterSelect self = prefab.Instantiate();
+        self.controlType = controlType;
+        self.playerSpawner = spawner;
+        
+        self.controllerIcon.Texture = controlType.Icon();
+        self.characterSelect.Hide();
+        self.hotkeyLabel.Text = """
         [Arrow keys]: Select character,
         [Enter]: Confirm
         """;
-        return panel;
+
+        if (character is not null)
+        {
+            self.SpawnPlayer(character);
+        }
+        
+        return self;
     }
-
-    public static CharacterSelect CreatePlayer(ControlType controlType, Node3D spawner, SanicCharacter character)
-    {
-        CharacterSelect panel = prefab.Instantiate<CharacterSelect>();
-        panel.playerSpawner = spawner;
-        panel.controlType = controlType;
-        panel.controllerIcon ??= panel.GetNode<TextureRect>(new NodePath("CharacterSelect"));
-        panel.controllerIcon.Texture = controlType.Icon();
-        panel.characterSelect ??= panel.GetNode<Control>(new NodePath("CharacterSelect"));
-        panel.characterSelect.Hide();
-        panel.characterIcon ??= panel.GetNode<TextureRect>(new NodePath("CharacterSelect/CharacterIcon"));
-        panel.characterName ??= panel.GetNode<Label>(new NodePath("CharacterSelect/CharacterName"));
-        panel.hotkeyLabel.Text = """
-        [Arrow keys]: Select character,
-        [Enter]: Confirm
-        """;
-        panel.SpawnPlayer(character);
-        return panel;
-    }
-
-    private static readonly SanicCharacter cancel = new()
-    {
-        Name = "Exit",
-        Credits = "Doesn't matter",
-        Material = new(),
-        Color = new(1, 0, 0, 1),
-        Icon = GD.Load<Texture2D>("res://assets/art/Cancel.png"),
-        MinimapIcon = GD.Load<Texture2D>("res://assets/art/Cancel.png"),
-    };
-
-    private static readonly SanicCharacter[] characters = [cancel, .. SanicCharacter.All];
 
     [BindProperty] private TextureRect background = null!;
     [BindProperty] private TextureRect controllerIcon = null!;
@@ -71,10 +42,18 @@ public partial class CharacterSelect : MarginContainer
     [BindProperty] private TextureRect characterIcon = null!;
     [BindProperty] private Label characterName = null!;
     [BindProperty] private Label hotkeyLabel = null!;
-    private Node3D playerSpawner = null!;
 
-    public SanicBall? Player { get; private set; }
+    private Node3D playerSpawner = null!;
+    //TODO: refactor so these can be made private 
     public ControlType controlType;
+    public Character? Player { get; private set; }
+
+    //TODO: This will orphan a massive amount of nodes
+    private readonly Character[] characters =
+    [
+        new Sanic(),
+        new Asspio()
+    ];
 
     public event EventHandler<bool>? OnReadyChanged;
     private bool ready = false;
@@ -85,10 +64,20 @@ public partial class CharacterSelect : MarginContainer
         get => _characterIndex;
         set
         {
-            _characterIndex = (value + 16) % 16;
-            SanicCharacter selectedCharacter = characters[_characterIndex];
-            characterName.Text = selectedCharacter.Name;
-            characterIcon.Texture = selectedCharacter.Icon;
+            int count = characters.Length;
+            _characterIndex = (value + count) % count;
+            
+            if (_characterIndex == 0)
+            {
+                characterName.Text = "Cancel";
+                characterIcon.Texture = GD.Load<Texture2D>("res://assets/art/Cancel.png");
+            }
+            else
+            {
+                Character selectedCharacter = characters[_characterIndex - 1];
+                characterName.Text = (string)selectedCharacter.Name;
+                characterIcon.Texture = selectedCharacter.Icon;
+            }
         }
     }
 
@@ -127,14 +116,16 @@ public partial class CharacterSelect : MarginContainer
             //cancel index
             if (CharacterIndex == 0) { return; }
 
-            SanicCharacter selected = characters[CharacterIndex];
+            Character selected = characters[CharacterIndex];
             SpawnPlayer(selected);
         }
     }
 
-    private void SpawnPlayer(SanicCharacter selected)
+    private void SpawnPlayer(Character selected)
     {
-        Player = SanicBall.CreateLobby(selected, new PlayerBall() { ControlType = controlType });
+        Player = selected;
+        Player.controller = new PlayerController() { ControlType = controlType };
+        
         playerSpawner.AddChild(Player);
         Player.Translate(new(0, 5, 0));
         Player.ApplyImpulse(new(0, 10, 0));
