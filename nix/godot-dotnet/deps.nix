@@ -20,6 +20,7 @@
   (fetchNuGet { pname = "Microsoft.CodeAnalysis.Analyzers"; version = "3.3.4"; hash = "sha256-qDzTfZBSCvAUu9gzq2k+LOvh6/eRvJ9++VCNck/ZpnE="; })
   (fetchNuGet { pname = "Microsoft.CodeAnalysis.Common"; version = "4.8.0"; hash = "sha256-3IEinVTZq6/aajMVA8XTRO3LTIEt0PuhGyITGJLtqz4="; })
   (fetchNuGet { pname = "Microsoft.CodeAnalysis.CSharp"; version = "4.8.0"; hash = "sha256-MmOnXJvd/ezs5UPcqyGLnbZz5m+VedpRfB+kFZeeqkU="; })
+  (fetchNuGet { pname = "Microsoft.CodeAnalysis.ResxSourceGenerator"; version = "3.11.0-beta1.24324.1"; hash = "sha256-+YEdFt4em1e8SMC3PnRAwOfyMZLwWPJo7/loTt7l9kQ="; })
   (fetchNuGet { pname = "Microsoft.NET.StringTools"; version = "17.10.4"; hash = "sha256-nXY7YaIx6sXn7aMqpF4bW4d2J5U1KNb9sXqRSd8MpOc="; })
   (fetchNuGet { pname = "Microsoft.NETCore.Platforms"; version = "1.1.0"; hash = "sha256-FeM40ktcObQJk4nMYShB61H/E8B7tIKfl9ObJ0IOcCM="; })
   (fetchNuGet { pname = "NETStandard.Library"; version = "2.0.3"; hash = "sha256-Prh2RPebz/s8AzHb2sPHg3Jl8s31inv9k+Qxd293ybo="; })

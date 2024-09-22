@@ -19,7 +19,7 @@ buildDotnetModule {
     owner = "raulsntos";
     repo = "godot-dotnet";
     rev = "master";
-    hash = "sha256-eMXeAjfOoQKSVqshunXkcGue1rnEP6Dp5K5I25EBGB8=";
+    hash = "sha256-mi9fj7tUvSFu64pQqUlEvJJZz/3lXe7bFdCmxbpIPH0=";
   };
 
   dotnet-sdk = dotnetCorePackages.sdk_8_0;
