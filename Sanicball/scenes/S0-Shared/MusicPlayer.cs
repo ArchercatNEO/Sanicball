@@ -1,7 +1,9 @@
 using Godot;
+using Sanicball.Assets;
 
-namespace Sanicball.Sound;
+namespace Sanicball.Scenes;
 
+[GodotClass]
 public partial class MusicPlayer : AudioStreamPlayer
 {
     [BindProperty] public bool muted = false;
@@ -12,10 +14,11 @@ public partial class MusicPlayer : AudioStreamPlayer
 
     private MusicPlayer()
     {
-        songs = [
-            GD.Load<Song>("res://assets/music/ChariotsOfFire.tres"),
-            GD.Load<Song>("res://assets/music/Dread.tres")
-        ];
+        //GD.Load<Song>("res://assets/music/Dread.tres")
+        Resource resource = GD.Load("res://assets/music/ChariotsOfFire.tres");
+        GD.Print($"Godot: {resource.GetClass()}");
+        GD.Print($"C#: {resource.GetType()}");
+        songs = [];
     }
 
     protected override void _Ready()

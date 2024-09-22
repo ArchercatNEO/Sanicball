@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cyscj3kuhqxsq"
-path="res://.godot/imported/AudioStreamOggVorbis.svg-952bcafa84e27686f2d05dbb411126a0.ctex"
+uid="uid://q6n6m1wgwf0r"
+path="res://.godot/imported/Plus.png-9e5dce2dce243d80f5400a675e07de72.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://addons/Song/AudioStreamOggVorbis.svg"
-dest_files=["res://.godot/imported/AudioStreamOggVorbis.svg-952bcafa84e27686f2d05dbb411126a0.ctex"]
+source_file="res://assets/music/Song/Plus.png"
+dest_files=["res://.godot/imported/Plus.png-9e5dce2dce243d80f5400a675e07de72.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

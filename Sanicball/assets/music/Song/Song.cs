@@ -1,9 +1,9 @@
-
 using Godot;
 
-namespace Sanicball.Sound;
+namespace Sanicball.Assets;
 
-//Icon = "res://addons/Song/AudioPlusPlus.svg"
+//Icon = "res://assets/music/Song/AudioPlusPlus.svg"
+[GodotClass]
 public partial class Song : Resource
 {
     [BindProperty] public string name;
