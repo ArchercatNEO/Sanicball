@@ -1,52 +1,31 @@
-{
-  lib,
-  stdenv,
-  mkShell,
-  blender,
-  dotnetCorePackages,
-  godot,
-  zlib,
-  openssl,
-  icu,
-  ...
-}: let
-  dotnet = with dotnetCorePackages;
+pkgs: let
+  dotnet = with pkgs.dotnetCorePackages;
     combinePackages [
-      sdk_6_0
       sdk_8_0
+      sdk_9_0
     ];
+  
+  libraries = pkgs.lib.makeLibraryPath [
+    pkgs.stdenv.cc.cc.lib
+    pkgs.stdenv.cc.libc
+    dotnet.passthru.icu
+    pkgs.openssl
+    pkgs.zlib
+  ];
 in
-  mkShell {
+  pkgs.mkShell {
     name = "sanicball-shell";
 
     nativeBuildInputs = [
-      blender
-      dotnetCorePackages.sdk_9_0
-      stdenv.cc
-      godot
-    ];
-
-    buildInputs = [
-      icu
-      openssl
-      zlib
-      zlib.dev
+      pkgs.blender
+      dotnet
+      pkgs.stdenv.cc
+      pkgs.godot
     ];
 
     env = {
-      NIX_LD_LIBRARY_PATH = lib.makeLibraryPath [
-        zlib
-        zlib.dev
-        stdenv.cc.cc.lib
-        openssl
-        icu
-      ];
-      LIBRARY_PATH = lib.makeLibraryPath [
-        icu
-        openssl
-        zlib
-        zlib.dev
-      ];
+      NIX_LD_LIBRARY_PATH = libraries;
+      LIBRARY_PATH = libraries;
     };
 
     shellHook = ''

@@ -13,7 +13,7 @@
 }:
 buildDotnetModule {
   pname = "godot-dotnet";
-  version = "4.3";
+  version = "4.4";
 
   src = fetchFromGitHub {
     owner = "raulsntos";
@@ -21,6 +21,10 @@ buildDotnetModule {
     rev = "master";
     hash = "sha256-mi9fj7tUvSFu64pQqUlEvJJZz/3lXe7bFdCmxbpIPH0=";
   };
+
+  patches = [
+    ./register_parent.patch
+  ];
 
   dotnet-sdk = dotnetCorePackages.sdk_8_0;
   dotnet-runtime = dotnetCorePackages.runtime_8_0;

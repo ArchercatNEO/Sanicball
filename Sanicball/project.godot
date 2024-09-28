@@ -15,7 +15,7 @@ config/description="The incredibly fast racer, reborn in godot.
 Get ready for some NEON races!"
 config/version="0.0"
 run/main_scene="res://scenes/S1-Intro/intro.tscn"
-config/features=PackedStringArray("4.3", "GL Compatibility")
+config/features=PackedStringArray("4.4", "GL Compatibility")
 config/icon="res://assets/Icon.svg"
 
 [dotnet]
