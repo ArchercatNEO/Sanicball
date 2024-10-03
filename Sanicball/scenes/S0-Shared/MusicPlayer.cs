@@ -9,17 +9,11 @@ public partial class MusicPlayer : AudioStreamPlayer
     [BindProperty] public bool muted = false;
     [BindProperty] public Label songName;
 
-    private readonly Song[] songs;
     private int songIndex = 0;
-
-    private MusicPlayer()
-    {
-        //GD.Load<Song>("res://assets/music/Dread.tres")
-        Resource resource = GD.Load("res://assets/music/ChariotsOfFire.tres");
-        GD.Print($"Godot: {resource.GetClass()}");
-        GD.Print($"C#: {resource.GetType()}");
-        songs = [];
-    }
+    private readonly Song[] songs = [
+        GD.Load<Song>("res://assets/music/Dread.tres"),
+        GD.Load<Song>("res://assets/music/ChariotsOfFire.tres")
+    ];
 
     protected override void _Ready()
     {
