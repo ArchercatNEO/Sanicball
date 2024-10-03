@@ -1,3 +1,6 @@
-[gd_resource type="SphereMesh" format=3 uid="uid://bxcqeu583rfdy"]
+[gd_resource type="SphereMesh" load_steps=2 format=3 uid="uid://bxcqeu583rfdy"]
+
+[ext_resource type="Material" uid="uid://dnr313oibwn6s" path="res://src/characters/C01-Sanic/material.tres" id="1_lcdaq"]
 
 [resource]
+material = ExtResource("1_lcdaq")
