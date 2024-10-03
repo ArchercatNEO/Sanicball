@@ -21,6 +21,7 @@ in
       dotnet
       pkgs.stdenv.cc
       pkgs.godot
+      pkgs.gdb
     ];
 
     env = {

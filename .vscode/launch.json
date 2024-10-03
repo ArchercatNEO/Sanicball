@@ -5,6 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Debug Sanicball",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "/nix/store/34sid6v2dv2vjyhdjnbpg6d4zhba3i70-godot4-4.4-dev2/bin/godot4",
+            "args": ["--path", "${workspaceFolder}/Sanicball"],
+            "cwd": "${workspaceFolder}",
+            "MIMode": "gdb",
+            "miDebuggerPath": "/nix/store/g3nca8ynriliw6zvgdv0gm8wql7yxjkl-gdb-15.1/bin/gdb"
+        },
+        {
             "name": "Debug rust server",
             "type": "lldb",
             "request": "launch",
