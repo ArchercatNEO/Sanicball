@@ -8,7 +8,7 @@
             "name": "Debug Sanicball",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/nix/store/34sid6v2dv2vjyhdjnbpg6d4zhba3i70-godot4-4.4-dev2/bin/godot4",
+            "program": "/nix/store/6yczx7k5qzxr4x8lrmrp10m9n3jvjdvn-godot4-4.4-dev3/bin/godot4",
             "args": ["--path", "${workspaceFolder}/Sanicball"],
             "cwd": "${workspaceFolder}",
             "MIMode": "gdb",

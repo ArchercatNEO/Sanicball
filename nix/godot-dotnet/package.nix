@@ -3,6 +3,8 @@
   autoPatchelfHook,
   buildDotnetModule,
   dotnetCorePackages,
+  bash,
+  python3,
   moreutils,
   jq,
   clang,
@@ -10,33 +12,33 @@
   icu,
   krb5,
   ...
-}:
-buildDotnetModule {
+}:  let 
+  dotnet-version = dotnetCorePackages.sdk_8_0.version;
+in 
+buildDotnetModule rec {
   pname = "godot-dotnet";
   version = "4.4";
+  commit = "eff114039efe1c4b4de2f69c337e7d14954927ef";
 
   src = fetchFromGitHub {
     owner = "raulsntos";
     repo = "godot-dotnet";
     rev = "master";
-    hash = "sha256-mi9fj7tUvSFu64pQqUlEvJJZz/3lXe7bFdCmxbpIPH0=";
+    hash = "sha256-X5Lkno+wjSPfKsdBkUyv7Hu4IFLrANtf55+sN++AMk4=";
   };
-
-  patches = [
-    ./register_parent.patch
-  ];
 
   dotnet-sdk = dotnetCorePackages.sdk_8_0;
   dotnet-runtime = dotnetCorePackages.runtime_8_0;
   projectFile = [
-    "./src/Godot.Bindings/Godot.Bindings.csproj"
-    "./src/Godot.SourceGenerators/Godot.SourceGenerators.csproj"
+    "./Godot.sln"
+    "./eng/common/tasks/Tasks.csproj"
   ];
   nugetDeps = ./deps.nix;
   packNupkg = true;
 
   nativeBuildInputs = [
     autoPatchelfHook
+    python3
     moreutils
     jq
     clang
@@ -49,24 +51,23 @@ buildDotnetModule {
     krb5.dev
   ];
 
-  dotnetBuildFlags = [
-    "/p:GenerateGodotBindings=true"
-  ];
-
-  dotnetInstallFlags = [
-    "/p:RepositoryUrl=https://github.com/raulsntos/godot-dotnet"
-    "/p:RepositoryCommit=AAAAAAAAAA"
-    "/p:RepositoryType=github"
-  ];
-
-  dotnetPackFlags = [
-    "/p:RepositoryUrl=https://github.com/raulsntos/godot-dotnet"
-    "/p:RepositoryCommit=AAAAAAAAAA"
-    "/p:RepositoryType=github"
-    "/p:RuntimeIdentifier=linux-x64"
-  ];
-
   preConfigure = ''
-    jq '.sdk.version = "8.0.303" | .tools.dotnet = "8.0.303"' global.json | sponge global.json
+    jq '.sdk.version = "${dotnet-version}" | .tools.dotnet = "${dotnet-version}"' global.json | sponge global.json
+  '';
+
+  buildPhase = ''
+    ${bash}/bin/bash ./eng/common/build.sh --productBuild --warnaserror false \
+      /p:GenerateGodotBindings=true \
+      /p:RepositoryUrl=https://github.com/raulsntos/godot-dotnet \
+      /p:RepositoryType=github \
+      /p:RepositoryCommit=${commit}
+  '';
+
+  installPhase = ''
+    mkdir -p $out/share
+    ${bash}/bin/bash ./eng/common/build.sh --productBuild --warnaserror false --pushNupkgsLocal $out/share \
+      /p:RepositoryUrl=https://github.com/raulsntos/godot-dotnet \
+      /p:RepositoryType=github \
+      /p:RepositoryCommit=${commit}
   '';
 }
