@@ -18,8 +18,9 @@ public partial class RaceManager : Node
 {
     public static void Activate(SceneTree tree, RaceOptions options)
     {
-        var self = tree.ChangeSceneAsync<RaceManager>(options.SelectedStage.RaceScene);
-        self.players = options.Players;
+        var self = tree.ChangeSceneAsync<RaceManager>(options.SelectedStage.RaceScene, self => {
+            self.players = options.Players;
+        });
     }
 
     [BindProperty] private HBoxContainer viewportManager = null!;
@@ -34,9 +35,10 @@ public partial class RaceManager : Node
         float offset = 10;
         foreach (var character in players)
         {
-            character.CheckpointPassed += null;
+            character.CheckpointPassed += OnPlayerPassCheckpoint;
+            character.currentCheckpoint = finishLine;
             
-            RaceUI raceUI = RaceUI.Create();
+            RaceUI raceUI = RaceUI.Create(character);
             //TODO: Implement RaceUI
             
             //Subvieports don't expand to the size of parent UI containers
@@ -45,6 +47,7 @@ public partial class RaceManager : Node
             expander.AddChild(raceUI);
             viewportManager.AddChild(expander);
             
+            //Global position needs to be set after AddChild in RaceUI
             character.GlobalPosition = finishLine.GlobalPosition with { Y = finishLine.GlobalPosition.Y + offset };
             offset += 10;
         }
@@ -61,10 +64,16 @@ public partial class RaceManager : Node
             };
 
             AddChild(ai);
-            ai.CheckpointPassed += null;
+            ai.CheckpointPassed += OnPlayerPassCheckpoint;
+            ai.currentCheckpoint = finishLine;
             ai.GlobalPosition = finishLine.GlobalPosition with { Y = finishLine.GlobalPosition.Y + offset };
             offset += 10;
         }
+    }
+
+    private void OnPlayerPassCheckpoint(Checkpoint e)
+    {
+
     }
 
     private void OnPlayerFinishRace(object? sender, EventArgs e)

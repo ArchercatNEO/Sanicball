@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Godot;
 using Sanicball.Account;
 using Sanicball.Characters;
@@ -18,24 +17,22 @@ public partial class LobbyManager : Node
     public static void Activate(SceneTree tree, List<Character> players)
     {
         GD.Print("Entering lobby");
-        var prefab = GD.Load<PackedScene<LobbyManager>>("res://scenes/S3-Lobby/Lobby.tscn");
-        var instance = tree.ChangeSceneAsync(prefab);
-        
-        GD.Print("Adding players to LobbyManager");
-        instance.players.AddRange(players);
+        var prefab = GD.Load<PackedScene>("res://scenes/S3-Lobby/Lobby.tscn");
+        var self = tree.ChangeSceneAsync<LobbyManager>(prefab, self => {
+            self.players = players;
+        });
     }
 
     //ui
-    [BindProperty] private HBoxContainer characterSelectContainer = null!;
     [BindProperty] private Label countdownText = null!;
     [BindProperty] private Control pauseMenu = null!;
+    [BindProperty] private HBoxContainer characterSelectContainer = null!;
 
     //3d
     [BindProperty] private Node3D playerSpawner = null!;
 
-
     private int readyPlayers = 0;
-    private readonly List<Character> players = [];
+    private List<Character> players = [];
     private readonly Dictionary<ControlType, CharacterSelect> activePanels = [];
 
     protected override void _EnterTree()
@@ -45,16 +42,9 @@ public partial class LobbyManager : Node
 
     protected override void _Ready()
     {
-        GD.Print("Calling ready on lobby manager");
-
-        if (!players.Any(player => player.controller is PlayerController { ControlType: ControlType.Keyboard }))
-        {
-            GD.Print("No keyboard player detected, adding one in");
-            OnDeviceConnected((long)ControlType.Keyboard, true);
-        }
-
         foreach (var player in players)
         {
+            GD.Print("Adding players to LobbyManager");
             if (player.controller is PlayerController controller)
             {
                 CharacterSelect panel = CharacterSelect.Create(controller.ControlType, playerSpawner, player);
@@ -62,15 +52,23 @@ public partial class LobbyManager : Node
                 activePanels.Add(controller.ControlType, panel);
                 panel.OnReadyChanged += OnReadyChanged;
             }
+            //TODO: if player is AI -> settings
         }
 
-        pauseMenu.GetNode<Button>(new NodePath("VBoxContainer/Unpause")).Pressed += pauseMenu.Hide;
-        Button ctxSensitive = pauseMenu.GetNode<Button>(new NodePath("VBoxContainer/Context"));
-        //TODO settings
+        //TODO: Find a way to be able to start from lobby with keyboard
+        //and return from race as a character
+        GD.Print("No keyboard player detected, adding one in");
+        OnDeviceConnected((long)ControlType.Keyboard, true);
+
+        GD.Print("Setting up callbacks");
+        pauseMenu.GetNode<Button>(new NodePath("Unpause")).Pressed += pauseMenu.Hide;
+        pauseMenu.GetNode<Button>(new NodePath("Quit")).Pressed += () => MenuUI.Activate(GetTree());
+        pauseMenu.GetParent<Control>().Hide();
+        
+        //TODO: settings
+        Button ctxSensitive = pauseMenu.GetNode<Button>(new NodePath("Context"));
         ctxSensitive.Pressed += pauseMenu.Hide;
         ctxSensitive.Text = "Settings";
-        pauseMenu.GetNode<Button>(new NodePath("VBoxContainer/Quit")).Pressed += () => MenuUI.Activate(GetTree());
-        pauseMenu.Hide();
     }
 
     protected override void _ExitTree()
@@ -143,7 +141,12 @@ public partial class LobbyManager : Node
         void SetCountdownText(float time) => countdownText.Text = $"{readyPlayers}/{players.Count} players ready: Match starting in {time} seconds";
         tween.TweenMethod(Callable.From<float>(SetCountdownText), 5, 0, 5);
 
-        void startRaceCallback() => RaceManager.Activate(GetTree(), options);
-        tween.TweenCallback(Callable.From(startRaceCallback));
+        tween.TweenCallback(Callable.From(() => {
+            foreach (var player in players)
+            {
+                playerSpawner.RemoveChild(player);
+            }
+            RaceManager.Activate(GetTree(), options);
+        }));
     }
 }

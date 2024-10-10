@@ -1,6 +1,7 @@
 //Handles nodes and virtual methods
 
 using System;
+using System.Diagnostics;
 using Godot;
 using Godot.Collections;
 using Sanicball.Account;
@@ -23,12 +24,17 @@ public partial class Character : RigidBody3D, ICollidableReciever<Checkpoint>
 
     public Character()
     {
+        ContactMonitor = true;
+        MaxContactsReported = 3;
+
         //TODO: implement ball camera
         renderer = new();
         AddChild(renderer);
+        MeshOverride = GD.Load<Mesh>("res://src/characters/ball_mesh.tres");
 
         collider = new();
         AddChild(collider);
+        ShapeOverride = GD.Load<Shape3D>("res://src/characters/ball_coll.tres");
     }
 
     public IController controller = new PlayerController() { ControlType = ControlType.Keyboard };
@@ -44,15 +50,16 @@ public partial class Character : RigidBody3D, ICollidableReciever<Checkpoint>
     /// <value>
     /// Inside the lobby it will be the global lobby camera. In a race it will be the camera attached to the ball itself
     /// </value>
-    public Camera3D Camera { get; private set; } = null!;
+    public Camera3D Camera { get; set; } = null!;
 
     #endregion Node refs
 
     public event Action<Checkpoint>? CheckpointPassed;
-    private Checkpoint currentCheckpoint;
+    public Checkpoint currentCheckpoint;
 
     public void OnCollision(Checkpoint checkpoint)
     {
+        Debug.Assert(currentCheckpoint != null, "Current checkpoint is null");
         if (currentCheckpoint.next == checkpoint)
         {
             currentCheckpoint = checkpoint;

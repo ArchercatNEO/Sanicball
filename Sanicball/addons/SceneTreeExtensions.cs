@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 namespace Sanicball.Scenes;
@@ -19,7 +20,7 @@ public static class SceneTreeExtensions
         return next;
     }
 
-    public static T ChangeSceneAsync<T>(this SceneTree sceneTree, PackedScene scene) where T : Node
+    public static T ChangeSceneAsync<T>(this SceneTree sceneTree, PackedScene scene, Action<T>? preReady = null) where T : Node
     {
         Node root = sceneTree.Root;
         
@@ -28,6 +29,7 @@ public static class SceneTreeExtensions
         current.QueueFree();
 
         T next = scene.Instantiate<T>();
+        preReady?.Invoke(next);
         root.AddChild(next);
 
         sceneTree.CurrentScene = next;

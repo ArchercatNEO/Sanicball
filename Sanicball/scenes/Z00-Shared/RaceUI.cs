@@ -1,4 +1,5 @@
 using Godot;
+using Sanicball.Characters;
 
 namespace Sanicball.Ball;
 
@@ -12,11 +13,21 @@ namespace Sanicball.Ball;
 //TODO: Implement checkpoint tracking
 public partial class RaceUI : SubViewport
 {
-    public static RaceUI Create()
+    [BindProperty] BallCamera camera;
+
+    private Character target = null!;
+    
+    public static RaceUI Create(Character character)
     {
-        var prefab = GD.Load<PackedScene<RaceUI>>("res://scenes/Z00-Shared/RaceUI.tscn");
+        var prefab = GD.Load<PackedScene>("res://scenes/Z00-Shared/RaceUI.tscn");
         
-        var self = prefab.Instantiate();
+        var self = prefab.Instantiate<RaceUI>();
+        self.target = character;
+        self.target.Camera = self.camera;
+
+        self.camera.Ball = character;
+
+        self.AddChild(character);
         
         return self;
     }

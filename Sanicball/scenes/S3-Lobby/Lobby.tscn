@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://iy8o8k21l1n1"]
+[gd_scene load_steps=27 format=3 uid="uid://iy8o8k21l1n1"]
 
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://scenes/S3-Lobby/Decoration/clear_sky.tres" id="1_8ov4f"]
 [ext_resource type="Texture2D" uid="uid://bawb32fvt5hrb" path="res://scenes/S3-Lobby/Decoration/TrianglesBackground.png" id="3_8rbhj"]
@@ -77,8 +77,8 @@ tracks/0/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_c6dja"]
 _data = {
-"RESET": SubResource("Animation_lqxk5"),
-"UpcycleTriangles": SubResource("Animation_6rq5x")
+&"RESET": SubResource("Animation_lqxk5"),
+&"UpcycleTriangles": SubResource("Animation_6rq5x")
 }
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fbn66"]
@@ -100,10 +100,10 @@ top_radius = 2.5
 bottom_radius = 2.5
 height = 6.0
 
-[node name="Lobby" type="LobbyManager" node_paths=PackedStringArray("characterSelectContainer", "countdownText", "pauseMenu", "playerSpawner")]
-characterSelectContainer = NodePath("Lobby2D/CharacterSelectBox")
+[node name="Lobby" type="LobbyManager" node_paths=PackedStringArray("countdownText", "pauseMenu", "characterSelectContainer", "playerSpawner")]
 countdownText = NodePath("Lobby2D/Header/RaceCountdown")
-pauseMenu = NodePath("Lobby2D/PauseMenu")
+pauseMenu = NodePath("Lobby2D/PauseMenu/VBoxContainer")
+characterSelectContainer = NodePath("Lobby2D/CharacterSelectBox")
 playerSpawner = NodePath("Lobby3D/Spawner")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -366,7 +366,7 @@ mesh = SubResource("PlaneMesh_mpevb")
 
 [node name="UpwardsCycle" type="AnimationPlayer" parent="Lobby3D/TV/Screen/Background"]
 libraries = {
-"": SubResource("AnimationLibrary_c6dja")
+&"": SubResource("AnimationLibrary_c6dja")
 }
 autoplay = "UpcycleTriangles"
 

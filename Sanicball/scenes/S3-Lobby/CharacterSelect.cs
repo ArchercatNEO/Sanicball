@@ -15,9 +15,9 @@ public partial class CharacterSelect : MarginContainer
 {
     public static CharacterSelect Create(ControlType controlType, Node3D spawner, Character? character)
     {
-        var prefab = GD.Load<PackedScene<CharacterSelect>>("res://scenes/S3-Lobby/CharacterSelect.tscn");
+        var prefab = GD.Load<PackedScene>("res://scenes/S3-Lobby/CharacterSelect.tscn");
 
-        CharacterSelect self = prefab.Instantiate();
+        CharacterSelect self = prefab.Instantiate<CharacterSelect>();
         self.controlType = controlType;
         self.playerSpawner = spawner;
         

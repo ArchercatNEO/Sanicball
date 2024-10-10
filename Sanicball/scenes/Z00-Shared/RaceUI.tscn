@@ -1,26 +1,30 @@
-[gd_scene load_steps=2 format=3 uid="uid://bryvlet2w7asd"]
+[gd_scene format=3 uid="uid://bryvlet2w7asd"]
 
-[node name="RaceUi" type="RaceUi" node_paths=PackedStringArray("LapCounter")]
+[node name="SubViewport" type="RaceUI" node_paths=PackedStringArray("camera")]
+camera = NodePath("BallCamera")
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="BallCamera" type="BallCamera" parent="."]
+OrbitHeight = 9.31
+OrbitRadius = 9.155
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-size_flags_horizontal = 3
-stretch = true
-LapCounter = NodePath("SubViewport/LapCounter")
 
-[node name="SubViewport" type="SubViewport" parent="."]
-handle_input_locally = false
-size = Vector2i(1152, 648)
-render_target_update_mode = 4
-
-[node name="LapCounter" type="Label" parent="SubViewport"]
+[node name="LapCounter" type="Label" parent="UI"]
+layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -69.0
-offset_right = 178.0
+offset_right = 177.0
 grow_vertical = 0
-theme_override_font_sizes/font_size = 50
+theme_override_font_sizes/font_size = 30
 text = "Lap 1/3"
