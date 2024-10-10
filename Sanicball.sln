@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SanicballServer", "Sanicbal
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GodotFiles", "+GodotFiles\GodotFiles.csproj", "{33E61641-B597-45A2-8BEC-D8AC16716892}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serilog.Sinks.Godot", "Serilog.Sinks.Godot\Serilog.Sinks.Godot.csproj", "{5EAD2772-55D2-40C0-A29D-F298F65E61FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,5 +47,11 @@ Global
 		{33E61641-B597-45A2-8BEC-D8AC16716892}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
 		{33E61641-B597-45A2-8BEC-D8AC16716892}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
 		{33E61641-B597-45A2-8BEC-D8AC16716892}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
+		{5EAD2772-55D2-40C0-A29D-F298F65E61FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EAD2772-55D2-40C0-A29D-F298F65E61FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EAD2772-55D2-40C0-A29D-F298F65E61FD}.ExportDebug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EAD2772-55D2-40C0-A29D-F298F65E61FD}.ExportDebug|Any CPU.Build.0 = Debug|Any CPU
+		{5EAD2772-55D2-40C0-A29D-F298F65E61FD}.ExportRelease|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EAD2772-55D2-40C0-A29D-F298F65E61FD}.ExportRelease|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using Sanicball.Account;
 using Sanicball.Characters;
+using Serilog;
 
 namespace Sanicball.Scenes;
 
@@ -16,7 +17,7 @@ public partial class LobbyManager : Node
 {
     public static void Activate(SceneTree tree, List<Character> players)
     {
-        GD.Print("Entering lobby");
+        Log.Information("Entering lobby");
         var prefab = GD.Load<PackedScene>("res://scenes/S3-Lobby/Lobby.tscn");
         var self = tree.ChangeSceneAsync<LobbyManager>(prefab, self => {
             self.players = players;
@@ -44,7 +45,7 @@ public partial class LobbyManager : Node
     {
         foreach (var player in players)
         {
-            GD.Print("Adding players to LobbyManager");
+            Log.Information("Adding players to LobbyManager");
             if (player.controller is PlayerController controller)
             {
                 CharacterSelect panel = CharacterSelect.Create(controller.ControlType, playerSpawner, player);
@@ -57,10 +58,9 @@ public partial class LobbyManager : Node
 
         //TODO: Find a way to be able to start from lobby with keyboard
         //and return from race as a character
-        GD.Print("No keyboard player detected, adding one in");
+        Log.Warning("No keyboard player detected, adding one in");
         OnDeviceConnected((long)ControlType.Keyboard, true);
 
-        GD.Print("Setting up callbacks");
         pauseMenu.GetNode<Button>(new NodePath("Unpause")).Pressed += pauseMenu.Hide;
         pauseMenu.GetNode<Button>(new NodePath("Quit")).Pressed += () => MenuUI.Activate(GetTree());
         pauseMenu.GetParent<Control>().Hide();
@@ -94,6 +94,7 @@ public partial class LobbyManager : Node
         ControlType controller = (ControlType)device;
         if (connected && !activePanels.ContainsKey(controller))
         {
+            Log.Information("Player {controller} joined", controller);
             CharacterSelect panel = CharacterSelect.Create(controller, playerSpawner, null);
             characterSelectContainer.AddChild(panel);
             activePanels.Add(controller, panel);
@@ -101,6 +102,7 @@ public partial class LobbyManager : Node
         }
         else
         {
+            Log.Information("Player {controller} left", controller);
             CharacterSelect panel = activePanels[controller];
             characterSelectContainer.RemoveChild(panel);
             activePanels.Remove(controller);

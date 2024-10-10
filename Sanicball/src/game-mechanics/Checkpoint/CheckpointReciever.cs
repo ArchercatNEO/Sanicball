@@ -1,6 +1,7 @@
 using System;
 using Godot;
 using Sanicball.Ball;
+using Serilog;
 
 namespace Sanicball.GameMechanics;
 
@@ -66,13 +67,13 @@ public class CheckpointReciever(Checkpoint initialCheckpoint, int maxLaps)
         {
             if (checkpointMarker == null)
             {
-                GD.Print("Passed through a checkpoint after finishing race");
+                Log.Warning("Passed through a checkpoint after finishing race");
                 return;
             }
 
             if (!checkpointMarker.IsInsideTree())
             {
-                GD.PushError("Error: checkpoint marker has not been added to a tree");
+                Log.Error("checkpoint marker has not been added to a tree");
                 return;
             }
 

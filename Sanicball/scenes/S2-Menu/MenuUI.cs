@@ -1,4 +1,5 @@
 using Godot;
+using Serilog;
 
 namespace Sanicball.Scenes;
 
@@ -9,6 +10,8 @@ public partial class MenuUI : Control
 {
     public static void Activate(SceneTree tree)
     {
+        Log.Information("Entering Menu");
+        
         PackedScene scene = GD.Load<PackedScene>("res://scenes/S2-Menu/menu.tscn");
         tree.ChangeSceneToPacked(scene);
     }

@@ -2,6 +2,7 @@
 
 using Godot;
 using Sanicball.Scenes;
+using Serilog;
 
 namespace Sanicball.Plugins;
 
@@ -37,23 +38,6 @@ internal partial class PathNode : EditorNode3DGizmoPlugin
     protected override string _GetGizmoName() => "PathNode";
     protected override bool _HasGizmo(Node3D forNode3D)
     {
-        Variant maybeScript = forNode3D.GetScript();
-        if (maybeScript.VariantType == Variant.Type.Nil)
-        {
-            return false;
-        }
-
-        if (maybeScript.As<Script>().ResourcePath == "res://scenes/S2-Menu/MenuPath.cs")
-        {
-            GD.Print("Menu path found");
-            GD.Print(forNode3D.GetType());
-        }
-
-        if (forNode3D is MenuPath)
-        {
-            GD.Print("Also it's known as the type");
-        }
-
         return forNode3D is MenuPath;
     }
 
@@ -89,7 +73,7 @@ internal partial class PathNode : EditorNode3DGizmoPlugin
         }
         else
         {
-            GD.Print("Too far, lost intersection");
+            Log.Warning("Too far, lost intersection");
         }
     }
 }
