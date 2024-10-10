@@ -1,0 +1,9 @@
+[configuration]
+
+entry_symbol = "init"
+compatibility_minimum = 4.3
+
+[libraries]
+
+linux.x86_64.debug = "res://addons/Sanicball/debug.so"
+linux.x86_64.release = "res://addons/Sanicball/release.so"
