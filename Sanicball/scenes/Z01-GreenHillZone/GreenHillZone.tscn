@@ -1,11 +1,11 @@
-[gd_scene load_steps=15 format=3 uid="uid://yvsf3gwttxet"]
+[gd_scene load_steps=13 format=3 uid="uid://yvsf3gwttxet"]
 
 [ext_resource type="Shader" path="res://assets/shaders/sea.gdshader" id="1_byn0m"]
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://scenes/S3-Lobby/Decoration/clear_sky.tres" id="1_udlj8"]
 [ext_resource type="AudioStream" uid="uid://56egn88rk5bt" path="res://assets/music/Sea.ogg" id="4_wke57"]
 [ext_resource type="PackedScene" uid="uid://gxo8i6rku4d6" path="res://scenes/Z01-GreenHillZone/GreenHillZone.blend" id="5_wtf51"]
 [ext_resource type="PackedScene" uid="uid://ceh3dfqf61qqe" path="res://src/game-mechanics/Checkpoint/Checkpoint.tscn" id="7_hucb3"]
-[ext_resource type="PackedScene" path="res://src/characters/AiNode.tscn" id="8_q7lne"]
+[ext_resource type="PackedScene" uid="uid://dxid7hpqoqjkl" path="res://src/characters/AiNode.tscn" id="8_q7lne"]
 
 [sub_resource type="Environment" id="Environment_dgy8r"]
 background_mode = 2
@@ -78,35 +78,35 @@ bus = &"Ambience"
 [node name="Checkpoints" type="Node3D" parent="Game3D"]
 
 [node name="FinishLine" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
-transform = Transform3D(-4.94321, -8.69279, -3.79974e-07, 0, -4.37114e-07, 10, -8.69279, 4.94321, 2.16075e-07, -81.3422, 45.5431, 175.875)
 isFinishLine = true
 next = NodePath("../Checkpoint")
+transform = Transform3D(-4.94321, -8.69279, -3.79974e-07, 0, -4.37114e-07, 10, -8.69279, 4.94321, 2.16075e-07, -81.3422, 45.5431, 175.875)
 
 [node name="Checkpoint" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
-transform = Transform3D(0.386947, -13.5895, 5.94016e-07, 0, -5.94256e-07, -13.595, 13.5895, 0.386947, -1.6914e-08, 204.756, 45.0111, 41.6596)
 next = NodePath("../Checkpoint2")
+transform = Transform3D(0.386947, -13.5895, 5.94016e-07, 0, -5.94256e-07, -13.595, 13.5895, 0.386947, -1.6914e-08, 204.756, 45.0111, 41.6596)
 
 [node name="Checkpoint2" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
-transform = Transform3D(4.57444, -14.2855, 6.24438e-07, 0, -6.55671e-07, -15, 14.2855, 4.57444, -1.99955e-07, 102.356, 24.9915, -86.804)
 next = NodePath("../Checkpoint3")
+transform = Transform3D(4.57444, -14.2855, 6.24438e-07, 0, -6.55671e-07, -15, 14.2855, 4.57444, -1.99955e-07, 102.356, 24.9915, -86.804)
 
 [node name="Checkpoint3" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
-transform = Transform3D(1.64715, 12.391, -5.41628e-07, 0, -5.46392e-07, -12.5, -12.391, 1.64715, -7.1999e-08, -169.798, 16.8091, -23.364)
 next = NodePath("../Checkpoint4")
+transform = Transform3D(1.64715, 12.391, -5.41628e-07, 0, -5.46392e-07, -12.5, -12.391, 1.64715, -7.1999e-08, -169.798, 16.8091, -23.364)
 
 [node name="Checkpoint4" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
-transform = Transform3D(10.8043, -2.06589, 9.03031e-08, 0, -4.80825e-07, -11, 2.06589, 10.8043, -4.72269e-07, -78.6377, 24.4562, 62.2761)
 next = NodePath("../FinishLine")
+transform = Transform3D(10.8043, -2.06589, 9.03031e-08, 0, -4.80825e-07, -11, 2.06589, 10.8043, -4.72269e-07, -78.6377, 24.4562, 62.2761)
 
 [node name="AiNodes" type="Node3D" parent="Game3D"]
 
 [node name="AiNode1" parent="Game3D/AiNodes" node_paths=PackedStringArray("nextOptions") instance=ExtResource("8_q7lne")]
-transform = Transform3D(2.84892, 0, -7.75315, 0, 8.26, 0, 7.75315, 0, 2.84892, -72.9548, 45.284, 174.044)
 nextOptions = [NodePath("../AiNode2")]
+transform = Transform3D(2.84892, 0, -7.75315, 0, 8.26, 0, 7.75315, 0, 2.84892, -72.9548, 45.284, 174.044)
 
 [node name="AiNode2" parent="Game3D/AiNodes" node_paths=PackedStringArray("nextOptions") instance=ExtResource("8_q7lne")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.9348, 52.3606, 162.517)
 nextOptions = [NodePath("../AiNode3")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.9348, 52.3606, 162.517)
 
 [node name="AiNode3" parent="Game3D/AiNodes" instance=ExtResource("8_q7lne")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 80.5282, 61.7785, 71.8825)

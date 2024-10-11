@@ -1,7 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://2twpn6kagwnv"]
+[gd_scene load_steps=6 format=3 uid="uid://2twpn6kagwnv"]
 
-[ext_resource type="PackedScene" uid="uid://dxwyu6ptcjbai" path="res://scenes/Z05-RainbowRoad/RainbowRoad.blend" id="1_kvsvf"]
+[ext_resource type="PackedScene" uid="uid://dxwyu6ptcjbai" path="res://scenes/Z05-RainbowRoad/models/RainbowRoad.blend" id="1_kvsvf"]
+[ext_resource type="Texture2D" uid="uid://lxvhls7a2tvb" path="res://scenes/Z05-RainbowRoad/textures/Space.exr" id="1_ml6ox"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_1bq44"]
+panorama = ExtResource("1_ml6ox")
+
+[sub_resource type="Sky" id="Sky_5a37r"]
+sky_material = SubResource("PanoramaSkyMaterial_1bq44")
+
+[sub_resource type="Environment" id="Environment_jl8oo"]
+background_mode = 2
+sky = SubResource("Sky_5a37r")
 
 [node name="RainbowRoad" type="Node"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_jl8oo")
 
 [node name="World3D" parent="." instance=ExtResource("1_kvsvf")]

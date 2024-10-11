@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cta16b4jnpo8g"
-path="res://.godot/imported/Star.blend-6b99f0f1145c7cc6a39e7428155f163f.scn"
+uid="uid://dv7n5jv8hmmwq"
+path="res://.godot/imported/star.blend-f81a533230bac22590395f1e910365b3.scn"
 
 [deps]
 
-source_file="res://scenes/Z05-RainbowRoad/Models/Star.blend"
-dest_files=["res://.godot/imported/Star.blend-6b99f0f1145c7cc6a39e7428155f163f.scn"]
+source_file="res://scenes/Z05-RainbowRoad/models/star/star.blend"
+dest_files=["res://.godot/imported/star.blend-f81a533230bac22590395f1e910365b3.scn"]
 
 [params]
 
