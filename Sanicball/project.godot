@@ -15,13 +15,8 @@ config/description="The incredibly fast racer, reborn in godot.
 Get ready for some NEON races!"
 config/version="0.0"
 run/main_scene="res://scenes/S1-Intro/intro.tscn"
-config/features=PackedStringArray("4.4", "GL Compatibility")
+config/features=PackedStringArray("4.4")
 config/icon="res://assets/Icon.svg"
-
-[dotnet]
-
-project/assembly_name="Sanicball"
-project/solution_directory="../"
 
 [input]
 
@@ -69,7 +64,3 @@ joystick_up={
 "events": [Object(InputEventJoypadMotion,"resource_local_to_scene":false,"resource_name":"","device":-1,"axis":1,"axis_value":-1.0,"script":null)
 ]
 }
-
-[rendering]
-
-renderer/rendering_method.mobile="gl_compatibility"

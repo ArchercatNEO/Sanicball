@@ -19,6 +19,7 @@ in
     nativeBuildInputs = [
       pkgs.blender
       dotnet
+      pkgs.nuget-to-nix
       pkgs.stdenv.cc
       pkgs.godot
       pkgs.gdb

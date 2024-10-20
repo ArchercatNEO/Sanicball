@@ -29,7 +29,9 @@
   mkSconsFlagsFromAttrSet = lib.mapAttrsToList (
     k: v: if builtins.isString v then "${k}=${v}" else "${k}=${builtins.toJSON v}"
   );
-in godot_4.overrideAttrs (finalAttrs: prevAttrs: rec {
+in (godot_4.override {
+    withDebug = true;
+  }).overrideAttrs (finalAttrs: prevAttrs: rec {
     version = "4.4-dev3";
     commitHash = "f4af8201bac157b9d47e336203d3e8a8ef729de2";
     
@@ -41,6 +43,10 @@ in godot_4.overrideAttrs (finalAttrs: prevAttrs: rec {
     };
 
     sconsFlags = prevAttrs.sconsFlags ++ mkSconsFlagsFromAttrSet {
+      dev_build = true;
+      dev_mode = true;
+      #deprecated = true; gdextension breaks without this
+
       builtin_brotli = false;
       #all commented options simply disable the assosiated third party
       #builtin_certs = false;

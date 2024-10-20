@@ -8,11 +8,14 @@
             "name": "Debug Sanicball",
             "type": "cppdbg",
             "request": "launch",
-            "program": "/nix/store/6yczx7k5qzxr4x8lrmrp10m9n3jvjdvn-godot4-4.4-dev3/bin/godot4",
+            "program": "/nix/store/r9sgra4jnncpwqyb8pbri99nd0p0jv2i-godot4-4.4-dev3/bin/godot4",
             "args": ["--path", "${workspaceFolder}/Sanicball"],
             "cwd": "${workspaceFolder}",
             "MIMode": "gdb",
-            "miDebuggerPath": "/nix/store/g3nca8ynriliw6zvgdv0gm8wql7yxjkl-gdb-15.1/bin/gdb"
+            "miDebuggerPath": "/nix/store/21p53fvw6b3sjv9iycy7gk3y2gws5fzm-gdb-15.1/bin/gdb",
+            "sourceFileMap":{
+                "<source-path>": "<target-path>"
+            }
         },
         {
             "name": "Debug rust server",

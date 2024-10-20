@@ -11,12 +11,16 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <WarningsAsErrors>CS8785</WarningsAsErrors>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <DefineConstants>TOOLS</DefineConstants>
+  </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Godot.Bindings" Version="4.4.0-dev" />
-    <PackageReference Include="Godot.SourceGenerators" Version="4.4.0-dev" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <PackageReference Include="Serilog" Version="4.0.2" />
-    <PackageReference Include="Serilog.Sinks.Console" Version="6.0.0" />
+    <PackageReference Include="Godot.Bindings" />
+    <PackageReference Include="Godot.SourceGenerators" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    <PackageReference Include="Serilog" />
+    <PackageReference Include="Serilog.Sinks.Console" />
     <ProjectReference Include="../Serilog.Sinks.Godot/Serilog.Sinks.Godot.csproj" />
   </ItemGroup>
 </Project>

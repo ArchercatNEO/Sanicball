@@ -17,7 +17,7 @@
         overlays = [
           (self: super: {
             godot = import ./nix/godot/package.nix pkgs;
-            godot-template = super.callPackage ./nix/godot-template/package.nix {};
+            godot-template = import ./nix/godot-template/package.nix pkgs;
             godot-dotnet = super.callPackage ./nix/godot-dotnet/package.nix {};
           })
         ];
@@ -27,6 +27,8 @@
         packages = rec {
           default = sanicball;
           sanicball = pkgs.callPackage ./Sanicball {};
+          inner = pkgs.callPackage ./Sanicball/dotnet.nix {};
+          serilog = pkgs.callPackage ./Serilog.Sinks.Godot/package.nix {};
           editor = pkgs.godot;
           templates = pkgs.godot-template;
           gdextension = pkgs.godot-dotnet;
