@@ -1,6 +1,7 @@
 using System;
+using Godot;
 
-namespace Godot;
+namespace Sanicball.Utils;
 
 public class PackedScene<T>(PackedScene scene) where T : class /* Allows for interfaces */
 {

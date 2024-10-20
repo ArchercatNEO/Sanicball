@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading;
 using Microsoft.CodeAnalysis;
 
-namespace GodotFiles;
+namespace Sanicball.SourceGenerators;
 
 struct FileWithImport
 {

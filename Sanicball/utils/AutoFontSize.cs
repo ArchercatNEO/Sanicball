@@ -1,6 +1,6 @@
 using Godot;
 
-namespace Sanicball.Plugins;
+namespace Sanicball.Utils;
 
 [GodotClass]
 public partial class AutoFontSize : Label
@@ -29,23 +29,23 @@ public partial class AutoFontSize : Label
         }
     }
 
-    private void ResizeText()
-    {
-        float area = 100; //size.X * size.Y;
-        float pxRes = area / Text.Length;
-        int fontSize = Mathf.RoundToInt(pxRes);
-        int clampedSize = Mathf.Clamp(fontSize, MinimumSize, MaximumSize);
-        AddThemeFontSizeOverride(new StringName("font_size"), clampedSize);
-    }
-
-    protected override void _Ready()
+    private AutoFontSize()
     {
         ClipText = true;
     }
 
+    private void ResizeText()
+    {
+        float area = Size.X * Size.Y;
+        float glyphPx = area / Text.Length;
+        int fontSize = Mathf.RoundToInt(glyphPx);
+        int clampedSize = Mathf.Clamp(fontSize, MinimumSize, MaximumSize);
+        AddThemeFontSizeOverride(new StringName("font_size"), clampedSize);
+    }
+
     protected override bool _Set(StringName property, Variant value)
     {
-        if (property == new StringName("text"))
+        if (property == PropertyName.Text)
         {
             Text = value.AsString();
             ResizeText();

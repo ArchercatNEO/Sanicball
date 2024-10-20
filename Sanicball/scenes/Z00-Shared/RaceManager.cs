@@ -5,6 +5,7 @@ using Godot;
 using Sanicball.Ball;
 using Sanicball.Characters;
 using Sanicball.GameMechanics;
+using Sanicball.Utils;
 
 namespace Sanicball.Scenes;
 

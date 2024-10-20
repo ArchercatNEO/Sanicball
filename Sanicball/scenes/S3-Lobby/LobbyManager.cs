@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Godot;
 using Sanicball.Account;
 using Sanicball.Characters;
+using Sanicball.Utils;
 using Serilog;
 
 namespace Sanicball.Scenes;

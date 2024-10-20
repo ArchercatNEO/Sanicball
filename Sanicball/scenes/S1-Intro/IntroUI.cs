@@ -1,9 +1,7 @@
 using System.Linq;
 using Godot;
 using Sanicball.Account;
-using Sanicball.Plugins;
 using Serilog;
-using Serilog.Core;
 
 namespace Sanicball.Scenes;
 
@@ -36,13 +34,6 @@ public partial class IntroUI : Control
 
     protected override void _Ready()
     {
-        //TODO find a more reliable way to set up logging
-        using var logger = new LoggerConfiguration()
-            .WriteTo.Godot()
-            .WriteTo.Console()
-            .CreateLogger();
-        Log.Logger = logger;
-
         Log.Information("Entering Intro");
 
         var images = credits.GetChildren().OfType<TextureRect>();

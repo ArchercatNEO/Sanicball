@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-namespace Sanicball.Scenes;
+namespace Sanicball.Utils;
 
 public static class SceneTreeExtensions
 {
