@@ -8,7 +8,8 @@
   openssl,
   zlib,
   ...
-}: buildDotnetModule {
+}:
+buildDotnetModule {
   pname = "sanicball-extension";
   version = "0.2-alpha";
 

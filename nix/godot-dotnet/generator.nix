@@ -12,13 +12,14 @@
   krb5,
   openssl,
   ...
-}: buildDotnetModule {
+}:
+buildDotnetModule {
   pname = pname + "-source-generators";
   inherit version commit src;
 
   projectFile = "./src/Godot.SourceGenerators/Godot.SourceGenerators.csproj";
   nugetDeps = ./deps.nix;
-  
+
   dotnet-sdk = dotnetCorePackages.sdk_8_0;
   dotnet-runtime = dotnetCorePackages.runtime_8_0;
 

@@ -1,3 +1,12 @@
-.direnv
-/artifacts/
-result
+# Generic
+.direnv/
+
+# Editors
+.idea/
+*.DotSettings.user
+
+# Artifacts
+artifacts/
+result*
+.godot
+

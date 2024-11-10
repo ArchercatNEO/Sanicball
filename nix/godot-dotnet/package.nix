@@ -6,15 +6,16 @@
   jq,
   moreutils,
   ...
-}:  let
+}:
+let
   pname = "godot-dotnet";
   version = "4.4";
-  dotnet-version = dotnetCorePackages.sdk_8_0.version;
   commit = "eff114039efe1c4b4de2f69c337e7d14954927ef";
-  
+  dotnet-version = dotnetCorePackages.sdk_8_0.version;
+
   args = {
     inherit pname version commit;
-    
+
     src = fetchFromGitHub {
       owner = "raulsntos";
       repo = "godot-dotnet";
@@ -40,7 +41,8 @@
   bindings = callPackage ./bindings.nix args;
   generator = callPackage ./generator.nix args;
 
-in runCommand (pname + version) {} ''
+in
+runCommand (pname + "-" + version) { } ''
   mkdir $out
   ln -s ${bindings}/share/nuget/source/ $out/godot.bindings
   ln -s ${generator}/share/nuget/source/ $out/godot.sourcegenerators

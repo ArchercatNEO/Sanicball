@@ -1,14 +1,7 @@
 {
     "files.exclude": {
-        ".git": false,
         "**/*.blend1": true
     },
 
-    "nix.enableLanguageServer": true,
-    "nix.serverPath": "nil",
-
     "dotnet.defaultSolution": "Sanicball.sln",
-    "dotnet.projects.enableAutomaticRestore": true,
-
-    "rust-analyzer.cargo.buildScripts.invocationStrategy": "per_workspace",
 }

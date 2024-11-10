@@ -1,6 +1,7 @@
 {
   godot,
   ...
-}: godot.override {
+}:
+godot.override {
   withTarget = "template_debug";
 }

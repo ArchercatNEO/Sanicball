@@ -1,5 +1,5 @@
 <Project>
-    <PropertyGroup>
-        <UseArtifactsOutput>true</UseArtifactsOutput>
-    </PropertyGroup>
+  <PropertyGroup>
+    <UseArtifactsOutput>true</UseArtifactsOutput>
+  </PropertyGroup>
 </Project>

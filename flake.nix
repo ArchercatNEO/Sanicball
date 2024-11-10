@@ -22,7 +22,7 @@
           })
         ];
       in {
-        devShells.default = import ./nix/shell.nix pkgs;
+        devShells.default = pkgs.callPackage ./shell.nix {};
 
         packages = rec {
           default = sanicball;

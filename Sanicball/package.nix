@@ -4,7 +4,8 @@
   godot,
   godot-template,
   ...
-}: stdenv.mkDerivation {
+}:
+stdenv.mkDerivation {
   pname = "sanicball";
   version = "0.0.0";
 

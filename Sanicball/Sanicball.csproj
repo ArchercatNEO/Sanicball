@@ -2,25 +2,33 @@
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
     <LangVersion>preview</LangVersion>
-
-    <PublishAot>true</PublishAot>
-
-    <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
+    <EnablePreviewFeatures>true</EnablePreviewFeatures>
 
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <WarningsAsErrors>CS8785</WarningsAsErrors>
+
+    <PublishAot>true</PublishAot>
+    <RuntimeIdentifier Condition="$(RuntimeIdentifier) == ''">linux-x64</RuntimeIdentifier>
   </PropertyGroup>
-  
+
+  <PropertyGroup>
+    <Title>The incredibly fast racer - reborn in NEO</Title>
+    <Authors>ArchercatNEO</Authors>
+    <RepositoryType>github</RepositoryType>
+    <NeutralLanguage>en-GB</NeutralLanguage>
+  </PropertyGroup>
+
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <DefineConstants>TOOLS</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Godot.Bindings" />
-    <PackageReference Include="Godot.SourceGenerators" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-    <PackageReference Include="Serilog" />
-    <PackageReference Include="Serilog.Sinks.Console" />
-    <ProjectReference Include="../Serilog.Sinks.Godot/Serilog.Sinks.Godot.csproj" />
+    <PackageReference Include="Godot.Bindings"/>
+    <PackageReference Include="Godot.SourceGenerators" OutputItemType="Analyzer" ReferenceOutputAssembly="false"/>
+    <PackageReference Include="Serilog"/>
+    <PackageReference Include="Serilog.Sinks.Console"/>
+    <ProjectReference Include="../Serilog.Sinks.Godot/Serilog.Sinks.Godot.csproj"/>
   </ItemGroup>
+
 </Project>

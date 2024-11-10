@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sanicball.SourceGenerators"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serilog.Sinks.Godot", "Serilog.Sinks.Godot\Serilog.Sinks.Godot.csproj", "{5EAD2772-55D2-40C0-A29D-F298F65E61FD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testing", "testing\testing.csproj", "{3F14B32A-6C11-47FB-9286-918569AE40F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{5EAD2772-55D2-40C0-A29D-F298F65E61FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EAD2772-55D2-40C0-A29D-F298F65E61FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5EAD2772-55D2-40C0-A29D-F298F65E61FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F14B32A-6C11-47FB-9286-918569AE40F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F14B32A-6C11-47FB-9286-918569AE40F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F14B32A-6C11-47FB-9286-918569AE40F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F14B32A-6C11-47FB-9286-918569AE40F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -12,15 +12,15 @@
   icu,
   krb5,
   openssl,
-  godot,
   ...
-}: buildDotnetModule {
+}:
+buildDotnetModule {
   pname = pname + "-bindings";
   inherit version commit src;
 
   projectFile = "./src/Godot.Bindings/Godot.Bindings.csproj";
   nugetDeps = ./deps.nix;
-  
+
   dotnet-sdk = dotnetCorePackages.sdk_8_0;
   dotnet-runtime = dotnetCorePackages.runtime_8_0;
 
@@ -31,16 +31,10 @@
   buildInputs = [
     icu
     krb5
-    krb5.dev
     openssl
   ];
 
-  preConfigure = preConfigure + ''
-    ls
-    cd ./gdextension
-    ${godot}/bin/godot4 --headless --dump-gdextension-interface --dump-extension-api
-    cd ..
-  '';
+  inherit preConfigure;
 
   preBuild = ''
     mkdir -p ./src/Godot.Bindings/Generated
@@ -51,9 +45,7 @@
   '';
 
   packNupkg = true;
-  dotnetPackFlags = dotnetPackFlags ++ [
-    "/p:DebugType=embedded"
-  ];
+
 
   dontFixup = true;
 }
