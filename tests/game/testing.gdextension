@@ -1,0 +1,9 @@
+[configuration]
+
+entry_symbol = "init"
+compatibility_minimum = 4.4
+
+[libraries]
+
+linux.x86_64.debug = "/home/ernesto/src/Sanicball/artifacts/publish/testing/debug_linux-x64/testing.so"
+linux.x86_64.release = "/home/ernesto/src/Sanicball/artifacts/publish/testing/release_linux-x64/testing.so"

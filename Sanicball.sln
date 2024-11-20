@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sanicball.SourceGenerators"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serilog.Sinks.Godot", "Serilog.Sinks.Godot\Serilog.Sinks.Godot.csproj", "{5EAD2772-55D2-40C0-A29D-F298F65E61FD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "testing", "testing\testing.csproj", "{3F14B32A-6C11-47FB-9286-918569AE40F3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game", "tests\game\testing.csproj", "{3F14B32A-6C11-47FB-9286-918569AE40F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

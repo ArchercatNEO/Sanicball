@@ -46,7 +46,7 @@ godot_4.overrideAttrs
 
       sconsFlags =
         prevAttrs.sconsFlags
-        ++ mkSconsFlagsFromAttrSet {
+        ++ (mkSconsFlagsFromAttrSet {
           dev_build = true;
           dev_mode = true;
 
@@ -82,19 +82,30 @@ godot_4.overrideAttrs
           builtin_wslay = false;
           builtin_zlib = false;
           builtin_zstd = false;
-
-          linkflags = "-Wl,--build-id";
-        };
+        }) ++ [
+          "linkflags=-Wl,--build-id"
+          #"linkflags=-L${embree}/lib"
+          #"ccflags=-I${embree}/include"
+          #"linkflags=-L${glslang}/lib"
+          #"ccflags=-I${glslang.dev}/include"
+          #"linkflags=-L${mbedtls}/lib"
+          #"ccflags=-I${mbedtls}/include"
+          #"linkflags=-L${miniupnpc}/lib"
+          #"ccflags=-I${miniupnpc}/include"
+          #"linkflags=-L${recastnavigation}/lib"
+          #"ccflags=-I${recastnavigation}/include"
+          #"ccflags=-I${xorg.libXfixes.dev}/include"
+        ];
 
       buildInputs =
         (prevAttrs.buildInputs or [ ])
         ++ prevAttrs.runtimeDependencies
         ++ [
           brotli
-          #embree
+          embree
           enet
           freetype
-          #glslang
+          glslang
           graphite2
           harfbuzz
           harfbuzzFull
@@ -104,11 +115,11 @@ godot_4.overrideAttrs
           libtheora
           libvorbis
           libwebp
-          #mbedtls
-          #miniupnpc
+          mbedtls
+          miniupnpc
           openxr-loader
           pcre2
-          #recastnavigation
+          recastnavigation
           wslay
           zlib
           zstd
