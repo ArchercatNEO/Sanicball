@@ -9,6 +9,7 @@ namespace Sanicball.Scenes;
 public partial class MenuPath : Node3D
 {
     private Material? characterMat;
+
     [BindProperty]
     public Material? CharacterMat
     {
@@ -16,10 +17,7 @@ public partial class MenuPath : Node3D
         set
         {
             characterMat = value;
-            if (value == null)
-            {
-                Log.Error("A null character material will break the camera");
-            }
+            if (value == null){ Log.Error("A null character material will break the camera");}
         }
     }
 

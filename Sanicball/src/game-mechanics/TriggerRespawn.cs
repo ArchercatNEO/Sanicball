@@ -11,7 +11,7 @@ public partial class TriggerRespawn : Area3D
     protected override void _Ready()
     {
         SetCollisionLayerValue(layer, true);
-        BodyEntered += (body) =>
+        BodyEntered += body =>
         {
             if (body is Character ball)
             {

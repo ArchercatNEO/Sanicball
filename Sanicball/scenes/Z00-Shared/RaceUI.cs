@@ -4,8 +4,8 @@ using Sanicball.Characters;
 namespace Sanicball.Ball;
 
 /// <summary>
-/// A UI overlay for balls inside a race
-/// Builder will handle UI elements like speedometers and checkpoint/player markers
+///     A UI overlay for balls inside a race
+///     Builder will handle UI elements like speedometers and checkpoint/player markers
 /// </summary>
 [GodotClass]
 //TODO: Implement speedometer
@@ -13,14 +13,10 @@ namespace Sanicball.Ball;
 //TODO: Implement checkpoint tracking
 public partial class RaceUI : SubViewport
 {
-    [BindProperty] BallCamera camera;
-
-    private Character target = null!;
-    
     public static RaceUI Create(Character character)
     {
         var prefab = GD.Load<PackedScene>("res://scenes/Z00-Shared/RaceUI.tscn");
-        
+
         var self = prefab.Instantiate<RaceUI>();
         self.target = character;
         self.target.Camera = self.camera;
@@ -28,9 +24,13 @@ public partial class RaceUI : SubViewport
         self.camera.Ball = character;
 
         self.AddChild(character);
-        
+
         return self;
     }
+
+    [BindProperty] private BallCamera camera;
+
+    private Character target = null!;
 
     public void AddTracker(ObjectMarker marker)
     {

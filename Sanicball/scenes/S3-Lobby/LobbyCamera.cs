@@ -6,26 +6,33 @@ using Godot;
 namespace Sanicball.Scenes;
 
 /// <summary>
-/// Looks towards the mean position of all players in the lobby.
-/// If there are no players it will default to wherever it was looking when it was instantiated
+///     Looks towards the mean position of all players in the lobby.
+///     If there are no players it will default to wherever it was looking when it was instantiated
 /// </summary>
 //TODO moving around enough causes the camera to flip, avoid that
 [GodotClass]
 public partial class LobbyCamera : Camera3D
 {
     public static LobbyCamera? Instance { get; private set; }
-    protected override void _EnterTree() { Instance = this; }
-    protected override void _ExitTree() { Instance = null; }
+    private readonly List<Node3D> balls = [];
+    private readonly Vector3 originRotation;
 
 
     [BindProperty] private float rotationSpeed = 10;
 
-    private readonly List<Node3D> balls = [];
-    private readonly Vector3 originRotation;
-
     private LobbyCamera()
     {
         originRotation = Rotation;
+    }
+
+    protected override void _EnterTree()
+    {
+        Instance = this;
+    }
+
+    protected override void _ExitTree()
+    {
+        Instance = null;
     }
 
     //Since vectors are passed by value we must instead poll the rotation to stay updated
@@ -46,16 +53,16 @@ public partial class LobbyCamera : Camera3D
         }
 
         //? Rotate towards the meaned position of every player
-        Vector3 sum = balls.Aggregate(Vector3.Zero, (accum, ball) => accum += ball.Position);
-        Vector3 meanPosition = sum / balls.Count;
-        Vector3 relativePosition = meanPosition - Position;
+        var sum = balls.Aggregate(Vector3.Zero, (accum, ball) => accum += ball.Position);
+        var meanPosition = sum / balls.Count;
+        var relativePosition = meanPosition - Position;
 
-        Vector3 cameraForwards = Quaternion.FromEuler(Rotation) * Vector3.Forward;
+        var cameraForwards = Quaternion.FromEuler(Rotation) * Vector3.Forward;
 
-        Vector3 normal = cameraForwards.Cross(relativePosition).Normalized();
-        if (normal == Vector3.Zero) { return; }
+        var normal = cameraForwards.Cross(relativePosition).Normalized();
+        if (normal == Vector3.Zero) {return;}
 
-        float angle = cameraForwards.AngleTo(relativePosition);
+        var angle = cameraForwards.AngleTo(relativePosition);
 
         Rotate(normal, angle * (float)delta * rotationSpeed);
     }

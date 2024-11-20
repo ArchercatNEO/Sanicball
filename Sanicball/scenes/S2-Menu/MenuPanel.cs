@@ -8,7 +8,7 @@ public partial class MenuPanel : ColorRect
 {
     protected override void _Ready()
     {
-        SceneTree tree = GetTree();
+        var tree = GetTree();
         GetNode<Button>(new NodePath("Content/Local")).ButtonDown += () => LobbyManager.Activate(tree, []);
 
         //TODO activate online mode

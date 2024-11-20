@@ -6,8 +6,8 @@ using Sanicball.Characters;
 namespace Sanicball.Scenes;
 
 /// <summary>
-/// Manages most player input inside the lobby.
-/// Handles setting ready, player joining and leaving
+///     Manages most player input inside the lobby.
+///     Handles setting ready, player joining and leaving
 /// </summary>
 //TODO Implement a preview grid to see what character is near
 [GodotClass]
@@ -17,36 +17,21 @@ public partial class CharacterSelect : MarginContainer
     {
         var prefab = GD.Load<PackedScene>("res://scenes/S3-Lobby/CharacterSelect.tscn");
 
-        CharacterSelect self = prefab.Instantiate<CharacterSelect>();
+        var self = prefab.Instantiate<CharacterSelect>();
         self.controlType = controlType;
         self.playerSpawner = spawner;
-        
+
         self.controllerIcon.Texture = controlType.Icon();
         self.characterSelect.Hide();
         self.hotkeyLabel.Text = """
-        [Arrow keys]: Select character,
-        [Enter]: Confirm
-        """;
+                                [Arrow keys]: Select character,
+                                [Enter]: Confirm
+                                """;
 
-        if (character is not null)
-        {
-            self.SpawnPlayer(character);
-        }
-        
+        if (character is not null){ self.SpawnPlayer(character);}
+
         return self;
     }
-
-    [BindProperty] private TextureRect background = null!;
-    [BindProperty] private TextureRect controllerIcon = null!;
-    [BindProperty] private Control characterSelect = null!;
-    [BindProperty] private TextureRect characterIcon = null!;
-    [BindProperty] private Label characterName = null!;
-    [BindProperty] private Label hotkeyLabel = null!;
-
-    private Node3D playerSpawner = null!;
-    //TODO: refactor so these can be made private 
-    public ControlType controlType;
-    public Character? Player { get; private set; }
 
     //TODO: This will orphan a massive amount of nodes
     private readonly Character[] characters =
@@ -55,18 +40,31 @@ public partial class CharacterSelect : MarginContainer
         new Asspio()
     ];
 
-    public event EventHandler<bool>? OnReadyChanged;
-    private bool ready = false;
+    private int _characterIndex;
 
-    private int _characterIndex = 0;
+    [BindProperty] private TextureRect background = null!;
+    [BindProperty] private TextureRect characterIcon = null!;
+    [BindProperty] private Label characterName = null!;
+    [BindProperty] private Control characterSelect = null!;
+
+    [BindProperty] private TextureRect controllerIcon = null!;
+
+    //TODO: refactor so these can be made private
+    public ControlType controlType;
+    [BindProperty] private Label hotkeyLabel = null!;
+
+    private Node3D playerSpawner = null!;
+    private bool ready;
+    public Character? Player { get; private set; }
+
     private int CharacterIndex
     {
         get => _characterIndex;
         set
         {
-            int count = characters.Length;
+            var count = characters.Length;
             _characterIndex = (value + count) % count;
-            
+
             if (_characterIndex == 0)
             {
                 characterName.Text = "Cancel";
@@ -74,7 +72,7 @@ public partial class CharacterSelect : MarginContainer
             }
             else
             {
-                Character selectedCharacter = characters[_characterIndex - 1];
+                var selectedCharacter = characters[_characterIndex - 1];
                 characterName.Text = (string)selectedCharacter.Name;
                 characterIcon.Texture = selectedCharacter.Icon;
             }
@@ -104,19 +102,19 @@ public partial class CharacterSelect : MarginContainer
             return;
         }
 
-        if (controlType.LeftPressed(@event)) { CharacterIndex -= 1; }
-        if (controlType.RightPressed(@event)) { CharacterIndex += 1; }
-        if (controlType.UpPressed(@event)) { CharacterIndex -= 4; }
-        if (controlType.DownPressed(@event)) { CharacterIndex += 4; }
+        if (controlType.LeftPressed(@event)){ CharacterIndex -= 1;}
+        if (controlType.RightPressed(@event)){ CharacterIndex += 1;}
+        if (controlType.UpPressed(@event)) {CharacterIndex -= 4;}
+        if (controlType.DownPressed(@event)){ CharacterIndex += 4;}
 
         if (controlType.Confirmed(@event))
         {
             characterSelect.Hide();
 
             //cancel index
-            if (CharacterIndex == 0) { return; }
+            if (CharacterIndex == 0){ return;}
 
-            Character selected = characters[CharacterIndex];
+            var selected = characters[CharacterIndex];
             SpawnPlayer(selected);
         }
     }
@@ -124,11 +122,13 @@ public partial class CharacterSelect : MarginContainer
     private void SpawnPlayer(Character selected)
     {
         Player = selected;
-        Player.controller = new PlayerController() { ControlType = controlType };
-        
+        Player.controller = new PlayerController { ControlType = controlType };
+
         playerSpawner.AddChild(Player);
-        Player.Translate(new(0, 5, 0));
-        Player.ApplyImpulse(new(0, 10, 0));
+        Player.Translate(new Vector3(0, 5, 0));
+        Player.ApplyImpulse(new Vector3(0, 10, 0));
         LobbyCamera.Instance?.Subscribe(Player);
     }
+
+    public event EventHandler<bool>? OnReadyChanged;
 }

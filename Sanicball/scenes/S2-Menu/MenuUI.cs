@@ -11,8 +11,8 @@ public partial class MenuUI : Control
     public static void Activate(SceneTree tree)
     {
         Log.Information("Entering Menu");
-        
-        PackedScene scene = GD.Load<PackedScene>("res://scenes/S2-Menu/menu.tscn");
+
+        var scene = GD.Load<PackedScene>("res://scenes/S2-Menu/menu.tscn");
         tree.ChangeSceneToPacked(scene);
     }
 
@@ -20,14 +20,13 @@ public partial class MenuUI : Control
     protected override void _Ready()
     {
         //needs to spin
-        Label pressAnyKey = GetNode<Label>(new NodePath("PressAnyKey"));
+        var pressAnyKey = GetNode<Label>(new NodePath("PressAnyKey"));
     }
 
     protected override void _Input(InputEvent @event)
     {
         if (@event is InputEventKey)
         {
-
         }
     }
 }

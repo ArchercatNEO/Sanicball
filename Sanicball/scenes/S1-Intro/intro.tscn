@@ -3,10 +3,10 @@
 [ext_resource type="Texture2D" uid="uid://xsb0tm45s6fr" path="res://scenes/S0-Shared/sanicteam.png" id="2_dxwkw"]
 [ext_resource type="Texture2D" uid="uid://beku0mlc4qaub" path="res://scenes/S0-Shared/notsega.png" id="3_h427x"]
 
-[node name="Intro" type="IntroUI" node_paths=PackedStringArray("inputUi", "usernameInput", "credits")]
+[node name="Intro" type="Intro" node_paths=PackedStringArray("credits", "inputUi", "usernameInput")]
+credits = NodePath("Credits")
 inputUi = NodePath("UsernameInput")
 usernameInput = NodePath("UsernameInput/TextEdit")
-credits = NodePath("Credits")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

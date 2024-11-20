@@ -6,31 +6,34 @@ namespace Sanicball.Scenes;
 [GodotClass]
 public partial class MusicPlayer : AudioStreamPlayer
 {
-    [BindProperty] public bool muted = false;
-    [BindProperty] public Label songName;
-
-    private int songIndex = 0;
-    private readonly Song[] songs = [
+    private readonly Song[] songs =
+    [
         GD.Load<Song>("res://assets/music/Dread.tres"),
         GD.Load<Song>("res://assets/music/ChariotsOfFire.tres")
     ];
 
+    [BindProperty] public bool muted = false;
+
+    private int songIndex;
+    [BindProperty] public Label songName;
+
     protected override void _Ready()
     {
         if (muted) { return; }
-        Song first = songs[0];
+
+        var first = songs[0];
         songName.Text = first.name;
-        this.Stream = first.stream;
-        this.Play();
+        Stream = first.stream;
+        Play();
 
-        this.Finished += () =>
+        Finished += () =>
         {
-            this.songIndex = (this.songIndex + 1) % this.songs.Length;
+            songIndex = (songIndex + 1) % songs.Length;
 
-            Song current = songs[songIndex];
+            var current = songs[songIndex];
             songName.Text = current.name;
-            this.Stream = current.stream;
-            this.Play();
+            Stream = current.stream;
+            Play();
         };
     }
 }

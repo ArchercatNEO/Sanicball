@@ -6,7 +6,8 @@ using Sanicball.Account;
 namespace Sanicball.Characters;
 
 //TODO: when/if discriminated unions come out use then instead
-public interface IController { };
+public interface IController
+{};
 
 public class PlayerController : IController
 {
@@ -15,11 +16,11 @@ public class PlayerController : IController
 
 public class AiController : IController
 {
-    public required AiNode InitialNode { get; init;}
+    public required AiNode InitialNode { get; init; }
 }
 
 /// <summary>
-/// An AI navigation Node
+///     An AI navigation Node
 /// </summary>
 //TODO: Tool debug things
 [GodotClass]
@@ -32,7 +33,7 @@ public partial class AiNode : Area3D
     {
         get
         {
-            double rng = Random.Shared.NextDouble();
+            var rng = Random.Shared.NextDouble();
 
             double totalWeight = 0;
             int index;
@@ -55,7 +56,7 @@ public partial class AiNode : Area3D
 
     protected override void _Ready()
     {
-        BodyEntered += (body) =>
+        BodyEntered += body =>
         {
             if (body is Character ball)
             {
@@ -65,15 +66,11 @@ public partial class AiNode : Area3D
     }
 }
 
-
 public class RemoteController : IController
-{
-}
+{}
 
 /// <summary>
-/// A movement object sent by remote balls for online matches
+///     A movement object sent by remote balls for online matches
 /// </summary>
 public class RemoteMovement
-{
-
-}
+{}

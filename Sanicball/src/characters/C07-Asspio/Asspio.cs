@@ -6,12 +6,12 @@ namespace Sanicball.Characters;
 [GodotClass]
 public partial class Asspio : Character
 {
-    public Asspio() : base()
+    public Asspio()
     {
         SkinName = "Asspio";
         Credits = "BK-TN";
-        Color = new(1, 0, 0.72549f, 1);
-        
+        Color = new Color(1, 0, 0.72549f);
+
         Material = GD.Load<Material>("res://src/characters/C07-Asspio/material.tres");
         Icon = GD.Load<Texture2D>("res://src/characters/C07-Asspio/icon.png");
         MinimapIcon = GD.Load<Texture2D>("res://src/characters/C07-Asspio/minimap.png");

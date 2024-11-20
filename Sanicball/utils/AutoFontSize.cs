@@ -5,7 +5,9 @@ namespace Sanicball.Utils;
 [GodotClass]
 public partial class AutoFontSize : Label
 {
+    private int _maximumSize = 20;
     private int _minimumSize = 10;
+
     [BindProperty]
     public int MinimumSize
     {
@@ -17,7 +19,6 @@ public partial class AutoFontSize : Label
         }
     }
 
-    private int _maximumSize = 20;
     [BindProperty]
     public int MaximumSize
     {
@@ -36,16 +37,16 @@ public partial class AutoFontSize : Label
 
     private void ResizeText()
     {
-        float area = Size.X * Size.Y;
-        float glyphPx = area / Text.Length;
-        int fontSize = Mathf.RoundToInt(glyphPx);
-        int clampedSize = Mathf.Clamp(fontSize, MinimumSize, MaximumSize);
+        var area = Size.X * Size.Y;
+        var glyphPx = area / Text.Length;
+        var fontSize = Mathf.RoundToInt(glyphPx);
+        var clampedSize = Mathf.Clamp(fontSize, MinimumSize, MaximumSize);
         AddThemeFontSizeOverride(new StringName("font_size"), clampedSize);
     }
 
     protected override bool _Set(StringName property, Variant value)
     {
-        if (property == PropertyName.Text)
+        if (property == Label.PropertyName.Text)
         {
             Text = value.AsString();
             ResizeText();

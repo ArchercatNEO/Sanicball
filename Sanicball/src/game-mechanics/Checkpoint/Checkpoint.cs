@@ -12,7 +12,7 @@ public partial class Checkpoint : Area3D, ICollidableEmmitter
 
     protected override void _Ready()
     {
-        BodyEntered += (body) =>
+        BodyEntered += body =>
         {
             if (body is ICollidableReciever<Checkpoint> reciever)
             {

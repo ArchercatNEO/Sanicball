@@ -17,28 +17,38 @@ public enum ControlType
 
 public static class ControlTypeImpl
 {
-    private static void AddActionIfMissing(StringName action, InputEvent trigger)
-    {
-        InputMap instance = InputMap.Singleton;
-        if (!instance.HasAction(action)) { instance.AddAction(action); }
-        instance.ActionAddEvent(action, trigger);
-    }
-
     static ControlTypeImpl()
     {
-        AddActionIfMissing(new StringName("keyboard_left"), new InputEventKey() { Keycode = Key.A });
-        AddActionIfMissing(new StringName("keyboard_right"), new InputEventKey() { Keycode = Key.D });
-        AddActionIfMissing(new StringName("keyboard_up"), new InputEventKey() { Keycode = Key.W });
-        AddActionIfMissing(new StringName("keyboard_down"), new InputEventKey() { Keycode = Key.S });
-        AddActionIfMissing(new StringName("keyboard_ready"), new InputEventKey() { Keycode = Key.R });
-        AddActionIfMissing(new StringName("keyboard_confirm"), new InputEventKey() { Keycode = Key.Enter });
+        AddActionIfMissing(new StringName("keyboard_left"), new InputEventKey { Keycode = Key.A });
+        AddActionIfMissing(new StringName("keyboard_right"), new InputEventKey { Keycode = Key.D });
+        AddActionIfMissing(new StringName("keyboard_up"), new InputEventKey { Keycode = Key.W });
+        AddActionIfMissing(new StringName("keyboard_down"), new InputEventKey { Keycode = Key.S });
+        AddActionIfMissing(new StringName("keyboard_ready"), new InputEventKey { Keycode = Key.R });
+        AddActionIfMissing(new StringName("keyboard_confirm"), new InputEventKey { Keycode = Key.Enter });
 
-        AddActionIfMissing(new StringName("joy1_left"), new InputEventJoypadButton() { Device = 0, ButtonIndex = JoyButton.LeftStick });
-        AddActionIfMissing(new StringName("joy1_right"), new InputEventJoypadButton() { Device = 0, ButtonIndex = JoyButton.LeftStick });
-        AddActionIfMissing(new StringName("joy1_up"), new InputEventJoypadButton() { Device = 0, ButtonIndex = JoyButton.LeftStick });
-        AddActionIfMissing(new StringName("joy1_down"), new InputEventJoypadButton() { Device = 0, ButtonIndex = JoyButton.LeftStick });
-        AddActionIfMissing(new StringName("joy1_ready"), new InputEventJoypadButton() { Device = 0, ButtonIndex = JoyButton.B });
-        AddActionIfMissing(new StringName("joy1_confirm"), new InputEventJoypadButton() { Device = 0, ButtonIndex = JoyButton.A });
+        AddActionIfMissing(new StringName("joy1_left"),
+            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.LeftStick });
+        AddActionIfMissing(new StringName("joy1_right"),
+            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.LeftStick });
+        AddActionIfMissing(new StringName("joy1_up"),
+            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.LeftStick });
+        AddActionIfMissing(new StringName("joy1_down"),
+            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.LeftStick });
+        AddActionIfMissing(new StringName("joy1_ready"),
+            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.B });
+        AddActionIfMissing(new StringName("joy1_confirm"),
+            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.A });
+    }
+
+    private static void AddActionIfMissing(StringName action, InputEvent trigger)
+    {
+        var instance = InputMap.Singleton;
+        if (!instance.HasAction(action))
+        {
+            instance.AddAction(action);
+        }
+
+        instance.ActionAddEvent(action, trigger);
     }
 
     public static Texture2D Icon(this ControlType controlType)
@@ -54,15 +64,31 @@ public static class ControlTypeImpl
     public static Vector3 NormalizedForce(this ControlType control)
     {
         Vector3 force = new();
-        Input instance = Input.Singleton;
+        var instance = Input.Singleton;
 
         switch (control)
         {
             case ControlType.Keyboard:
-                if (instance.IsActionPressed(new StringName("keyboard_left"))) { force += Vector3.Left; }
-                if (instance.IsActionPressed(new StringName("keyboard_right"))) { force += Vector3.Right; }
-                if (instance.IsActionPressed(new StringName("keyboard_up"))) { force += Vector3.Forward; }
-                if (instance.IsActionPressed(new StringName("keyboard_down"))) { force += Vector3.Back; }
+                if (instance.IsActionPressed(new StringName("keyboard_left")))
+                {
+                    force += Vector3.Left;
+                }
+
+                if (instance.IsActionPressed(new StringName("keyboard_right")))
+                {
+                    force += Vector3.Right;
+                }
+
+                if (instance.IsActionPressed(new StringName("keyboard_up")))
+                {
+                    force += Vector3.Forward;
+                }
+
+                if (instance.IsActionPressed(new StringName("keyboard_down")))
+                {
+                    force += Vector3.Back;
+                }
+
                 break;
 
             case ControlType.Joystick1:
@@ -74,7 +100,9 @@ public static class ControlTypeImpl
 
             default:
                 throw new InvalidCastException($"Invalid control type detected: {control}");
-        };
+        }
+
+        ;
 
         return force.Normalized();
     }
@@ -126,7 +154,7 @@ public static class ControlTypeImpl
         {
             ControlType.Keyboard => input.IsActionPressed(new StringName("keyboard_confirm")),
             ControlType.Joystick1 => input.IsActionPressed(new StringName("joy1_confirm")),
-            _ => throw new InvalidCastException($"Invalid control type detected: {controlType}"),
+            _ => throw new InvalidCastException($"Invalid control type detected: {controlType}")
         };
     }
 

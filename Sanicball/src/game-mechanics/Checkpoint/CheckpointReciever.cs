@@ -5,18 +5,13 @@ using Serilog;
 
 namespace Sanicball.GameMechanics;
 
-
 //TODO consider implementing builder
 public class CheckpointReciever(Checkpoint initialCheckpoint, int maxLaps)
 {
-    public event EventHandler<Checkpoint>? NextCheckpoint;
-    public event EventHandler<int>? NextLap;
-    public event EventHandler? RaceFinished;
+    private int currentLap = 1;
 
     //null when we have finished the race
     public Checkpoint? CurrentCheckpoint { get; private set; } = initialCheckpoint;
-
-    private int currentLap = 1;
 
     public void OnCheckpointCollion(Checkpoint checkpoint)
     {
@@ -48,8 +43,27 @@ public class CheckpointReciever(Checkpoint initialCheckpoint, int maxLaps)
         }
     }
 
-    #region Marker Tracking
+    #region Lap counters
 
+    public void AddCounter(Label display)
+    {
+        display.Text = $"Lap {currentLap}/{maxLaps}";
+
+        NextLap += (sender, lap) => { display.Text = $"Lap {currentLap}/{maxLaps}"; };
+
+        RaceFinished += (sender, e) =>
+        {
+            display.AddThemeColorOverride(new StringName("font_color"), new Color(0, 0, 1));
+        };
+    }
+
+    #endregion Lap counters
+
+    public event EventHandler<Checkpoint>? NextCheckpoint;
+    public event EventHandler<int>? NextLap;
+    public event EventHandler? RaceFinished;
+
+    #region Marker Tracking
 
     //null if tracking has not been added OR we finished the race
     private ObjectMarker? checkpointMarker;
@@ -61,7 +75,7 @@ public class CheckpointReciever(Checkpoint initialCheckpoint, int maxLaps)
             return null;
         }
 
-        checkpointMarker = ObjectMarker.Create(origin, CurrentCheckpoint, new(0, 0, 1));
+        checkpointMarker = ObjectMarker.Create(origin, CurrentCheckpoint, new Color(0, 0, 1));
 
         NextCheckpoint += (sender, checkpoint) =>
         {
@@ -77,7 +91,7 @@ public class CheckpointReciever(Checkpoint initialCheckpoint, int maxLaps)
                 return;
             }
 
-            ObjectMarker nextMarker = ObjectMarker.Create(origin, CurrentCheckpoint, new(0, 0, 1));
+            var nextMarker = ObjectMarker.Create(origin, CurrentCheckpoint, new Color(0, 0, 1));
             checkpointMarker.ReplaceBy(nextMarker);
             checkpointMarker.QueueFree();
             checkpointMarker = nextMarker;
@@ -93,23 +107,4 @@ public class CheckpointReciever(Checkpoint initialCheckpoint, int maxLaps)
     }
 
     #endregion Marker Tracking
-
-    #region Lap counters
-
-    public void AddCounter(Label display)
-    {
-        display.Text = $"Lap {currentLap}/{maxLaps}";
-
-        NextLap += (sender, lap) =>
-        {
-            display.Text = $"Lap {currentLap}/{maxLaps}";
-        };
-
-        RaceFinished += (sender, e) =>
-        {
-            display.AddThemeColorOverride(new StringName("font_color"), new(0, 0, 1));
-        };
-    }
-
-    #endregion Lap counters
 }

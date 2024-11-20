@@ -2,14 +2,14 @@ using Godot;
 
 namespace Sanicball.Ball;
 
-
 [GodotClass]
 public partial class ObjectMarker : Control
 {
-    private static readonly PackedScene prefab = GD.Load<PackedScene>("res://src/game-mechanics/marker/ObjectMarker.tscn");
+    private static readonly PackedScene prefab =
+        GD.Load<PackedScene>("res://src/game-mechanics/marker/ObjectMarker.tscn");
 
     /// <summary>
-    /// Factory method
+    ///     Factory method
     /// </summary>
     /// <param name="origin">The node3D from where calculation will be done</param>
     /// <param name="target">The node3D from where calculation will be done</param>
@@ -17,7 +17,7 @@ public partial class ObjectMarker : Control
     /// <returns>The created object</returns>
     public static ObjectMarker Create(Camera3D origin, Node3D target, Color color)
     {
-        ObjectMarker marker = prefab.Instantiate<ObjectMarker>();
+        var marker = prefab.Instantiate<ObjectMarker>();
 
         marker.origin = origin;
         origin.TreeExited += marker.QueueFree;
@@ -34,9 +34,9 @@ public partial class ObjectMarker : Control
 
     protected override void _Process(double delta)
     {
-        Projection projectionMatrix = origin.GetCameraProjection();
-        Vector3 thing = origin.Transform * target.Position;
-        Vector3 projectedVector = projectionMatrix * thing;
+        var projectionMatrix = origin.GetCameraProjection();
+        var thing = origin.Transform * target.Position;
+        var projectedVector = projectionMatrix * thing;
         //Position = Position with { X = projectedVector.X, Y = projectedVector.Y };
     }
 }

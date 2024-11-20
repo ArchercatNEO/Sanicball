@@ -17,7 +17,7 @@ public class Program
             .WriteTo.Godot()
             .CreateLogger();
         Log.Logger = logger;
-        
+
         GodotBridge.Initialize(getProcAddress, library, initialization, config =>
         {
             config.SetMinimumLibraryInitializationLevel(InitializationLevel.Scene);

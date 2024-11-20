@@ -4,28 +4,33 @@ using Sanicball.Characters;
 namespace Sanicball.Ball;
 
 /// <summary>
-/// <list type="bullet">
-///     <listheader> Specification </listheader>
-///     <item>
-/// 		<term> Orientation quaternion </term>
-/// 		<description> The quaternion that maps Vector3.Forward to the ball's linear velocity (normalized) </description>
-/// 	</item>
-///     <item>
-/// 		<term> Position (global) </term>
-/// 		<description> Ball's global position + Orientation * orbit vector </description>
-/// 	</item>
-///     <item>
-/// 		<term> Rotation </term>
-/// 		<description> The rotation that looks at the ball directly </description>
-/// 	</item>
-/// </list>
+///     <list type="bullet">
+///         <listheader> Specification </listheader>
+///         <item>
+///             <term> Orientation quaternion </term>
+///             <description> The quaternion that maps Vector3.Forward to the ball's linear velocity (normalized) </description>
+///         </item>
+///         <item>
+///             <term> Position (global) </term>
+///             <description> Ball's global position + Orientation * orbit vector </description>
+///         </item>
+///         <item>
+///             <term> Rotation </term>
+///             <description> The rotation that looks at the ball directly </description>
+///         </item>
+///     </list>
 /// </summary>
 [GodotClass]
 public partial class BallCamera : Camera3D
 {
+    private float _orbitHeight;
+
+    private float _orbitRadius;
+
+    private float orbitAngle;
+    private Vector3 previousOrbit;
     public Character Ball { get; set; }
 
-    private float _orbitHeight;
     [BindProperty]
     public float OrbitHeight
     {
@@ -37,7 +42,6 @@ public partial class BallCamera : Camera3D
         }
     }
 
-    private float _orbitRadius;
     [BindProperty]
     public float OrbitRadius
     {
@@ -49,12 +53,9 @@ public partial class BallCamera : Camera3D
         }
     }
 
-    private float orbitAngle;
-    private Vector3 previousOrbit;
-
     protected override void _Ready()
     {
-        Position = new(0, OrbitHeight, OrbitRadius);
+        Position = new Vector3(0, OrbitHeight, OrbitRadius);
         orbitAngle = Position.AngleTo(Vector3.Forward) + Mathf.Pi / 2;
     }
 
@@ -66,14 +67,15 @@ public partial class BallCamera : Camera3D
         //Check if velocity and the up vector are not aligned so the cross product will work
         if (Ball.LinearVelocity.Dot(Ball.UpOverride) - Ball.LinearVelocity.Length() * Ball.UpOverride.Length() != 0)
         {
-            Vector3 normalizedVelocity = Ball.LinearVelocity.Normalized() * OrbitRadius;
-            Vector3 rotationAxis = normalizedVelocity.Cross(Ball.UpOverride).Normalized();
+            var normalizedVelocity = Ball.LinearVelocity.Normalized() * OrbitRadius;
+            var rotationAxis = normalizedVelocity.Cross(Ball.UpOverride).Normalized();
             if (!rotationAxis.IsNormalized())
             {
                 return;
             }
-            Vector3 orbitVector = normalizedVelocity.Rotated(rotationAxis, -orbitAngle);
-            Vector3 offsetVector = previousOrbit.Lerp(orbitVector, (float)delta);
+
+            var orbitVector = normalizedVelocity.Rotated(rotationAxis, -orbitAngle);
+            var offsetVector = previousOrbit.Lerp(orbitVector, (float)delta);
             previousOrbit = offsetVector;
             GlobalPosition = Ball.GlobalPosition + offsetVector;
         }

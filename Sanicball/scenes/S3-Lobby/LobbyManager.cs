@@ -9,8 +9,8 @@ using Serilog;
 namespace Sanicball.Scenes;
 
 /// <summary>
-/// The top level handler of the lobby scene,
-/// this is the only place the amount of players should increase
+///     The top level handler of the lobby scene,
+///     this is the only place the amount of players should increase
 /// </summary>
 //TODO Implement lobby settings
 [GodotClass]
@@ -20,22 +20,21 @@ public partial class LobbyManager : Node
     {
         Log.Information("Entering lobby");
         var prefab = GD.Load<PackedScene>("res://scenes/S3-Lobby/Lobby.tscn");
-        var self = tree.ChangeSceneAsync<LobbyManager>(prefab, self => {
-            self.players = players;
-        });
+        var self = tree.ChangeSceneAsync<LobbyManager>(prefab, self => { self.players = players; });
     }
+
+    private readonly Dictionary<ControlType, CharacterSelect> activePanels = [];
+    [BindProperty] private HBoxContainer characterSelectContainer = null!;
 
     //ui
     [BindProperty] private Label countdownText = null!;
     [BindProperty] private Control pauseMenu = null!;
-    [BindProperty] private HBoxContainer characterSelectContainer = null!;
+    private List<Character> players = [];
 
     //3d
     [BindProperty] private Node3D playerSpawner = null!;
 
-    private int readyPlayers = 0;
-    private List<Character> players = [];
-    private readonly Dictionary<ControlType, CharacterSelect> activePanels = [];
+    private int readyPlayers;
 
     protected override void _EnterTree()
     {
@@ -49,7 +48,7 @@ public partial class LobbyManager : Node
             Log.Information("Adding players to LobbyManager");
             if (player.controller is PlayerController controller)
             {
-                CharacterSelect panel = CharacterSelect.Create(controller.ControlType, playerSpawner, player);
+                var panel = CharacterSelect.Create(controller.ControlType, playerSpawner, player);
                 characterSelectContainer.AddChild(panel);
                 activePanels.Add(controller.ControlType, panel);
                 panel.OnReadyChanged += OnReadyChanged;
@@ -65,9 +64,9 @@ public partial class LobbyManager : Node
         pauseMenu.GetNode<Button>(new NodePath("Unpause")).Pressed += pauseMenu.Hide;
         pauseMenu.GetNode<Button>(new NodePath("Quit")).Pressed += () => MenuUI.Activate(GetTree());
         pauseMenu.GetParent<Control>().Hide();
-        
+
         //TODO: settings
-        Button ctxSensitive = pauseMenu.GetNode<Button>(new NodePath("Context"));
+        var ctxSensitive = pauseMenu.GetNode<Button>(new NodePath("Context"));
         ctxSensitive.Pressed += pauseMenu.Hide;
         ctxSensitive.Text = "Settings";
     }
@@ -79,24 +78,21 @@ public partial class LobbyManager : Node
 
     protected override void _Input(InputEvent @event)
     {
-        if (@event is InputEventKey inputEvent)
+        if (@event is InputEventKey { Keycode: Key.P })
         {
-            if (inputEvent.Keycode == Key.P)
-            {
-                pauseMenu.Show();
-                pauseMenu.GetNode<Button>(new NodePath("VBoxContainer/Unpause")).GrabFocus();
-                //TODO pause game
-            }
+            pauseMenu.Show();
+            pauseMenu.GetNode<Button>(new NodePath("VBoxContainer/Unpause")).GrabFocus();
+            //TODO pause game
         }
     }
 
     private void OnDeviceConnected(long device, bool connected)
     {
-        ControlType controller = (ControlType)device;
+        var controller = (ControlType)device;
         if (connected && !activePanels.ContainsKey(controller))
         {
             Log.Information("Player {controller} joined", controller);
-            CharacterSelect panel = CharacterSelect.Create(controller, playerSpawner, null);
+            var panel = CharacterSelect.Create(controller, playerSpawner, null);
             characterSelectContainer.AddChild(panel);
             activePanels.Add(controller, panel);
             panel.OnReadyChanged += OnReadyChanged;
@@ -104,7 +100,7 @@ public partial class LobbyManager : Node
         else
         {
             Log.Information("Player {controller} left", controller);
-            CharacterSelect panel = activePanels[controller];
+            var panel = activePanels[controller];
             characterSelectContainer.RemoveChild(panel);
             activePanels.Remove(controller);
             panel.QueueFree();
@@ -114,7 +110,7 @@ public partial class LobbyManager : Node
     private void OnReadyChanged(object? sender, bool ready)
     {
         ArgumentNullException.ThrowIfNull(sender);
-        CharacterSelect panel = (CharacterSelect)sender;
+        var panel = (CharacterSelect)sender;
 
         if (ready)
         {
@@ -124,7 +120,8 @@ public partial class LobbyManager : Node
         else
         {
             readyPlayers--;
-            players.RemoveAll(ball => ball.controller is PlayerController player && player.ControlType == panel.controlType);
+            players.RemoveAll(ball =>
+                ball.controller is PlayerController player && player.ControlType == panel.controlType);
         }
 
         if (readyPlayers < players.Count)
@@ -139,16 +136,22 @@ public partial class LobbyManager : Node
             SelectedStage = GD.Load<TrackResource>("res://scenes/Z01-GreenHillZone/GreenHillZone.tres")
         };
 
-        Tween tween = CreateTween();
+        var tween = CreateTween();
 
-        void SetCountdownText(float time) => countdownText.Text = $"{readyPlayers}/{players.Count} players ready: Match starting in {time} seconds";
+        void SetCountdownText(float time)
+        {
+            countdownText.Text = $"{readyPlayers}/{players.Count} players ready: Match starting in {time} seconds";
+        }
+
         tween.TweenMethod(Callable.From<float>(SetCountdownText), 5, 0, 5);
 
-        tween.TweenCallback(Callable.From(() => {
+        tween.TweenCallback(Callable.From(() =>
+        {
             foreach (var player in players)
             {
                 playerSpawner.RemoveChild(player);
             }
+
             RaceManager.Activate(GetTree(), options);
         }));
     }

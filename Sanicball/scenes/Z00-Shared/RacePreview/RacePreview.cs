@@ -10,14 +10,15 @@ public partial class RacePreview : Node
 
     public static RacePreview Create(string stageName)
     {
-        RacePreview preview = prefab.Instantiate<RacePreview>();
+        var preview = prefab.Instantiate<RacePreview>();
         preview.stageName.Text = stageName;
         return preview;
     }
 
+    [BindProperty] private HBoxContainer controlPanel = null!;
+
     [BindProperty] private Label stageName = null!;
     [BindProperty] private Label startRaceHotkey = null!;
-    [BindProperty] private HBoxContainer controlPanel = null!;
 
     protected override void _Ready()
     {
@@ -25,7 +26,7 @@ public partial class RacePreview : Node
         /* Tween soundReset = CreateTween();
         soundReset.TweenProperty(this, ":volume", 1, 1); */
 
-        Tween loopPaths = CreateTween();
+        var loopPaths = CreateTween();
     }
 
     protected override void _Input(InputEvent @event)

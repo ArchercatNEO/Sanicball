@@ -100,10 +100,10 @@ top_radius = 2.5
 bottom_radius = 2.5
 height = 6.0
 
-[node name="Lobby" type="LobbyManager" node_paths=PackedStringArray("countdownText", "pauseMenu", "characterSelectContainer", "playerSpawner")]
+[node name="Lobby" type="LobbyManager" node_paths=PackedStringArray("characterSelectContainer", "countdownText", "pauseMenu", "playerSpawner")]
+characterSelectContainer = NodePath("Lobby2D/CharacterSelectBox")
 countdownText = NodePath("Lobby2D/Header/RaceCountdown")
 pauseMenu = NodePath("Lobby2D/PauseMenu/VBoxContainer")
-characterSelectContainer = NodePath("Lobby2D/CharacterSelectBox")
 playerSpawner = NodePath("Lobby3D/Spawner")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

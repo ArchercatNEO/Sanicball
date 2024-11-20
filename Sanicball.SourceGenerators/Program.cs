@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -8,7 +6,7 @@ using Microsoft.CodeAnalysis;
 
 namespace Sanicball.SourceGenerators;
 
-struct FileWithImport
+internal struct FileWithImport
 {
     public AdditionalText data;
     public AdditionalText import;
@@ -17,60 +15,86 @@ struct FileWithImport
 [Generator]
 public class PreloadGenerator : IIncrementalGenerator
 {
+    private static bool SyntaxFilter(SyntaxNode node, CancellationToken _cancellationToken)
+    {
+        return true;
+    }
+
+    private static FieldDescriptor SyntaxTransformer(GeneratorAttributeSyntaxContext context,
+        CancellationToken _cancellationToken)
+    {
+        return new FieldDescriptor
+        {
+            containingNamespace = context.TargetSymbol.ContainingNamespace.Name,
+            className = context.TargetSymbol.ContainingType.Name,
+            location = context.TargetNode.GetLocation(),
+            fieldName = context.TargetSymbol.Name,
+            fieldType = ((IFieldSymbol)context.TargetSymbol).Type!.Name,
+            path = (string)context.Attributes[0].ConstructorArguments[0].Value!
+        };
+    }
+
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var resourceFiles = context.AdditionalTextsProvider.Where(file => file.Path.EndsWith(".tres") || file.Path.EndsWith(".tscn")).Collect();
-        var resourceData = context.AdditionalTextsProvider.Where(file => !file.Path.EndsWith(".tres") && !file.Path.EndsWith(".tscn"));
+        var resourceFiles = context.AdditionalTextsProvider
+            .Where(file => file.Path.EndsWith(".tres") || file.Path.EndsWith(".tscn")).Collect();
+        var resourceData =
+            context.AdditionalTextsProvider.Where(file => !file.Path.EndsWith(".tres") && !file.Path.EndsWith(".tscn"));
         var resouceImports = resourceData.Collect().Select((files, token) =>
-        {
-            Dictionary<string, AdditionalText> map = [];
-            foreach (var file in files)
             {
-                map.Add(file.Path, file);
-            }
-            return map;
-        }).SelectMany((map, token) =>
-        {
-            List<FileWithImport> importers = [];
-
-            foreach (var pair in map)
-            {
-                var path = pair.Key;
-                if (!path.EndsWith(".import")) { continue; }
-
-                importers.Add(new()
+                Dictionary<string, AdditionalText> map = [];
+                foreach (var file in files)
                 {
-                    import = pair.Value,
-                    data = map[path.Replace(".import", "")]
-                });
-            }
-            return importers;
-        })
-        .Select((file, token) =>
-        {
-            //Import the file
-            return file.data;
-        }).Collect().Select((files, token) =>
-        {
-            Dictionary<string, AdditionalText> lookupTable = [];
-            foreach (var file in files)
+                    map.Add(file.Path, file);
+                }
+
+                return map;
+            }).SelectMany((map, token) =>
             {
-                lookupTable.Add(file.Path, file);
-            }
-            return lookupTable;
-        });
+                List<FileWithImport> importers = [];
+
+                foreach (var pair in map)
+                {
+                    var path = pair.Key;
+                    if (!path.EndsWith(".import"))
+                    {
+                        continue;
+                    }
+
+                    importers.Add(new FileWithImport
+                    {
+                        import = pair.Value,
+                        data = map[path.Replace(".import", "")]
+                    });
+                }
+
+                return importers;
+            })
+            .Select((file, token) =>
+            {
+                //Import the file
+                return file.data;
+            }).Collect().Select((files, token) =>
+            {
+                Dictionary<string, AdditionalText> lookupTable = [];
+                foreach (var file in files)
+                {
+                    lookupTable.Add(file.Path, file);
+                }
+
+                return lookupTable;
+            });
 
         var resourceTree = resouceImports.Combine(resourceFiles).Select((files, token) =>
         {
-            Dictionary<string, AdditionalText> tree = files.Left;
+            var tree = files.Left;
             foreach (var file in files.Right)
             {
                 tree.Add(file.Path, file);
             }
+
             return tree;
         });
-
-
 
 
         var syntax = context.SyntaxProvider
@@ -81,10 +105,10 @@ public class PreloadGenerator : IIncrementalGenerator
                 Dictionary<string, ClassAndFields> sorted = [];
                 foreach (var field in fields)
                 {
-                    string fullName = field.containingNamespace + field.className;
+                    var fullName = field.containingNamespace + field.className;
                     if (!sorted.ContainsKey(fullName))
                     {
-                        sorted.Add(fullName, new()
+                        sorted.Add(fullName, new ClassAndFields
                         {
                             containingNamespace = field.containingNamespace,
                             className = field.className,
@@ -92,27 +116,28 @@ public class PreloadGenerator : IIncrementalGenerator
                         });
                     }
 
-                    ClassAndFields parent = sorted[fullName];
+                    var parent = sorted[fullName];
                     parent.fields.Add(field);
                 }
+
                 return sorted.Values;
             }).Combine(resourceTree);
         context.RegisterSourceOutput(syntax, (ctx, compilationContext) =>
         {
             var (classData, resourceTree) = compilationContext;
 
-            int files = resourceTree.Count;
-            string avalible = string.Join("\n", resourceTree.Select(res => res.Key));
+            var files = resourceTree.Count;
+            var avalible = string.Join("\n", resourceTree.Select(res => res.Key));
 
             StringBuilder builder = new();
             builder.Append($$"""
-            namespace Sanicball.{{classData.containingNamespace}};
+                             namespace Sanicball.{{classData.containingNamespace}};
 
-            public partial class {{classData.className}}
-            {
-                static {{classData.className}}()
-                {
-            """);
+                             public partial class {{classData.className}}
+                             {
+                                 static {{classData.className}}()
+                                 {
+                             """);
 
             foreach (var field in classData.fields)
             {
@@ -131,14 +156,14 @@ public class PreloadGenerator : IIncrementalGenerator
                     true,
                     $"File path: {field.path} does not exist, {files} files exist"
                 );
-                Diagnostic invalidPath = Diagnostic.Create(description, field.location);
+                var invalidPath = Diagnostic.Create(description, field.location);
                 ctx.ReportDiagnostic(invalidPath);
             }
 
             builder.Append("""
-                }
-            }
-            """);
+                               }
+                           }
+                           """);
 
             ctx.AddSource($"{classData.className}.g.cs", builder.ToString());
         });
@@ -155,24 +180,6 @@ public class PreloadGenerator : IIncrementalGenerator
                 #pragma warning restore CS9113 // Parameter is unread.
             ");
         });
-    }
-
-    private static bool SyntaxFilter(SyntaxNode node, CancellationToken _cancellationToken)
-    {
-        return true;
-    }
-
-    private static FieldDescriptor SyntaxTransformer(GeneratorAttributeSyntaxContext context, CancellationToken _cancellationToken)
-    {
-        return new()
-        {
-            containingNamespace = context.TargetSymbol.ContainingNamespace.Name,
-            className = context.TargetSymbol.ContainingType.Name,
-            location = context.TargetNode.GetLocation(),
-            fieldName = context.TargetSymbol.Name,
-            fieldType = ((IFieldSymbol)context.TargetSymbol).Type!.Name,
-            path = (string)context.Attributes[0].ConstructorArguments[0].Value!
-        };
     }
 }
 
