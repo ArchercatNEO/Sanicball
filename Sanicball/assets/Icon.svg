@@ -2,23 +2,23 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   version="1.1"
-   id="svg544"
-   width="128"
-   height="128"
-   viewBox="0 0 128 128"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
-  <defs
-     id="defs548" />
-  <g
-     id="g550">
-    <image
-       width="128"
-       height="128"
-       preserveAspectRatio="none"
-       xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
+    version="1.1"
+    id="svg544"
+    width="128"
+    height="128"
+    viewBox="0 0 128 128"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <defs
+        id="defs548"/>
+    <g
+        id="g550">
+        <image
+            width="128"
+            height="128"
+            preserveAspectRatio="none"
+            xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJ
 bWFnZVJlYWR5ccllPAAAAyJpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdp
 bj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6
 eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMy1jMDExIDY2LjE0
@@ -478,6 +478,6 @@ PUlBc476zS4HqXHLjzovbshgFybpgflKHywFsFyEr1NJ6G30wA/nlXWYV4//DcIGiOpB4G2o6PjT
 FAWHoTI9o1zJl8ivzahc+8tYqlaVdQgg6nVh0GxhafIyqxSFWwE0r/fUlXtd1B5bgv4mUXulR7K/
 KSYeW4Cwt66eA6Svcso7pyCC+1Kp2YHj/wIMAFymvkkDkLxnAAAAAElFTkSuQmCC
 "
-       id="image552" />
-  </g>
+            id="image552"/>
+    </g>
 </svg>

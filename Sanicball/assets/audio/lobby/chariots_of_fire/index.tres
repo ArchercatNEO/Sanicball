@@ -1,6 +1,6 @@
 [gd_resource type="Song" load_steps=3 format=3 uid="uid://chegewenclqt"]
 
-[ext_resource type="AudioStream" uid="uid://drx20q3hy5pdc" path="res://assets/music/ChariotsOfFire.ogg" id="2_3wjkm"]
+[ext_resource type="AudioStream" uid="uid://drx20q3hy5pdc" path="res://assets/music/chariots_of_fire/audio.ogg" id="2_3wjkm"]
 
 [resource]
 name = "Chariots of Fire"
