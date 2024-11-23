@@ -34,15 +34,19 @@ in
 godot_4.overrideAttrs
   (
     finalAttrs: prevAttrs: rec {
-      version = "4.4-dev4";
-      commitHash = "36e6207bb48fafd43b98a458d0c461ad982b4e68";
+      version = "4.4-dev5";
+      commitHash = "f952bfe9985ad8f507cc29b2c7601bbba18b8039";
 
       src = fetchFromGitHub {
         owner = "godotengine";
         repo = "godot";
         rev = commitHash;
-        hash = "sha256-AHzTiO+vItA0p42HtMgHg55V0vhOP+aIDTncPVFie70=";
+        hash = "sha256-40zEthN89CVOPvdeUe997OKAOwTal+z2gcm1nUhH6vU=";
       };
+
+      patches = [
+        ./miniupnpc.patch
+      ];
 
       sconsFlags =
         prevAttrs.sconsFlags
@@ -70,8 +74,8 @@ godot_4.overrideAttrs
           builtin_libvorbis = false;
           builtin_libwebp = false;
           #builtin_msdfgen = false;
-          builtin_mbedtls = true; # no pkg-config
-          builtin_miniupnpc = true; # no pkg-config
+          builtin_mbedtls = false;
+          builtin_miniupnpc = false;
           builtin_openxr = false;
           builtin_pcre2 = false;
           builtin_pcre2_with_jit = false;
@@ -88,10 +92,6 @@ godot_4.overrideAttrs
           #"ccflags=-I${embree}/include"
           #"linkflags=-L${glslang}/lib"
           #"ccflags=-I${glslang.dev}/include"
-          #"linkflags=-L${mbedtls}/lib"
-          #"ccflags=-I${mbedtls}/include"
-          #"linkflags=-L${miniupnpc}/lib"
-          #"ccflags=-I${miniupnpc}/include"
           #"linkflags=-L${recastnavigation}/lib"
           #"ccflags=-I${recastnavigation}/include"
           #"ccflags=-I${xorg.libXfixes.dev}/include"

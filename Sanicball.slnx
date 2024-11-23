@@ -1,0 +1,10 @@
+﻿<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Sanicball.SourceGenerators/Sanicball.SourceGenerators.csproj" Type="Classic C#" />
+    <Project Path="src/Sanicball/Sanicball.csproj" Type="Classic C#" />
+    <Project Path="src/Serilog.Sinks.Godot/Serilog.Sinks.Godot.csproj" Type="Classic C#" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/game/testing.csproj" Type="Classic C#" />
+  </Folder>
+</Solution>
