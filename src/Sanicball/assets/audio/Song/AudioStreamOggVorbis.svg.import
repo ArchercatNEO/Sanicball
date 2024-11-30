@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cyscj3kuhqxsq"
-path="res://.godot/imported/AudioStreamOggVorbis.svg-161e25024d3d15995576f3cb59035608.ctex"
+path="res://.godot/imported/AudioStreamOggVorbis.svg-93f3ae4de457ac219f8b008cf3a26ec9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/music/Song/AudioStreamOggVorbis.svg"
-dest_files=["res://.godot/imported/AudioStreamOggVorbis.svg-161e25024d3d15995576f3cb59035608.ctex"]
+source_file="res://assets/audio/Song/AudioStreamOggVorbis.svg"
+dest_files=["res://.godot/imported/AudioStreamOggVorbis.svg-93f3ae4de457ac219f8b008cf3a26ec9.ctex"]
 
 [params]
 

@@ -1,0 +1,7 @@
+[gd_resource type="Song" load_steps=2 format=3 uid="uid://dyeyjxfsnahvq"]
+
+[ext_resource type="AudioStream" uid="uid://cnc5m1m02nj2p" path="res://assets/audio/music/dread/stream.ogg" id="2_i8y4k"]
+
+[resource]
+name = "Dread"
+stream = ExtResource("2_i8y4k")

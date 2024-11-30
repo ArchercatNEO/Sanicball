@@ -1,0 +1,6 @@
+[gd_resource type="Song" load_steps=2 format=3 uid="uid://b3xraq8pm3nkd"]
+
+[ext_resource type="AudioStream" uid="uid://bfr0s5tkxc0go" path="res://assets/audio/music/lobby/stream.ogg" id="1_fy4lp"]
+
+[resource]
+stream = ExtResource("1_fy4lp")

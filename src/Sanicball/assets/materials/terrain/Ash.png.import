@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ra0ofjse6b68"
-path="res://.godot/imported/AudioPlusPlus.svg-5ddfa75192bff7e77e395aaf42c4ed2f.ctex"
+uid="uid://bq1ahadd8rfxv"
+path="res://.godot/imported/Ash.png-94bf0aa426f4d89d2e39d05bd1173840.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/audio/Song/AudioPlusPlus.svg"
-dest_files=["res://.godot/imported/AudioPlusPlus.svg-5ddfa75192bff7e77e395aaf42c4ed2f.ctex"]
+source_file="res://assets/materials/terrain/Ash.png"
+dest_files=["res://.godot/imported/Ash.png-94bf0aa426f4d89d2e39d05bd1173840.ctex"]
 
 [params]
 
@@ -32,6 +32,3 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
-editor/scale_with_editor_scale=false
-editor/convert_colors_with_editor_theme=false

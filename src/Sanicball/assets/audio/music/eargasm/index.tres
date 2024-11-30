@@ -1,0 +1,8 @@
+[gd_resource type="Song" load_steps=2 format=3 uid="uid://djt6wku34iar6"]
+
+[ext_resource type="AudioStream" uid="uid://dhsb7f1s6tws2" path="res://assets/audio/music/eargasm/stream.ogg" id="1_f8ilc"]
+
+[resource]
+name = "eargasm"
+composer = "???"
+stream = ExtResource("1_f8ilc")

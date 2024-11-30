@@ -1,8 +1,0 @@
-[gd_resource type="Song" load_steps=3 format=3 uid="uid://dyeyjxfsnahvq"]
-
-[ext_resource type="AudioStream" uid="uid://cnc5m1m02nj2p" path="res://assets/music/Dread.ogg" id="2_i8y4k"]
-
-[resource]
-name = "Dread"
-credits = ""
-stream = ExtResource("2_i8y4k")
