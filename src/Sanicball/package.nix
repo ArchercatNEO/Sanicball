@@ -1,15 +1,21 @@
 {
-  lib,
+  self,
   stdenv,
+  callPackage,
   godot,
   godot-template,
   ...
 }:
+let
+  dotnet = callPackage ./dotnet.nix {
+    inherit self;
+  };
+in
 stdenv.mkDerivation {
   pname = "sanicball";
   version = "0.0.0";
 
-  src = ./.;
+  src = self;
 
   configurePhase = ''
     mkdir ./templates
@@ -20,4 +26,8 @@ stdenv.mkDerivation {
     mkdir -p $out/bin
     ${godot}/bin/godot4 --export-release Linux $out/bin
   '';
+
+  passthru = {
+    inherit dotnet;
+  };
 }

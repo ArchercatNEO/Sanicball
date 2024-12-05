@@ -6,38 +6,53 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = {
-    self,
-    nixpkgs,
-    flake-utils,
-  }:
-    flake-utils.lib.eachSystem ["x86_64-linux"] (
-      system: let
-        pkgs = import nixpkgs {inherit system overlays;};
-        overlays = [
-          (self: super: {
-            godot = import ./nix/godot/package.nix pkgs;
-            godot-template = import ./nix/godot-template/package.nix pkgs;
-            godot-dotnet = super.callPackage ./nix/godot-dotnet/package.nix {};
-          })
-        ];
-      in {
-        devShells.default = pkgs.callPackage ./shell.nix {};
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+    }:
+    flake-utils.lib.eachSystem [ "x86_64-linux" ] (
+      system:
+      let
+        pkgs = import nixpkgs { inherit system; };
 
-        packages = rec {
-          default = sanicball;
-          sanicball = pkgs.callPackage ./Sanicball {};
-          inner = pkgs.callPackage ./Sanicball/dotnet.nix {};
-          serilog = pkgs.callPackage ./Serilog.Sinks.Godot/package.nix {};
-          editor = pkgs.godot;
-          templates = pkgs.godot-template;
-          gdextension = pkgs.godot-dotnet;
+        godot = pkgs.callPackage ./nix/godot/package.nix { };
+
+        godot-template = godot.override {
+          withTarget = "template_debug";
         };
 
-        apps = {
-          default = {
-            type = "app";
-            program = "${self.packages."${system}".sanicball}";
+        godot-dotnet = pkgs.callPackage ./nix/godot-dotnet/package.nix { };
+
+        callPackage = pkgs.lib.callPackageWith (
+          pkgs
+          // {
+            inherit
+              self
+              godot
+              godot-template
+              godot-dotnet
+              ;
+          }
+        );
+
+        packages = {
+          sanicball = callPackage ./src/Sanicball/package.nix { };
+          serilog = callPackage ./src/Serilog.Sinks.Godot/package.nix { };
+          editor = godot;
+          templates = godot-template;
+          gdextension = godot-dotnet;
+        };
+      in
+      {
+        devShells.default = callPackage ./shell.nix { };
+
+        packages = packages // {
+          default = pkgs.linkFarm "sanicball-artifacts" {
+            sanicball = packages.sanicball;
+            godot = godot;
+            godot-dotnet = godot-dotnet;
           };
         };
       }

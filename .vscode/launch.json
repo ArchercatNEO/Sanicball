@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${env:NIX_GODOT}/bin/godot4",
-            "args": ["--path", "${workspaceFolder}/Sanicball"],
+            "args": ["--path", "${workspaceFolder}/src/Sanicball"],
             "cwd": "${workspaceFolder}",
             "MIMode": "gdb",
             "miDebuggerPath": "${env:NIX_DBG}/bin/gdb",

@@ -46,6 +46,5 @@ buildDotnetModule {
 
   packNupkg = true;
 
-
   dontFixup = true;
 }

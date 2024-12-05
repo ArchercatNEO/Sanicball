@@ -1,6 +1,6 @@
 {
+  self,
   lib,
-  godot-dotnet,
   buildDotnetModule,
   dotnetCorePackages,
   gcc,
@@ -13,16 +13,12 @@ buildDotnetModule {
   pname = "sanicball-extension";
   version = "0.2-alpha";
 
-  src = ./.;
-  projectFile = "./Sanicball.csproj";
+  src = self;
+  projectFile = "${self}/src/Sanicball/Sanicball.csproj";
   nugetDeps = ./deps.nix;
 
   dotnet-sdk = dotnetCorePackages.sdk_9_0;
   dotnet-runtime = dotnetCorePackages.runtime_9_0;
-
-  projectReferences = [
-    godot-dotnet
-  ];
 
   nativeBuildInputs = [
     gcc
