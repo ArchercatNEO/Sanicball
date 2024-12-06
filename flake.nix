@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
+
+    treefmt = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -11,6 +16,7 @@
       self,
       nixpkgs,
       flake-utils,
+      treefmt,
     }:
     flake-utils.lib.eachSystem [ "x86_64-linux" ] (
       system:
@@ -55,6 +61,8 @@
             godot-dotnet = godot-dotnet;
           };
         };
+
+        formatter = (treefmt.lib.evalModule pkgs ./treefmt.nix).config.build.wrapper;
       }
     );
 }
