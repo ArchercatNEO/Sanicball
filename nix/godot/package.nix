@@ -33,19 +33,15 @@ let
 in
 godot_4.overrideAttrs (
   finalAttrs: prevAttrs: rec {
-    version = "4.4-dev5";
-    commitHash = "f952bfe9985ad8f507cc29b2c7601bbba18b8039";
+    version = "4.4-dev6";
+    commitHash = "1f47e4c4e3a09a422e96880a7918d986dd575a63";
 
     src = fetchFromGitHub {
       owner = "godotengine";
       repo = "godot";
       rev = commitHash;
-      hash = "sha256-40zEthN89CVOPvdeUe997OKAOwTal+z2gcm1nUhH6vU=";
+      hash = "sha256-eYB2xNvYYQTxP1Vkn6IZWb8IzGJJcXKordyo6xoHugw=";
     };
-
-    patches = [
-      ./miniupnpc.patch
-    ];
 
     sconsFlags =
       prevAttrs.sconsFlags
