@@ -43,6 +43,10 @@ godot_4.overrideAttrs (
       hash = "sha256-eYB2xNvYYQTxP1Vkn6IZWb8IzGJJcXKordyo6xoHugw=";
     };
 
+    patches = [
+      ./temp_dirs.patch
+    ];
+
     sconsFlags =
       prevAttrs.sconsFlags
       ++ (mkSconsFlagsFromAttrSet {
