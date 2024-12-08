@@ -1,49 +1,27 @@
 {
-  callPackage,
-  runCommand,
   fetchFromGitHub,
   dotnetCorePackages,
-  jq,
-  moreutils,
   ...
 }:
-let
+dotnetCorePackages.buildDotnetModule rec {
   pname = "godot-dotnet";
   version = "4.4";
-  commit = "eff114039efe1c4b4de2f69c337e7d14954927ef";
-  dotnet-version = dotnetCorePackages.sdk_8_0.version;
+  rev = "55bdf39f9f0d62ab9ab3c49931926dc6e2cd5905";
 
-  args = {
-    inherit pname version commit;
-
-    src = fetchFromGitHub {
-      owner = "raulsntos";
-      repo = "godot-dotnet";
-      rev = commit;
-      hash = "sha256-X5Lkno+wjSPfKsdBkUyv7Hu4IFLrANtf55+sN++AMk4=";
-    };
-
-    nativeBuildInputs = [
-      jq
-      moreutils
-    ];
-
-    preConfigure = "jq '.sdk.version = \"${dotnet-version}\" | .tools.dotnet = \"${dotnet-version}\"' global.json | sponge global.json";
-
-    dotnetPackFlags = [
-      "/p:RuntimeIdentifier=linux-x64"
-      "/p:RepositoryUrl=https://github.com/raulsntos/godot-dotnet"
-      "/p:RepositoryType=github"
-      "/p:RepositoryCommit=${commit}"
-    ];
+  src = fetchFromGitHub {
+    owner = "raulsntos";
+    repo = "godot-dotnet";
+    inherit rev;
+    hash = "sha256-tBCh/+w1YBF0Lotu988No+QkezWiKZ4aybN81zAYLlQ=";
   };
 
-  bindings = callPackage ./bindings.nix args;
-  generator = callPackage ./generator.nix args;
+  projectFile = "./Godot.sln";
 
-in
-runCommand (pname + "-" + version) { } ''
-  mkdir $out
-  ln -s ${bindings}/share/nuget/source/ $out/godot.bindings
-  ln -s ${generator}/share/nuget/source/ $out/godot.sourcegenerators
-''
+  dotnet-sdk = dotnetCorePackages.sdk_9_0;
+  dotnet-runtime = dotnetCorePackages.runtime_9_0;
+  nugetDeps = ./deps.nix;
+
+  buildPhase = ''
+    ./eng/common/cibuild.sh --warnaserror false /p:GenerateGodotBindings=true
+  '';
+}
