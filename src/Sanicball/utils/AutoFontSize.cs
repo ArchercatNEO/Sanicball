@@ -5,30 +5,27 @@ namespace Sanicball.Utils;
 [GodotClass]
 public partial class AutoFontSize : Label
 {
-    private int _maximumSize = 20;
-    private int _minimumSize = 10;
-
     [BindProperty]
     public int MinimumSize
     {
-        get => _minimumSize;
+        get;
         set
         {
-            _minimumSize = value;
+            field = value;
             ResizeText();
         }
-    }
+    } = 10;
 
     [BindProperty]
     public int MaximumSize
     {
-        get => _maximumSize;
+        get;
         set
         {
-            _maximumSize = value;
+            field = value;
             ResizeText();
         }
-    }
+    } = 20;
 
     private AutoFontSize()
     {

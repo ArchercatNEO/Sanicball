@@ -20,19 +20,31 @@ public partial class LobbyManager : Node
     {
         Log.Information("Entering lobby");
         var prefab = GD.Load<PackedScene>("res://scenes/S3-Lobby/Lobby.tscn");
-        var self = tree.ChangeSceneAsync<LobbyManager>(prefab, self => { self.players = players; });
+        var self = tree.ChangeSceneAsync<LobbyManager>(
+            prefab,
+            self =>
+            {
+                self.players = players;
+            }
+        );
     }
 
     private readonly Dictionary<ControlType, CharacterSelect> activePanels = [];
-    [BindProperty] private HBoxContainer characterSelectContainer = null!;
+
+    [BindProperty]
+    private HBoxContainer characterSelectContainer = null!;
 
     //ui
-    [BindProperty] private Label countdownText = null!;
-    [BindProperty] private Control pauseMenu = null!;
+    [BindProperty]
+    private Label countdownText = null!;
+
+    [BindProperty]
+    private Control pauseMenu = null!;
     private List<Character> players = [];
 
     //3d
-    [BindProperty] private Node3D playerSpawner = null!;
+    [BindProperty]
+    private Node3D playerSpawner = null!;
 
     private int readyPlayers;
 
@@ -121,38 +133,47 @@ public partial class LobbyManager : Node
         {
             readyPlayers--;
             players.RemoveAll(ball =>
-                ball.controller is PlayerController player && player.ControlType == panel.controlType);
+                ball.controller is PlayerController player
+                && player.ControlType == panel.controlType
+            );
         }
 
         if (readyPlayers < players.Count)
         {
-            countdownText.Text = $"{readyPlayers}/{players.Count} players ready: waiting for more players";
+            countdownText.Text =
+                $"{readyPlayers}/{players.Count} players ready: waiting for more players";
             return;
         }
 
-        RaceOptions options = new()
-        {
-            Players = players,
-            SelectedStage = GD.Load<TrackResource>("res://scenes/Z01-GreenHillZone/GreenHillZone.tres")
-        };
+        RaceOptions options =
+            new()
+            {
+                Players = players,
+                SelectedStage = GD.Load<TrackResource>(
+                    "res://scenes/Z01-GreenHillZone/GreenHillZone.tres"
+                ),
+            };
 
         var tween = CreateTween();
 
         void SetCountdownText(float time)
         {
-            countdownText.Text = $"{readyPlayers}/{players.Count} players ready: Match starting in {time} seconds";
+            countdownText.Text =
+                $"{readyPlayers}/{players.Count} players ready: Match starting in {time} seconds";
         }
 
         tween.TweenMethod(Callable.From<float>(SetCountdownText), 5, 0, 5);
 
-        tween.TweenCallback(Callable.From(() =>
-        {
-            foreach (var player in players)
+        tween.TweenCallback(
+            Callable.From(() =>
             {
-                playerSpawner.RemoveChild(player);
-            }
+                foreach (var player in players)
+                {
+                    playerSpawner.RemoveChild(player);
+                }
 
-            RaceManager.Activate(GetTree(), options);
-        }));
+                RaceManager.Activate(GetTree(), options);
+            })
+        );
     }
 }

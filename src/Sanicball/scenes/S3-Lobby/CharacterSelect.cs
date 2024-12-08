@@ -13,7 +13,11 @@ namespace Sanicball.Scenes;
 [GodotClass]
 public partial class CharacterSelect : MarginContainer
 {
-    public static CharacterSelect Create(ControlType controlType, Node3D spawner, Character? character)
+    public static CharacterSelect Create(
+        ControlType controlType,
+        Node3D spawner,
+        Character? character
+    )
     {
         var prefab = GD.Load<PackedScene>("res://scenes/S3-Lobby/CharacterSelect.tscn");
 
@@ -24,34 +28,41 @@ public partial class CharacterSelect : MarginContainer
         self.controllerIcon.Texture = controlType.Icon();
         self.characterSelect.Hide();
         self.hotkeyLabel.Text = """
-                                [Arrow keys]: Select character,
-                                [Enter]: Confirm
-                                """;
+            [Arrow keys]: Select character,
+            [Enter]: Confirm
+            """;
 
-        if (character is not null){ self.SpawnPlayer(character);}
+        if (character is not null)
+        {
+            self.SpawnPlayer(character);
+        }
 
         return self;
     }
 
     //TODO: This will orphan a massive amount of nodes
-    private readonly Character[] characters =
-    [
-        new Sanic(),
-        new Asspio()
-    ];
+    private readonly Character[] characters = [new Sanic(), new Asspio()];
 
-    private int _characterIndex;
+    [BindProperty]
+    private TextureRect background = null!;
 
-    [BindProperty] private TextureRect background = null!;
-    [BindProperty] private TextureRect characterIcon = null!;
-    [BindProperty] private Label characterName = null!;
-    [BindProperty] private Control characterSelect = null!;
+    [BindProperty]
+    private TextureRect characterIcon = null!;
 
-    [BindProperty] private TextureRect controllerIcon = null!;
+    [BindProperty]
+    private Label characterName = null!;
+
+    [BindProperty]
+    private Control characterSelect = null!;
+
+    [BindProperty]
+    private TextureRect controllerIcon = null!;
 
     //TODO: refactor so these can be made private
     public ControlType controlType;
-    [BindProperty] private Label hotkeyLabel = null!;
+
+    [BindProperty]
+    private Label hotkeyLabel = null!;
 
     private Node3D playerSpawner = null!;
     private bool ready;
@@ -59,20 +70,20 @@ public partial class CharacterSelect : MarginContainer
 
     private int CharacterIndex
     {
-        get => _characterIndex;
+        get;
         set
         {
             var count = characters.Length;
-            _characterIndex = (value + count) % count;
+            field = (value + count) % count;
 
-            if (_characterIndex == 0)
+            if (field == 0)
             {
                 characterName.Text = "Cancel";
                 characterIcon.Texture = GD.Load<Texture2D>("res://assets/art/Cancel.png");
             }
             else
             {
-                var selectedCharacter = characters[_characterIndex - 1];
+                var selectedCharacter = characters[field - 1];
                 characterName.Text = (string)selectedCharacter.Name;
                 characterIcon.Texture = selectedCharacter.Icon;
             }
@@ -102,17 +113,32 @@ public partial class CharacterSelect : MarginContainer
             return;
         }
 
-        if (controlType.LeftPressed(@event)){ CharacterIndex -= 1;}
-        if (controlType.RightPressed(@event)){ CharacterIndex += 1;}
-        if (controlType.UpPressed(@event)) {CharacterIndex -= 4;}
-        if (controlType.DownPressed(@event)){ CharacterIndex += 4;}
+        if (controlType.LeftPressed(@event))
+        {
+            CharacterIndex -= 1;
+        }
+        if (controlType.RightPressed(@event))
+        {
+            CharacterIndex += 1;
+        }
+        if (controlType.UpPressed(@event))
+        {
+            CharacterIndex -= 4;
+        }
+        if (controlType.DownPressed(@event))
+        {
+            CharacterIndex += 4;
+        }
 
         if (controlType.Confirmed(@event))
         {
             characterSelect.Hide();
 
             //cancel index
-            if (CharacterIndex == 0){ return;}
+            if (CharacterIndex == 0)
+            {
+                return;
+            }
 
             var selected = characters[CharacterIndex];
             SpawnPlayer(selected);

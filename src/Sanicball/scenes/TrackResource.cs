@@ -8,11 +8,16 @@ namespace Sanicball.Scenes;
 [GodotClass]
 public partial class TrackResource : Resource
 {
-    [BindProperty] public Texture2D flatOverlay;
+    [BindProperty]
+    public Texture2D flatOverlay;
 
-    [BindProperty] public string name;
+    [BindProperty]
+    public string name;
 
     //we can't use the PackedScene<T> because of the marshaller
-    [BindProperty] public PackedScene RaceScene;
-    [BindProperty] public PackedScene solidOverlay;
+    [BindProperty]
+    public PackedScene RaceScene;
+
+    [BindProperty]
+    public PackedScene solidOverlay;
 }

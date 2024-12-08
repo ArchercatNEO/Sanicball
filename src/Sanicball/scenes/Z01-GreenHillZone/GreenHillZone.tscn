@@ -1,8 +1,8 @@
 [gd_scene load_steps=13 format=3 uid="uid://yvsf3gwttxet"]
 
-[ext_resource type="Shader" path="res://assets/shaders/sea.gdshader" id="1_byn0m"]
+[ext_resource type="Shader" uid="uid://d4mdvys5hmdf8" path="res://assets/materials/shaders/sea.gdshader" id="1_byn0m"]
 [ext_resource type="Sky" uid="uid://fu0h5jshp1tg" path="res://scenes/S3-Lobby/Decoration/clear_sky.tres" id="1_udlj8"]
-[ext_resource type="AudioStream" uid="uid://56egn88rk5bt" path="res://assets/music/Sea.ogg" id="4_wke57"]
+[ext_resource type="AudioStream" uid="uid://56egn88rk5bt" path="res://assets/audio/ambience/sea/Sea.ogg" id="4_wke57"]
 [ext_resource type="PackedScene" uid="uid://gxo8i6rku4d6" path="res://scenes/Z01-GreenHillZone/GreenHillZone.blend" id="5_wtf51"]
 [ext_resource type="PackedScene" uid="uid://ceh3dfqf61qqe" path="res://src/game-mechanics/Checkpoint/Checkpoint.tscn" id="7_hucb3"]
 [ext_resource type="PackedScene" uid="uid://dxid7hpqoqjkl" path="res://src/characters/AiNode.tscn" id="8_q7lne"]
@@ -31,10 +31,10 @@ size = Vector2(1000, 1000)
 subdivide_width = 32
 subdivide_depth = 32
 
-[node name="GreenHillZone" type="RaceManager" node_paths=PackedStringArray("viewportManager", "finishLine", "initialNode")]
-viewportManager = NodePath("Game2D/ScreenSplitter")
+[node name="GreenHillZone" type="RaceManager" node_paths=PackedStringArray("finishLine", "initialNode", "viewportManager")]
 finishLine = NodePath("Game3D/Checkpoints/FinishLine")
 initialNode = NodePath("Game3D/AiNodes/AiNode1")
+viewportManager = NodePath("Game2D/ScreenSplitter")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_dgy8r")
@@ -88,7 +88,7 @@ transform = Transform3D(0.386947, -13.5895, 5.94016e-07, 0, -5.94256e-07, -13.59
 
 [node name="Checkpoint2" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
 next = NodePath("../Checkpoint3")
-transform = Transform3D(4.57444, -14.2855, 6.24438e-07, 0, -6.55671e-07, -15, 14.2855, 4.57444, -1.99955e-07, 102.356, 24.9915, -86.804)
+transform = Transform3D(4.57443, -14.2855, 6.24438e-07, 0, -6.55671e-07, -15, 14.2855, 4.57443, -1.99955e-07, 102.356, 24.9915, -86.804)
 
 [node name="Checkpoint3" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
 next = NodePath("../Checkpoint4")
@@ -96,7 +96,7 @@ transform = Transform3D(1.64715, 12.391, -5.41628e-07, 0, -5.46392e-07, -12.5, -
 
 [node name="Checkpoint4" parent="Game3D/Checkpoints" node_paths=PackedStringArray("next") instance=ExtResource("7_hucb3")]
 next = NodePath("../FinishLine")
-transform = Transform3D(10.8043, -2.06589, 9.03031e-08, 0, -4.80825e-07, -11, 2.06589, 10.8043, -4.72269e-07, -78.6377, 24.4562, 62.2761)
+transform = Transform3D(10.8043, -2.06588, 9.03026e-08, 0, -4.80825e-07, -11, 2.06588, 10.8043, -4.72269e-07, -78.6377, 24.4562, 62.2761)
 
 [node name="AiNodes" type="Node3D" parent="Game3D"]
 

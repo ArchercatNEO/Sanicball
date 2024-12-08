@@ -17,13 +17,20 @@ namespace Sanicball.Characters;
 public partial class Character : RigidBody3D, ICollidableReciever<Checkpoint>
 {
     //TODO: Implement dynamic loading instead of hardcoding the clips
-    private static readonly AudioStreamMP3 jump = GD.Load<AudioStreamMP3>("res://src/characters/S1-Sound/jump.mp3");
-    private static readonly AudioStreamWav roll = GD.Load<AudioStreamWav>("res://src/characters/S1-Sound/rolling.wav");
+    private static readonly AudioStreamMP3 jump = GD.Load<AudioStreamMP3>(
+        "res://src/characters/S1-Sound/jump.mp3"
+    );
+    private static readonly AudioStreamWav roll = GD.Load<AudioStreamWav>(
+        "res://src/characters/S1-Sound/rolling.wav"
+    );
 
-    private static readonly AudioStreamWav speed =
-        GD.Load<AudioStreamWav>("res://src/characters/S1-Sound/speednoise.wav");
+    private static readonly AudioStreamWav speed = GD.Load<AudioStreamWav>(
+        "res://src/characters/S1-Sound/speednoise.wav"
+    );
 
-    private static readonly AudioStreamWav brake = GD.Load<AudioStreamWav>("res://src/characters/S1-Sound/brake.wav");
+    private static readonly AudioStreamWav brake = GD.Load<AudioStreamWav>(
+        "res://src/characters/S1-Sound/brake.wav"
+    );
 
     public IController controller = new PlayerController { ControlType = ControlType.Keyboard };
     public Checkpoint currentCheckpoint;

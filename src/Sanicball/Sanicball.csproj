@@ -31,4 +31,8 @@
     <ProjectReference Include="../Serilog.Sinks.Godot/Serilog.Sinks.Godot.csproj"/>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="assets\audio\music\" />
+  </ItemGroup>
+
 </Project>

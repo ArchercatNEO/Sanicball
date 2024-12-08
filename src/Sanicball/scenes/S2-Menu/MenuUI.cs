@@ -16,7 +16,6 @@ public partial class MenuUI : Control
         tree.ChangeSceneToPacked(scene);
     }
 
-
     protected override void _Ready()
     {
         //needs to spin
@@ -25,8 +24,6 @@ public partial class MenuUI : Control
 
     protected override void _Input(InputEvent @event)
     {
-        if (@event is InputEventKey)
-        {
-        }
+        if (@event is InputEventKey) { }
     }
 }

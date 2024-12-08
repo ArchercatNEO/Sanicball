@@ -7,7 +7,7 @@ using Serilog;
 
 namespace Sanicball;
 
-public class Program
+public static class Program
 {
     [UnmanagedCallersOnly(EntryPoint = "init")]
     internal static bool Init(nint getProcAddress, nint library, nint initialization)
@@ -18,12 +18,17 @@ public class Program
             .CreateLogger();
         Log.Logger = logger;
 
-        GodotBridge.Initialize(getProcAddress, library, initialization, config =>
-        {
-            config.SetMinimumLibraryInitializationLevel(InitializationLevel.Scene);
-            config.RegisterInitializer(ClassDBExtensions.InitializeUserTypes);
-            config.RegisterTerminator(ClassDBExtensions.DeinitializeUserTypes);
-        });
+        GodotBridge.Initialize(
+            getProcAddress,
+            library,
+            initialization,
+            config =>
+            {
+                config.SetMinimumLibraryInitializationLevel(InitializationLevel.Scene);
+                config.RegisterInitializer(ClassDBExtensions.InitializeUserTypes);
+                config.RegisterTerminator(ClassDBExtensions.DeinitializeUserTypes);
+            }
+        );
         return true;
     }
 }

@@ -19,17 +19,26 @@ public partial class RaceManager : Node
 {
     public static void Activate(SceneTree tree, RaceOptions options)
     {
-        var self = tree.ChangeSceneAsync<RaceManager>(options.SelectedStage.RaceScene,
-            self => { self.players = options.Players; });
+        var self = tree.ChangeSceneAsync<RaceManager>(
+            options.SelectedStage.RaceScene,
+            self =>
+            {
+                self.players = options.Players;
+            }
+        );
     }
 
-    [BindProperty] private Checkpoint finishLine = null!;
-    [BindProperty] private AiNode initialNode = null!;
+    [BindProperty]
+    private Checkpoint finishLine = null!;
+
+    [BindProperty]
+    private AiNode initialNode = null!;
 
     private List<Character> players = [];
     private int playersFinished;
 
-    [BindProperty] private HBoxContainer viewportManager = null!;
+    [BindProperty]
+    private HBoxContainer viewportManager = null!;
 
     protected override void _Ready()
     {
@@ -49,7 +58,10 @@ public partial class RaceManager : Node
             viewportManager.AddChild(expander);
 
             //Global position needs to be set after AddChild in RaceUI
-            character.GlobalPosition = finishLine.GlobalPosition with { Y = finishLine.GlobalPosition.Y + offset };
+            character.GlobalPosition = finishLine.GlobalPosition with
+            {
+                Y = finishLine.GlobalPosition.Y + offset,
+            };
             offset += 10;
         }
 
@@ -58,23 +70,21 @@ public partial class RaceManager : Node
             //TODO: Make ai balls configurable from lobby
             Character ai = new Asspio
             {
-                controller = new AiController
-                {
-                    InitialNode = initialNode
-                }
+                controller = new AiController { InitialNode = initialNode },
             };
 
             AddChild(ai);
             ai.CheckpointPassed += OnPlayerPassCheckpoint;
             ai.currentCheckpoint = finishLine;
-            ai.GlobalPosition = finishLine.GlobalPosition with { Y = finishLine.GlobalPosition.Y + offset };
+            ai.GlobalPosition = finishLine.GlobalPosition with
+            {
+                Y = finishLine.GlobalPosition.Y + offset,
+            };
             offset += 10;
         }
     }
 
-    private void OnPlayerPassCheckpoint(Checkpoint e)
-    {
-    }
+    private void OnPlayerPassCheckpoint(Checkpoint e) { }
 
     private void OnPlayerFinishRace(object? sender, EventArgs e)
     {

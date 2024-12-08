@@ -17,10 +17,16 @@ public partial class MenuPath : Node3D
         set
         {
             characterMat = value;
-            if (value == null){ Log.Error("A null character material will break the camera");}
+            if (value == null)
+            {
+                Log.Error("A null character material will break the camera");
+            }
         }
     }
 
-    [BindProperty] public Vector3 Start { get; set; } = Vector3.Zero;
-    [BindProperty] public Vector3 End { get; set; } = Vector3.Zero;
+    [BindProperty]
+    public Vector3 Start { get; set; } = Vector3.Zero;
+
+    [BindProperty]
+    public Vector3 End { get; set; } = Vector3.Zero;
 }

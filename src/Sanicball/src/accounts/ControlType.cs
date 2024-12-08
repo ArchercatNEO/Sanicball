@@ -12,7 +12,7 @@ public enum ControlType
     Joystick2,
     Joystick3,
     Joystick4,
-    Keyboard
+    Keyboard,
 }
 
 public static class ControlTypeImpl
@@ -24,20 +24,35 @@ public static class ControlTypeImpl
         AddActionIfMissing(new StringName("keyboard_up"), new InputEventKey { Keycode = Key.W });
         AddActionIfMissing(new StringName("keyboard_down"), new InputEventKey { Keycode = Key.S });
         AddActionIfMissing(new StringName("keyboard_ready"), new InputEventKey { Keycode = Key.R });
-        AddActionIfMissing(new StringName("keyboard_confirm"), new InputEventKey { Keycode = Key.Enter });
+        AddActionIfMissing(
+            new StringName("keyboard_confirm"),
+            new InputEventKey { Keycode = Key.Enter }
+        );
 
-        AddActionIfMissing(new StringName("joy1_left"),
-            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.LeftStick });
-        AddActionIfMissing(new StringName("joy1_right"),
-            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.LeftStick });
-        AddActionIfMissing(new StringName("joy1_up"),
-            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.LeftStick });
-        AddActionIfMissing(new StringName("joy1_down"),
-            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.LeftStick });
-        AddActionIfMissing(new StringName("joy1_ready"),
-            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.B });
-        AddActionIfMissing(new StringName("joy1_confirm"),
-            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.A });
+        AddActionIfMissing(
+            new StringName("joy1_left"),
+            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.LeftStick }
+        );
+        AddActionIfMissing(
+            new StringName("joy1_right"),
+            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.LeftStick }
+        );
+        AddActionIfMissing(
+            new StringName("joy1_up"),
+            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.LeftStick }
+        );
+        AddActionIfMissing(
+            new StringName("joy1_down"),
+            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.LeftStick }
+        );
+        AddActionIfMissing(
+            new StringName("joy1_ready"),
+            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.B }
+        );
+        AddActionIfMissing(
+            new StringName("joy1_confirm"),
+            new InputEventJoypadButton { Device = 0, ButtonIndex = JoyButton.A }
+        );
     }
 
     private static void AddActionIfMissing(StringName action, InputEvent trigger)
@@ -57,7 +72,7 @@ public static class ControlTypeImpl
         {
             ControlType.Keyboard => GD.Load<Texture2D>("res://scenes/S0-Shared/Keyboard.png"),
             ControlType.Joystick1 => GD.Load<Texture2D>("res://scenes/S0-Shared/Joystick1.png"),
-            _ => throw new InvalidCastException($"Invalid control type detected: {controlType}")
+            _ => throw new InvalidCastException($"Invalid control type detected: {controlType}"),
         };
     }
 
@@ -101,7 +116,6 @@ public static class ControlTypeImpl
             default:
                 throw new InvalidCastException($"Invalid control type detected: {control}");
         }
-
         ;
 
         return force.Normalized();
@@ -113,7 +127,7 @@ public static class ControlTypeImpl
         {
             ControlType.Keyboard => input.IsActionPressed(new StringName("keyboard_left")),
             ControlType.Joystick1 => input.IsActionPressed(new StringName("joystick_left")),
-            _ => throw new InvalidCastException($"Invalid control type detected: {control}")
+            _ => throw new InvalidCastException($"Invalid control type detected: {control}"),
         };
     }
 
@@ -123,7 +137,7 @@ public static class ControlTypeImpl
         {
             ControlType.Keyboard => input.IsActionPressed(new StringName("keyboard_right")),
             ControlType.Joystick1 => false,
-            _ => throw new InvalidCastException($"Invalid control type detected: {control}")
+            _ => throw new InvalidCastException($"Invalid control type detected: {control}"),
         };
     }
 
@@ -133,7 +147,7 @@ public static class ControlTypeImpl
         {
             ControlType.Keyboard => input.IsActionPressed(new StringName("keyboard_up")),
             ControlType.Joystick1 => false,
-            _ => throw new InvalidCastException($"Invalid control type detected: {control}")
+            _ => throw new InvalidCastException($"Invalid control type detected: {control}"),
         };
     }
 
@@ -143,10 +157,9 @@ public static class ControlTypeImpl
         {
             ControlType.Keyboard => input.IsActionPressed(new StringName("keyboard_down")),
             ControlType.Joystick1 => input.IsActionPressed(new StringName("joy1_down")),
-            _ => throw new InvalidCastException($"Invalid control type detected: {control}")
+            _ => throw new InvalidCastException($"Invalid control type detected: {control}"),
         };
     }
-
 
     public static bool Confirmed(this ControlType controlType, InputEvent input)
     {
@@ -154,7 +167,7 @@ public static class ControlTypeImpl
         {
             ControlType.Keyboard => input.IsActionPressed(new StringName("keyboard_confirm")),
             ControlType.Joystick1 => input.IsActionPressed(new StringName("joy1_confirm")),
-            _ => throw new InvalidCastException($"Invalid control type detected: {controlType}")
+            _ => throw new InvalidCastException($"Invalid control type detected: {controlType}"),
         };
     }
 
@@ -164,7 +177,7 @@ public static class ControlTypeImpl
         {
             ControlType.Keyboard => input.IsActionPressed(new StringName("keyboard_ready")),
             ControlType.Joystick1 => input.IsActionPressed(new StringName("joy1_ready")),
-            _ => throw new InvalidCastException($"Invalid control type detected: {controlType}")
+            _ => throw new InvalidCastException($"Invalid control type detected: {controlType}"),
         };
     }
 }

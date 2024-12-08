@@ -5,8 +5,11 @@ namespace Sanicball.GameMechanics;
 [GodotClass]
 public partial class Checkpoint : Area3D, ICollidableEmmitter
 {
-    [BindProperty] public bool isFinishLine = false;
-    [BindProperty] public Checkpoint next = null!;
+    [BindProperty]
+    public bool isFinishLine = false;
+
+    [BindProperty]
+    public Checkpoint next = null!;
 
     public int Layer { get; } = 10;
 

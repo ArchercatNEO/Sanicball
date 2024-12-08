@@ -28,7 +28,8 @@ public partial class RaceUI : SubViewport
         return self;
     }
 
-    [BindProperty] private BallCamera camera;
+    [BindProperty]
+    private BallCamera camera;
 
     private Character target = null!;
 

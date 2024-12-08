@@ -28,9 +28,14 @@ namespace Sanicball.Scenes;
 [GodotClass]
 public partial class Intro : Control
 {
-    [BindProperty] public Control credits;
-    [BindProperty] public Control inputUi;
-    [BindProperty] public LineEdit usernameInput;
+    [BindProperty]
+    public Control credits;
+
+    [BindProperty]
+    public Control inputUi;
+
+    [BindProperty]
+    public LineEdit usernameInput;
 
     protected override void _Ready()
     {

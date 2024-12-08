@@ -6,7 +6,9 @@ namespace Sanicball.Scenes;
 [GodotClass]
 public partial class RacePreview : Node
 {
-    private static readonly PackedScene prefab = GD.Load<PackedScene>("res://scenes/RacePreview.tscn");
+    private static readonly PackedScene prefab = GD.Load<PackedScene>(
+        "res://scenes/RacePreview.tscn"
+    );
 
     public static RacePreview Create(string stageName)
     {
@@ -15,10 +17,14 @@ public partial class RacePreview : Node
         return preview;
     }
 
-    [BindProperty] private HBoxContainer controlPanel = null!;
+    [BindProperty]
+    private HBoxContainer controlPanel = null!;
 
-    [BindProperty] private Label stageName = null!;
-    [BindProperty] private Label startRaceHotkey = null!;
+    [BindProperty]
+    private Label stageName = null!;
+
+    [BindProperty]
+    private Label startRaceHotkey = null!;
 
     protected override void _Ready()
     {

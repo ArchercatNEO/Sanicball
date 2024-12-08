@@ -34,7 +34,7 @@ public class GodotSink : ILogEventSink
             LogEventLevel.Warning => NamedColors.Yellow.ToHtml(),
             LogEventLevel.Error => NamedColors.Red.ToHtml(),
             LogEventLevel.Fatal => NamedColors.Purple.ToHtml(),
-            _ => NamedColors.LightGray.ToHtml()
+            _ => NamedColors.LightGray.ToHtml(),
         };
 
         foreach (var line in writer.ToString()?.Split('\n') ?? Array.Empty<string>())
@@ -42,12 +42,19 @@ public class GodotSink : ILogEventSink
             GD.PrintRich($"[color=#{color}]{line}[/color]");
         }
 
-        if (logEvent.Exception is null) {return;}
+        if (logEvent.Exception is null)
+        {
+            return;
+        }
 
         if (logEvent.Level >= LogEventLevel.Error)
-        {GD.PushError(logEvent.Exception);}
+        {
+            GD.PushError(logEvent.Exception);
+        }
         else
-        { GD.PushWarning(logEvent.Exception);}
+        {
+            GD.PushWarning(logEvent.Exception);
+        }
     }
 
     private class TemplateRenderer : ITextFormatter
@@ -61,26 +68,29 @@ public class GodotSink : ILogEventSink
             this.formatProvider = formatProvider;
 
             var template = new MessageTemplateParser().Parse(outputTemplate);
-            renderers = template.Tokens.Select(
-                token => token switch
-                {
-                    TextToken textToken => (_, output) => output.Write(textToken.Text),
-                    PropertyToken propertyToken => propertyToken.PropertyName switch
+            renderers = template
+                .Tokens.Select(token =>
+                    token switch
                     {
-                        OutputProperties.LevelPropertyName
-                            => (logEvent, output) => output.Write(logEvent.Level),
-                        OutputProperties.MessagePropertyName
-                            => (logEvent, output) => logEvent.RenderMessage(output, formatProvider),
-                        OutputProperties.NewLinePropertyName
-                            => (_, output) => output.Write('\n'),
-                        OutputProperties.TimestampPropertyName
-                            => RenderTimestamp(propertyToken.Format),
-                        _
-                            => RenderProperty(propertyToken.PropertyName, propertyToken.Format)
-                    },
-                    _ => null
-                }
-            ).OfType<Renderer>().ToArray();
+                        TextToken textToken => (_, output) => output.Write(textToken.Text),
+                        PropertyToken propertyToken => propertyToken.PropertyName switch
+                        {
+                            OutputProperties.LevelPropertyName => (logEvent, output) =>
+                                output.Write(logEvent.Level),
+                            OutputProperties.MessagePropertyName => (logEvent, output) =>
+                                logEvent.RenderMessage(output, formatProvider),
+                            OutputProperties.NewLinePropertyName => (_, output) =>
+                                output.Write('\n'),
+                            OutputProperties.TimestampPropertyName => RenderTimestamp(
+                                propertyToken.Format
+                            ),
+                            _ => RenderProperty(propertyToken.PropertyName, propertyToken.Format),
+                        },
+                        _ => null,
+                    }
+                )
+                .OfType<Renderer>()
+                .ToArray();
         }
 
         public void Format(LogEvent logEvent, TextWriter output)
@@ -93,9 +103,14 @@ public class GodotSink : ILogEventSink
 
         private Renderer RenderTimestamp(string? format)
         {
-            Func<LogEvent, string> f = formatProvider?.GetFormat(typeof(ICustomFormatter)) is ICustomFormatter formatter
+            Func<LogEvent, string> f = formatProvider?.GetFormat(typeof(ICustomFormatter))
+                is ICustomFormatter formatter
                 ? logEvent => formatter.Format(format, logEvent.Timestamp, formatProvider)
-                : logEvent => logEvent.Timestamp.ToString(format, formatProvider ?? CultureInfo.InvariantCulture);
+                : logEvent =>
+                    logEvent.Timestamp.ToString(
+                        format,
+                        formatProvider ?? CultureInfo.InvariantCulture
+                    );
 
             return (logEvent, output) => output.Write(f(logEvent));
         }
@@ -104,7 +119,12 @@ public class GodotSink : ILogEventSink
         {
             return delegate(LogEvent logEvent, TextWriter output)
             {
-                if (logEvent.Properties.TryGetValue(propertyName, out LogEventPropertyValue? propertyValue))
+                if (
+                    logEvent.Properties.TryGetValue(
+                        propertyName,
+                        out LogEventPropertyValue? propertyValue
+                    )
+                )
                 {
                     propertyValue.Render(output, format, formatProvider);
                 }
@@ -119,9 +139,11 @@ public static class GodotSinkExtensions
 {
     private const string DefaultGodotSinkOutputTemplate = "[{Timestamp:HH:mm:ss}] {Message:lj}";
 
-    public static LoggerConfiguration Godot(this LoggerSinkConfiguration configuration,
+    public static LoggerConfiguration Godot(
+        this LoggerSinkConfiguration configuration,
         string outputTemplate = DefaultGodotSinkOutputTemplate,
-        IFormatProvider? formatProvider = null)
+        IFormatProvider? formatProvider = null
+    )
     {
         return configuration.Sink(new GodotSink(outputTemplate, formatProvider));
     }

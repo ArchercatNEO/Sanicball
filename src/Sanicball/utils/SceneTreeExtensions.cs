@@ -5,7 +5,8 @@ namespace Sanicball.Utils;
 
 public static class SceneTreeExtensions
 {
-    public static T ChangeSceneAsync<T>(this SceneTree sceneTree, PackedScene<T> scene) where T : Node
+    public static T ChangeSceneAsync<T>(this SceneTree sceneTree, PackedScene<T> scene)
+        where T : Node
     {
         Node root = sceneTree.Root;
 
@@ -20,7 +21,11 @@ public static class SceneTreeExtensions
         return next;
     }
 
-    public static T ChangeSceneAsync<T>(this SceneTree sceneTree, PackedScene scene, Action<T>? preReady = null)
+    public static T ChangeSceneAsync<T>(
+        this SceneTree sceneTree,
+        PackedScene scene,
+        Action<T>? preReady = null
+    )
         where T : Node
     {
         Node root = sceneTree.Root;

@@ -17,8 +17,8 @@ public partial class LobbyCamera : Camera3D
     private readonly List<Node3D> balls = [];
     private readonly Vector3 originRotation;
 
-
-    [BindProperty] private float rotationSpeed = 10;
+    [BindProperty]
+    private float rotationSpeed = 10;
 
     private LobbyCamera()
     {
@@ -39,7 +39,10 @@ public partial class LobbyCamera : Camera3D
     public Func<Vector3> Subscribe(Node3D ball)
     {
         balls.Add(ball);
-        ball.TreeExited += () => { balls.Remove(ball); };
+        ball.TreeExited += () =>
+        {
+            balls.Remove(ball);
+        };
         return () => Rotation;
     }
 
@@ -60,7 +63,10 @@ public partial class LobbyCamera : Camera3D
         var cameraForwards = Quaternion.FromEuler(Rotation) * Vector3.Forward;
 
         var normal = cameraForwards.Cross(relativePosition).Normalized();
-        if (normal == Vector3.Zero) {return;}
+        if (normal == Vector3.Zero)
+        {
+            return;
+        }
 
         var angle = cameraForwards.AngleTo(relativePosition);
 

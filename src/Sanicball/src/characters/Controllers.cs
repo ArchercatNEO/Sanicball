@@ -6,8 +6,7 @@ using Sanicball.Account;
 namespace Sanicball.Characters;
 
 //TODO: when/if discriminated unions come out use then instead
-public interface IController
-{};
+public interface IController { };
 
 public class PlayerController : IController
 {
@@ -26,7 +25,9 @@ public class AiController : IController
 [GodotClass]
 public partial class AiNode : Area3D
 {
-    [BindProperty] private GodotArray<AiNode> nextOptions = [];
+    [BindProperty]
+    private GodotArray<AiNode> nextOptions = [];
+
     //TODO Weights
 
     public AiNode NextNode
@@ -66,11 +67,9 @@ public partial class AiNode : Area3D
     }
 }
 
-public class RemoteController : IController
-{}
+public class RemoteController : IController { }
 
 /// <summary>
 ///     A movement object sent by remote balls for online matches
 /// </summary>
-public class RemoteMovement
-{}
+public class RemoteMovement { }

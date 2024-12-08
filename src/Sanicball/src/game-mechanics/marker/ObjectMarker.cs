@@ -5,8 +5,9 @@ namespace Sanicball.Ball;
 [GodotClass]
 public partial class ObjectMarker : Control
 {
-    private static readonly PackedScene prefab =
-        GD.Load<PackedScene>("res://src/game-mechanics/marker/ObjectMarker.tscn");
+    private static readonly PackedScene prefab = GD.Load<PackedScene>(
+        "res://src/game-mechanics/marker/ObjectMarker.tscn"
+    );
 
     /// <summary>
     ///     Factory method

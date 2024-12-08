@@ -4,12 +4,6 @@ namespace Sanicball.Characters;
 
 partial class Character
 {
-    private readonly Material _material = GD.Load<Material>("res://src/characters/ball_material.tres");
-
-    private readonly Mesh _meshOverride = GD.Load<Mesh>("res://src/characters/ball_mesh.tres");
-
-    private readonly Shape3D _shapeOverride = GD.Load<Shape3D>("res://src/characters/ball_coll.tres");
-
     /// <summary>
     ///     Name of the skin (or character)
     /// </summary>
@@ -34,10 +28,10 @@ partial class Character
     /// </summary>
     public Shape3D ShapeOverride
     {
-        get => _shapeOverride;
+        get;
         init
         {
-            _shapeOverride = value;
+            field = value;
             collider.Shape = value;
         }
     }
@@ -47,10 +41,10 @@ partial class Character
     /// </summary>
     public Mesh MeshOverride
     {
-        get => _meshOverride;
+        get;
         init
         {
-            _meshOverride = value;
+            field = value;
             renderer.Mesh = value;
         }
     }
@@ -60,10 +54,10 @@ partial class Character
     /// </summary>
     public Material Material
     {
-        get => _material;
+        get;
         init
         {
-            _material = value;
+            field = value;
             renderer.MaterialOverride = value;
         }
     }
@@ -81,5 +75,6 @@ partial class Character
     /// <summary>
     ///     The icon displayed on a minimap during a race
     /// </summary>
-    public Texture2D MinimapIcon { get; init; } = GD.Load<Texture2D>("res://src/characters/ball_icon.svg");
+    public Texture2D MinimapIcon { get; init; } =
+        GD.Load<Texture2D>("res://src/characters/ball_icon.svg");
 }

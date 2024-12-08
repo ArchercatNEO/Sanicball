@@ -23,10 +23,6 @@ namespace Sanicball.Ball;
 [GodotClass]
 public partial class BallCamera : Camera3D
 {
-    private float _orbitHeight;
-
-    private float _orbitRadius;
-
     private float orbitAngle;
     private Vector3 previousOrbit;
     public Character Ball { get; set; }
@@ -34,10 +30,10 @@ public partial class BallCamera : Camera3D
     [BindProperty]
     public float OrbitHeight
     {
-        get => _orbitHeight;
+        get;
         private set
         {
-            _orbitHeight = value;
+            field = value;
             Position = Position with { Y = value };
         }
     }
@@ -45,10 +41,10 @@ public partial class BallCamera : Camera3D
     [BindProperty]
     public float OrbitRadius
     {
-        get => _orbitRadius;
+        get;
         private set
         {
-            _orbitRadius = value;
+            field = value;
             Position = Position with { Z = value };
         }
     }
@@ -65,7 +61,11 @@ public partial class BallCamera : Camera3D
         //TODO handle zooming in/out
 
         //Check if velocity and the up vector are not aligned so the cross product will work
-        if (Ball.LinearVelocity.Dot(Ball.UpOverride) - Ball.LinearVelocity.Length() * Ball.UpOverride.Length() != 0)
+        if (
+            Ball.LinearVelocity.Dot(Ball.UpOverride)
+                - Ball.LinearVelocity.Length() * Ball.UpOverride.Length()
+            != 0
+        )
         {
             var normalizedVelocity = Ball.LinearVelocity.Normalized() * OrbitRadius;
             var rotationAxis = normalizedVelocity.Cross(Ball.UpOverride).Normalized();
@@ -79,7 +79,6 @@ public partial class BallCamera : Camera3D
             previousOrbit = offsetVector;
             GlobalPosition = Ball.GlobalPosition + offsetVector;
         }
-
 
         //Rotation updates
         LookAt(Ball.Position);

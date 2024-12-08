@@ -49,7 +49,10 @@ public class CheckpointReciever(Checkpoint initialCheckpoint, int maxLaps)
     {
         display.Text = $"Lap {currentLap}/{maxLaps}";
 
-        NextLap += (sender, lap) => { display.Text = $"Lap {currentLap}/{maxLaps}"; };
+        NextLap += (sender, lap) =>
+        {
+            display.Text = $"Lap {currentLap}/{maxLaps}";
+        };
 
         RaceFinished += (sender, e) =>
         {

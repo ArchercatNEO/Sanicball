@@ -12,8 +12,10 @@ public partial class Song : Resource
 
     static Song()
     {
-        if (!Engine.Singleton.IsEditorHint()) { return; }
-
+        if (!Engine.Singleton.IsEditorHint())
+        {
+            return;
+        }
 
         string root = ProjectSettings.Singleton.GlobalizePath("res://assets/audio/music");
         Log.Information(root);
@@ -57,9 +59,15 @@ public partial class Song : Resource
         };
     }
 
-    [BindProperty] public string name = "";
-    [BindProperty] public string composer = "";
-    [BindProperty] public string? origin;
+    [BindProperty]
+    public string name = "";
 
-    [BindProperty] public AudioStream stream;
+    [BindProperty]
+    public string composer = "";
+
+    [BindProperty]
+    public string? origin;
+
+    [BindProperty]
+    public AudioStream stream;
 }
